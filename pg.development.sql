@@ -6411,7 +6411,7 @@ CREATE TABLE hs_tracking_variable (
     "timestamp" timestamp with time zone NOT NULL,
     name character varying(32) NOT NULL,
     type integer NOT NULL,
-    value character varying(500) NOT NULL,
+    value text NOT NULL,
     session_id integer NOT NULL
 );
 
@@ -9864,7 +9864,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$zWpscL2LEyIq$lU5ALtHtJIeE+GKzxE1g3/y5ING28gAzY0S2CJdUn54=	2017-05-05 13:43:51+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$zWpscL2LEyIq$lU5ALtHtJIeE+GKzxE1g3/y5ING28gAzY0S2CJdUn54=	2017-07-26 18:01:25.288216+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -10082,6 +10082,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 49	2017-05-05 14:17:42.985039+00	1	Resource Author	2	Changed name.	2	4
 50	2017-05-05 14:20:45.489007+00	1	QuotaMessage object	1		207	4
 51	2017-05-05 14:24:29.244065+00	1	SiteConfiguration object	2	Changed col1_content, col3_heading, col3_content, twitter_link, facebook_link, youtube_link, github_link, linkedin_link and copyright.	16	4
+52	2017-07-26 18:02:34.737492+00	1	SiteConfiguration object	2	Changed col3_content and copyright.	16	4
 \.
 
 
@@ -10089,7 +10090,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 51, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 52, true);
 
 
 --
@@ -10719,6 +10720,9 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 181	theme	0005_userquota	2017-05-05 13:41:55.396172+00
 182	theme	0006_auto_20170309_1516	2017-05-05 13:41:55.432509+00
 183	theme	0007_auto_20170427_1553	2017-05-05 13:41:57.537779+00
+184	hs_access_control	0021_auto_20170613_1925	2017-07-26 17:17:57.382159+00
+185	hs_tracking	0005_auto_20170613_1925	2017-07-26 17:17:57.757155+00
+186	theme	0008_auto_20170613_1925	2017-07-26 17:17:59.818007+00
 \.
 
 
@@ -10726,7 +10730,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 183, true);
+SELECT pg_catalog.setval('django_migrations_id_seq', 186, true);
 
 
 --
@@ -10755,6 +10759,7 @@ yq96gavkvlu0skywfwgvdock65xnq3tc	ZTIwZWRiZTQzZjI5ODhkYTE0NDQxYzFmZmQzMTRjZDc3MWU
 5eflr6q0pn7qgkuu6mbo84kuqoxk5plt	ZjZmMTlkMThkOGJmNWIzY2IxODNjODM5ZTA2MmFjNTRmNTlmYTRkOTp7InF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJoc190cmFja2luZ19pZCI6ImV5SnBaQ0k2TW4wOjFiRzg2ZDpGNWs4M3pGcnQ2Mzg5WWMyZUhRc3BNRGVBR2siLCJmYWNldHNfaXRlbXMiOnsiZmllbGRzIjp7ImF1dGhvciI6W10sIm93bmVyc19uYW1lcyI6W10sInN1YmplY3RzIjpbXSwiZGlzY292ZXJhYmxlIjpbXSwicHVibGljIjpbXSwicmVzb3VyY2VfdHlwZSI6W119LCJkYXRlcyI6e30sInF1ZXJpZXMiOnt9fSwidG90YWxfcmVzdWx0cyI6MH0=	2016-07-07 17:17:57.67608+00
 yg9nko1xsebjvcc6wk4ynygw4m8l3ofk	ZTg1M2RhMWVmMzk3YTcwYTFlMWE5MDhlNWRiYjAyZGU0Yzk2YmVmYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZObjA6MWNaTEJZOnhCdHhZT3oxQ3RXb0lBVFR2aFVqcW5UaDBwOCJ9	2017-02-16 17:28:40.816975+00
 sbfc9qcoi728qf2c38jscng5q7ccra4a	ZWI2ZjgwZmQ3NmRhYTA3NDAyYzI4MzEyMzgwMjNmMGExODU3ZjNhMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWQ2ZFdIOmx4S0hCN1NrVWgwS3NaT2tqSHVEVndhMGcxbyIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-05-19 13:43:51.032176+00
+kz6caq7yvgl218yj9pvf8jrye683yu2m	MGY4N2IyY2ZjMWUwNGYyOWU2ZjM4NTY0MmRkYjQ3ZWI2MTNkNWZiZDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPSDA6MWRhUTlOOnd2WDBPT1E4eVRFQXZ1T1B0Z0dYbjZtOUtCSSIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-08-09 18:01:25.302891+00
 \.
 
 
@@ -12847,6 +12852,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 5	2017-02-02 17:27:56.526549+00	1
 6	2017-02-02 17:28:40.81141+00	6
 7	2017-05-05 13:43:41.852248+00	1
+8	2017-07-26 17:31:09.012614+00	1
 \.
 
 
@@ -12854,7 +12860,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 7, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 8, true);
 
 
 --
@@ -13155,6 +13161,18 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 291	2017-05-05 14:21:09.837984+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	7
 292	2017-05-05 14:21:09.893575+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
 293	2017-05-05 14:24:29.356625+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	7
+294	2017-07-26 17:31:09.014263+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	8
+295	2017-07-26 17:31:09.016239+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	8
+296	2017-07-26 17:41:54.794559+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/help/	8
+297	2017-07-26 17:41:57.657977+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	8
+298	2017-07-26 17:56:08.285256+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	8
+299	2017-07-26 18:01:12.792136+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	8
+300	2017-07-26 18:01:25.300191+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	8
+301	2017-07-26 18:01:25.411202+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	8
+302	2017-07-26 18:01:37.625382+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	8
+303	2017-07-26 18:01:47.745036+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	8
+304	2017-07-26 18:01:47.842586+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	8
+305	2017-07-26 18:02:34.851896+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	8
 \.
 
 
@@ -13162,7 +13180,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 293, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 305, true);
 
 
 --
@@ -13177,6 +13195,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 5	2017-02-02 17:27:56.524908+00	\N
 6	2017-02-02 17:28:40.809782+00	\N
 7	2017-05-05 13:43:41.849519+00	\N
+8	2017-07-26 17:31:09.010077+00	\N
 \.
 
 
@@ -13184,7 +13203,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 7, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 8, true);
 
 
 --
@@ -13556,7 +13575,7 @@ SELECT pg_catalog.setval('theme_quotamessage_id_seq', 1, true);
 --
 
 COPY theme_siteconfiguration (id, col1_heading, col1_content, col2_heading, col2_content, col3_heading, col3_content, twitter_link, facebook_link, pinterest_link, youtube_link, github_link, linkedin_link, vk_link, gplus_link, has_social_network_links, copyright, site_id) FROM stdin;
-1	Contact us	<p class="p1">Email us at <a href="mailto:support@xdcishare.renci.org">xdcishare.renci.org</a></p>	Follow		Version	<p>This is xDCIShare Version<b> DEVELOPMENT</b></p>									f	&copy 2017-{% now "Y" %} University of North Carolina at Chapel Hill. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.\r\n\r\n&copy 2012-2016 CUAHSI. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.	1
+1	Contact us	<p class="p1">Email us at <a href="mailto:support@xdcishare.renci.org">xdcishare.renci.org</a></p>	Follow		Version	<p>This is xDCIShare Version<b> DEVELOPMENT</b></p>									f	&copy 2017-{% now "Y" %} University of North Carolina at Chapel Hill. &copy 2012-2016 CUAHSI. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.	1
 \.
 
 
