@@ -9864,7 +9864,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$zWpscL2LEyIq$lU5ALtHtJIeE+GKzxE1g3/y5ING28gAzY0S2CJdUn54=	2017-07-26 18:01:25.288216+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-07-26 18:01:25.288216+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -10759,7 +10759,7 @@ yq96gavkvlu0skywfwgvdock65xnq3tc	ZTIwZWRiZTQzZjI5ODhkYTE0NDQxYzFmZmQzMTRjZDc3MWU
 5eflr6q0pn7qgkuu6mbo84kuqoxk5plt	ZjZmMTlkMThkOGJmNWIzY2IxODNjODM5ZTA2MmFjNTRmNTlmYTRkOTp7InF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJoc190cmFja2luZ19pZCI6ImV5SnBaQ0k2TW4wOjFiRzg2ZDpGNWs4M3pGcnQ2Mzg5WWMyZUhRc3BNRGVBR2siLCJmYWNldHNfaXRlbXMiOnsiZmllbGRzIjp7ImF1dGhvciI6W10sIm93bmVyc19uYW1lcyI6W10sInN1YmplY3RzIjpbXSwiZGlzY292ZXJhYmxlIjpbXSwicHVibGljIjpbXSwicmVzb3VyY2VfdHlwZSI6W119LCJkYXRlcyI6e30sInF1ZXJpZXMiOnt9fSwidG90YWxfcmVzdWx0cyI6MH0=	2016-07-07 17:17:57.67608+00
 yg9nko1xsebjvcc6wk4ynygw4m8l3ofk	ZTg1M2RhMWVmMzk3YTcwYTFlMWE5MDhlNWRiYjAyZGU0Yzk2YmVmYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZObjA6MWNaTEJZOnhCdHhZT3oxQ3RXb0lBVFR2aFVqcW5UaDBwOCJ9	2017-02-16 17:28:40.816975+00
 sbfc9qcoi728qf2c38jscng5q7ccra4a	ZWI2ZjgwZmQ3NmRhYTA3NDAyYzI4MzEyMzgwMjNmMGExODU3ZjNhMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWQ2ZFdIOmx4S0hCN1NrVWgwS3NaT2tqSHVEVndhMGcxbyIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-05-19 13:43:51.032176+00
-kz6caq7yvgl218yj9pvf8jrye683yu2m	MGY4N2IyY2ZjMWUwNGYyOWU2ZjM4NTY0MmRkYjQ3ZWI2MTNkNWZiZDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPSDA6MWRhUTlOOnd2WDBPT1E4eVRFQXZ1T1B0Z0dYbjZtOUtCSSIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-08-09 18:01:25.302891+00
+7ypgqm7kofba96l6ls9oqblkhn6pc0cg	NmFiM2NkMmIwNjFkODkwOWQ1NjcxOTVlMzYxOWYwODE1NWM1ZDAwZjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEI5OjFkYVF6NjpLa0NraElMU1dlb2hPaWRtOUY4ZzJSNGtlZzAifQ==	2017-08-09 18:24:36.608252+00
 \.
 
 
@@ -12853,6 +12853,8 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 6	2017-02-02 17:28:40.81141+00	6
 7	2017-05-05 13:43:41.852248+00	1
 8	2017-07-26 17:31:09.012614+00	1
+9	2017-07-26 18:24:36.55158+00	1
+10	2017-07-26 18:24:36.603147+00	9
 \.
 
 
@@ -12860,7 +12862,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 8, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 10, true);
 
 
 --
@@ -13173,6 +13175,11 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 303	2017-07-26 18:01:47.745036+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	8
 304	2017-07-26 18:01:47.842586+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	8
 305	2017-07-26 18:02:34.851896+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	8
+306	2017-07-26 18:24:36.555432+00	begin_session	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	9
+307	2017-07-26 18:24:36.557306+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	9
+308	2017-07-26 18:24:36.60436+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	10
+309	2017-07-26 18:24:36.606287+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	10
+310	2017-07-26 18:24:45.267249+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	10
 \.
 
 
@@ -13180,7 +13187,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 305, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 310, true);
 
 
 --
@@ -13196,6 +13203,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 6	2017-02-02 17:28:40.809782+00	\N
 7	2017-05-05 13:43:41.849519+00	\N
 8	2017-07-26 17:31:09.010077+00	\N
+9	2017-07-26 18:24:36.601826+00	\N
 \.
 
 
@@ -13203,7 +13211,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 8, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 9, true);
 
 
 --
