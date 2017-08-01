@@ -9864,7 +9864,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-01 15:08:48.832553+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-01 22:57:47.636745+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -10084,6 +10084,13 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 51	2017-05-05 14:24:29.244065+00	1	SiteConfiguration object	2	Changed col1_content, col3_heading, col3_content, twitter_link, facebook_link, youtube_link, github_link, linkedin_link and copyright.	16	4
 52	2017-07-26 18:02:34.737492+00	1	SiteConfiguration object	2	Changed col3_content and copyright.	16	4
 53	2017-08-01 15:08:19.974747+00	6	Apps	2	Changed status.	34	4
+54	2017-08-01 22:54:57.422561+00	2	Home	2	Changed heading, content, in_menus and keywords.	17	4
+55	2017-08-01 23:06:15.683441+00	2	Home	2	Changed content, in_menus and keywords.	17	4
+56	2017-08-01 23:07:32.016563+00	6	Apps	2	Changed slug.	34	4
+57	2017-08-01 23:13:58.786225+00	7	Verify Account	2	Changed content, in_menus and keywords.	33	4
+58	2017-08-01 23:14:46.70497+00	8	Resend Verification Email	2	Changed content, in_menus and keywords.	28	4
+59	2017-08-01 23:30:15.111474+00	9	Terms of Use	2	Changed content, in_menus, description and keywords.	33	4
+60	2017-08-01 23:33:15.587452+00	10	Statement of Privacy	2	Changed content, in_menus, description and keywords.	33	4
 \.
 
 
@@ -10091,7 +10098,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 53, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 60, true);
 
 
 --
@@ -10762,6 +10769,22 @@ yg9nko1xsebjvcc6wk4ynygw4m8l3ofk	ZTg1M2RhMWVmMzk3YTcwYTFlMWE5MDhlNWRiYjAyZGU0Yzk
 sbfc9qcoi728qf2c38jscng5q7ccra4a	ZWI2ZjgwZmQ3NmRhYTA3NDAyYzI4MzEyMzgwMjNmMGExODU3ZjNhMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWQ2ZFdIOmx4S0hCN1NrVWgwS3NaT2tqSHVEVndhMGcxbyIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-05-19 13:43:51.032176+00
 k7nt7rugdkbcm58fglbsdrepdqaytp43	M2Q0Y2ZiM2Q0MDdhMjA5MWNmZTc4MDM0NjA0YzY1MjYxM2U4YjY5NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEY5OjFkYVJVNDpPU1Z0SWNpeXBBcE96OWpJQmpPLXI0QmZwQ3ciLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-09 18:56:46.438769+00
 luvbqixlnqnwf4v4nqn65qwgv92967lw	YWEzNzgyMzcyYWViZjkyNjk1MDM4YTg5Yjk1ZGEzM2E5N2M2ZWQ4ZTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVFI5OjFkY1luMjpKZkNBWWhZR09EMjFmUElTa3NIV3JvYXhURHMifQ==	2017-08-15 15:08:56.554221+00
+3z0mta463zqe77671d0010wwf6ajcqfb	MTI0ZTI5MmQ5ZDI5MmIzOGU1MmY0ZGYzOTI1MDU0ZGNjNjc0OWY3Mjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVFo5OjFkY2ZVZTpJaGYzaF96Nk0xRl9mMUYtZGVVNEk4a2p2QzAifQ==	2017-08-15 22:18:24.267526+00
+qs0wmt2hhfwgs2rrgoj9mi3nb38m58w6	M2ZhNzJiMTU3ZGZjOGI4OWYzZTBjNDE5MWM0Nzc5MmUwMzg3ZDFkMDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVFY5OjFkY2ZVZTpwYXFxRHhEMDJ2N2NsMXJSdl9aNUxLek5rYncifQ==	2017-08-15 22:18:24.265935+00
+xf4aeiwe7r8w5xl1ydmcvao2oe4ol8il	N2Y5MjgzMmEwYmVkYTVmMmZlOTYwMzE4MDBlYmE2Yjg5NDI3NDdiZjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVGg5OjFkY2ZVZTo1VjF4LXJMQTZ1T202YlR4bWxfWDZXc2h5M0EifQ==	2017-08-15 22:18:24.268437+00
+qedhulc3wzvi4gn5mmwjh5np4s0fyg3u	NmFkOThkYjdkMWIyMzJkMTZlODliZTJhZGZjZTFhOWIwMTMwNjk3Njp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVGQ5OjFkY2ZVZTo2SXJXRGllNm1EOHJLeEJnRHhhZmxoM2hKZE0ifQ==	2017-08-15 22:18:24.269221+00
+zwindgwlw28qi61vyjrylxughw5atboo	OGE4YTU3ZTg2ODlmYjhmZDkzZThlNzY3MzE0N2Q0OGM5YmRjNTQ3MTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNakI5OjFkY2ZVZTo5WmgzZTE1ZURnNmNQYWFpalFwUDIyM1g1QkUifQ==	2017-08-15 22:18:24.270985+00
+dfxmb9mkyqw5z5oiuleab73wt5ol2lv4	ZWQ0YzQ5N2IxOTg4ODhiN2NmNDMwOWRhN2NmZGViNDM5NmZiY2FhZTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVGw5OjFkY2ZVZTp5QlVGbHFtSHM2WEs4ZXhxaGQ0RG14c1Q3UGMifQ==	2017-08-15 22:18:24.272427+00
+cuducc3knjsurzsyfa8hmqajo2yp68dk	MzU4ODFlYjc2YjBiYTYyYmY0MzAyZjVmMzRjZDhkNDRkYjMxNDQ0Yzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNakY5OjFkY2ZVZTpyb1ZVZXR0T0o4RHljUWhodTBEOHdfQi1OZjAifQ==	2017-08-15 22:18:24.277934+00
+mump2bmxwo4o62rbupqf7ua1wwlhlwwb	Yzc1MzUzZjhiNjM3YTJjMjMwMGNlMGExMWE5YWU3NGU1MTlmMmEzNzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNak45OjFkY2ZXRDoyeGIzbEZ2VXF1WUF3NzQ2MGU1WDhYb05oQ3MifQ==	2017-08-15 22:20:01.643984+00
+6r3baagyizvtlde110yxr6du1bxmywyt	MjE5Yjg4MTgyNDViYzgwMmY1NDk1NmY3OTQ3OGZkOGEyZDcxODUzNDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNako5OjFkY2ZXRDpPOEFKYUhxN1hXSzZIWHM4bTd5cFczazBWVVkifQ==	2017-08-15 22:20:01.645092+00
+79ysdjrb5b2w8n343nj6kk1ymyj7bx9q	NGU0N2U1OWU1N2QyMDE4MGU3MTQ1NTkyYjc3ZDdmMDNjODY4NjU2Mzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNalI5OjFkY2ZXRDpNb1BrRWY4bURUODNvZnlVUEVNNkRBU1g0YzQifQ==	2017-08-15 22:20:01.654342+00
+fpedybt603wx21khfno3s32e1mhxfmxu	NmE3YmQzODExMmFmMjg1OWJhN2UzYTY2MTI4ZTUyZmY0MGVhMzE4Yjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNalY5OjFkY2ZXRDpfaER6bmlxdDNHeE14bEktbUhPZV9EUUZoWTAifQ==	2017-08-15 22:20:01.691202+00
+ye5dioumcc3dz0wr20tpgiab5u98mhm8	NDY1ZTAyZTg0ZWEwMTgzYzE0OTc0NThiZWI2ZTEyNzgwZmMzNDEzNzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNalo5OjFkY2ZXRDpueWR3NTJPQVRrVEh0WTliRmNLVTFqMVc1TDgifQ==	2017-08-15 22:20:01.696598+00
+2njepouf4cjctadhmh401npz6ek4enaq	YWJjN2FkMzk3ZDczZWUwMzRmOTY1NDFiODhjOWEwNTc4MjNjZWRjMDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNamQ5OjFkY2ZXRDpGMVJ4bFFiX2xQY0Z6cFVlSi13MnJmRUdZancifQ==	2017-08-15 22:20:01.716808+00
+tl7y6jil057tardxqvf3lx9e9oabuul2	MzhlNTUxNDAxNjg5M2ZjMjhmOTNmZGU2MTlmYTdmNmE1YmNiMWVmMjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNamg5OjFkY2ZXRDpPRUFnM0ZjUWI4R1B1aWpJVnBSaEFsVS1jRHMifQ==	2017-08-15 22:20:01.723966+00
+1ko304inunuk18wr1lpau36pnyj3ozo2	OWYwMDk5YWY0YmI5OGNkM2U1MjhkMzQ0NDUyMmYxNjlmZGU5NmJjYTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNamw5OjFkY2ZXRDo1SXMxTEdMOV81VklNVTZFUjVMbUlDRTBCckkifQ==	2017-08-15 22:20:01.731257+00
+vuj0jcyg1llbl98kretm42c26606w76p	ZDU3MmI1YjlkZDliMDE0YzViNjJiMWVlODRhNTc5ZmI5OWUzODMzZTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOVEY5OjFkY2djQjpfZ1BaRm9kVkpoekt6VVVTRzdYdXkzeUhtRXMiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9pZCI6IjQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQifQ==	2017-08-15 23:30:15.043233+00
 \.
 
 
@@ -10899,7 +10922,7 @@ SELECT pg_catalog.setval('forms_fieldentry_id_seq', 1, false);
 --
 
 COPY forms_form (page_ptr_id, content, button_text, response, send_email, email_from, email_copies, email_subject, email_message) FROM stdin;
-8	<p class="p1">Please give us your email address and we will resend the confirmation</p>	Resend Verification	<p class="p1">Verification email sent!</p>	f				
+8	<p class="p1">Please give us your email address and we will resend the confirmation.</p>	Resend Verification	<p class="p1">Verification email sent!</p>	f				
 \.
 
 
@@ -12861,6 +12884,25 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 12	2017-08-01 15:06:57.040757+00	1
 13	2017-08-01 15:08:28.330869+00	1
 14	2017-08-01 15:08:56.548879+00	13
+15	2017-08-01 22:18:24.229911+00	15
+16	2017-08-01 22:18:24.228747+00	14
+17	2017-08-01 22:18:24.232636+00	16
+18	2017-08-01 22:18:24.235496+00	20
+19	2017-08-01 22:18:24.23657+00	17
+20	2017-08-01 22:18:24.236907+00	18
+21	2017-08-01 22:18:24.250344+00	19
+22	2017-08-01 22:20:01.609491+00	23
+23	2017-08-01 22:20:01.612442+00	21
+24	2017-08-01 22:20:01.619534+00	22
+25	2017-08-01 22:20:01.660503+00	24
+26	2017-08-01 22:20:01.678845+00	25
+27	2017-08-01 22:20:01.692337+00	26
+28	2017-08-01 22:20:01.699771+00	27
+29	2017-08-01 22:20:01.715426+00	28
+48	2017-08-01 22:35:21.632924+00	1
+49	2017-08-01 22:55:09.249235+00	1
+50	2017-08-01 22:57:27.716217+00	1
+51	2017-08-01 23:30:15.036533+00	1
 \.
 
 
@@ -12868,7 +12910,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 14, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 51, true);
 
 
 --
@@ -13213,6 +13255,144 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 335	2017-08-01 15:08:56.550391+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	14
 336	2017-08-01 15:08:56.552012+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	14
 337	2017-08-01 15:15:25.287042+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	14
+338	2017-08-01 22:18:24.23733+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	16
+339	2017-08-01 22:18:24.235139+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	15
+340	2017-08-01 22:18:24.239329+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	17
+341	2017-08-01 22:18:24.243123+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	18
+342	2017-08-01 22:18:24.243639+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	19
+343	2017-08-01 22:18:24.245248+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	20
+344	2017-08-01 22:18:24.246066+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	16
+345	2017-08-01 22:18:24.248001+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	15
+346	2017-08-01 22:18:24.24987+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	17
+347	2017-08-01 22:18:24.253365+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	19
+348	2017-08-01 22:18:24.252822+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	18
+349	2017-08-01 22:18:24.257348+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	21
+350	2017-08-01 22:18:24.255527+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	20
+351	2017-08-01 22:18:24.265128+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	21
+352	2017-08-01 22:20:01.623224+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	22
+353	2017-08-01 22:20:01.622707+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	23
+354	2017-08-01 22:20:01.629949+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	24
+355	2017-08-01 22:20:01.628425+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	22
+356	2017-08-01 22:20:01.631241+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	23
+357	2017-08-01 22:20:01.635856+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	24
+358	2017-08-01 22:20:01.670409+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	25
+359	2017-08-01 22:20:01.681181+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	25
+360	2017-08-01 22:20:01.684792+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	26
+361	2017-08-01 22:20:01.689399+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	26
+362	2017-08-01 22:20:01.695726+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	27
+363	2017-08-01 22:20:01.702692+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	27
+364	2017-08-01 22:20:01.707246+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	28
+365	2017-08-01 22:20:01.713668+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	28
+366	2017-08-01 22:20:01.720212+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	29
+367	2017-08-01 22:20:01.722415+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	29
+371	2017-08-01 22:35:21.636716+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	48
+372	2017-08-01 22:35:21.640805+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	48
+373	2017-08-01 22:35:37.332594+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	48
+374	2017-08-01 22:35:44.319513+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	48
+375	2017-08-01 22:35:44.4354+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	48
+376	2017-08-01 22:37:54.526408+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	48
+377	2017-08-01 22:37:54.538691+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	48
+378	2017-08-01 22:38:42.777678+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/my-resources/	48
+379	2017-08-01 22:38:42.781881+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/my-resources/	48
+380	2017-08-01 22:38:42.799615+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/my-resources/	48
+381	2017-08-01 22:38:42.817189+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/my-resources/	48
+382	2017-08-01 22:38:42.834828+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/my-resources/	48
+383	2017-08-01 22:38:42.838506+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/my-resources/	48
+406	2017-08-01 22:45:06.204508+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	48
+407	2017-08-01 22:45:20.884586+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	48
+408	2017-08-01 22:45:31.125237+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	48
+409	2017-08-01 22:45:31.264602+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	48
+410	2017-08-01 22:45:41.089773+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	48
+411	2017-08-01 22:45:41.207049+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	48
+412	2017-08-01 22:54:57.294521+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	48
+413	2017-08-01 22:54:57.730922+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	48
+414	2017-08-01 22:54:57.802149+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	48
+415	2017-08-01 22:55:03.323065+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	48
+416	2017-08-01 22:55:09.15231+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	48
+417	2017-08-01 22:55:09.251591+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	49
+418	2017-08-01 22:55:09.253215+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	49
+419	2017-08-01 22:55:24.160406+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	49
+420	2017-08-01 22:55:57.671379+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	49
+421	2017-08-01 22:56:08.528873+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	49
+422	2017-08-01 22:56:08.649233+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	49
+423	2017-08-01 22:56:19.688568+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	49
+424	2017-08-01 22:56:22.68591+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	49
+425	2017-08-01 22:56:22.735664+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	49
+426	2017-08-01 22:56:25.046554+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	49
+427	2017-08-01 22:56:25.109669+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	49
+428	2017-08-01 22:57:10.504173+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	49
+429	2017-08-01 22:57:27.603357+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	49
+430	2017-08-01 22:57:27.71788+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	50
+431	2017-08-01 22:57:27.719769+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	50
+432	2017-08-01 22:57:32.605879+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	50
+433	2017-08-01 22:57:38.768067+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	50
+434	2017-08-01 22:57:47.654099+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	50
+435	2017-08-01 22:57:47.766636+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	50
+436	2017-08-01 22:57:53.270434+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	50
+437	2017-08-01 22:58:12.966643+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+438	2017-08-01 22:58:13.028974+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+439	2017-08-01 22:58:14.519524+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	50
+440	2017-08-01 22:58:14.596249+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+441	2017-08-01 23:06:15.585313+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	50
+442	2017-08-01 23:06:15.989181+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+443	2017-08-01 23:06:16.046282+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+444	2017-08-01 23:06:30.167577+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/3/	50
+445	2017-08-01 23:06:30.260508+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+446	2017-08-01 23:06:39.044094+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+447	2017-08-01 23:06:39.114596+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+448	2017-08-01 23:06:40.89484+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/4/	50
+449	2017-08-01 23:06:40.95411+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+450	2017-08-01 23:06:51.535193+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+451	2017-08-01 23:06:51.59154+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+452	2017-08-01 23:06:53.727356+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/13/	50
+453	2017-08-01 23:06:53.774325+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+454	2017-08-01 23:07:09.040125+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+455	2017-08-01 23:07:09.09804+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+456	2017-08-01 23:07:10.883455+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/link/6/	50
+457	2017-08-01 23:07:10.927635+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+458	2017-08-01 23:07:32.304911+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+459	2017-08-01 23:07:32.354655+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+460	2017-08-01 23:07:34.767555+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/5/	50
+461	2017-08-01 23:07:34.825703+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+462	2017-08-01 23:09:37.979946+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+463	2017-08-01 23:09:38.049104+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+464	2017-08-01 23:09:40.446105+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/5/	50
+465	2017-08-01 23:09:40.503198+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+466	2017-08-01 23:09:43.270898+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+467	2017-08-01 23:09:43.327533+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+468	2017-08-01 23:09:46.413689+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/7/	50
+469	2017-08-01 23:09:46.471554+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+470	2017-08-01 23:13:58.721014+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	50
+471	2017-08-01 23:13:59.078575+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+472	2017-08-01 23:13:59.138227+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+473	2017-08-01 23:14:02.53053+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/forms/form/8/	50
+474	2017-08-01 23:14:02.58675+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+475	2017-08-01 23:14:46.538678+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	50
+476	2017-08-01 23:14:47.045791+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	50
+477	2017-08-01 23:14:47.102445+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+478	2017-08-01 23:14:56.588074+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/9/	50
+479	2017-08-01 23:14:56.65402+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	50
+480	2017-08-01 23:30:15.040598+00	begin_session	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	51
+481	2017-08-01 23:30:15.042088+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	51
+482	2017-08-01 23:30:15.430713+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	51
+483	2017-08-01 23:30:15.505634+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+484	2017-08-01 23:30:18.142471+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/10/	51
+485	2017-08-01 23:30:18.195262+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+486	2017-08-01 23:33:15.51789+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	51
+487	2017-08-01 23:33:16.009887+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	51
+488	2017-08-01 23:33:16.089665+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+489	2017-08-01 23:33:19.882454+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/11/	51
+490	2017-08-01 23:33:19.946434+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+491	2017-08-01 23:33:24.251241+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	51
+492	2017-08-01 23:33:24.328496+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+493	2017-08-01 23:33:26.337419+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/12/	51
+494	2017-08-01 23:33:26.403437+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+495	2017-08-01 23:33:32.746886+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	51
+496	2017-08-01 23:33:32.805428+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	51
+497	2017-08-01 23:33:37.752056+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	51
+498	2017-08-01 23:33:58.102647+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/terms-of-use/	51
+499	2017-08-01 23:34:06.512784+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/privacy/	51
+500	2017-08-01 23:34:19.81499+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/sitemap/	51
 \.
 
 
@@ -13220,7 +13400,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 337, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 500, true);
 
 
 --
@@ -13241,6 +13421,24 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 11	2017-08-01 15:06:57.035709+00	\N
 12	2017-08-01 15:08:28.329029+00	\N
 13	2017-08-01 15:08:56.547244+00	\N
+14	2017-08-01 22:18:24.22288+00	\N
+15	2017-08-01 22:18:24.224557+00	\N
+16	2017-08-01 22:18:24.223955+00	\N
+17	2017-08-01 22:18:24.214823+00	\N
+18	2017-08-01 22:18:24.220167+00	\N
+19	2017-08-01 22:18:24.206294+00	\N
+20	2017-08-01 22:18:24.229602+00	\N
+21	2017-08-01 22:20:01.588685+00	\N
+22	2017-08-01 22:20:01.593072+00	\N
+23	2017-08-01 22:20:01.596219+00	\N
+24	2017-08-01 22:20:01.64746+00	\N
+25	2017-08-01 22:20:01.652554+00	\N
+26	2017-08-01 22:20:01.682909+00	\N
+27	2017-08-01 22:20:01.688808+00	\N
+28	2017-08-01 22:20:01.675957+00	\N
+47	2017-08-01 22:35:21.622649+00	\N
+48	2017-08-01 22:55:09.243969+00	\N
+49	2017-08-01 22:57:27.713769+00	\N
 \.
 
 
@@ -13248,7 +13446,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 13, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 49, true);
 
 
 --
@@ -13331,12 +13529,12 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2016-01-25 19:52:37.387455+00	2	2016-01-25 19:23:52+00	\N	\N	t	2	\N	1,2,3	Discover	richtextpage	f
 13		1	Collaborate	collaborate		collaborate	t	2016-06-23 17:07:04.042277+00	2016-06-23 17:07:04.042277+00	2	2016-06-23 17:07:04.008329+00	\N	\N	t	3	\N	1	Collaborate	richtextpage	f
 5		1	Help	help	Help	help	t	2016-01-25 19:25:35.644671+00	2016-01-25 19:25:35.644671+00	2	2016-01-25 19:25:35.643697+00	\N	\N	t	5	\N	1,2,3	Help	richtextpage	f
-8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation	t	2016-01-25 19:32:20.248488+00	2016-01-25 19:32:20.248488+00	2	2016-01-25 19:32:20.247193+00	\N	\N	t	7	\N		Resend Verification Email	form	f
-2		1	Home	/		xDCIShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.	t	2016-01-25 19:17:47.144396+00	2017-05-05 13:49:03.81146+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
-7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for xDCIShare! We have sent you an email from xdcishare.renci.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with xDCIShare.	t	2016-01-25 19:28:12.867432+00	2017-05-05 13:54:23.845+00	2	2016-01-25 19:28:12+00	\N	\N	t	6	\N		Verify Account	richtextpage	f
-9		1	Terms of Use	terms-of-use	Terms of Use	xDCIShare Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-05-05 14:08:48.384616+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
-10		1	Statement of Privacy	privacy	Statement of Privacy	xDCIShare Statement of Privacy\nLast modified May 5, 2017	t	2016-01-25 19:34:22.084583+00	2017-05-05 14:13:10.178601+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
-6		1	Apps	https://appsdev.xdcishare.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 15:08:19.972084+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
+2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-01 23:06:15.67419+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
+6		1	Apps	https://appsdev.myhpom.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 23:07:32.01117+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
+7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.	t	2016-01-25 19:28:12.867432+00	2017-08-01 23:13:58.772728+00	2	2016-01-25 19:28:12+00	\N	\N	t	6	\N		Verify Account	richtextpage	f
+8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation.	t	2016-01-25 19:32:20.248488+00	2017-08-01 23:14:46.696705+00	2	2016-01-25 19:32:20+00	\N	\N	t	7	\N		Resend Verification Email	form	f
+9		1	Terms of Use	terms-of-use	Terms of Use	MyHPOM Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-08-01 23:30:15.102304+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
+10		1	Statement of Privacy	privacy	Statement of Privacy	MyHPOM Statement of Privacy\nLast modified August 1, 2017	t	2016-01-25 19:34:22.084583+00	2017-08-01 23:33:15.574459+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
 \.
 
 
@@ -13358,9 +13556,9 @@ COPY pages_richtextpage (page_ptr_id, content) FROM stdin;
 12	<p>sign up</p>
 4	<p>Discover</p>
 13	<p>collaborate</p>
-7	<p class="p1">Thank you for signing up for xDCIShare! We have sent you an email from xdcishare.renci.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with xDCIShare.</p>\n<p class="p2"><a href="http://dev.xdcishare.renci.org/hsapi/_internal/resend_verification_email/">Please click here if you do not receive a verification email within 1 hour.</a></p>
-9	<h2 class="p1"><b>xDCIShare Terms of Use</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">Thank you for using the xDCIShare scientific data sharing system hosted at xdcishare.renci.org.  xDCIShare services are provided by a team of researchers associated with the Renaissance Computing Institue of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of the University of North Carolina at Chapel Hil. Your access to xdcishare.renci.org is subject to your agreement to these Terms of Use. By using our services at xdcishare.renci.org, you are agreeing to these terms.  Please read them carefully.</p>\n<h2 class="p3"><b>Modification of the Agreement</b></h2>\n<p class="p2">We maintain the right to modify these Terms of Use and may do so by posting modifications on this page. Any modification is effective immediately upon posting the modification unless otherwise stated. Your continued use of xdcishare.renci.org following the posting of any modification signifies your acceptance of that modification. You should regularly visit this page to review the current Terms of Use.</p>\n<h2 class="p3"><b>Conduct Using our Services</b></h2>\n<p class="p2">The xdcishare.renci.org site is intended to support data and model sharing for scientific domains.  This is broadly interpreted to include any discipline or endeavor that has something to do with scientific domains.  You are responsible at all times for using xdcishare.renci.org in a manner that is legal, ethical, and not to the detriment of others and for purposes related to science. You agree that you will not in your use of xdcishare.renci.org:</p>\n<ul class="ul1">\n<li class="li2">Violate any applicable law, commit a criminal offense or perform actions that might encourage others to commit a criminal offense or give rise to a civil liability;</li>\n<li class="li2">Post or transmit any unlawful, threatening, libelous, harassing, defamatory, vulgar, obscene, pornographic, profane, or otherwise objectionable content;</li>\n<li class="li2">Use xdcishare.renci.org to impersonate other parties or entities;</li>\n<li class="li2">Use xdcishare.renci.org to upload any content that contains a software virus, "Trojan Horse" or any other computer code, files, or programs that may alter, damage, or interrupt the functionality of xdcishare.renci.org or the hardware or software of any other person who accesses xdcishare.renci.org;</li>\n<li class="li2">Upload, post, email, or otherwise transmit any materials that you do not have a right to transmit under any law or under a contractual relationship;</li>\n<li class="li2">Alter, damage, or delete any content posted on xdcishare.renci.org, except where such alterations or deletions are consistent with the access control settings of that content in xdcishare.renci.org;</li>\n<li class="li2">Disrupt the normal flow of communication in any way;</li>\n<li class="li2">Claim a relationship with or speak for any business, association, or other organization for which you are not authorized to claim such a relationship;</li>\n<li class="li2">Post or transmit any unsolicited advertising, promotional materials, or other forms of solicitation;</li>\n<li class="li2">Post any material that infringes or violates the intellectual property rights of another.</li>\n</ul>\n<p class="p2">Certain portions of xdcishare.renci.org are limited to registered users and/or allow a user to participate in online services by entering personal information. You agree that any information provided to xdcishare.renci.org in these areas will be complete and accurate, and that you will neither register under the name of another person or entity of nor attempt to enter xdcishare.renci.org under the name of another person or entity.</p>\n<p class="p2">You are responsible for maintaining the confidentiality of your user ID and password, if any, and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. Xdcishare.org does not authorize use of your User ID by third-parties.</p>\n<p class="p2">We may, in our sole discretion, terminate or suspend your access to and use of xdcishare.renci.org without notice and for any reason, including for violation of these Terms of Use or for other conduct that we, in our sole discretion, believe to be unlawful or harmful to others. In the event of termination, you are no longer authorized to access xdcishare.renci.org.</p>\n<h2 class="p3"><b>Disclaimers</b></h2>\n<p class="p2">XDCISHARE.ORG AND ANY INFORMATION, PRODUCTS OR SERVICES ON IT ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Xdcishare.org and its participating institutions do not warrant, and hereby disclaim any warranties, either express or implied, with respect to the accuracy, adequacy or completeness of any good, service, or information obtained from xdcishare.renci.org. Xdcishare.org and its participating institutions do not warrant that xdcishare.renci.org will operate in an uninterrupted or error-free manner or that xdcishare.renci.org is free of viruses or other harmful components. Use of xdcishare.renci.org is at your own risk.</p>\n<p class="p2">You agree that xdcishare.renci.org and its participating institutions shall have no liability for any consequential, indirect, punitive, special or incidental damages, whether foreseeable or unforeseeable (including, but not limited to, claims for defamation, errors, loss of data, or interruption in availability of data), arising out of or relating to your use of any resource that you access through xdcishare.renci.org.</p>\n<p class="p2">The xdcishare.renci.org site hosts content from a number of authors. The statements and views of these authors are theirs alone, and do not reflect the stances or policies of the xDCIShare research team or their sponsors, nor does their posting imply the endorsement of xDCIShare or their sponsors.</p>\n<h2 class="p3"><b>Choice of Law/Forum Selection/Attorney Fees</b></h2>\n<p class="p2">You agree that any dispute arising out of or relating to xdcishare.renci.org, whether based in contract, tort, statutory or other law, will be governed by federal law and by the laws of North Carolina, excluding its conflicts of law provisions. You further consent to the personal jurisdiction of and exclusive venue in the federal and state courts located in and serving the United States of America, North Carolina as the exclusive legal forums for any such dispute.</p>
-10	<h2 class="p1"><b>xDCIShare Statement of Privacy</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">XDCIShare is operated by a team of researchers associated with the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  In the following these are referred to as participating institutions.</p>\n<p class="p2">We respect your privacy. We will only use your personal identification information to support and manage your use of xdcioshare.org, including the use of tracking cookies to facilitate xdcishare.renci.org security procedures. The xDCIShare participating institutions regularly request xdcishare.renci.org usages statistics and other information. Usage of xdcishare.renci.org is monitored and usage statistics are collected and reported on a regular basis. Xdcishare.org also reserves the right to contact you to request additional information or to keep you updated on changes to xdcishare.renci.org. You may opt out of receiving newsletters and other non-essential communications. No information that would identify you personally will be provided to sponsors or third parties without your permission.</p>\n<p class="p2">While xDCIoShare uses policies and procedures to manage the access to content according to the access control settings set by users all information posted or stored on xdcishare.renci.org is potentially available to other users of xdcishare.renci.org and the public. The xDCIShare participating institutions and xdcishare.renci.org disclaim any responsibility for the preservation of confidentiality of such information. <i>Do not post or store information on xdcishare.renci.org if you expect to or are obligated to protect the confidentiality of that information.</i></p>
+7	<p class="p1">Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.</p>\n<p class="p2"><a href="http://myhpom.org/hsapi/_internal/resend_verification_email/">Please click here if you do not receive a verification email within 1 hour.</a></p>
+9	<h2 class="p1"><b>MyHPOM Terms of Use</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">Thank you for using the MyHPOM system hosted at MYHPOM.org.  MyHPOM services are provided by a team of researchers associated with the Renaissance Computing Institue of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of the University of North Carolina at Chapel Hil. Your access to myhpom.org is subject to your agreement to these Terms of Use. By using our services at xdcishare.renci.org, you are agreeing to these terms.  Please read them carefully.</p>\n<h2 class="p3"><b>Modification of the Agreement</b></h2>\n<p class="p2">We maintain the right to modify these Terms of Use and may do so by posting modifications on this page. Any modification is effective immediately upon posting the modification unless otherwise stated. Your continued use of xdcishare.renci.org following the posting of any modification signifies your acceptance of that modification. You should regularly visit this page to review the current Terms of Use.</p>\n<h2 class="p3"><b>Conduct Using our Services</b></h2>\n<p class="p2">The myhpom.org site is intended to support your health information and future healthcare wishes. You are responsible at all times for using myhpom.org in a manner that is legal, ethical, not to the detriment of others, and for purposes related to your health information and future healthcare wishes.. You agree that you will not in your use of myhpom.org:</p>\n<ul class="ul1">\n<li class="li2">Violate any applicable law, commit a criminal offense or perform actions that might encourage others to commit a criminal offense or give rise to a civil liability;</li>\n<li class="li2">Post or transmit any unlawful, threatening, libelous, harassing, defamatory, vulgar, obscene, pornographic, profane, or otherwise objectionable content;</li>\n<li class="li2">Use myhpom.org to impersonate other parties or entities;</li>\n<li class="li2">Use myhpom.org to upload any content that contains a software virus, "Trojan Horse" or any other computer code, files, or programs that may alter, damage, or interrupt the functionality of myhpom.org or the hardware or software of any other person who accesses myhpom.org;</li>\n<li class="li2">Upload, post, email, or otherwise transmit any materials that you do not have a right to transmit under any law or under a contractual relationship;</li>\n<li class="li2">Alter, damage, or delete any content posted on myhpom.org, except where such alterations or deletions are consistent with the access control settings of that content in myhpom.org;</li>\n<li class="li2">Disrupt the normal flow of communication in any way;</li>\n<li class="li2">Claim a relationship with or speak for any business, association, or other organization for which you are not authorized to claim such a relationship;</li>\n<li class="li2">Post or transmit any unsolicited advertising, promotional materials, or other forms of solicitation;</li>\n<li class="li2">Post any material that infringes or violates the intellectual property rights of another.</li>\n</ul>\n<p class="p2">Certain portions of myhpom.org are limited to registered users and/or allow a user to participate in online services by entering personal information. You agree that any information provided to myhpomorg in these areas will be accurate, and that you will neither register under the name of another person or entity of nor attempt to enter myhpom.org under the name of another person or entity.</p>\n<p class="p2">You are responsible for maintaining the confidentiality of your user ID and password, if any, and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. Myhpom.org does not authorize use of your User ID by third-parties.</p>\n<p class="p2">We may, in our sole discretion, terminate or suspend your access to and use of myhpom.org without notice and for any reason, including for violation of these Terms of Use or for other conduct that we, in our sole discretion, believe to be unlawful or harmful to others. In the event of termination, you are no longer authorized to access myhpom.org.</p>\n<h2 class="p3"><b>Disclaimers</b></h2>\n<p class="p2">MYHPOM.ORG AND ANY INFORMATION, PRODUCTS OR SERVICES ON IT ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Myhpom.org and its participating institutions do not warrant, and hereby disclaim any warranties, either express or implied, with respect to the accuracy, adequacy or completeness of any good, service, or information obtained from myhpom.org. M Myhpom.org and its participating institutions do not warrant that myhpom.org will operate in an uninterrupted or error-free manner or that myhpom.org is free of viruses or other harmful components. Use of xdcishare.renci.org is at your own risk.</p>\n<p class="p2">You agree that myhpom.org and its participating institutions shall have no liability for any consequential, indirect, punitive, special or incidental damages, whether foreseeable or unforeseeable (including, but not limited to, claims for defamation, errors, loss of data, or interruption in availability of data), arising out of or relating to your use of any resource that you access through myhpom.org.</p>\n<p class="p2">The myhpom.org site hosts content from a number of authors. The statements and views of these authors are theirs alone, and do not reflect the stances or policies of the MyHPOM team or their sponsors, nor does their posting imply the endorsement of MyHPOM or their sponsors.</p>\n<h2 class="p3"><b>Choice of Law/Forum Selection/Attorney Fees</b></h2>\n<p class="p2">You agree that any dispute arising out of or relating to myhpom.org, whether based in contract, tort, statutory or other law, will be governed by federal law and by the laws of North Carolina, excluding its conflicts of law provisions. You further consent to the personal jurisdiction of and exclusive venue in the federal and state courts located in and serving the United States of America, North Carolina as the exclusive legal forums for any such dispute.</p>
+10	<h2 class="p1"><b>MyHPOM Statement of Privacy</b></h2>\n<p class="p2"><i>Last modified August 1, 2017<br></i></p>\n<p class="p2">MyHPOM is operated by a team of researchers associated with the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  In the following these are referred to as participating institutions.</p>\n<p class="p2">We respect your privacy. We will only use your personal identification information to support and manage your use of xdcioshare.org, including the use of tracking cookies to facilitate xdcishare.renci.org security procedures. The MyHPOM participating institutions regularly request myhpom.org usages statistics and other information. Usage of myhpom.org is monitored and usage statistics are collected and reported on a regular basis. Myhpom.org also reserves the right to contact you to request additional information or to keep you updated on changes to myhpom.org. You may opt out of receiving newsletters and other non-essential communications. No information that would identify you personally will be provided to sponsors or third parties without your permission.</p>\n<p class="p2">While MyHPOM uses policies and procedures to manage the access to content according to the access control settings set by users all information posted or stored on myhpom.org is potentially available to other users of myhpom.org and the public. The MyHPOM participating institutions and myhpom.org disclaim any responsibility for the preservation of confidentiality of such information. <i>Do not post or store information on myhpom.org if you expect to or are obligated to protect the confidentiality of that information.</i></p>
 \.
 
 
@@ -13580,7 +13778,7 @@ COPY spatial_ref_sys  FROM stdin;
 --
 
 COPY theme_homepage (page_ptr_id, heading, slide_in_one_icon, slide_in_one, slide_in_two_icon, slide_in_two, slide_in_three_icon, slide_in_three, header_background, header_image, welcome_heading, content, recent_blog_heading, number_recent_posts, message_end_date, message_start_date, message_type, show_message) FROM stdin;
-2	xDCIShare									Share and Collaborate	<p class="p1">xDCIShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.</p>	Latest blog posts	3	2047-05-05	2016-01-25	warning	f
+2	MyHPOM									Share and Collaborate	<p class="p1">My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.<strong><br></strong></p>	Latest blog posts	3	2047-05-05	2016-01-25	warning	f
 \.
 
 
