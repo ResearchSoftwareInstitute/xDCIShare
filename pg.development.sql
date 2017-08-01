@@ -9864,7 +9864,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-07-26 18:01:25.288216+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-01 15:08:48.832553+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -10083,6 +10083,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 50	2017-05-05 14:20:45.489007+00	1	QuotaMessage object	1		207	4
 51	2017-05-05 14:24:29.244065+00	1	SiteConfiguration object	2	Changed col1_content, col3_heading, col3_content, twitter_link, facebook_link, youtube_link, github_link, linkedin_link and copyright.	16	4
 52	2017-07-26 18:02:34.737492+00	1	SiteConfiguration object	2	Changed col3_content and copyright.	16	4
+53	2017-08-01 15:08:19.974747+00	6	Apps	2	Changed status.	34	4
 \.
 
 
@@ -10090,7 +10091,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 52, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 53, true);
 
 
 --
@@ -10759,7 +10760,8 @@ yq96gavkvlu0skywfwgvdock65xnq3tc	ZTIwZWRiZTQzZjI5ODhkYTE0NDQxYzFmZmQzMTRjZDc3MWU
 5eflr6q0pn7qgkuu6mbo84kuqoxk5plt	ZjZmMTlkMThkOGJmNWIzY2IxODNjODM5ZTA2MmFjNTRmNTlmYTRkOTp7InF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJoc190cmFja2luZ19pZCI6ImV5SnBaQ0k2TW4wOjFiRzg2ZDpGNWs4M3pGcnQ2Mzg5WWMyZUhRc3BNRGVBR2siLCJmYWNldHNfaXRlbXMiOnsiZmllbGRzIjp7ImF1dGhvciI6W10sIm93bmVyc19uYW1lcyI6W10sInN1YmplY3RzIjpbXSwiZGlzY292ZXJhYmxlIjpbXSwicHVibGljIjpbXSwicmVzb3VyY2VfdHlwZSI6W119LCJkYXRlcyI6e30sInF1ZXJpZXMiOnt9fSwidG90YWxfcmVzdWx0cyI6MH0=	2016-07-07 17:17:57.67608+00
 yg9nko1xsebjvcc6wk4ynygw4m8l3ofk	ZTg1M2RhMWVmMzk3YTcwYTFlMWE5MDhlNWRiYjAyZGU0Yzk2YmVmYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZObjA6MWNaTEJZOnhCdHhZT3oxQ3RXb0lBVFR2aFVqcW5UaDBwOCJ9	2017-02-16 17:28:40.816975+00
 sbfc9qcoi728qf2c38jscng5q7ccra4a	ZWI2ZjgwZmQ3NmRhYTA3NDAyYzI4MzEyMzgwMjNmMGExODU3ZjNhMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWQ2ZFdIOmx4S0hCN1NrVWgwS3NaT2tqSHVEVndhMGcxbyIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-05-19 13:43:51.032176+00
-7ypgqm7kofba96l6ls9oqblkhn6pc0cg	NmFiM2NkMmIwNjFkODkwOWQ1NjcxOTVlMzYxOWYwODE1NWM1ZDAwZjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEI5OjFkYVF6NjpLa0NraElMU1dlb2hPaWRtOUY4ZzJSNGtlZzAifQ==	2017-08-09 18:24:36.608252+00
+k7nt7rugdkbcm58fglbsdrepdqaytp43	M2Q0Y2ZiM2Q0MDdhMjA5MWNmZTc4MDM0NjA0YzY1MjYxM2U4YjY5NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEY5OjFkYVJVNDpPU1Z0SWNpeXBBcE96OWpJQmpPLXI0QmZwQ3ciLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-09 18:56:46.438769+00
+luvbqixlnqnwf4v4nqn65qwgv92967lw	YWEzNzgyMzcyYWViZjkyNjk1MDM4YTg5Yjk1ZGEzM2E5N2M2ZWQ4ZTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVFI5OjFkY1luMjpKZkNBWWhZR09EMjFmUElTa3NIV3JvYXhURHMifQ==	2017-08-15 15:08:56.554221+00
 \.
 
 
@@ -12855,6 +12857,10 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 8	2017-07-26 17:31:09.012614+00	1
 9	2017-07-26 18:24:36.55158+00	1
 10	2017-07-26 18:24:36.603147+00	9
+11	2017-07-26 18:56:36.900837+00	1
+12	2017-08-01 15:06:57.040757+00	1
+13	2017-08-01 15:08:28.330869+00	1
+14	2017-08-01 15:08:56.548879+00	13
 \.
 
 
@@ -12862,7 +12868,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 10, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 14, true);
 
 
 --
@@ -13180,6 +13186,33 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 308	2017-07-26 18:24:36.60436+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	10
 309	2017-07-26 18:24:36.606287+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	10
 310	2017-07-26 18:24:45.267249+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	10
+311	2017-07-26 18:56:36.902457+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	11
+312	2017-07-26 18:56:36.904584+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	11
+313	2017-07-26 18:56:46.437019+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	11
+314	2017-07-26 18:56:46.544814+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	11
+315	2017-08-01 15:06:57.042512+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	12
+316	2017-08-01 15:06:57.045161+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	12
+317	2017-08-01 15:07:10.995866+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	12
+318	2017-08-01 15:07:21.431805+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	12
+319	2017-08-01 15:07:21.530151+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	12
+320	2017-08-01 15:07:34.796952+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	12
+321	2017-08-01 15:07:55.427995+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	12
+322	2017-08-01 15:07:55.50393+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	12
+323	2017-08-01 15:08:02.458851+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/link/6/	12
+324	2017-08-01 15:08:02.514143+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	12
+325	2017-08-01 15:08:20.247512+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	12
+326	2017-08-01 15:08:20.295012+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	12
+327	2017-08-01 15:08:28.287897+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	12
+328	2017-08-01 15:08:28.332899+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	13
+329	2017-08-01 15:08:28.334584+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	13
+330	2017-08-01 15:08:34.318152+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	13
+331	2017-08-01 15:08:38.813627+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	13
+332	2017-08-01 15:08:48.84354+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	13
+333	2017-08-01 15:08:48.942074+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	13
+334	2017-08-01 15:08:56.48372+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	13
+335	2017-08-01 15:08:56.550391+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	14
+336	2017-08-01 15:08:56.552012+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	14
+337	2017-08-01 15:15:25.287042+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	14
 \.
 
 
@@ -13187,7 +13220,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 310, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 337, true);
 
 
 --
@@ -13204,6 +13237,10 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 7	2017-05-05 13:43:41.849519+00	\N
 8	2017-07-26 17:31:09.010077+00	\N
 9	2017-07-26 18:24:36.601826+00	\N
+10	2017-07-26 18:56:36.899178+00	\N
+11	2017-08-01 15:06:57.035709+00	\N
+12	2017-08-01 15:08:28.329029+00	\N
+13	2017-08-01 15:08:56.547244+00	\N
 \.
 
 
@@ -13211,7 +13248,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 9, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 13, true);
 
 
 --
@@ -13296,10 +13333,10 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 5		1	Help	help	Help	help	t	2016-01-25 19:25:35.644671+00	2016-01-25 19:25:35.644671+00	2	2016-01-25 19:25:35.643697+00	\N	\N	t	5	\N	1,2,3	Help	richtextpage	f
 8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation	t	2016-01-25 19:32:20.248488+00	2016-01-25 19:32:20.248488+00	2	2016-01-25 19:32:20.247193+00	\N	\N	t	7	\N		Resend Verification Email	form	f
 2		1	Home	/		xDCIShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.	t	2016-01-25 19:17:47.144396+00	2017-05-05 13:49:03.81146+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
-6		1	Apps	https://appsdev.xdcishare.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-05-05 13:52:11.655364+00	2	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
 7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for xDCIShare! We have sent you an email from xdcishare.renci.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with xDCIShare.	t	2016-01-25 19:28:12.867432+00	2017-05-05 13:54:23.845+00	2	2016-01-25 19:28:12+00	\N	\N	t	6	\N		Verify Account	richtextpage	f
 9		1	Terms of Use	terms-of-use	Terms of Use	xDCIShare Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-05-05 14:08:48.384616+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
 10		1	Statement of Privacy	privacy	Statement of Privacy	xDCIShare Statement of Privacy\nLast modified May 5, 2017	t	2016-01-25 19:34:22.084583+00	2017-05-05 14:13:10.178601+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
+6		1	Apps	https://appsdev.xdcishare.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 15:08:19.972084+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
 \.
 
 
