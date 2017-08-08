@@ -9864,7 +9864,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-01 22:57:47.636745+00	t	admin	xDCIShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-08 21:51:55+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -9873,7 +9873,7 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 --
 
 COPY auth_user_groups (id, user_id, group_id) FROM stdin;
-3	4	1
+5	4	1
 \.
 
 
@@ -9881,7 +9881,7 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 3, true);
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 5, true);
 
 
 --
@@ -10091,6 +10091,10 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 58	2017-08-01 23:14:46.70497+00	8	Resend Verification Email	2	Changed content, in_menus and keywords.	28	4
 59	2017-08-01 23:30:15.111474+00	9	Terms of Use	2	Changed content, in_menus, description and keywords.	33	4
 60	2017-08-01 23:33:15.587452+00	10	Statement of Privacy	2	Changed content, in_menus, description and keywords.	33	4
+61	2017-08-07 19:42:20.402438+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
+62	2017-08-07 19:55:17.665242+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
+63	2017-08-08 21:53:36.19698+00	4	admin	2	Changed first_name.	3	4
+64	2017-08-08 21:55:05.452327+00	4	admin	2	Changed email.	3	4
 \.
 
 
@@ -10098,7 +10102,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 60, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 64, true);
 
 
 --
@@ -10784,7 +10788,9 @@ ye5dioumcc3dz0wr20tpgiab5u98mhm8	NDY1ZTAyZTg0ZWEwMTgzYzE0OTc0NThiZWI2ZTEyNzgwZmM
 2njepouf4cjctadhmh401npz6ek4enaq	YWJjN2FkMzk3ZDczZWUwMzRmOTY1NDFiODhjOWEwNTc4MjNjZWRjMDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNamQ5OjFkY2ZXRDpGMVJ4bFFiX2xQY0Z6cFVlSi13MnJmRUdZancifQ==	2017-08-15 22:20:01.716808+00
 tl7y6jil057tardxqvf3lx9e9oabuul2	MzhlNTUxNDAxNjg5M2ZjMjhmOTNmZGU2MTlmYTdmNmE1YmNiMWVmMjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNamg5OjFkY2ZXRDpPRUFnM0ZjUWI4R1B1aWpJVnBSaEFsVS1jRHMifQ==	2017-08-15 22:20:01.723966+00
 1ko304inunuk18wr1lpau36pnyj3ozo2	OWYwMDk5YWY0YmI5OGNkM2U1MjhkMzQ0NDUyMmYxNjlmZGU5NmJjYTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNamw5OjFkY2ZXRDo1SXMxTEdMOV81VklNVTZFUjVMbUlDRTBCckkifQ==	2017-08-15 22:20:01.731257+00
-vuj0jcyg1llbl98kretm42c26606w76p	ZDU3MmI1YjlkZDliMDE0YzViNjJiMWVlODRhNTc5ZmI5OWUzODMzZTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOVEY5OjFkY2djQjpfZ1BaRm9kVkpoekt6VVVTRzdYdXkzeUhtRXMiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9pZCI6IjQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQifQ==	2017-08-15 23:30:15.043233+00
+nc13v2z0rr9mec6oihfyf8m2jm8jqeao	MzRiNzU2M2I2ZDNkNzRkZWExYmM4Y2MzMTA3N2Y1NDY3MGJmNGNiNDp7InF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJoc190cmFja2luZ19pZCI6ImV5SnBaQ0k2TlROOToxZGNoVzI6bmQ0ZlV6ck14ZEF3NGdRQWFKMTZIa3pwT3NnIiwiZmFjZXRzX2l0ZW1zIjp7ImZpZWxkcyI6eyJ2YXJpYWJsZV9uYW1lcyI6W10sInVuaXRzX25hbWVzIjpbXSwib3duZXJzX25hbWVzIjpbXSwic3ViamVjdHMiOltdLCJkaXNjb3ZlcmFibGUiOltdLCJwdWJsaXNoZWQiOltdLCJjcmVhdG9ycyI6W10sInB1YmxpYyI6W10sInJlc291cmNlX3R5cGUiOltdLCJzYW1wbGVfbWVkaXVtcyI6W119LCJkYXRlcyI6e30sInF1ZXJpZXMiOnt9fSwidG90YWxfcmVzdWx0cyI6MH0=	2017-08-16 00:28:14.424858+00
+51hgn45x1h20o6vmd5uzotfg3w9mmin1	NTg5MzJmMTUxM2Y1NmU2NzNhZWVmMzljNzI3ZjUzNTVjMGM1ZDEzYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOalY5OjFkZW84MDp1WUNwTWhsOFZCdGZpOWtmbE1SWXBQSTJ6c1EifQ==	2017-08-21 19:55:52.42598+00
+775mdt99zlg18d6t30ny60ek8b5m1acy	ZDVhYmYwMDk0Y2FmMmVjNzY3NzhlNjEyZDU3NTM0ZjRkODllYjc1Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOamw5OjFkZkNQUTpsaUNBUXFvYkZhMUM4M3dZbjFjTzFoWUxOLWsiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-22 21:51:55.536041+00
 \.
 
 
@@ -12903,6 +12909,24 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 49	2017-08-01 22:55:09.249235+00	1
 50	2017-08-01 22:57:27.716217+00	1
 51	2017-08-01 23:30:15.036533+00	1
+52	2017-08-02 00:27:49.302082+00	1
+53	2017-08-02 00:27:58.570031+00	50
+54	2017-08-02 16:03:16.519147+00	51
+55	2017-08-02 17:48:37.957021+00	52
+56	2017-08-02 18:13:16.609735+00	1
+57	2017-08-02 18:57:12.998277+00	54
+58	2017-08-02 19:21:07.085876+00	55
+59	2017-08-03 19:56:41.5116+00	56
+60	2017-08-03 20:56:42.607734+00	57
+61	2017-08-07 15:09:29.572321+00	1
+62	2017-08-07 16:49:37.574983+00	1
+63	2017-08-07 19:42:20.503814+00	1
+64	2017-08-07 19:44:04.909751+00	1
+65	2017-08-07 19:55:52.421045+00	60
+66	2017-08-08 15:32:15.476393+00	1
+67	2017-08-08 19:16:58.745314+00	1
+68	2017-08-08 19:16:58.811246+00	61
+69	2017-08-08 21:51:28.647112+00	1
 \.
 
 
@@ -12910,7 +12934,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 51, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 69, true);
 
 
 --
@@ -13393,6 +13417,147 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 498	2017-08-01 23:33:58.102647+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/terms-of-use/	51
 499	2017-08-01 23:34:06.512784+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/privacy/	51
 500	2017-08-01 23:34:19.81499+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/sitemap/	51
+501	2017-08-02 00:27:49.306102+00	begin_session	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	52
+502	2017-08-02 00:27:49.308321+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	52
+503	2017-08-02 00:27:58.487021+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	52
+504	2017-08-02 00:27:58.573143+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	53
+505	2017-08-02 00:27:58.575546+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	53
+506	2017-08-02 00:28:09.609802+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	53
+507	2017-08-02 00:28:12.648245+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	53
+508	2017-08-02 00:28:14.42111+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/search/	53
+509	2017-08-02 16:03:16.522414+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	54
+510	2017-08-02 16:03:16.528931+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	54
+511	2017-08-02 17:48:37.958461+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	55
+512	2017-08-02 17:48:37.9598+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	55
+513	2017-08-02 17:50:00.951258+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	55
+514	2017-08-02 17:50:36.800951+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	55
+515	2017-08-02 17:50:47.010521+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	55
+516	2017-08-02 18:13:16.61212+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	56
+517	2017-08-02 18:13:16.614515+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+518	2017-08-02 18:20:05.942519+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+519	2017-08-02 18:24:32.625172+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+520	2017-08-02 18:31:23.027296+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+521	2017-08-02 18:39:47.318002+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+522	2017-08-02 18:42:40.306435+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+523	2017-08-02 18:54:35.202332+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	56
+524	2017-08-02 18:55:27.719564+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	56
+525	2017-08-02 18:55:36.227243+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	56
+526	2017-08-02 18:55:36.342423+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	56
+527	2017-08-02 18:55:52.409221+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/user/4/	56
+528	2017-08-02 18:56:16.469985+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	56
+529	2017-08-02 18:56:22.452756+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	56
+530	2017-08-02 18:56:22.578226+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	56
+531	2017-08-02 18:56:26.47921+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/blog/blogpost/	56
+532	2017-08-02 18:56:26.518063+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	56
+533	2017-08-02 18:56:27.735138+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	56
+534	2017-08-02 18:56:27.775894+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	56
+535	2017-08-02 18:56:28.84137+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/redirects/redirect/	56
+536	2017-08-02 18:56:28.883258+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	56
+537	2017-08-02 18:56:29.925927+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	56
+538	2017-08-02 18:56:29.971833+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	56
+539	2017-08-02 18:56:43.31549+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	56
+540	2017-08-02 18:56:43.377737+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	56
+541	2017-08-02 18:57:04.819083+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	56
+542	2017-08-02 18:57:12.927412+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	56
+543	2017-08-02 18:57:12.999655+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	57
+544	2017-08-02 18:57:13.001212+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	57
+545	2017-08-02 18:57:28.931701+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	57
+546	2017-08-02 19:01:35.423857+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	57
+547	2017-08-02 19:01:40.38484+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	57
+548	2017-08-02 19:02:43.143091+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	57
+549	2017-08-02 19:02:44.943449+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	57
+550	2017-08-02 19:21:07.088874+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	58
+551	2017-08-02 19:21:07.09267+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	58
+552	2017-08-02 19:25:39.271477+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	58
+553	2017-08-02 19:31:02.394971+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	58
+554	2017-08-02 19:32:23.649438+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	58
+555	2017-08-02 19:32:59.787441+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	58
+556	2017-08-02 19:40:47.358697+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	58
+557	2017-08-03 19:56:41.514215+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	59
+558	2017-08-03 19:56:41.515775+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	59
+559	2017-08-03 20:56:42.610314+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	60
+560	2017-08-03 20:56:42.612566+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	60
+561	2017-08-07 15:09:29.573605+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	61
+562	2017-08-07 15:09:29.575418+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	61
+563	2017-08-07 15:15:40.446326+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	61
+564	2017-08-07 15:28:08.3826+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	61
+565	2017-08-07 15:28:16.060616+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	61
+566	2017-08-07 15:28:26.690058+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	61
+567	2017-08-07 15:28:26.804412+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	61
+568	2017-08-07 15:28:39.264187+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	61
+569	2017-08-07 16:49:37.578861+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	62
+570	2017-08-07 16:49:37.580794+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	62
+571	2017-08-07 16:49:37.644064+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	62
+572	2017-08-07 16:49:41.64872+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	62
+573	2017-08-07 16:49:41.731359+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	62
+574	2017-08-07 16:50:36.398175+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	62
+575	2017-08-07 16:50:36.449592+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	62
+576	2017-08-07 16:50:39.007815+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/redirects/redirect/	62
+577	2017-08-07 16:50:39.056776+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	62
+578	2017-08-07 16:50:40.511384+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	62
+579	2017-08-07 16:50:40.566591+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	62
+580	2017-08-07 17:05:17.773164+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	62
+581	2017-08-07 17:05:17.816878+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	62
+582	2017-08-07 19:42:20.507362+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	63
+583	2017-08-07 19:42:20.508616+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	63
+584	2017-08-07 19:44:04.873469+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	63
+585	2017-08-07 19:44:04.911467+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	64
+586	2017-08-07 19:44:04.91318+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	64
+587	2017-08-07 19:44:18.117243+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	64
+588	2017-08-07 19:53:11.47326+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	64
+589	2017-08-07 19:53:21.680552+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	64
+590	2017-08-07 19:53:21.787395+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	64
+591	2017-08-07 19:53:31.663204+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	64
+592	2017-08-07 19:53:39.207977+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	64
+593	2017-08-07 19:53:39.278827+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	64
+594	2017-08-07 19:55:17.783668+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	64
+595	2017-08-07 19:55:25.245372+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	64
+596	2017-08-07 19:55:52.422882+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	65
+597	2017-08-07 19:55:52.424202+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	65
+598	2017-08-07 19:56:17.800198+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	64
+599	2017-08-07 19:56:24.210381+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	64
+600	2017-08-07 19:56:24.278293+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	64
+601	2017-08-07 19:56:42.961668+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	64
+602	2017-08-07 19:56:43.94559+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	64
+603	2017-08-07 19:56:45.847957+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	64
+604	2017-08-07 19:56:48.84885+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	64
+605	2017-08-07 19:58:17.496574+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	64
+606	2017-08-08 15:32:15.487439+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	66
+607	2017-08-08 15:32:15.489352+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	66
+608	2017-08-08 19:16:58.748914+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	67
+609	2017-08-08 19:16:58.750984+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	67
+610	2017-08-08 19:16:58.813115+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	68
+611	2017-08-08 19:16:58.815205+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	68
+612	2017-08-08 19:18:44.818887+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	68
+613	2017-08-08 21:51:28.649276+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	69
+614	2017-08-08 21:51:28.651451+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	69
+615	2017-08-08 21:51:46.696492+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	69
+616	2017-08-08 21:51:55.533663+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=com	69
+617	2017-08-08 21:51:55.639875+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	69
+618	2017-08-08 21:52:02.974279+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	69
+619	2017-08-08 21:52:05.838764+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	69
+620	2017-08-08 21:52:05.915056+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+621	2017-08-08 21:52:25.849707+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	69
+622	2017-08-08 21:52:25.911279+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+623	2017-08-08 21:52:27.869997+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	69
+624	2017-08-08 21:52:27.932657+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+625	2017-08-08 21:52:33.592875+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	69
+626	2017-08-08 21:52:33.636448+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+627	2017-08-08 21:52:35.01235+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/blog/blogpost/	69
+628	2017-08-08 21:52:35.070515+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+629	2017-08-08 21:52:36.021604+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/generic/threadedcomment/	69
+630	2017-08-08 21:52:36.073373+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+631	2017-08-08 21:52:37.074571+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	69
+632	2017-08-08 21:52:38.47991+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	69
+633	2017-08-08 21:52:38.519471+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+634	2017-08-08 21:52:41.105692+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	69
+635	2017-08-08 21:52:41.169581+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+636	2017-08-08 21:53:36.32926+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	69
+637	2017-08-08 21:53:36.398752+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+638	2017-08-08 21:54:45.387853+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	69
+639	2017-08-08 21:54:45.44289+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
+640	2017-08-08 21:55:05.590516+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	69
+641	2017-08-08 21:55:05.641602+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	69
 \.
 
 
@@ -13400,7 +13565,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 500, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 641, true);
 
 
 --
@@ -13439,6 +13604,19 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 47	2017-08-01 22:35:21.622649+00	\N
 48	2017-08-01 22:55:09.243969+00	\N
 49	2017-08-01 22:57:27.713769+00	\N
+50	2017-08-02 00:27:58.56457+00	\N
+51	2017-08-02 16:03:16.510392+00	\N
+52	2017-08-02 17:48:37.954587+00	\N
+53	2017-08-02 18:13:16.606756+00	\N
+54	2017-08-02 18:57:12.996637+00	\N
+55	2017-08-02 19:21:07.083463+00	\N
+56	2017-08-03 19:56:41.506686+00	\N
+57	2017-08-03 20:56:42.598966+00	\N
+58	2017-08-07 15:09:29.570075+00	\N
+59	2017-08-07 19:44:04.908119+00	\N
+60	2017-08-07 19:55:52.419235+00	\N
+61	2017-08-08 19:16:58.809098+00	\N
+62	2017-08-08 21:51:28.642048+00	\N
 \.
 
 
@@ -13446,7 +13624,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 49, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 62, true);
 
 
 --
@@ -13818,7 +13996,7 @@ SELECT pg_catalog.setval('theme_quotamessage_id_seq', 1, true);
 --
 
 COPY theme_siteconfiguration (id, col1_heading, col1_content, col2_heading, col2_content, col3_heading, col3_content, twitter_link, facebook_link, pinterest_link, youtube_link, github_link, linkedin_link, vk_link, gplus_link, has_social_network_links, copyright, site_id) FROM stdin;
-1	Contact us	<p class="p1">Email us at <a href="mailto:support@xdcishare.renci.org">xdcishare.renci.org</a></p>	Follow		Version	<p>This is xDCIShare Version<b> DEVELOPMENT</b></p>									f	&copy 2017-{% now "Y" %} University of North Carolina at Chapel Hill. &copy 2012-2016 CUAHSI. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.	1
+1	Contact us	<p class="p1">Email us at <a href="mailto:support@myhpom.org">support@myhpom.org</a></p>	Follow		Version	<p>This is xDCIShare Version<b> DEVELOPMENT</b></p>									f	&copy 2017-{% now "Y" %} University of North Carolina at Chapel Hill. &copy 2012-2016 CUAHSI. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.	1
 \.
 
 
