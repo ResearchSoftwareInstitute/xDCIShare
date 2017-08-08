@@ -9864,8 +9864,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-5	pbkdf2_sha256$20000$wqHjECFdKPEx$qh+O+zWuUZuVADOAZ56BbZRgfyZ6hTDvVMfdX/5USlg=	2017-08-04 16:58:52.736523+00	f	cbc	Chris	Calloway	cbc@renci.org	f	t	2017-08-04 16:54:24+00
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-07 19:49:14.031963+00	t	admin	MyHPOM	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-08 21:51:02+00	t	admin	xDCIShare	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -9874,8 +9873,7 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 --
 
 COPY auth_user_groups (id, user_id, group_id) FROM stdin;
-4	4	1
-6	5	1
+8	4	1
 \.
 
 
@@ -9883,7 +9881,7 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 6, true);
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 8, true);
 
 
 --
@@ -10091,6 +10089,9 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 56	2017-08-01 23:39:39.520638+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
 57	2017-08-04 16:58:19.230761+00	5	cbc	2	Changed is_active.	3	4
 58	2017-08-07 19:52:36.405255+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
+59	2017-08-08 21:53:24.643731+00	4	admin	2	Changed first_name.	3	4
+60	2017-08-08 21:54:21.79744+00	5	cbc	3		3	4
+61	2017-08-08 21:55:17.555145+00	4	admin	2	Changed email.	3	4
 \.
 
 
@@ -10098,7 +10099,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 58, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 61, true);
 
 
 --
@@ -10769,7 +10770,7 @@ yg9nko1xsebjvcc6wk4ynygw4m8l3ofk	ZTg1M2RhMWVmMzk3YTcwYTFlMWE5MDhlNWRiYjAyZGU0Yzk
 sbfc9qcoi728qf2c38jscng5q7ccra4a	ZWI2ZjgwZmQ3NmRhYTA3NDAyYzI4MzEyMzgwMjNmMGExODU3ZjNhMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWQ2ZFdIOmx4S0hCN1NrVWgwS3NaT2tqSHVEVndhMGcxbyIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-05-19 13:43:51.032176+00
 k7nt7rugdkbcm58fglbsdrepdqaytp43	M2Q0Y2ZiM2Q0MDdhMjA5MWNmZTc4MDM0NjA0YzY1MjYxM2U4YjY5NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEY5OjFkYVJVNDpPU1Z0SWNpeXBBcE96OWpJQmpPLXI0QmZwQ3ciLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-09 18:56:46.438769+00
 pzmfpuc10goyvs830hivrzi9cj5qryyj	ZjIyMTYxMGU3YjcwZWI4Mjc1YzY4YjlkN2M1NGMxODk1NjBmOGMwMjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVGQ5OjFkY2dnZDpya3Z0a0ZBOVlGVUNkUUNkWTVfNjRFRU1HMU0iLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9pZCI6IjQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQifQ==	2017-08-15 23:34:51.800083+00
-wq6izbpobm7kq6ht6l4vroosub2slf1y	YTE4ZjhjNDIyMjliYzRiOWIwMjY0ZTM1OGQ5ZjBmYjNmYTFhMGI1Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNakY5OjFkZW8xUDpyemUyTWlwVG5UanEyd1hwTVRFaFhBMTNSNmsiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-21 19:49:14.049729+00
+sa8adlikrlsrjjls0k5gugzzibnpxeyy	ZWI2MjMzNDdjZmI0MjgwMmI5NWY5MjFjMzIyYjhiZmYzODRiYjVmODp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNalY5OjFkZkNPVTplTUYyOWV4ZDBlb2RDa0xGa3lmS0ZBdXBIS2MiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-22 21:51:03.002445+00
 \.
 
 
@@ -11190,7 +11191,6 @@ SELECT pg_catalog.setval('hs_access_control_groupresourceprovenance_id_seq', 1, 
 --
 
 COPY hs_access_control_resourceaccess (id, active, discoverable, public, shareable, published, immutable, resource_id) FROM stdin;
-1	t	f	f	t	f	f	14
 \.
 
 
@@ -11207,7 +11207,6 @@ SELECT pg_catalog.setval('hs_access_control_resourceaccess_id_seq', 1, true);
 
 COPY hs_access_control_useraccess (id, user_id) FROM stdin;
 1	4
-2	5
 \.
 
 
@@ -11253,7 +11252,6 @@ SELECT pg_catalog.setval('hs_access_control_usergroupprovenance_id_seq', 1, fals
 --
 
 COPY hs_access_control_userresourceprivilege (id, privilege, start, grantor_id, resource_id, user_id) FROM stdin;
-1	1	2017-08-04 16:59:39.031426+00	5	14	5
 \.
 
 
@@ -11269,7 +11267,6 @@ SELECT pg_catalog.setval('hs_access_control_userresourceprivilege_id_seq', 1, tr
 --
 
 COPY hs_access_control_userresourceprovenance (id, privilege, start, grantor_id, resource_id, user_id, undone) FROM stdin;
-1	1	2017-08-04 16:59:39.033114+00	5	14	5	f
 \.
 
 
@@ -11601,7 +11598,6 @@ COPY hs_collection_resource_collectiondeletedresource_resource_od9f5 (id, collec
 --
 
 COPY hs_core_bags (id, object_id, "timestamp", content_type_id) FROM stdin;
-1	14	2017-08-04 16:59:39.107744+00	66
 \.
 
 
@@ -11757,7 +11753,6 @@ SELECT pg_catalog.setval('hs_core_fundingagency_id_seq', 1, false);
 --
 
 COPY hs_core_genericresource (page_ptr_id, comments_count, rating_count, rating_sum, rating_average, content, short_id, doi, object_id, content_type_id, creator_id, last_changed_by_id, user_id, resource_type, file_unpack_message, file_unpack_status, locked_time, extra_metadata, resource_federation_path, extra_data) FROM stdin;
-14	0	0	0	0	My Generic Resource	058f2dcfb349441096802dbfee44c522	\N	1	68	5	5	5	GenericResource	\N	\N	\N			
 \.
 
 
@@ -11858,7 +11853,6 @@ SELECT pg_catalog.setval('hs_core_relation_id_seq', 1, false);
 --
 
 COPY hs_core_resourcefile (id, object_id, resource_file, content_type_id, fed_resource_file, file_folder, logical_file_content_type_id, logical_file_object_id) FROM stdin;
-1	14	058f2dcfb349441096802dbfee44c522/data/contents/favicon.ico	66		\N	\N	\N
 \.
 
 
@@ -12163,7 +12157,6 @@ SELECT pg_catalog.setval('hs_geographic_feature_resource_originalfileinfo_id_seq
 --
 
 COPY hs_labels_resourcelabels (id, resource_id) FROM stdin;
-1	14
 \.
 
 
@@ -12180,7 +12173,6 @@ SELECT pg_catalog.setval('hs_labels_resourcelabels_id_seq', 1, true);
 
 COPY hs_labels_userlabels (id, user_id) FROM stdin;
 1	4
-2	5
 \.
 
 
@@ -12892,9 +12884,11 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 16	2017-08-01 22:52:18.83025+00	1
 17	2017-08-01 23:34:51.793147+00	1
 18	2017-08-04 16:53:17.98147+00	1
-19	2017-08-04 16:58:42.165063+00	17
-20	2017-08-07 19:48:45.969908+00	17
 21	2017-08-07 19:49:03.270891+00	1
+22	2017-08-08 17:54:32.801006+00	1
+23	2017-08-08 17:54:32.884678+00	19
+24	2017-08-08 21:25:24.393851+00	20
+25	2017-08-08 21:50:30.829877+00	1
 \.
 
 
@@ -12902,7 +12896,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 21, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 25, true);
 
 
 --
@@ -13352,25 +13346,6 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 440	2017-08-04 16:58:19.42932+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	18
 441	2017-08-04 16:58:26.911117+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	18
 442	2017-08-04 16:58:42.002313+00	logout	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	18
-443	2017-08-04 16:58:42.166967+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	19
-444	2017-08-04 16:58:42.169029+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	19
-445	2017-08-04 16:58:44.672307+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	19
-446	2017-08-04 16:58:52.746481+00	login	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=org	19
-447	2017-08-04 16:58:52.826793+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	19
-448	2017-08-04 16:58:57.140878+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-resources/	19
-449	2017-08-04 16:59:04.325613+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/hsapi/_internal/create-resource/	19
-450	2017-08-04 16:59:07.312754+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/hsapi/_internal/GenericResource/supported-file-types/	19
-451	2017-08-04 16:59:07.327564+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/hsapi/_internal/GenericResource/allow-multiple-file/	19
-452	2017-08-04 16:59:41.254577+00	create	2	user_email_domain=org resource_size_bytes=470593 user_type=Unspecified resource_guid=058f2dcfb349441096802dbfee44c522 user_ip=192.168.57.1 resource_type=GenericResource	19
-453	2017-08-04 16:59:41.263742+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/hsapi/_internal/create-resource/do/	19
-454	2017-08-04 16:59:42.042137+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/resource/058f2dcfb349441096802dbfee44c522/	19
-455	2017-08-04 16:59:43.049016+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/hsapi/_internal/data-store-structure/	19
-456	2017-08-04 16:59:52.248374+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/user/5/	19
-457	2017-08-04 17:04:14.732311+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	19
-458	2017-08-04 17:04:20.744474+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/user/5/	19
-459	2017-08-07 19:48:45.977166+00	begin_session	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=org	20
-460	2017-08-07 19:48:45.980127+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	20
-461	2017-08-07 19:49:03.201623+00	logout	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=org	20
 462	2017-08-07 19:49:03.272841+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	21
 463	2017-08-07 19:49:03.274451+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	21
 464	2017-08-07 19:49:05.295368+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	21
@@ -13384,6 +13359,33 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 472	2017-08-07 19:51:39.132463+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	21
 473	2017-08-07 19:52:36.519206+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	21
 474	2017-08-07 19:52:55.703687+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	21
+475	2017-08-08 17:54:32.810135+00	begin_session	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	22
+476	2017-08-08 17:54:32.814477+00	logout	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	22
+477	2017-08-08 17:54:32.886147+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	23
+478	2017-08-08 17:54:32.889661+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	23
+479	2017-08-08 21:25:24.395366+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	24
+480	2017-08-08 21:25:24.396942+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	24
+481	2017-08-08 21:25:31.429952+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	24
+482	2017-08-08 21:50:30.83151+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	25
+483	2017-08-08 21:50:30.83331+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	25
+484	2017-08-08 21:50:36.498957+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	25
+485	2017-08-08 21:50:54.990461+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	25
+486	2017-08-08 21:51:03.000578+00	login	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	25
+487	2017-08-08 21:51:03.103926+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	25
+488	2017-08-08 21:51:10.285542+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	25
+489	2017-08-08 21:51:13.317825+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
+490	2017-08-08 21:51:13.38665+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
+491	2017-08-08 21:53:07.930981+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	25
+492	2017-08-08 21:53:08.043344+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
+493	2017-08-08 21:53:24.804726+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
+494	2017-08-08 21:53:24.872948+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
+495	2017-08-08 21:54:17.402746+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
+496	2017-08-08 21:54:22.19879+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
+497	2017-08-08 21:54:22.233026+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
+498	2017-08-08 21:55:12.289702+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	25
+499	2017-08-08 21:55:12.341406+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
+500	2017-08-08 21:55:17.697638+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	25
+501	2017-08-08 21:55:17.743297+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	25
 \.
 
 
@@ -13391,7 +13393,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 474, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 501, true);
 
 
 --
@@ -13415,8 +13417,10 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 14	2017-08-01 22:49:37.192301+00	\N
 15	2017-08-01 22:52:18.828605+00	\N
 16	2017-08-04 16:53:17.97207+00	\N
-17	2017-08-04 16:58:42.157109+00	5
 18	2017-08-07 19:49:03.267995+00	\N
+19	2017-08-08 17:54:32.882957+00	\N
+20	2017-08-08 21:25:24.391258+00	\N
+21	2017-08-08 21:50:30.826945+00	\N
 \.
 
 
@@ -13424,7 +13428,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 18, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 21, true);
 
 
 --
@@ -13513,7 +13517,6 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 9		1	Terms of Use	terms-of-use	Terms of Use	xDCIShare Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-05-05 14:08:48.384616+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
 10		1	Statement of Privacy	privacy	Statement of Privacy	xDCIShare Statement of Privacy\nLast modified May 5, 2017	t	2016-01-25 19:34:22.084583+00	2017-05-05 14:13:10.178601+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
 6		1	Apps	https://appsdev.xdcishare.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 15:08:19.972084+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
-14		1	My Generic Resource	resource/058f2dcfb349441096802dbfee44c522	\N	My Generic Resource	t	2017-08-04 16:59:37.653222+00	2017-08-04 16:59:39.107744+00	2	2017-08-04 16:59:37.651537+00	\N	\N	t	12	\N		My Generic Resource	genericresource	f
 \.
 
 
@@ -13814,7 +13817,6 @@ SELECT pg_catalog.setval('theme_siteconfiguration_id_seq', 1, true);
 
 COPY theme_userprofile (id, picture, title, subject_areas, organization, phone_1, phone_1_type, phone_2, phone_2_type, public, cv, details, user_id, country, middle_name, state, user_type, website, create_irods_user_account) FROM stdin;
 4		\N	\N	\N	\N	\N	\N	\N	t		\N	4	\N	\N	\N	Unspecified	\N	f
-5		\N	\N	\N	\N	\N	\N	\N	t		\N	5	\N	\N	\N	Unspecified	\N	f
 \.
 
 
@@ -13830,7 +13832,6 @@ SELECT pg_catalog.setval('theme_userprofile_id_seq', 5, true);
 --
 
 COPY theme_userquota (id, allocated_value, used_value, unit, zone, remaining_grace_period, user_id) FROM stdin;
-1	20	0	GB	xdcishare_internal	-1	5
 \.
 
 
