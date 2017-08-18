@@ -1,41 +1,41 @@
-xdcishare-postgis:
+postgis:
   image: mjstealey/hs_postgres:9.4.7
-  container_name: xdcishare-postgis
+  container_name: postgis
   volumes:
     - "/var/lib/postgresql/data"
-xdcishare-redis:
+redis:
   image: redis:2.8
-  container_name: xdcishare-redis
-xdcishare-rabbitmq:
+  container_name: redis
+rabbitmq:
   image: rabbitmq:3.5
-  container_name: xdcishare-rabbitmq
-xdcishare-solr:
+  container_name: rabbitmq
+solr:
   image: makuk66/docker-solr:4.10.4
-  container_name: xdcishare-solr
+  container_name: solr
   volumes:
     # hydroshare repository
     - "HS_PATH:/hydroshare"
   ports:
     - "8983"
-  command: [sh, -c, /bin/bash /opt/xdcishare-solr/bin/solr -f]
-xdcishare:
+  command: [sh, -c, /bin/bash /opt/solr/bin/solr -f]
+hydroshare:
   build: .
-  container_name: xdcishare 
+  container_name: hydroshare
   cap_add:
     - SYS_ADMIN
   devices:
     - "/dev/fuse"
   privileged: true
   environment:
-    POSTGIS_HOST: xdcishare-postgis
+    POSTGIS_HOST: postgis
     POSTGIS_PORT: 5432
-    REDIS_HOST: xdcishare-redis
+    REDIS_HOST: redis
     REDIS_PORT: 6379
     POSTGIS_PASSWORD: postgres
     POSTGIS_DB: postgres
     POSTGIS_USER: postgres
     PGPASSWORD: postgres
-    SOLR_HOST: xdcishare-solr
+    SOLR_HOST: solr
     TMP: /hs_tmp
   volumes:
     # hydroshare repository
@@ -52,34 +52,34 @@ xdcishare:
     - "1338:2022"
     - "8000:8000"
   links:
-    - xdcishare-postgis:xdcishare-postgis
-    - xdcishare-redis:xdcishare-redis
-    - xdcishare-rabbitmq:xdcishare-rabbitmq
-    - xdcishare-solr:xdcishare-solr
+    - postgis:postgis
+    - redis:redis
+    - rabbitmq:rabbitmq
+    - solr:solr
   extra_hosts:
     - "IRODS_DATA_HOSTNAME:IRODS_DATA_IP"
     - "IRODS_USER_HOSTNAME:IRODS_USER_IP"
   command: /bin/bash init-hydroshare
-xdcishare-defaultworker:
+defaultworker:
   build: .
-  container_name: xdcishare-defaultworker
+  container_name: defaultworker
   environment:
-    POSTGIS_HOST: xdcishare-postgis
+    POSTGIS_HOST: postgis
     POSTGIS_PORT: 5432
-    REDIS_HOST: xdcishare-redis
+    REDIS_HOST: redis
     REDIS_PORT: 6379
     POSTGIS_PASSWORD: postgres
     POSTGIS_DB: postgres
     PGPASSWORD: postgres
     C_FORCE_ROOT: 1
   volumes_from:
-    - xdcishare
+    - hydroshare
   volumes:
     - "/var/run/docker.sock:/docker.sock"
   links:
-    - xdcishare-postgis:xdcishare-postgis
-    - xdcishare-redis:xdcishare-redis
-    - xdcishare-rabbitmq:xdcishare-rabbitmq
+    - postgis:postgis
+    - redis:redis
+    - rabbitmq:rabbitmq
   extra_hosts:
     - "IRODS_DATA_HOSTNAME:IRODS_DATA_IP"
     - "IRODS_USER_HOSTNAME:IRODS_USER_IP"
