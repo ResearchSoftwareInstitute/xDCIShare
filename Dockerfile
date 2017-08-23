@@ -1,7 +1,7 @@
 FROM mjstealey/hs_docker_base:1.9.5
 MAINTAINER Michael J. Stealey <stealey@renci.org>
 
-### Begin - xDCIShare Development Image Additions ###
+### Begin - MyHPOM Development Image Additions ###
 RUN pip install --upgrade pip && pip install \
   robot_detection \
   django-ipware \
@@ -17,7 +17,7 @@ RUN echo -e "\
 \n>         to_dir = settings.TEMPLATES[0][\"DIRS\"][0]\
 " | patch /usr/local/lib/python2.7/site-packages/mezzanine/core/management/commands/collecttemplates.py -
 
-### End - xDCIShare Development Image Additions ###
+### End - MyHPOM Development Image Additions ###
 
 USER root
 WORKDIR /hydroshare

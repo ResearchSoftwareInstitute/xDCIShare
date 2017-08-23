@@ -1,7 +1,7 @@
 # DEVELOPMENT - local_settings.py
 #    - This file should be copied to ~/hydroshare/hydroshare/local_settings.py
 #    - The iRODS specific contents of this file contain username and password informaiton
-#      that is used for an xDCIShare proxy user
+#      that is used for an MyHPOM proxy user
 
 import redis
 import os
@@ -74,7 +74,7 @@ CARTO_HOME='/hs_tmp/node_modules/carto'
 
 
 USE_SOUTH = False
-SITE_TITLE = "xDCIShare"
+SITE_TITLE = "MyHPOM"
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
@@ -140,20 +140,20 @@ HYRAX_SSH_PROXY_USER = ''
 HYRAX_SSH_PROXY_USER_PWD = ''
 HYRAX_SCRIPT_RUN_COMMAND = ''
 
-# hsuserproxy system user configuration used to create xDCIShare iRODS users on-demand
+# hsuserproxy system user configuration used to create MyHPOM iRODS users on-demand
 HS_USER_ZONE_HOST = ''
 HS_USER_ZONE_PROXY_USER = ''
 HS_USER_ZONE_PROXY_USER_PWD = ''
 HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD = ''
 HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD = ''
 
-# the local xDCIShare proxy user (a counterpart of wwwHydroProxy) in a federated zone with HydroShare Zone
+# the local MyHPOM proxy user (a counterpart of wwwHydroProxy) in a federated zone with HydroShare Zone
 HS_LOCAL_PROXY_USER_IN_FED_ZONE = 'localTestHydroProxy'
 
 # Please keep the line below unchanged since it is used to check whether
 # the current site is in production or not
 HS_WWW_IRODS_PROXY_USER = 'wwwHydroProxy'
-# credentials for xDCIShare proxy user iRODS account which is set to have own access control
+# credentials for MyHPOM proxy user iRODS account which is set to have own access control
 # to all collections in any federated zone with HydroShare zone, which is only useful when
 # testing HydroShare federated zone in local test development environment since in www
 # production environment, IRODS_USERNAME and other associated settings already represent wwwHydroProxy settings

@@ -1,7 +1,7 @@
 """
-Module extracting metadata from raster file to complete part of the required xDCIShare Raster
+Module extracting metadata from raster file to complete part of the required MyHPOM Raster
 Science Metadata.
-The expected metadata elements are defined in the xDCIShare raster resource specification.
+The expected metadata elements are defined in the MyHPOM raster resource specification.
 Reference code:
 http://gis.stackexchange.com/questions/6669/converting-projected-geotiff-to-wgs84-
 with-gdal-and-python

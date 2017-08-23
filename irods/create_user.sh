@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# xDCIShare user zone control script to create iRODS users on-demand corresponding to xDCIShare users
+# MyHPOM user zone control script to create iRODS users on-demand corresponding to MyHPOM users
 # AUthor: Hong Yi <hongyi@renci.org>
 
 HS_WWW_IRODS_PROXY_USER=wwwHydroProxy

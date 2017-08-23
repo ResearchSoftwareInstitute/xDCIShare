@@ -1,7 +1,7 @@
 generateBagIt {
 # -----------------------------------------------------
-# generateBagIt for xDCIShare
-# adapted by Hong Yi on May 2015 to fit xDCIShare use case 
+# generateBagIt for MyHPOM
+# adapted by Hong Yi on May 2015 to fit MyHPOM use case 
 # from rulegenerateBagIt.r originally developed by Terrell 
 # Russell on August 2010
 # -----------------------------------------------------
@@ -87,7 +87,7 @@ generateBagIt {
   msiDataObjChksum("*BAGITDATA" ++ "/manifest-md5.txt", "forceChksum=", *CHKSUM);
   writeString("stdout", *CHKSUM);
   writeLine("stdout", "    manifest-md5.txt");
-  ### - write readme.txt file checksum to BAGITDATA/tagmanifest-md5.txt as readme.txt is included in all xDCIShare resource bags
+  ### - write readme.txt file checksum to BAGITDATA/tagmanifest-md5.txt as readme.txt is included in all MyHPOM resource bags
   msiDataObjChksum("*BAGITDATA" ++ "/readme.txt", "forceChksum=", *CHKSUM);
   writeString("stdout", *CHKSUM);
   writeLine("stdout", "    readme.txt")

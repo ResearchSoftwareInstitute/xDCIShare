@@ -1,4 +1,4 @@
 hs_SWATModelInstance
 ===============
 
-xDCIShare SWAT Model Instance resource type for Django
+MyHPOM SWAT Model Instance resource type for Django

@@ -1,6 +1,8 @@
 *.pyc
 *.pyo
 *.db
+*.sedbak
+*.sedbak.*
 .bash_history
 .cache
 .coverage

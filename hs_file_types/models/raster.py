@@ -432,7 +432,7 @@ def raster_file_validation(raster_file):
                         continue
                     elif os.path.basename(vrt_ref_raster_name) in file_names:
                         msg = "Please specify {} as {} in the .vrt file, because it will " \
-                              "be saved in the same folder with .vrt file in xDCIShare."
+                              "be saved in the same folder with .vrt file in MyHPOM."
                         msg = msg.format(vrt_ref_raster_name, os.path.basename(vrt_ref_raster_name))
                         error_info.append(msg)
                         break
