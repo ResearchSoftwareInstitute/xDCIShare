@@ -1,5 +1,5 @@
 """
-WSGI config for xDCIShare project.
+WSGI config for MyHPOM project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 

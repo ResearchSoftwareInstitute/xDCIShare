@@ -239,7 +239,7 @@ class AbstractMetaDataElement(models.Model):
         abstract = True
 
 
-# Adaptor class added for Django inplace editing to honor xDCIShare user-resource permissions
+# Adaptor class added for Django inplace editing to honor MyHPOM user-resource permissions
 class HSAdaptorEditInline(object):
     @classmethod
     def can_edit(cls, adaptor_field):
@@ -327,7 +327,7 @@ class Party(AbstractMetaDataElement):
             if party.description is not None and kwargs['description'] is not None:
                 if len(party.description.strip()) > 0 and len(kwargs['description'].strip()) > 0:
                     if party.description != kwargs['description']:
-                        raise ValidationError("xDCIShare user identifier can't be changed.")
+                        raise ValidationError("MyHPOM user identifier can't be changed.")
 
         if 'order' in kwargs and element_name == 'Creator':
             creator_order = kwargs['order']
@@ -783,7 +783,7 @@ class Identifier(AbstractMetaDataElement):
             if idf.url.lower() != kwargs['url'].lower():
                 if idf.name.lower() == 'hydroshareidentifier':
                     if 'migration' not in kwargs:
-                        raise ValidationError("xDCIShare identifier url value can't be changed.")
+                        raise ValidationError("MyHPOM identifier url value can't be changed.")
 
                 # check this new identifier url not already exists
                 if Identifier.objects.filter(url__iexact=kwargs['url'], object_id=idf.object_id,
@@ -799,11 +799,11 @@ class Identifier(AbstractMetaDataElement):
         # get matching resource
         resource = BaseResource.objects.filter(object_id=idf.content_object.id).first()
         if idf.name.lower() == 'hydroshareidentifier':
-            raise ValidationError("xDCIShare identifier:%s can't be deleted." % idf.name)
+            raise ValidationError("MyHPOM identifier:%s can't be deleted." % idf.name)
 
         if idf.name.lower() == 'doi':
             if resource.doi:
-                raise ValidationError("xDCIShare identifier:%s can't be deleted for a resource "
+                raise ValidationError("MyHPOM identifier:%s can't be deleted for a resource "
                                       "that has been assigned a DOI." % idf.name)
         idf.delete()
 
@@ -1659,11 +1659,11 @@ class AbstractResource(ResourcePermissionsMixin):
                 creation_date=date_str))
         elif repl_rel:
             citation_str_lst.append(u", {repl_rel_value}, accessed {creation_date}, replicated in "
-                                    u"xDCIShare at: {url}".format(repl_rel_value=repl_rel.value,
+                                    u"MyHPOM at: {url}".format(repl_rel_value=repl_rel.value,
                                                                    creation_date=date_str,
                                                                    url=hs_identifier.url))
         else:
-            citation_str_lst.append(", xDCIShare, {url}".format(url=hs_identifier.url))
+            citation_str_lst.append(", MyHPOM, {url}".format(url=hs_identifier.url))
 
         if isPendingActivation:
             citation_str_lst.append(", DOI for this published resource is pending activation.")
@@ -2120,7 +2120,7 @@ class ResourceFile(models.Model):
     # fed_resource_file_size = models.CharField(max_length=15, null=True, blank=True)
 
     # we are using GenericForeignKey to allow resource file to be associated with any
-    # xDCIShare defined LogicalFile types (e.g., GeoRasterFile, NetCdfFile etc)
+    # MyHPOM defined LogicalFile types (e.g., GeoRasterFile, NetCdfFile etc)
     logical_file_object_id = models.PositiveIntegerField(null=True, blank=True)
     logical_file_content_type = models.ForeignKey(ContentType,
                                                   null=True, blank=True,
@@ -2661,8 +2661,8 @@ class BaseResource(Page, AbstractResource):
     # the time when the resource is locked for a new version action. A value of null
     # means the resource is not locked
     locked_time = models.DateTimeField(null=True, blank=True)
-    # this resource_federation_path is added to record where a xDCIShare resource is
-    # stored. The default is empty string meaning the resource is stored in xDCIShare
+    # this resource_federation_path is added to record where a MyHPOM resource is
+    # stored. The default is empty string meaning the resource is stored in MyHPOM
     # zone. If a resource is stored in a fedearated zone, the field should store the
     # federated root path in the format of /federated_zone/home/localHydroProxy
 
@@ -2791,7 +2791,7 @@ class BaseResource(Page, AbstractResource):
         etree.SubElement(head, 'timestamp').text = arrow.get(self.updated).format(
                                                                  "YYYYMMDDHHmmss")
         depositor = etree.SubElement(head, 'depositor')
-        etree.SubElement(depositor, 'depositor_name').text = 'xDCIShare'
+        etree.SubElement(depositor, 'depositor_name').text = 'MyHPOM'
         etree.SubElement(depositor, 'email_address').text = settings.DEFAULT_SUPPORT_EMAIL
         # The organization that owns the information being registered.
         etree.SubElement(head, 'registrant').text = 'Consortium of Universities for the ' \
@@ -2806,9 +2806,9 @@ class BaseResource(Page, AbstractResource):
         db_md = etree.SubElement(db, 'database_metadata', language="en")
         # titles is required element for database_metadata
         titles = etree.SubElement(db_md, 'titles')
-        etree.SubElement(titles, 'title').text = "xDCIShare Resources"
+        etree.SubElement(titles, 'title').text = "MyHPOM Resources"
         # create the dataset sub element, dataset_type can be record or collection, set it to
-        # collection for xDCIShare resources
+        # collection for MyHPOM resources
         dataset = etree.SubElement(db, 'dataset', dataset_type="collection")
         ds_titles = etree.SubElement(dataset, 'titles')
         etree.SubElement(ds_titles, 'title').text = self.metadata.title.value

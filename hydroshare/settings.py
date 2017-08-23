@@ -584,7 +584,7 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': False,
         },
-        # Catch-all logger for xDCIShare apps
+        # Catch-all logger for MyHPOM apps
         '': {
             'handlers': ['hydrosharelog'],
             'propagate': False,

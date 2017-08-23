@@ -1,2 +1,2 @@
 {% load i18n %}
-{% trans "xDCIShare group membership request" %}
+{% trans "MyHPOM group membership request" %}

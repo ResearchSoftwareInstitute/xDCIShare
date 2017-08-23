@@ -2,6 +2,8 @@ syntax: glob
 *.pyc
 *.pyo
 *.db
+*.sedbak
+*.sedbak.*
 .DS_Store
 .coverage
 hydroshare/local_settings.py

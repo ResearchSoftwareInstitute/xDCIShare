@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# xDCIShare user zone control script to delete a specific iRODS users on-demand corresponding to xDCIShare users
+# MyHPOM user zone control script to delete a specific iRODS users on-demand corresponding to MyHPOM users
 # AUthor: Hong Yi <hongyi@renci.org>
 # change permission so that hsuserproxy can delete all collections on behalf of the user before deleting the user
 ichmod -rM own hsuserproxy /hydroshareuserZone/home/$1

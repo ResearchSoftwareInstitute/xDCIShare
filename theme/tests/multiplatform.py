@@ -196,7 +196,7 @@ class SeleniumTestsParentClass(object):
             title = self.wait_for_visible(By.CSS_SELECTOR, '#resource-title').text
             self.assertEqual(title, resource_title)
             citation_text = self.wait_for_visible(By.CSS_SELECTOR, 'div#citation-text').text
-            m = re.search('xDCIShare, http.*/resource/(.*)$', citation_text)
+            m = re.search('MyHPOM, http.*/resource/(.*)$', citation_text)
             shortkey = m.groups(0)[0]
             resource = BaseResource.objects.get()
             self.assertEqual(resource.title, resource_title)
