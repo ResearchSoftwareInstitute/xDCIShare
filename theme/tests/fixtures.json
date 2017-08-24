@@ -79,7 +79,7 @@
     "header_background": "uploads/homepage/homepage_1.jpg",
     "recent_blog_heading": "Latest blog posts",
     "content": "<p class=\"p1\"><span>Planned MyHPOM Maintenance. \u00a0MyHPOM will be offline Friday February 17 from 8 am to 11 am Eastern US Standard time for system wide storage maintenance at the RENCI data center. \u00a0We apologize for any inconvenience.</span></p>",
-    "welcome_heading": "Share and Collaborate",
+    "welcome_heading": "Express Your Wishes",
     "heading": "MyHPOM"
    },
    "model": "theme.homepage",
