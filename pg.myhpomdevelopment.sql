@@ -3744,7 +3744,6 @@ ALTER SEQUENCE hs_core_fundingagency_id_seq OWNED BY hs_core_fundingagency.id;
 
 CREATE TABLE hs_core_genericresource (
     page_ptr_id integer NOT NULL,
-    comments_count integer NOT NULL,
     rating_count integer NOT NULL,
     rating_sum integer NOT NULL,
     rating_average double precision NOT NULL,
@@ -9864,7 +9863,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-08 21:51:55+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-24 20:24:15.10391+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -10095,6 +10094,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 62	2017-08-07 19:55:17.665242+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
 63	2017-08-08 21:53:36.19698+00	4	admin	2	Changed first_name.	3	4
 64	2017-08-08 21:55:05.452327+00	4	admin	2	Changed email.	3	4
+65	2017-08-24 20:29:22.397193+00	2	Home	2	Changed welcome_heading, content, in_menus and keywords.	17	4
 \.
 
 
@@ -10102,7 +10102,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 64, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 65, true);
 
 
 --
@@ -10735,6 +10735,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 184	hs_access_control	0021_auto_20170613_1925	2017-07-26 17:17:57.382159+00
 185	hs_tracking	0005_auto_20170613_1925	2017-07-26 17:17:57.757155+00
 186	theme	0008_auto_20170613_1925	2017-07-26 17:17:59.818007+00
+187	hs_core	0036_remove_baseresource_comments_count	2017-08-23 17:55:22.715575+00
 \.
 
 
@@ -10742,7 +10743,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 186, true);
+SELECT pg_catalog.setval('django_migrations_id_seq', 187, true);
 
 
 --
@@ -10791,6 +10792,8 @@ tl7y6jil057tardxqvf3lx9e9oabuul2	MzhlNTUxNDAxNjg5M2ZjMjhmOTNmZGU2MTlmYTdmNmE1YmN
 nc13v2z0rr9mec6oihfyf8m2jm8jqeao	MzRiNzU2M2I2ZDNkNzRkZWExYmM4Y2MzMTA3N2Y1NDY3MGJmNGNiNDp7InF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJoc190cmFja2luZ19pZCI6ImV5SnBaQ0k2TlROOToxZGNoVzI6bmQ0ZlV6ck14ZEF3NGdRQWFKMTZIa3pwT3NnIiwiZmFjZXRzX2l0ZW1zIjp7ImZpZWxkcyI6eyJ2YXJpYWJsZV9uYW1lcyI6W10sInVuaXRzX25hbWVzIjpbXSwib3duZXJzX25hbWVzIjpbXSwic3ViamVjdHMiOltdLCJkaXNjb3ZlcmFibGUiOltdLCJwdWJsaXNoZWQiOltdLCJjcmVhdG9ycyI6W10sInB1YmxpYyI6W10sInJlc291cmNlX3R5cGUiOltdLCJzYW1wbGVfbWVkaXVtcyI6W119LCJkYXRlcyI6e30sInF1ZXJpZXMiOnt9fSwidG90YWxfcmVzdWx0cyI6MH0=	2017-08-16 00:28:14.424858+00
 51hgn45x1h20o6vmd5uzotfg3w9mmin1	NTg5MzJmMTUxM2Y1NmU2NzNhZWVmMzljNzI3ZjUzNTVjMGM1ZDEzYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOalY5OjFkZW84MDp1WUNwTWhsOFZCdGZpOWtmbE1SWXBQSTJ6c1EifQ==	2017-08-21 19:55:52.42598+00
 775mdt99zlg18d6t30ny60ek8b5m1acy	ZDVhYmYwMDk0Y2FmMmVjNzY3NzhlNjEyZDU3NTM0ZjRkODllYjc1Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOamw5OjFkZkNQUTpsaUNBUXFvYkZhMUM4M3dZbjFjTzFoWUxOLWsiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-22 21:51:55.536041+00
+hrp7ct4vtkcxjumiflobfvzlmsia52mf	ZjExNTBiZDNjYmJkOTY2OWNhMDkwMmYzNzU5ZTMzMzZiNjVmNmUyODp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOekI5OjFka1p2UDpmQ2dNYi0tM2ZKem1VZmlXSU1Zekt5R0hpdlEifQ==	2017-09-06 17:58:43.867889+00
+7qnsbf27tcp85vhptuj35rfmw1ngviov	NjliYzhhY2YzOWVlNzVjNjRmMzMzOWRmNjgxZDdlYjc0ODY2ZjA1Yjp7ImZhY2V0c19pdGVtcyI6eyJmaWVsZHMiOnsidmFyaWFibGVfbmFtZXMiOltdLCJ1bml0c19uYW1lcyI6W10sIm93bmVyc19uYW1lcyI6W10sInN1YmplY3RzIjpbXSwiZGlzY292ZXJhYmxlIjpbXSwicHVibGlzaGVkIjpbXSwiY3JlYXRvcnMiOltdLCJwdWJsaWMiOltdLCJyZXNvdXJjZV90eXBlIjpbXSwic2FtcGxlX21lZGl1bXMiOltdfSwiZGF0ZXMiOnt9LCJxdWVyaWVzIjp7fX0sIl9hdXRoX3VzZXJfaWQiOiI0IiwidG90YWxfcmVzdWx0cyI6MCwiaHNfdHJhY2tpbmdfaWQiOiJleUpwWkNJNk56Rjk6MWRreVdhOmI2Q25pQlhmVDBUdzVNSmwwVFBIVVlNZnlxOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6Im1lenphbmluZS5jb3JlLmF1dGhfYmFja2VuZHMuTWV6emFuaW5lQmFja2VuZCIsInF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIn0=	2017-09-07 20:24:28.542187+00
 \.
 
 
@@ -11767,7 +11770,7 @@ SELECT pg_catalog.setval('hs_core_fundingagency_id_seq', 1, false);
 -- Data for Name: hs_core_genericresource; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY hs_core_genericresource (page_ptr_id, comments_count, rating_count, rating_sum, rating_average, content, short_id, doi, object_id, content_type_id, creator_id, last_changed_by_id, user_id, resource_type, file_unpack_message, file_unpack_status, locked_time, extra_metadata, resource_federation_path, extra_data) FROM stdin;
+COPY hs_core_genericresource (page_ptr_id, rating_count, rating_sum, rating_average, content, short_id, doi, object_id, content_type_id, creator_id, last_changed_by_id, user_id, resource_type, file_unpack_message, file_unpack_status, locked_time, extra_metadata, resource_federation_path, extra_data) FROM stdin;
 \.
 
 
@@ -12927,6 +12930,8 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 67	2017-08-08 19:16:58.745314+00	1
 68	2017-08-08 19:16:58.811246+00	61
 69	2017-08-08 21:51:28.647112+00	1
+70	2017-08-23 17:58:43.861718+00	63
+71	2017-08-24 20:14:44.788983+00	1
 \.
 
 
@@ -12934,7 +12939,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 69, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 71, true);
 
 
 --
@@ -13558,6 +13563,32 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 639	2017-08-08 21:54:45.44289+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	69
 640	2017-08-08 21:55:05.590516+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	69
 641	2017-08-08 21:55:05.641602+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	69
+642	2017-08-23 17:58:43.863768+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	70
+643	2017-08-23 17:58:43.865797+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	70
+644	2017-08-24 20:14:44.792539+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	71
+645	2017-08-24 20:14:44.797586+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	71
+646	2017-08-24 20:17:22.870827+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	71
+647	2017-08-24 20:21:03.365654+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	71
+648	2017-08-24 20:24:08.408362+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	71
+649	2017-08-24 20:24:15.122715+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	71
+650	2017-08-24 20:24:15.220288+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	71
+651	2017-08-24 20:24:24.428711+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-resources/	71
+652	2017-08-24 20:24:26.163427+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/collaborate/	71
+653	2017-08-24 20:24:28.540782+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/search/	71
+654	2017-08-24 20:24:31.54473+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-resources/	71
+655	2017-08-24 20:28:16.222139+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	71
+656	2017-08-24 20:28:19.900113+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	71
+657	2017-08-24 20:28:20.002357+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
+658	2017-08-24 20:28:25.445392+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/homepage/2/	71
+659	2017-08-24 20:28:25.540608+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
+660	2017-08-24 20:28:38.606718+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	71
+661	2017-08-24 20:28:56.882423+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/homepage/2/	71
+662	2017-08-24 20:28:56.925666+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
+663	2017-08-24 20:29:22.285023+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	71
+664	2017-08-24 20:29:22.649123+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	71
+665	2017-08-24 20:29:22.700107+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
+666	2017-08-24 20:29:25.522365+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/homepage/2/	71
+667	2017-08-24 20:29:25.587367+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
 \.
 
 
@@ -13565,7 +13596,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 641, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 667, true);
 
 
 --
@@ -13617,6 +13648,8 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 60	2017-08-07 19:55:52.419235+00	\N
 61	2017-08-08 19:16:58.809098+00	\N
 62	2017-08-08 21:51:28.642048+00	\N
+63	2017-08-23 17:58:43.858516+00	\N
+64	2017-08-24 20:14:44.780006+00	\N
 \.
 
 
@@ -13624,7 +13657,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 62, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 64, true);
 
 
 --
@@ -13707,12 +13740,12 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2016-01-25 19:52:37.387455+00	2	2016-01-25 19:23:52+00	\N	\N	t	2	\N	1,2,3	Discover	richtextpage	f
 13		1	Collaborate	collaborate		collaborate	t	2016-06-23 17:07:04.042277+00	2016-06-23 17:07:04.042277+00	2	2016-06-23 17:07:04.008329+00	\N	\N	t	3	\N	1	Collaborate	richtextpage	f
 5		1	Help	help	Help	help	t	2016-01-25 19:25:35.644671+00	2016-01-25 19:25:35.644671+00	2	2016-01-25 19:25:35.643697+00	\N	\N	t	5	\N	1,2,3	Help	richtextpage	f
-2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-01 23:06:15.67419+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
 6		1	Apps	https://appsdev.myhpom.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 23:07:32.01117+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
 7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.	t	2016-01-25 19:28:12.867432+00	2017-08-01 23:13:58.772728+00	2	2016-01-25 19:28:12+00	\N	\N	t	6	\N		Verify Account	richtextpage	f
 8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation.	t	2016-01-25 19:32:20.248488+00	2017-08-01 23:14:46.696705+00	2	2016-01-25 19:32:20+00	\N	\N	t	7	\N		Resend Verification Email	form	f
 9		1	Terms of Use	terms-of-use	Terms of Use	MyHPOM Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-08-01 23:30:15.102304+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
 10		1	Statement of Privacy	privacy	Statement of Privacy	MyHPOM Statement of Privacy\nLast modified August 1, 2017	t	2016-01-25 19:34:22.084583+00	2017-08-01 23:33:15.574459+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
+2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-24 20:29:22.387597+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
 \.
 
 
@@ -13956,7 +13989,7 @@ COPY spatial_ref_sys  FROM stdin;
 --
 
 COPY theme_homepage (page_ptr_id, heading, slide_in_one_icon, slide_in_one, slide_in_two_icon, slide_in_two, slide_in_three_icon, slide_in_three, header_background, header_image, welcome_heading, content, recent_blog_heading, number_recent_posts, message_end_date, message_start_date, message_type, show_message) FROM stdin;
-2	MyHPOM									Share and Collaborate	<p class="p1">My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.<strong><br></strong></p>	Latest blog posts	3	2047-05-05	2016-01-25	warning	f
+2	MyHPOM									Express Your WIshes	<p class="p1">My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.<strong><br></strong></p>	Latest blog posts	3	2047-05-05	2016-01-25	warning	f
 \.
 
 
