@@ -56,10 +56,10 @@ class FlagCodes(object):
     Flag codes describe the meanings of per-user flags for a resource.
 
     * 1 or FlagCodes.FAVORITE:
-      marked as a favorite on "My Resources" page
+      marked as a favorite on "My Documents" page
 
     * 2 or FlagCodes.MINE:
-      marked as being part of "My Resources" on "Discover" page.
+      marked as being part of "My Documents" on "Discover" page.
     """
     FAVORITE = 1
     MINE = 2

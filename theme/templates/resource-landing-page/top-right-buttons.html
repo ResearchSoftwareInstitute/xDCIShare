@@ -4,26 +4,26 @@
         {% if not metadata_form %}
             {% if not is_owner_user and not is_edit_user and not is_view_user %}
                 {% if resource_is_mine %}
-                    <form data-id="form-add-to-my-resources"
+                    <form data-id="form-add-to-my-documents"
                           action="/hsapi/_internal/{{ cm.short_id }}/label-resource-action/"
                           method="post">
                         {% csrf_token %}
                         <input type="hidden" name="label_type" value="MINE">
                         <input type="hidden" name="action" value="DELETE">
                         <button id="btnMyResources" data-toggle="tooltip" data-placement="bottom"
-                                title="Remove from my resources" data-form-id="form-add-to-my-resources"
+                                title="Remove from my resources" data-form-id="form-add-to-my-documents"
                                 class="glyphicon glyphicon-inbox icon-button btn-resource-remove"></button>
                     </form>
                 {% else %}
                     {% if user.is_authenticated %}
-                        <form data-id="form-add-to-my-resources"
+                        <form data-id="form-add-to-my-documents"
                               action="/hsapi/_internal/{{ cm.short_id }}/label-resource-action/"
                               method="post">
                             {% csrf_token %}
                             <input type="hidden" name="label_type" value="MINE">
                             <input type="hidden" name="action" value="CREATE">
                             <button id="btnMyResources" data-toggle="tooltip" data-placement="bottom"
-                                    title="Add to my resources" data-form-id="form-add-to-my-resources"
+                                    title="Add to my resources" data-form-id="form-add-to-my-documents"
                                     class="glyphicon glyphicon-inbox icon-button btn-resource-add"></button>
                         </form>
                     {% endif %}
