@@ -9,7 +9,7 @@ from hs_core.views import add_generic_context
 from functools import partial, wraps
 
 
-# page processor to populate raster resource specific metadata into my-resources template page
+# page processor to populate raster resource specific metadata into my-documents template page
 @processor_for(RasterResource)
 # TODO: problematic permissions
 def landing_page(request, page):

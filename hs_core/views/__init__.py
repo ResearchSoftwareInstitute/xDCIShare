@@ -552,7 +552,7 @@ def delete_resource(request, shortkey, *args, **kwargs):
     if request.is_ajax():
         return JsonResponse(ajax_response_data)
     else:
-        return HttpResponseRedirect('/my-resources/')
+        return HttpResponseRedirect('/my-documents/')
 
 
 def rep_res_bag_to_irods_user_zone(request, shortkey, *args, **kwargs):
@@ -821,7 +821,7 @@ def unshare_resource_with_user(request, shortkey, user_id, *args, **kwargs):
         user.uaccess.unshare_resource_with_user(res, user_to_unshare_with)
         if user not in res.raccess.view_users:
             # user has no explict access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-resources/'
+            ajax_response_data['redirect_to'] = '/my-documents/'
 
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
@@ -840,7 +840,7 @@ def unshare_resource_with_group(request, shortkey, group_id, *args, **kwargs):
         user.uaccess.unshare_resource_with_group(res, group_to_unshare_with)
         if user not in res.raccess.view_users:
             # user has no explicit access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-resources/'
+            ajax_response_data['redirect_to'] = '/my-documents/'
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
         ajax_response_data['message'] = exp.message
@@ -869,7 +869,7 @@ def undo_share_resource_with_user(request, shortkey, user_id, *args, **kwargs):
 
         if user not in res.raccess.view_users:
             # user has no explict access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-resources/'
+            ajax_response_data['redirect_to'] = '/my-documents/'
 
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
@@ -896,7 +896,7 @@ def undo_share_resource_with_group(request, shortkey, group_id, *args, **kwargs)
 
         if user not in res.raccess.view_users:
             # user has no explicit access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-resources/'
+            ajax_response_data['redirect_to'] = '/my-documents/'
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
         ajax_response_data['message'] = exp.message
@@ -1038,7 +1038,7 @@ class GroupUpdateForm(GroupForm):
         privacy_level = frm_data['privacy_level']
         self._set_privacy_level(group_to_update, privacy_level)
 
-@processor_for('my-resources')
+@processor_for('my-documents')
 @login_required
 def my_resources(request, page):
 
@@ -1702,7 +1702,7 @@ class GroupView(TemplateView):
 
 
 class CollaborateView(TemplateView):
-    template_name = 'pages/collaborate.html'
+    template_name = 'pages/my-connections.html'
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

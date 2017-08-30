@@ -9863,7 +9863,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-24 20:24:15.10391+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-30 19:06:35.414489+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -9880,14 +9880,14 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 5, true);
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 7, true);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 6, true);
 
 
 --
@@ -10095,6 +10095,14 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 63	2017-08-08 21:53:36.19698+00	4	admin	2	Changed first_name.	3	4
 64	2017-08-08 21:55:05.452327+00	4	admin	2	Changed email.	3	4
 65	2017-08-24 20:29:22.397193+00	2	Home	2	Changed welcome_heading, content, in_menus and keywords.	17	4
+66	2017-08-30 16:55:07.622683+00	4	Discover	2	Changed status and keywords.	33	4
+67	2017-08-30 17:48:26.017984+00	5	cbc	3		3	4
+68	2017-08-30 17:57:47.767334+00	3	My Documents	2	Changed title and keywords.	33	4
+69	2017-08-30 17:58:51.501946+00	3	My Documents	2	Changed content, _meta_title, slug, description and keywords.	33	4
+70	2017-08-30 17:59:25.298493+00	3	My Documents	2	Changed slug and keywords.	33	4
+71	2017-08-30 19:05:23.017664+00	3	My Documents	2	Changed slug and keywords.	33	4
+72	2017-08-30 19:09:08.611103+00	13	My Connections	2	Changed title, content, _meta_title, slug, description and keywords.	33	4
+73	2017-08-30 20:30:44.844909+00	6	cbc	3		3	4
 \.
 
 
@@ -10102,7 +10110,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 65, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 73, true);
 
 
 --
@@ -10793,7 +10801,8 @@ nc13v2z0rr9mec6oihfyf8m2jm8jqeao	MzRiNzU2M2I2ZDNkNzRkZWExYmM4Y2MzMTA3N2Y1NDY3MGJ
 51hgn45x1h20o6vmd5uzotfg3w9mmin1	NTg5MzJmMTUxM2Y1NmU2NzNhZWVmMzljNzI3ZjUzNTVjMGM1ZDEzYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOalY5OjFkZW84MDp1WUNwTWhsOFZCdGZpOWtmbE1SWXBQSTJ6c1EifQ==	2017-08-21 19:55:52.42598+00
 775mdt99zlg18d6t30ny60ek8b5m1acy	ZDVhYmYwMDk0Y2FmMmVjNzY3NzhlNjEyZDU3NTM0ZjRkODllYjc1Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOamw5OjFkZkNQUTpsaUNBUXFvYkZhMUM4M3dZbjFjTzFoWUxOLWsiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-22 21:51:55.536041+00
 hrp7ct4vtkcxjumiflobfvzlmsia52mf	ZjExNTBiZDNjYmJkOTY2OWNhMDkwMmYzNzU5ZTMzMzZiNjVmNmUyODp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOekI5OjFka1p2UDpmQ2dNYi0tM2ZKem1VZmlXSU1Zekt5R0hpdlEifQ==	2017-09-06 17:58:43.867889+00
-7qnsbf27tcp85vhptuj35rfmw1ngviov	NjliYzhhY2YzOWVlNzVjNjRmMzMzOWRmNjgxZDdlYjc0ODY2ZjA1Yjp7ImZhY2V0c19pdGVtcyI6eyJmaWVsZHMiOnsidmFyaWFibGVfbmFtZXMiOltdLCJ1bml0c19uYW1lcyI6W10sIm93bmVyc19uYW1lcyI6W10sInN1YmplY3RzIjpbXSwiZGlzY292ZXJhYmxlIjpbXSwicHVibGlzaGVkIjpbXSwiY3JlYXRvcnMiOltdLCJwdWJsaWMiOltdLCJyZXNvdXJjZV90eXBlIjpbXSwic2FtcGxlX21lZGl1bXMiOltdfSwiZGF0ZXMiOnt9LCJxdWVyaWVzIjp7fX0sIl9hdXRoX3VzZXJfaWQiOiI0IiwidG90YWxfcmVzdWx0cyI6MCwiaHNfdHJhY2tpbmdfaWQiOiJleUpwWkNJNk56Rjk6MWRreVdhOmI2Q25pQlhmVDBUdzVNSmwwVFBIVVlNZnlxOCIsIl9hdXRoX3VzZXJfYmFja2VuZCI6Im1lenphbmluZS5jb3JlLmF1dGhfYmFja2VuZHMuTWV6emFuaW5lQmFja2VuZCIsInF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIn0=	2017-09-07 20:24:28.542187+00
+0asnfuacpsne490hule5mwo1zt3djqol	YTkzMjE5MGZmNzk1NDI5MWZhMmVlMmMzODNkYjVlMGIyMjk1Y2M4NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOelY5OjFkbUxUdjplYUVTZEVtTEVZYUMxbHdfWjZXUWc1T3RkRkUifQ==	2017-09-11 14:57:39.409137+00
+l1co0t6zkxfcf4emgkg6xrzn1zd26k40	NjU1ZmJjOWQ4MGM4YTBlY2NhOTk2YzJlMWExZDEzYzcyZmE2YzAwZTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPRGw5OjFkbjllVjpmX3ZaSHhfWFVoU0pTV05wR0dQRV9aLU9pSU0ifQ==	2017-09-13 20:31:55.869502+00
 \.
 
 
@@ -11237,7 +11246,7 @@ COPY hs_access_control_useraccess (id, user_id) FROM stdin;
 -- Name: hs_access_control_useraccess_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_access_control_useraccess_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_access_control_useraccess_id_seq', 3, true);
 
 
 --
@@ -12193,7 +12202,7 @@ COPY hs_labels_userlabels (id, user_id) FROM stdin;
 -- Name: hs_labels_userlabels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_labels_userlabels_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_labels_userlabels_id_seq', 3, true);
 
 
 --
@@ -12932,6 +12941,22 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 69	2017-08-08 21:51:28.647112+00	1
 70	2017-08-23 17:58:43.861718+00	63
 71	2017-08-24 20:14:44.788983+00	1
+72	2017-08-24 20:59:02.287428+00	1
+73	2017-08-24 21:00:42.829495+00	65
+74	2017-08-25 17:35:32.623047+00	66
+75	2017-08-28 14:57:39.403937+00	67
+76	2017-08-28 15:02:25.10912+00	68
+77	2017-08-30 16:44:29.723119+00	1
+78	2017-08-30 16:55:27.838407+00	1
+79	2017-08-30 17:00:10.427984+00	1
+80	2017-08-30 17:10:02.684951+00	72
+81	2017-08-30 17:47:16.754368+00	1
+83	2017-08-30 17:50:00.314598+00	1
+84	2017-08-30 19:04:12.325776+00	1
+85	2017-08-30 19:04:22.919634+00	1
+87	2017-08-30 19:06:23.510376+00	1
+88	2017-08-30 20:29:05.109684+00	1
+89	2017-08-30 20:31:55.864746+00	79
 \.
 
 
@@ -12939,7 +12964,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 71, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 89, true);
 
 
 --
@@ -13589,6 +13614,211 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 665	2017-08-24 20:29:22.700107+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
 666	2017-08-24 20:29:25.522365+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/homepage/2/	71
 667	2017-08-24 20:29:25.587367+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	71
+668	2017-08-24 20:59:02.301501+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	72
+669	2017-08-24 20:59:02.303237+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	72
+670	2017-08-24 20:59:20.068573+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	72
+671	2017-08-24 21:00:11.882976+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	72
+672	2017-08-24 21:00:11.933419+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	72
+673	2017-08-24 21:00:14.528989+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/homepage/2/	72
+674	2017-08-24 21:00:14.577676+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	72
+675	2017-08-24 21:00:19.22208+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	72
+676	2017-08-24 21:00:38.756243+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	72
+677	2017-08-24 21:00:42.729352+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	72
+678	2017-08-24 21:00:42.831248+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	73
+679	2017-08-24 21:00:42.832715+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	73
+680	2017-08-25 17:35:32.624616+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	74
+681	2017-08-25 17:35:32.626322+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	74
+682	2017-08-28 14:57:39.405651+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	75
+683	2017-08-28 14:57:39.408165+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	75
+684	2017-08-28 14:57:48.195674+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	75
+685	2017-08-28 14:58:13.691695+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	75
+686	2017-08-28 15:02:25.11158+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	76
+687	2017-08-28 15:02:25.114282+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	76
+688	2017-08-30 16:44:29.725107+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	77
+689	2017-08-30 16:44:29.728089+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	77
+690	2017-08-30 16:45:26.642945+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	77
+691	2017-08-30 16:45:35.601334+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	77
+692	2017-08-30 16:45:41.241651+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	77
+693	2017-08-30 16:45:41.364807+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/collaborate/	77
+694	2017-08-30 16:45:49.797049+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/search/	77
+695	2017-08-30 16:45:54.826785+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-resources/	77
+696	2017-08-30 16:54:30.359204+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	77
+697	2017-08-30 16:54:46.606446+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	77
+698	2017-08-30 16:54:46.720222+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	77
+699	2017-08-30 16:54:50.671034+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/link/6/	77
+700	2017-08-30 16:54:50.731141+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	77
+701	2017-08-30 16:54:57.637218+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	77
+702	2017-08-30 16:54:59.531851+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/4/	77
+703	2017-08-30 16:54:59.608329+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	77
+704	2017-08-30 16:55:07.539664+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	77
+705	2017-08-30 16:55:07.925052+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	77
+706	2017-08-30 16:55:07.97759+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	77
+707	2017-08-30 16:55:27.793496+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	77
+708	2017-08-30 16:55:27.839737+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	78
+709	2017-08-30 16:55:27.841025+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	78
+710	2017-08-30 16:58:57.996938+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	78
+711	2017-08-30 16:59:01.538434+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	78
+712	2017-08-30 16:59:10.73676+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	78
+713	2017-08-30 16:59:28.313218+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	78
+714	2017-08-30 16:59:36.8981+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	78
+715	2017-08-30 16:59:36.999166+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	78
+716	2017-08-30 16:59:45.934296+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	78
+717	2017-08-30 16:59:49.892597+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	78
+718	2017-08-30 16:59:49.957508+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	78
+719	2017-08-30 17:00:10.385774+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	78
+720	2017-08-30 17:00:10.429346+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	79
+721	2017-08-30 17:00:10.430599+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	79
+722	2017-08-30 17:00:18.979939+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	79
+723	2017-08-30 17:00:22.527481+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/sign-up/	79
+724	2017-08-30 17:01:10.711608+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	79
+725	2017-08-30 17:09:32.978019+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	79
+726	2017-08-30 17:09:40.820461+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	79
+727	2017-08-30 17:09:40.951982+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	79
+728	2017-08-30 17:09:49.191993+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	79
+729	2017-08-30 17:09:52.566163+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	79
+730	2017-08-30 17:09:52.640928+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	79
+731	2017-08-30 17:10:02.643401+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	79
+732	2017-08-30 17:10:02.68651+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	80
+733	2017-08-30 17:10:02.687857+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	80
+734	2017-08-30 17:10:08.617752+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	80
+735	2017-08-30 17:47:16.756096+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	81
+736	2017-08-30 17:47:16.758525+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	81
+737	2017-08-30 17:48:05.908625+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	81
+738	2017-08-30 17:48:06.053497+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	81
+739	2017-08-30 17:48:12.947563+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	81
+740	2017-08-30 17:48:16.326318+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	81
+741	2017-08-30 17:48:16.396917+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	81
+742	2017-08-30 17:48:21.956492+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	81
+743	2017-08-30 17:48:26.25075+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	81
+744	2017-08-30 17:48:26.317086+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	81
+745	2017-08-30 17:48:29.102398+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	81
+754	2017-08-30 17:50:00.316004+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	83
+755	2017-08-30 17:50:00.317603+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	83
+756	2017-08-30 17:55:35.099724+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	83
+757	2017-08-30 17:55:45.071017+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	83
+758	2017-08-30 17:55:45.191249+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	83
+759	2017-08-30 17:56:49.365144+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	83
+760	2017-08-30 17:56:56.600674+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+761	2017-08-30 17:56:56.678027+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+762	2017-08-30 17:57:00.511298+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/3/	83
+763	2017-08-30 17:57:00.583918+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+764	2017-08-30 17:57:47.689261+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	83
+765	2017-08-30 17:57:48.085241+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+766	2017-08-30 17:57:48.165709+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+767	2017-08-30 17:57:51.88869+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	83
+768	2017-08-30 17:57:54.689937+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-resources/	83
+769	2017-08-30 17:58:13.57184+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+770	2017-08-30 17:58:16.394946+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/3/	83
+771	2017-08-30 17:58:16.470111+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+772	2017-08-30 17:58:51.43613+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	83
+773	2017-08-30 17:58:51.791275+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+774	2017-08-30 17:58:51.84413+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+775	2017-08-30 17:58:54.161667+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	83
+776	2017-08-30 17:58:56.25213+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-documents/	83
+777	2017-08-30 17:59:04.985826+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+778	2017-08-30 17:59:07.983131+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/3/	83
+779	2017-08-30 17:59:08.039414+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+780	2017-08-30 17:59:25.235222+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	83
+781	2017-08-30 17:59:25.588754+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+782	2017-08-30 17:59:25.646398+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+783	2017-08-30 17:59:29.700874+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	83
+784	2017-08-30 17:59:31.72541+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-resources/	83
+785	2017-08-30 18:02:24.207827+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+786	2017-08-30 18:02:28.207221+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/3/	83
+787	2017-08-30 18:02:28.269382+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+788	2017-08-30 18:02:38.396899+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+789	2017-08-30 18:02:40.603394+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/3/	83
+790	2017-08-30 18:02:40.677598+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	83
+791	2017-08-30 18:02:54.643503+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	83
+792	2017-08-30 19:04:12.336408+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	84
+793	2017-08-30 19:04:12.338582+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	84
+794	2017-08-30 19:04:22.717003+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	84
+795	2017-08-30 19:04:22.921192+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	85
+796	2017-08-30 19:04:22.922825+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	85
+797	2017-08-30 19:04:25.914672+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/my-resources/	85
+798	2017-08-30 19:04:28.305393+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	85
+799	2017-08-30 19:04:33.86451+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	85
+800	2017-08-30 19:04:46.494059+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	85
+801	2017-08-30 19:04:46.690539+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	85
+802	2017-08-30 19:04:56.596165+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	85
+803	2017-08-30 19:05:03.838931+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	85
+804	2017-08-30 19:05:03.909048+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	85
+805	2017-08-30 19:05:07.381553+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/3/	85
+806	2017-08-30 19:05:07.453019+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	85
+807	2017-08-30 19:05:22.921714+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	85
+808	2017-08-30 19:05:23.37506+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	85
+809	2017-08-30 19:05:23.435428+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	85
+810	2017-08-30 19:05:26.501566+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	85
+820	2017-08-30 19:06:23.512649+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	87
+821	2017-08-30 19:06:23.514033+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	87
+822	2017-08-30 19:06:27.569637+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	87
+823	2017-08-30 19:06:35.426316+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	87
+824	2017-08-30 19:06:35.52102+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	87
+825	2017-08-30 19:06:47.96715+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	87
+826	2017-08-30 19:07:39.976762+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	87
+827	2017-08-30 19:07:40.049126+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	87
+828	2017-08-30 19:07:42.629058+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/13/	87
+829	2017-08-30 19:07:42.675939+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	87
+830	2017-08-30 19:09:08.54446+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	87
+831	2017-08-30 19:09:08.891601+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	87
+832	2017-08-30 19:09:08.948243+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	87
+833	2017-08-30 19:09:14.146247+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	87
+834	2017-08-30 19:09:17.527568+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-connections/	87
+835	2017-08-30 20:29:05.11996+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	88
+836	2017-08-30 20:29:05.121879+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	88
+837	2017-08-30 20:29:07.470273+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-connections/	88
+838	2017-08-30 20:29:16.437511+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-connections/	88
+839	2017-08-30 20:29:19.215636+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-documents/	88
+840	2017-08-30 20:29:23.795149+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-connections/	88
+841	2017-08-30 20:29:54.45579+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/my-connections/	88
+842	2017-08-30 20:30:27.587816+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	88
+843	2017-08-30 20:30:31.083253+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	88
+844	2017-08-30 20:30:31.139751+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+845	2017-08-30 20:30:36.500835+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	88
+846	2017-08-30 20:30:45.02627+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	88
+847	2017-08-30 20:30:45.07643+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+848	2017-08-30 20:30:51.69802+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/quotamessage/1/	88
+849	2017-08-30 20:30:51.744074+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+850	2017-08-30 20:30:58.576492+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/siteconfiguration/1/	88
+851	2017-08-30 20:30:58.621775+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+852	2017-08-30 20:31:02.01816+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/theme/userquota/	88
+853	2017-08-30 20:31:02.094093+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+854	2017-08-30 20:31:04.841517+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/robots/url/	88
+855	2017-08-30 20:31:04.88471+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+856	2017-08-30 20:31:06.755064+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/robots/rule/	88
+857	2017-08-30 20:31:06.825412+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+858	2017-08-30 20:31:11.04589+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/django_comments/comment/	88
+859	2017-08-30 20:31:11.096243+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+860	2017-08-30 20:31:16.76357+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/oauth2_provider/refreshtoken/	88
+861	2017-08-30 20:31:16.837156+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+862	2017-08-30 20:31:18.454642+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/oauth2_provider/grant/	88
+863	2017-08-30 20:31:18.497159+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+864	2017-08-30 20:31:20.170449+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/oauth2_provider/application/	88
+865	2017-08-30 20:31:20.217261+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+866	2017-08-30 20:31:21.91706+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/oauth2_provider/accesstoken/	88
+867	2017-08-30 20:31:21.964478+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+868	2017-08-30 20:31:23.657661+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/group/	88
+869	2017-08-30 20:31:23.717459+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+870	2017-08-30 20:31:25.237834+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	88
+871	2017-08-30 20:31:25.274569+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+872	2017-08-30 20:31:28.239162+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/group/	88
+873	2017-08-30 20:31:28.279094+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+874	2017-08-30 20:31:37.962509+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	88
+875	2017-08-30 20:31:38.035932+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+876	2017-08-30 20:31:41.74573+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/conf/setting/	88
+877	2017-08-30 20:31:41.80109+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+878	2017-08-30 20:31:44.72749+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/redirects/redirect/	88
+879	2017-08-30 20:31:44.772311+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+880	2017-08-30 20:31:46.691299+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/sites/site/	88
+881	2017-08-30 20:31:46.750245+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+882	2017-08-30 20:31:49.213026+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/media-library/browse/	88
+883	2017-08-30 20:31:50.190187+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/blog/blogpost/	88
+884	2017-08-30 20:31:50.248588+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+885	2017-08-30 20:31:52.829349+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	88
+886	2017-08-30 20:31:52.871994+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	88
+887	2017-08-30 20:31:55.83076+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	88
+888	2017-08-30 20:31:55.866043+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	89
+889	2017-08-30 20:31:55.867386+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	89
 \.
 
 
@@ -13596,7 +13826,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 667, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 889, true);
 
 
 --
@@ -13650,6 +13880,20 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 62	2017-08-08 21:51:28.642048+00	\N
 63	2017-08-23 17:58:43.858516+00	\N
 64	2017-08-24 20:14:44.780006+00	\N
+65	2017-08-24 21:00:42.825437+00	\N
+66	2017-08-25 17:35:32.621567+00	\N
+67	2017-08-28 14:57:39.396217+00	\N
+68	2017-08-28 15:02:25.106428+00	\N
+69	2017-08-30 16:44:29.71542+00	\N
+70	2017-08-30 16:55:27.836404+00	\N
+71	2017-08-30 17:00:10.426588+00	\N
+72	2017-08-30 17:10:02.683636+00	\N
+73	2017-08-30 17:47:16.751539+00	\N
+75	2017-08-30 17:50:00.312954+00	\N
+76	2017-08-30 19:04:22.917832+00	\N
+77	2017-08-30 19:05:26.542084+00	\N
+78	2017-08-30 19:06:23.50663+00	\N
+79	2017-08-30 20:31:55.863278+00	\N
 \.
 
 
@@ -13657,7 +13901,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 64, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 79, true);
 
 
 --
@@ -13736,9 +13980,6 @@ COPY pages_link (page_ptr_id) FROM stdin;
 COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, description, gen_description, created, updated, status, publish_date, expiry_date, short_url, in_sitemap, _order, parent_id, in_menus, titles, content_model, login_required) FROM stdin;
 11		1	Create Resource	create-resource	Create Resource	create resource	t	2016-01-25 19:35:15.10115+00	2016-01-25 19:35:15.10115+00	2	2016-01-25 19:35:15.100153+00	\N	\N	t	10	\N		Create Resource	richtextpage	f
 12		1	Sign Up	sign-up	Sign Up	sign up	t	2016-01-25 19:40:35.894321+00	2016-01-25 19:40:35.894321+00	2	2016-01-25 19:40:35.893206+00	\N	\N	t	11	\N		Sign Up	richtextpage	f
-3		1	My Resources	my-resources	My Resources	my-resources	t	2016-01-25 19:22:48.667099+00	2016-01-25 19:29:50.956511+00	2	2016-01-25 19:22:48+00	\N	\N	t	1	\N	1,2,3	My Resources	richtextpage	f
-4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2016-01-25 19:52:37.387455+00	2	2016-01-25 19:23:52+00	\N	\N	t	2	\N	1,2,3	Discover	richtextpage	f
-13		1	Collaborate	collaborate		collaborate	t	2016-06-23 17:07:04.042277+00	2016-06-23 17:07:04.042277+00	2	2016-06-23 17:07:04.008329+00	\N	\N	t	3	\N	1	Collaborate	richtextpage	f
 5		1	Help	help	Help	help	t	2016-01-25 19:25:35.644671+00	2016-01-25 19:25:35.644671+00	2	2016-01-25 19:25:35.643697+00	\N	\N	t	5	\N	1,2,3	Help	richtextpage	f
 6		1	Apps	https://appsdev.myhpom.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 23:07:32.01117+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
 7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.	t	2016-01-25 19:28:12.867432+00	2017-08-01 23:13:58.772728+00	2	2016-01-25 19:28:12+00	\N	\N	t	6	\N		Verify Account	richtextpage	f
@@ -13746,6 +13987,9 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 9		1	Terms of Use	terms-of-use	Terms of Use	MyHPOM Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-08-01 23:30:15.102304+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
 10		1	Statement of Privacy	privacy	Statement of Privacy	MyHPOM Statement of Privacy\nLast modified August 1, 2017	t	2016-01-25 19:34:22.084583+00	2017-08-01 23:33:15.574459+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
 2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-24 20:29:22.387597+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
+4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2017-08-30 16:55:07.615743+00	1	2016-01-25 19:23:52+00	\N	\N	t	2	\N	1,2,3	Discover	richtextpage	f
+3		1	My Documents	my-documents	My Documents	my-documents	t	2016-01-25 19:22:48.667099+00	2017-08-30 19:05:23.007931+00	2	2016-01-25 19:22:48+00	\N	\N	t	1	\N	1,2,3	My Documents	richtextpage	f
+13		1	My Connections	my-connections	My Connections	my-connections	t	2016-06-23 17:07:04.042277+00	2017-08-30 19:09:08.603166+00	2	2016-06-23 17:07:04+00	\N	\N	t	3	\N	1	My Connections	richtextpage	f
 \.
 
 
@@ -13762,14 +14006,14 @@ SELECT pg_catalog.setval('pages_page_id_seq', 13, true);
 
 COPY pages_richtextpage (page_ptr_id, content) FROM stdin;
 5	<p>help</p>
-3	<p>my-resources</p>
 11	<p>create resource</p>
 12	<p>sign up</p>
-4	<p>Discover</p>
-13	<p>collaborate</p>
 7	<p class="p1">Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.</p>\n<p class="p2"><a href="http://myhpom.org/hsapi/_internal/resend_verification_email/">Please click here if you do not receive a verification email within 1 hour.</a></p>
 9	<h2 class="p1"><b>MyHPOM Terms of Use</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">Thank you for using the MyHPOM system hosted at MYHPOM.org.  MyHPOM services are provided by a team of researchers associated with the Renaissance Computing Institue of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of the University of North Carolina at Chapel Hil. Your access to myhpom.org is subject to your agreement to these Terms of Use. By using our services at myhpom.renci.org, you are agreeing to these terms.  Please read them carefully.</p>\n<h2 class="p3"><b>Modification of the Agreement</b></h2>\n<p class="p2">We maintain the right to modify these Terms of Use and may do so by posting modifications on this page. Any modification is effective immediately upon posting the modification unless otherwise stated. Your continued use of myhpom.renci.org following the posting of any modification signifies your acceptance of that modification. You should regularly visit this page to review the current Terms of Use.</p>\n<h2 class="p3"><b>Conduct Using our Services</b></h2>\n<p class="p2">The myhpom.org site is intended to support your health information and future healthcare wishes. You are responsible at all times for using myhpom.org in a manner that is legal, ethical, not to the detriment of others, and for purposes related to your health information and future healthcare wishes.. You agree that you will not in your use of myhpom.org:</p>\n<ul class="ul1">\n<li class="li2">Violate any applicable law, commit a criminal offense or perform actions that might encourage others to commit a criminal offense or give rise to a civil liability;</li>\n<li class="li2">Post or transmit any unlawful, threatening, libelous, harassing, defamatory, vulgar, obscene, pornographic, profane, or otherwise objectionable content;</li>\n<li class="li2">Use myhpom.org to impersonate other parties or entities;</li>\n<li class="li2">Use myhpom.org to upload any content that contains a software virus, "Trojan Horse" or any other computer code, files, or programs that may alter, damage, or interrupt the functionality of myhpom.org or the hardware or software of any other person who accesses myhpom.org;</li>\n<li class="li2">Upload, post, email, or otherwise transmit any materials that you do not have a right to transmit under any law or under a contractual relationship;</li>\n<li class="li2">Alter, damage, or delete any content posted on myhpom.org, except where such alterations or deletions are consistent with the access control settings of that content in myhpom.org;</li>\n<li class="li2">Disrupt the normal flow of communication in any way;</li>\n<li class="li2">Claim a relationship with or speak for any business, association, or other organization for which you are not authorized to claim such a relationship;</li>\n<li class="li2">Post or transmit any unsolicited advertising, promotional materials, or other forms of solicitation;</li>\n<li class="li2">Post any material that infringes or violates the intellectual property rights of another.</li>\n</ul>\n<p class="p2">Certain portions of myhpom.org are limited to registered users and/or allow a user to participate in online services by entering personal information. You agree that any information provided to myhpomorg in these areas will be accurate, and that you will neither register under the name of another person or entity of nor attempt to enter myhpom.org under the name of another person or entity.</p>\n<p class="p2">You are responsible for maintaining the confidentiality of your user ID and password, if any, and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. Myhpom.org does not authorize use of your User ID by third-parties.</p>\n<p class="p2">We may, in our sole discretion, terminate or suspend your access to and use of myhpom.org without notice and for any reason, including for violation of these Terms of Use or for other conduct that we, in our sole discretion, believe to be unlawful or harmful to others. In the event of termination, you are no longer authorized to access myhpom.org.</p>\n<h2 class="p3"><b>Disclaimers</b></h2>\n<p class="p2">MYHPOM.ORG AND ANY INFORMATION, PRODUCTS OR SERVICES ON IT ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Myhpom.org and its participating institutions do not warrant, and hereby disclaim any warranties, either express or implied, with respect to the accuracy, adequacy or completeness of any good, service, or information obtained from myhpom.org. M Myhpom.org and its participating institutions do not warrant that myhpom.org will operate in an uninterrupted or error-free manner or that myhpom.org is free of viruses or other harmful components. Use of myhpom.renci.org is at your own risk.</p>\n<p class="p2">You agree that myhpom.org and its participating institutions shall have no liability for any consequential, indirect, punitive, special or incidental damages, whether foreseeable or unforeseeable (including, but not limited to, claims for defamation, errors, loss of data, or interruption in availability of data), arising out of or relating to your use of any resource that you access through myhpom.org.</p>\n<p class="p2">The myhpom.org site hosts content from a number of authors. The statements and views of these authors are theirs alone, and do not reflect the stances or policies of the MyHPOM team or their sponsors, nor does their posting imply the endorsement of MyHPOM or their sponsors.</p>\n<h2 class="p3"><b>Choice of Law/Forum Selection/Attorney Fees</b></h2>\n<p class="p2">You agree that any dispute arising out of or relating to myhpom.org, whether based in contract, tort, statutory or other law, will be governed by federal law and by the laws of North Carolina, excluding its conflicts of law provisions. You further consent to the personal jurisdiction of and exclusive venue in the federal and state courts located in and serving the United States of America, North Carolina as the exclusive legal forums for any such dispute.</p>
 10	<h2 class="p1"><b>MyHPOM Statement of Privacy</b></h2>\n<p class="p2"><i>Last modified August 1, 2017<br></i></p>\n<p class="p2">MyHPOM is operated by a team of researchers associated with the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  In the following these are referred to as participating institutions.</p>\n<p class="p2">We respect your privacy. We will only use your personal identification information to support and manage your use of xdcioshare.org, including the use of tracking cookies to facilitate myhpom.renci.org security procedures. The MyHPOM participating institutions regularly request myhpom.org usages statistics and other information. Usage of myhpom.org is monitored and usage statistics are collected and reported on a regular basis. Myhpom.org also reserves the right to contact you to request additional information or to keep you updated on changes to myhpom.org. You may opt out of receiving newsletters and other non-essential communications. No information that would identify you personally will be provided to sponsors or third parties without your permission.</p>\n<p class="p2">While MyHPOM uses policies and procedures to manage the access to content according to the access control settings set by users all information posted or stored on myhpom.org is potentially available to other users of myhpom.org and the public. The MyHPOM participating institutions and myhpom.org disclaim any responsibility for the preservation of confidentiality of such information. <i>Do not post or store information on myhpom.org if you expect to or are obligated to protect the confidentiality of that information.</i></p>
+4	<p>Discover</p>
+3	<p>my-documents</p>
+13	<p>my-connections</p>
 \.
 
 
@@ -14053,7 +14297,7 @@ COPY theme_userprofile (id, picture, title, subject_areas, organization, phone_1
 -- Name: theme_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('theme_userprofile_id_seq', 4, true);
+SELECT pg_catalog.setval('theme_userprofile_id_seq', 6, true);
 
 
 --
@@ -14068,7 +14312,7 @@ COPY theme_userquota (id, allocated_value, used_value, unit, zone, remaining_gra
 -- Name: theme_userquota_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('theme_userquota_id_seq', 1, false);
+SELECT pg_catalog.setval('theme_userquota_id_seq', 2, true);
 
 
 --

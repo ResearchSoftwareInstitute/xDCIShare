@@ -148,7 +148,7 @@ class SeleniumTestsParentClass(object):
             upload_file_path = os.path.abspath(upload_file_path)
 
             # load my resources & click create new
-            self.wait_for_visible(By.XPATH, '//a[contains(text(),"My Resources")]').click()
+            self.wait_for_visible(By.XPATH, '//a[contains(text(),"My Documents")]').click()
             self.wait_for_visible(By.LINK_TEXT, 'Create new').click()
 
             # complete new resource form

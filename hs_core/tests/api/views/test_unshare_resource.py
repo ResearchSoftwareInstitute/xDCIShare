@@ -127,7 +127,7 @@ class TestUnshareResource(MockIRODSTestCaseMixin, TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_data = json.loads(response.content)
         self.assertEqual(response_data['status'], 'success')
-        self.assertEqual(response_data['redirect_to'], '/my-resources/')
+        self.assertEqual(response_data['redirect_to'], '/my-documents/')
         self.gen_res.raccess.refresh_from_db()
         self.assertNotIn(self.user, self.gen_res.raccess.view_users)
 

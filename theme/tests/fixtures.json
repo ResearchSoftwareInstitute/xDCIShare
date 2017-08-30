@@ -91,10 +91,10 @@
     "login_required": false,
     "updated": "2015-12-03T15:02:05.241Z",
     "_order": 1,
-    "titles": "My Resources",
-    "description": "my-resources",
+    "titles": "My Documents",
+    "description": "my-documents",
     "parent": null,
-    "title": "My Resources",
+    "title": "My Documents",
     "short_url": null,
     "created": "2015-05-15T20:17:23.597Z",
     "site": 1,
@@ -105,7 +105,7 @@
     "publish_date": "2015-05-15T20:17:23Z",
     "content_model": "richtextpage",
     "in_menus": "1,2,3",
-    "slug": "my-resources",
+    "slug": "my-documents",
     "gen_description": true
    },
    "model": "pages.page",
@@ -113,7 +113,7 @@
   },
   {
    "fields": {
-    "content": "<p>my-resources</p>"
+    "content": "<p>my-documents</p>"
    },
    "model": "pages.richtextpage",
    "pk": 3

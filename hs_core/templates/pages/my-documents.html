@@ -1,13 +1,13 @@
 {% extends "pages/page.html" %}
 {% load pages_tags mezzanine_tags keyword_tags hydroshare_tags %}
-{% block title %}My Resources{% endblock %}
+{% block title %}My Documents{% endblock %}
 
 {% block main %}
 
 <div class="container" id="main">
     <div class="row">
         <div class="col-sm-12">
-            <h2 class="page-title">My Resources</h2>
+            <h2 class="page-title">My Documents</h2>
         </div>
         <div class="col-lg-2" id="facets">
             <a class="btn btn-success" href="/hsapi/_internal/create-resource"><i class="fa fa-plus"></i> Create new</a>
@@ -518,6 +518,6 @@
 {% block extra_js %}
     {{ block.super }}
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/my-resources.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/my-documents.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/hs_resource_table.js"></script>
 {% endblock %}
