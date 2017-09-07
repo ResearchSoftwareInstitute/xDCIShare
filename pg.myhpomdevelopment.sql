@@ -9863,7 +9863,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-09-01 21:07:26.606963+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-09-07 20:02:36.12563+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -10106,6 +10106,10 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 74	2017-08-31 14:16:35.794187+00	5	FAQs	2	Changed title, content, _meta_title, slug, description and keywords.	33	4
 75	2017-09-01 21:03:48.626645+00	5	FAQS	2	Changed title and keywords.	33	4
 76	2017-09-01 21:05:38.116161+00	14	About	1		33	4
+77	2017-09-07 20:04:36.990963+00	14	About	2	Changed content, slug, gen_description and keywords.	33	4
+78	2017-09-07 20:06:08.187958+00	14	About	2	Changed content and keywords.	33	4
+79	2017-09-07 20:07:32.486976+00	14	About	2	Changed content and keywords.	33	4
+80	2017-09-07 20:12:12.056248+00	14	About	2	Changed content and keywords.	33	4
 \.
 
 
@@ -10113,7 +10117,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 76, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 80, true);
 
 
 --
@@ -10806,6 +10810,8 @@ nc13v2z0rr9mec6oihfyf8m2jm8jqeao	MzRiNzU2M2I2ZDNkNzRkZWExYmM4Y2MzMTA3N2Y1NDY3MGJ
 hrp7ct4vtkcxjumiflobfvzlmsia52mf	ZjExNTBiZDNjYmJkOTY2OWNhMDkwMmYzNzU5ZTMzMzZiNjVmNmUyODp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOekI5OjFka1p2UDpmQ2dNYi0tM2ZKem1VZmlXSU1Zekt5R0hpdlEifQ==	2017-09-06 17:58:43.867889+00
 0asnfuacpsne490hule5mwo1zt3djqol	YTkzMjE5MGZmNzk1NDI5MWZhMmVlMmMzODNkYjVlMGIyMjk1Y2M4NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOelY5OjFkbUxUdjplYUVTZEVtTEVZYUMxbHdfWjZXUWc1T3RkRkUifQ==	2017-09-11 14:57:39.409137+00
 t5vfpg0e972kq0ttvwugrp0vc7pkf89f	Y2Q2ZDg1ZjIxMGMwN2I2NTkyMjhmN2ExYjExMmM5NWJlMGVlMGIyYTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPVGg5OjFkbnRCUTpUeVUxaFprcUhuUzVEMEhCRTF0WHdUaVFvakEifQ==	2017-09-15 21:08:56.030892+00
+ypi9fizq5ba3w56r6b09q8vissf2k5mn	YjQ0MWI5OWI3NzNkYWVlODZmOGM4ZmZjMzc4MDEyMTdkY2E3NzM2Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEF3ZlE6MWRwRWdPOnZseFgwaVdpbDA5eVdkOVVlTllGN2REbXBvcyJ9	2017-09-19 14:18:28.421124+00
+hmjotc61gvl6wbl0v4y00v7dqvpz2sfc	ZDEzMzQ5ZmQwNzUzYWJiZjAwNWRlNzk2Y2UzYTM2NDc5ODA1ODUxYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEF4ZlE6MWRxMzBDOnZ5VVczSDdLMDZuYWdtSzk1RUpqVG9YOHRaYyIsIl9hdXRoX3VzZXJfaGFzaCI6IjJhNzc4NWMxODlkNGNjYTBjZGFmMzU0MzJiYmJmMDdlYjExNThkNWYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-09-21 20:02:36.154405+00
 \.
 
 
@@ -12969,6 +12975,9 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 96	2017-09-01 20:57:41.655194+00	1
 97	2017-09-01 21:07:14.535131+00	1
 98	2017-09-01 21:08:56.02578+00	82
+99	2017-09-01 22:04:20.536635+00	83
+100	2017-09-05 14:18:28.416177+00	84
+101	2017-09-07 20:02:16.951462+00	1
 \.
 
 
@@ -12976,7 +12985,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 98, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 101, true);
 
 
 --
@@ -13909,6 +13918,60 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 965	2017-09-01 21:08:55.95384+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	97
 966	2017-09-01 21:08:56.027272+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	98
 967	2017-09-01 21:08:56.028747+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	98
+968	2017-09-01 22:04:20.541774+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	99
+969	2017-09-01 22:04:20.543701+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	99
+970	2017-09-01 22:04:23.664986+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	99
+971	2017-09-01 22:04:31.997588+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	99
+972	2017-09-01 22:04:34.387601+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	99
+973	2017-09-01 22:04:49.399505+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	99
+974	2017-09-01 22:04:52.081037+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	99
+975	2017-09-01 22:04:56.21644+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	99
+976	2017-09-01 22:09:12.89172+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	99
+977	2017-09-05 14:18:28.417985+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	100
+978	2017-09-05 14:18:28.419351+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	100
+979	2017-09-07 20:02:16.953358+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	101
+980	2017-09-07 20:02:16.956089+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/faqs/	101
+981	2017-09-07 20:02:20.399675+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	101
+982	2017-09-07 20:02:29.3206+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	101
+983	2017-09-07 20:02:36.152599+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	101
+984	2017-09-07 20:02:36.262892+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
+985	2017-09-07 20:02:46.576693+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
+986	2017-09-07 20:02:51.55073+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	101
+987	2017-09-07 20:02:54.124493+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+988	2017-09-07 20:02:54.226029+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+989	2017-09-07 20:02:58.302748+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	101
+990	2017-09-07 20:02:58.376274+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+991	2017-09-07 20:04:36.900209+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	101
+992	2017-09-07 20:04:37.246855+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+993	2017-09-07 20:04:37.308308+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+994	2017-09-07 20:04:41.207879+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
+995	2017-09-07 20:04:45.52282+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	101
+996	2017-09-07 20:05:00.041303+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+997	2017-09-07 20:05:04.604975+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	101
+998	2017-09-07 20:06:08.127461+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	101
+999	2017-09-07 20:06:08.526849+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+1000	2017-09-07 20:06:08.579242+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+1001	2017-09-07 20:06:12.678641+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
+1002	2017-09-07 20:06:16.861616+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	101
+1003	2017-09-07 20:06:22.404814+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+1004	2017-09-07 20:06:23.397567+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	101
+1005	2017-09-07 20:07:32.430229+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	101
+1006	2017-09-07 20:07:32.745816+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+1007	2017-09-07 20:07:32.798591+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+1008	2017-09-07 20:07:42.556548+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	101
+1009	2017-09-07 20:12:11.999231+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	101
+1010	2017-09-07 20:12:12.321545+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+1011	2017-09-07 20:12:12.393978+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+1012	2017-09-07 20:12:17.899844+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
+1013	2017-09-07 20:12:20.661282+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	101
+1014	2017-09-07 20:12:52.400738+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	101
+1015	2017-09-07 20:13:16.942007+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	101
+1016	2017-09-07 20:13:18.249223+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	101
+1017	2017-09-07 20:24:21.550856+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	101
+1018	2017-09-07 20:24:21.610903+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	101
+1019	2017-09-07 20:24:29.929669+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
+1020	2017-09-07 20:24:32.142364+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	101
+1021	2017-09-07 20:24:46.058797+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	101
 \.
 
 
@@ -13916,7 +13979,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 967, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 1021, true);
 
 
 --
@@ -13987,6 +14050,9 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 80	2017-08-31 14:06:20.46831+00	\N
 81	2017-09-01 21:07:14.531209+00	\N
 82	2017-09-01 21:08:56.023885+00	\N
+83	2017-09-01 22:04:20.533395+00	\N
+84	2017-09-05 14:18:28.414119+00	\N
+85	2017-09-07 20:02:16.943233+00	\N
 \.
 
 
@@ -13994,7 +14060,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 82, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 85, true);
 
 
 --
@@ -14075,7 +14141,6 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 11		1	Create Resource	create-resource	Create Resource	create resource	t	2016-01-25 19:35:15.10115+00	2016-01-25 19:35:15.10115+00	2	2016-01-25 19:35:15.100153+00	\N	\N	t	11	\N		Create Resource	richtextpage	f
 12		1	Sign Up	sign-up	Sign Up	sign up	t	2016-01-25 19:40:35.894321+00	2016-01-25 19:40:35.894321+00	2	2016-01-25 19:40:35.893206+00	\N	\N	t	12	\N		Sign Up	richtextpage	f
 2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-24 20:29:22.387597+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
-14		1	About	faqs	About	About My Health Peace of Mind	t	2017-09-01 21:05:38.108141+00	2017-09-01 21:05:38.108141+00	2	2017-09-01 21:05:38.107963+00	\N	\N	t	1	\N	1,2,3	About	richtextpage	f
 3		1	My Documents	my-documents	My Documents	my-documents	t	2016-01-25 19:22:48.667099+00	2017-08-30 19:05:23.007931+00	2	2016-01-25 19:22:48+00	\N	\N	t	2	\N	1,2,3	My Documents	richtextpage	f
 4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2017-08-30 16:55:07.615743+00	1	2016-01-25 19:23:52+00	\N	\N	t	3	\N	1,2,3	Discover	richtextpage	f
 13		1	My Connections	my-connections	My Connections	my-connections	t	2016-06-23 17:07:04.042277+00	2017-08-30 19:09:08.603166+00	2	2016-06-23 17:07:04+00	\N	\N	t	4	\N	1	My Connections	richtextpage	f
@@ -14084,6 +14149,7 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.	t	2016-01-25 19:28:12.867432+00	2017-08-01 23:13:58.772728+00	2	2016-01-25 19:28:12+00	\N	\N	t	7	\N		Verify Account	richtextpage	f
 8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation.	t	2016-01-25 19:32:20.248488+00	2017-08-01 23:14:46.696705+00	2	2016-01-25 19:32:20+00	\N	\N	t	8	\N		Resend Verification Email	form	f
 9		1	Terms of Use	terms-of-use	Terms of Use	MyHPOM Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-08-01 23:30:15.102304+00	2	2016-01-25 19:33:24+00	\N	\N	t	9	\N		Terms of Use	richtextpage	f
+14		1	About	about	About	About My Health Peace of Mind	f	2017-09-01 21:05:38.108141+00	2017-09-07 20:12:12.049697+00	2	2017-09-01 21:05:38+00	\N	\N	t	1	\N	1,2,3	About	richtextpage	f
 \.
 
 
@@ -14108,7 +14174,7 @@ COPY pages_richtextpage (page_ptr_id, content) FROM stdin;
 3	<p>my-documents</p>
 13	<p>my-connections</p>
 5	<p>Frequently Asked Questions</p>
-14	<p>About My Health Peace of Mind</p>
+14	<div style="margin: 10px 20px 10px 20px;">\n<p><em>My Health Peace of Mind</em> offers you a chance to connect the dots between the health care you want and to the people who might be called on to make those decisions on your behalf. In a way, we see <em>My Health Peace of Mind</em> as helping you to own your own health.</p>\n<p><em>My Health Peace of Mind</em> is a free tool for you, funded by a generous grant from The Duke Endowment.</p>\n<p><em>My Health Peace of Mind</em> encourages people to have important conversations about the healthcare they would like to receive in the future if they were facing a life limiting condition. By encouraging these conversations with those closest to you, you can formalize your wishes into legal documents called <strong>Advance Directives</strong>. Advance Directives include a <strong>Living Will</strong> (a document that states your healthcare preferences) and a <strong>Healthcare Power of Attorney</strong> (a document that lets you name a trusted person to make healthcare decisions on your behalf if you are unable to make the decisions yourself).</p>\n<p><em>My Health Peace of Mind</em> allows you to upload your documents online where they can be shared with the people who might be called on to make decisions one day. This can include anyone you name – members of your family, a friend, your physician or some other trusted person. Uploading and sharing your documents increases the chance that your healthcare wishes will be honored. And through a secure partnership with hospitals or Vynca, <em>My Health Peace of Mind</em> will allow your <strong>Advance Directives</strong> to be accessed if you need emergency care.</p>\n<p><em>My Health Peace of Mind</em> will provide you with the ability to explore and discover information about health conditions, aging in general and how to have conversations about your future healthcare preferences, no matter what you choose. What’s important to us is that your voice is heard, documented and shared with the people closest to you.</p>\n<p>By joining <em>My Health Peace of Mind</em>, you begin a journey of making important personal decisions that are a gift to your loved ones.</p>\n<p><em>My Health Peace of Mind</em> is a collaborative project of <a href="http://cchospice.org/">The Carolinas Center</a>, a member organization that has led the way for patient-centered care at the end of life in the Carolinas. Together with our members and project partners (need page with project partners named), we want you to receive the care you desire when it is needed. Without planning in advance, your healthcare preferences might not be known or honored.</p>\n</div>
 \.
 
 
