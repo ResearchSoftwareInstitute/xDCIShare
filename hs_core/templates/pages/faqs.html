@@ -8,9 +8,9 @@
         <div class="row">
             <div class="col-md-8">
                 <h2>My Health Peace of Mind Support</h2>
-                Greetings My Health Peace of Mind User!
+                <p>Greetings My Health Peace of Mind User!
                 This page tells you about some of the features of MyHPOM.
-                Browse the topics below and click on a question to see the answer.
+                Browse the topics below and click on a question to see the answer.</p>
             </div>
         </div>
     </div>
@@ -20,8 +20,8 @@
         <div class="col-md-8">
             <!-- Nav tabs category -->
             <ul class="nav nav-tabs faq-cat-tabs">
-                <li class="active"><a href="#faq-cat-1" data-toggle="tab">Introduction to MyHPOM</a></li>
-                <li><a href="#faq-cat-2" data-toggle="tab">Get Started Using MyHPOM</a></li>
+                <li class="active"><a href="#faq-cat-1" data-toggle="tab">FAQs</a></li>
+                <li><a href="#faq-cat-2" data-toggle="tab">Glossary</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -118,82 +118,44 @@ healthcare wishes.
                             <div class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-1">
                                     <h4 class="panel-title">
-                                        What is a resource?
+                                        Common Terms
                                         <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
                                     </h4>
                                 </a>
                             </div>
-                            <div id="faq-cat-2-sub-1" class="panel-collapse collapse">
+                            <div id="faq-cat-2-sub-1" class="panel-collapse in">
                                 <div class="panel-body">
-                                    In MyHPOM, we define a resource as digital content which includes the science data files or model files and their corresponding metadata information. MyHPOM supports multiple resource types including Generic, Geographic Raster, Model Progam, Model Instance, SWAT Model Instance, Multidimensional (NetCDF), Time Series, Web App, and Geographic Feature (ESRI Shapefiles). 
-                                    Information on resource types and metadata terms can be found <span><a href="/terms">here</a>.</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default panel-faq">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-2">
-                                    <h4 class="panel-title">
-                                        How do I create a resource?
-                                        <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="faq-cat-2-sub-2" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ol>
-                                        <li><a href="{% url 'login' %}">Sign in</a> to MyHPOM.</li>
-					<li>Click on "My Documents" in the navigation bar at the top of the page.</li>
-                                        <li>Click on "+Create new" at the top of the page.</li>
-                                        <li>Select your resource type from the dropdown menu.</li>
-                                        <li>Enter a Title.</li>
-                                        <li>Optionally Add your data files stored on your local computer to add to your resource. </li>
-					<li>Optionally Add your data files stored stored in your iRODS datagrid to your resource. </li>
-                                        <li>Click the "Create Resource" button.</li>
-                                        <li>A new page will appear where you can add or edit Metadata, Content, Sharing, Comments, and Add files. </li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default panel-faq">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-3">
-                                    <h4 class="panel-title">
-                                        How do I view, download, edit, or delete a resource?
-                                        <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="faq-cat-2-sub-3" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ol>
-                                        <li><a href="{% url 'login' %}">Sign in</a> to MyHPOM.</li>
-                                        <li>Click on "My resources" in the navigation bar at the top of the page.</li>
-                                        <li>Click one or more of the checkboxes "Owned by me," "Editable by me," "Viewable by me," and/or "Favorites" on the top of the page.</li>
-					<li>Optionally enter search criteria in the Search box.</li>
-                                        <li>Click on resource Title to take you to that resource page.</li>
-                                        <li>A new page will appear where you can Share, Delete, and Download a resource as well as perform various options on it. </li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default panel-faq">
-                            <div class="panel-heading">
-                                <a data-toggle="collapse" data-parent="#accordion-cat-2" href="#faq-cat-2-sub-4">
-                                    <h4 class="panel-title">
-                                        How do I comment on or rate a resource?
-                                        <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
-                                    </h4>
-                                </a>
-                            </div>
-                            <div id="faq-cat-2-sub-4" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ol>
-                                        <li><a href="{% url 'login' %}">Sign in</a> to MyHPOM.</li>
-                                        <li>Click on "My resources" in the navigation bar at the top of the page.</li>
-                                        <li>Select the Title of the resource you would like to rate or comment on.</li>
-                                        <li>A new page will appear where you can comment on or rate a resource as well as perform various options on it. You may also rate a comment by clicking the "+1" next to the comment.</li>
-                                    </ol>
+                                    <p><strong>Helping others understand your wishes if you are unable to speak for yourself are important. There are state and federal laws that guide how you communicate your wishes to others. There are many terms and documents that describe the instructions you can give your health team, and loved ones to communicate your wishes.  The terms below are the most common ones you may hear.</strong></p>
+
+                                    <p><strong>Advance Directive or Advance Care Plan</strong>- is a legal document that allows a person to communicate health care preferences in the event that he or she is no longer able to make these decisions. This is how you want to be treated if you can't speak for yourself. For example you might not want a feeding tube.</p>
+ 
+                                    <p><strong>Cardiac Arrest</strong>- is the abrupt loss of heart function in a person who may or may not have diagnosed heart disease. The time and reason for death are unexpected. (AHA)</p>
+
+                                    <p><strong>DNR-Do Not Resuscitate-No Code-Desire for a Natural Death</strong>- are all terms that express the desire not to be mechanically kept alive if your heart stops. The DNR tells the health team whether or not you want cardiopulmonary resuscitation  (CPR) or to be put on a ventilator to breathe.</p>
+
+                                    <p><strong>End of Life-End of Life (EOL)</strong> is the period of time when a person is approaching the end of life and is expected to die. There is no specific time interval when end-of-life is happening.</p>
+
+                                    <p><strong>Euthanasia-Assisted Suicide</strong>- is the practice of intentionally ending a life in order to relieve pain and suffering. There are different euthanasia laws in the US and vary on a state-by-state basis.</p>
+
+                                    <p><strong>Health Care Proxy</strong>- is a legal document that names another person to legally make healthcare decisions on behalf of the patient, when you are incapable of making and executing the healthcare decisions stipulated in the proxy.</p>
+
+                                    <p><strong>Hospice Care</strong>- is a model for quality, compassionate care for people facing a life-limiting illness or injury. It involves a team-oriented approach to expert medical care, pain management, and emotional and spiritual support expressly tailored to the patient's needs and wishes.</p>
+
+                                    <p><strong>Life-Sustaining Treatment</strong> is the use of available medical machinery and techniques, such as heart-lung machines, ventilators, and other medical equipment and techniques that may keep you alive and possibly let you live longer, but which may not by themselves cure your condition.</p>
+
+                                    <p><strong>Living Will</strong> - is a written expression of how a person wants to be treated in certain medical circumstances. What must be included in the document and what makes it legal varies from state to state.</p>
+
+                                    <p><strong>POLST/MOLST Forms</strong>- POLST stands for Physician Orders for Life-Sustaining Therapy. POLST/MOLST forms are specific Medical Orders that tell providers what to do in an emergency. They can accompany a person from home to hospital.  They do not replace an advanced directive or health care proxy.</p>
+
+                                    <p><strong>Natural Death</strong>- is a death that occurs from natural causes, as disease or old age, rather than from violence or an accident.</p>
+
+                                    <p><strong>Organ or Tissue Donation</strong>- gives the health team permission to surgically remove and give your organs or tissues to another person.</p>
+
+                                    <p><strong>Patient Self Determination Act (PSDA)</strong>- is a federal law whose purpose is to ensure that a patient's right to self-determination in health care decisions be communicated and protected. Health care facilities are required by law to honor a patient's wishes and to ask every person seeking care whether they have documents that spell out their wishes.</p>
+
+                                    <p><strong>Palliative Care</strong>- is specialized medical care for people with serious illness. This type of care is focused on providing relief from the symptoms and stress of a serious illness. The goal is to improve quality of life for both the patient and the family.</p>
+
+                                    <p><strong>Power of Attorney for Health Care</strong> - is a legal document that names someone that you trust to act as your agent to make health care decisions if you are unable to speak for yourself. There is a second document that names power of attorney for financial matters. They do not have to be the same person.</p>
                                 </div>
                             </div>
                         </div>
