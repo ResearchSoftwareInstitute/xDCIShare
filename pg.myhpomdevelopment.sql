@@ -10110,6 +10110,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 78	2017-09-07 20:06:08.187958+00	14	About	2	Changed content and keywords.	33	4
 79	2017-09-07 20:07:32.486976+00	14	About	2	Changed content and keywords.	33	4
 80	2017-09-07 20:12:12.056248+00	14	About	2	Changed content and keywords.	33	4
+81	2017-09-11 05:23:37.961927+00	4	Discover	2	Changed status, content, slug, description and keywords.	33	4
 \.
 
 
@@ -10117,7 +10118,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 80, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 81, true);
 
 
 --
@@ -10811,7 +10812,7 @@ hrp7ct4vtkcxjumiflobfvzlmsia52mf	ZjExNTBiZDNjYmJkOTY2OWNhMDkwMmYzNzU5ZTMzMzZiNjV
 0asnfuacpsne490hule5mwo1zt3djqol	YTkzMjE5MGZmNzk1NDI5MWZhMmVlMmMzODNkYjVlMGIyMjk1Y2M4NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOelY5OjFkbUxUdjplYUVTZEVtTEVZYUMxbHdfWjZXUWc1T3RkRkUifQ==	2017-09-11 14:57:39.409137+00
 t5vfpg0e972kq0ttvwugrp0vc7pkf89f	Y2Q2ZDg1ZjIxMGMwN2I2NTkyMjhmN2ExYjExMmM5NWJlMGVlMGIyYTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPVGg5OjFkbnRCUTpUeVUxaFprcUhuUzVEMEhCRTF0WHdUaVFvakEifQ==	2017-09-15 21:08:56.030892+00
 ypi9fizq5ba3w56r6b09q8vissf2k5mn	YjQ0MWI5OWI3NzNkYWVlODZmOGM4ZmZjMzc4MDEyMTdkY2E3NzM2Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEF3ZlE6MWRwRWdPOnZseFgwaVdpbDA5eVdkOVVlTllGN2REbXBvcyJ9	2017-09-19 14:18:28.421124+00
-hmjotc61gvl6wbl0v4y00v7dqvpz2sfc	ZDEzMzQ5ZmQwNzUzYWJiZjAwNWRlNzk2Y2UzYTM2NDc5ODA1ODUxYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEF4ZlE6MWRxMzBDOnZ5VVczSDdLMDZuYWdtSzk1RUpqVG9YOHRaYyIsIl9hdXRoX3VzZXJfaGFzaCI6IjJhNzc4NWMxODlkNGNjYTBjZGFmMzU0MzJiYmJmMDdlYjExNThkNWYiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-09-21 20:02:36.154405+00
+0ez7kji9ii9hdwd6wbzfz9jkciwf8oyk	NzM0ZmUwZDUwMzU3MGJhMTMyM2E0OTJmNWIxMjgxNjk3NzNmZGM0MDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEEwZlE6MWRySENEOkdnRU5oNUtpNjJyRm9lMXl1anM3ZjBLZTRxcyJ9	2017-09-25 05:23:45.100701+00
 \.
 
 
@@ -12978,6 +12979,9 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 99	2017-09-01 22:04:20.536635+00	83
 100	2017-09-05 14:18:28.416177+00	84
 101	2017-09-07 20:02:16.951462+00	1
+102	2017-09-11 04:07:40.002769+00	1
+103	2017-09-11 05:23:10.352444+00	1
+104	2017-09-11 05:23:45.095113+00	86
 \.
 
 
@@ -12985,7 +12989,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 101, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 104, true);
 
 
 --
@@ -13972,6 +13976,49 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 1019	2017-09-07 20:24:29.929669+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	101
 1020	2017-09-07 20:24:32.142364+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	101
 1021	2017-09-07 20:24:46.058797+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	101
+1022	2017-09-11 04:07:40.006798+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	102
+1023	2017-09-11 04:07:40.00871+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1024	2017-09-11 04:08:12.081064+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1025	2017-09-11 04:08:22.133134+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1026	2017-09-11 04:11:11.912145+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1027	2017-09-11 04:11:42.593429+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1028	2017-09-11 04:11:44.794431+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1029	2017-09-11 04:11:50.965961+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1030	2017-09-11 04:12:00.708397+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1031	2017-09-11 04:14:16.313893+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1032	2017-09-11 04:17:16.830227+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1033	2017-09-11 04:17:18.598054+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1034	2017-09-11 04:17:20.580663+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1035	2017-09-11 04:17:51.922963+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1036	2017-09-11 04:17:55.318455+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1037	2017-09-11 04:17:58.422654+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1038	2017-09-11 04:18:37.069563+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1039	2017-09-11 04:18:40.259509+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1040	2017-09-11 04:27:24.573122+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1041	2017-09-11 04:38:42.613176+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/about/	102
+1042	2017-09-11 04:39:51.408062+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	102
+1043	2017-09-11 04:39:56.189797+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	102
+1044	2017-09-11 04:39:56.257555+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	102
+1045	2017-09-11 04:39:58.489966+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/14/	102
+1046	2017-09-11 04:39:58.545444+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	102
+1047	2017-09-11 04:40:29.738779+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	102
+1048	2017-09-11 04:40:31.020249+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	102
+1049	2017-09-11 04:41:46.919304+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/faqs/	102
+1050	2017-09-11 05:23:10.36291+00	begin_session	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	103
+1051	2017-09-11 05:23:10.365485+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	103
+1052	2017-09-11 05:23:17.439116+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	103
+1053	2017-09-11 05:23:17.5012+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	103
+1054	2017-09-11 05:23:19.389693+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/richtextpage/4/	103
+1055	2017-09-11 05:23:19.442622+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	103
+1056	2017-09-11 05:23:37.903696+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin_keywords_submit/	103
+1057	2017-09-11 05:23:38.227156+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/pages/page/	103
+1058	2017-09-11 05:23:38.288998+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	103
+1059	2017-09-11 05:23:41.465477+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	103
+1060	2017-09-11 05:23:45.018678+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	103
+1061	2017-09-11 05:23:45.096954+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	104
+1062	2017-09-11 05:23:45.098433+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	104
+1063	2017-09-11 05:23:46.604048+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/discover/	104
+1064	2017-09-11 05:23:49.257671+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	104
 \.
 
 
@@ -13979,7 +14026,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 1021, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 1064, true);
 
 
 --
@@ -14053,6 +14100,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 83	2017-09-01 22:04:20.533395+00	\N
 84	2017-09-05 14:18:28.414119+00	\N
 85	2017-09-07 20:02:16.943233+00	\N
+86	2017-09-11 05:23:45.091084+00	\N
 \.
 
 
@@ -14060,7 +14108,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 85, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 86, true);
 
 
 --
@@ -14142,7 +14190,6 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 12		1	Sign Up	sign-up	Sign Up	sign up	t	2016-01-25 19:40:35.894321+00	2016-01-25 19:40:35.894321+00	2	2016-01-25 19:40:35.893206+00	\N	\N	t	12	\N		Sign Up	richtextpage	f
 2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-24 20:29:22.387597+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
 3		1	My Documents	my-documents	My Documents	my-documents	t	2016-01-25 19:22:48.667099+00	2017-08-30 19:05:23.007931+00	2	2016-01-25 19:22:48+00	\N	\N	t	2	\N	1,2,3	My Documents	richtextpage	f
-4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2017-08-30 16:55:07.615743+00	1	2016-01-25 19:23:52+00	\N	\N	t	3	\N	1,2,3	Discover	richtextpage	f
 13		1	My Connections	my-connections	My Connections	my-connections	t	2016-06-23 17:07:04.042277+00	2017-08-30 19:09:08.603166+00	2	2016-06-23 17:07:04+00	\N	\N	t	4	\N	1	My Connections	richtextpage	f
 6		1	Apps	https://appsdev.myhpom.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 23:07:32.01117+00	1	2016-01-25 19:26:44+00	\N	\N	f	5	\N	1,2,3	Apps	link	f
 5		1	FAQS	faqs	FAQs	Frequently Asked Questions	t	2016-01-25 19:25:35.644671+00	2017-09-01 21:03:48.619822+00	2	2016-01-25 19:25:35+00	\N	\N	t	6	\N	1,2,3	FAQS	richtextpage	f
@@ -14150,6 +14197,7 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation.	t	2016-01-25 19:32:20.248488+00	2017-08-01 23:14:46.696705+00	2	2016-01-25 19:32:20+00	\N	\N	t	8	\N		Resend Verification Email	form	f
 9		1	Terms of Use	terms-of-use	Terms of Use	MyHPOM Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-08-01 23:30:15.102304+00	2	2016-01-25 19:33:24+00	\N	\N	t	9	\N		Terms of Use	richtextpage	f
 14		1	About	about	About	About My Health Peace of Mind	f	2017-09-01 21:05:38.108141+00	2017-09-07 20:12:12.049697+00	2	2017-09-01 21:05:38+00	\N	\N	t	1	\N	1,2,3	About	richtextpage	f
+4		1	Discover	discover	Discover	**"In a future development phase for My Health Peace of Mind, the ability to search and discover new resources relevant to your health care planning will be added.	t	2016-01-25 19:23:52.174668+00	2017-09-11 05:23:37.953318+00	2	2016-01-25 19:23:52+00	\N	\N	t	3	\N	1,2,3	Discover	richtextpage	f
 \.
 
 
@@ -14170,11 +14218,11 @@ COPY pages_richtextpage (page_ptr_id, content) FROM stdin;
 7	<p class="p1">Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.</p>\n<p class="p2"><a href="http://myhpom.org/hsapi/_internal/resend_verification_email/">Please click here if you do not receive a verification email within 1 hour.</a></p>
 9	<h2 class="p1"><b>MyHPOM Terms of Use</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">Thank you for using the MyHPOM system hosted at MYHPOM.org.  MyHPOM services are provided by a team of researchers associated with the Renaissance Computing Institue of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of the University of North Carolina at Chapel Hil. Your access to myhpom.org is subject to your agreement to these Terms of Use. By using our services at myhpom.renci.org, you are agreeing to these terms.  Please read them carefully.</p>\n<h2 class="p3"><b>Modification of the Agreement</b></h2>\n<p class="p2">We maintain the right to modify these Terms of Use and may do so by posting modifications on this page. Any modification is effective immediately upon posting the modification unless otherwise stated. Your continued use of myhpom.renci.org following the posting of any modification signifies your acceptance of that modification. You should regularly visit this page to review the current Terms of Use.</p>\n<h2 class="p3"><b>Conduct Using our Services</b></h2>\n<p class="p2">The myhpom.org site is intended to support your health information and future healthcare wishes. You are responsible at all times for using myhpom.org in a manner that is legal, ethical, not to the detriment of others, and for purposes related to your health information and future healthcare wishes.. You agree that you will not in your use of myhpom.org:</p>\n<ul class="ul1">\n<li class="li2">Violate any applicable law, commit a criminal offense or perform actions that might encourage others to commit a criminal offense or give rise to a civil liability;</li>\n<li class="li2">Post or transmit any unlawful, threatening, libelous, harassing, defamatory, vulgar, obscene, pornographic, profane, or otherwise objectionable content;</li>\n<li class="li2">Use myhpom.org to impersonate other parties or entities;</li>\n<li class="li2">Use myhpom.org to upload any content that contains a software virus, "Trojan Horse" or any other computer code, files, or programs that may alter, damage, or interrupt the functionality of myhpom.org or the hardware or software of any other person who accesses myhpom.org;</li>\n<li class="li2">Upload, post, email, or otherwise transmit any materials that you do not have a right to transmit under any law or under a contractual relationship;</li>\n<li class="li2">Alter, damage, or delete any content posted on myhpom.org, except where such alterations or deletions are consistent with the access control settings of that content in myhpom.org;</li>\n<li class="li2">Disrupt the normal flow of communication in any way;</li>\n<li class="li2">Claim a relationship with or speak for any business, association, or other organization for which you are not authorized to claim such a relationship;</li>\n<li class="li2">Post or transmit any unsolicited advertising, promotional materials, or other forms of solicitation;</li>\n<li class="li2">Post any material that infringes or violates the intellectual property rights of another.</li>\n</ul>\n<p class="p2">Certain portions of myhpom.org are limited to registered users and/or allow a user to participate in online services by entering personal information. You agree that any information provided to myhpomorg in these areas will be accurate, and that you will neither register under the name of another person or entity of nor attempt to enter myhpom.org under the name of another person or entity.</p>\n<p class="p2">You are responsible for maintaining the confidentiality of your user ID and password, if any, and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. Myhpom.org does not authorize use of your User ID by third-parties.</p>\n<p class="p2">We may, in our sole discretion, terminate or suspend your access to and use of myhpom.org without notice and for any reason, including for violation of these Terms of Use or for other conduct that we, in our sole discretion, believe to be unlawful or harmful to others. In the event of termination, you are no longer authorized to access myhpom.org.</p>\n<h2 class="p3"><b>Disclaimers</b></h2>\n<p class="p2">MYHPOM.ORG AND ANY INFORMATION, PRODUCTS OR SERVICES ON IT ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Myhpom.org and its participating institutions do not warrant, and hereby disclaim any warranties, either express or implied, with respect to the accuracy, adequacy or completeness of any good, service, or information obtained from myhpom.org. M Myhpom.org and its participating institutions do not warrant that myhpom.org will operate in an uninterrupted or error-free manner or that myhpom.org is free of viruses or other harmful components. Use of myhpom.renci.org is at your own risk.</p>\n<p class="p2">You agree that myhpom.org and its participating institutions shall have no liability for any consequential, indirect, punitive, special or incidental damages, whether foreseeable or unforeseeable (including, but not limited to, claims for defamation, errors, loss of data, or interruption in availability of data), arising out of or relating to your use of any resource that you access through myhpom.org.</p>\n<p class="p2">The myhpom.org site hosts content from a number of authors. The statements and views of these authors are theirs alone, and do not reflect the stances or policies of the MyHPOM team or their sponsors, nor does their posting imply the endorsement of MyHPOM or their sponsors.</p>\n<h2 class="p3"><b>Choice of Law/Forum Selection/Attorney Fees</b></h2>\n<p class="p2">You agree that any dispute arising out of or relating to myhpom.org, whether based in contract, tort, statutory or other law, will be governed by federal law and by the laws of North Carolina, excluding its conflicts of law provisions. You further consent to the personal jurisdiction of and exclusive venue in the federal and state courts located in and serving the United States of America, North Carolina as the exclusive legal forums for any such dispute.</p>
 10	<h2 class="p1"><b>MyHPOM Statement of Privacy</b></h2>\n<p class="p2"><i>Last modified August 1, 2017<br></i></p>\n<p class="p2">MyHPOM is operated by a team of researchers associated with the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  In the following these are referred to as participating institutions.</p>\n<p class="p2">We respect your privacy. We will only use your personal identification information to support and manage your use of xdcioshare.org, including the use of tracking cookies to facilitate myhpom.renci.org security procedures. The MyHPOM participating institutions regularly request myhpom.org usages statistics and other information. Usage of myhpom.org is monitored and usage statistics are collected and reported on a regular basis. Myhpom.org also reserves the right to contact you to request additional information or to keep you updated on changes to myhpom.org. You may opt out of receiving newsletters and other non-essential communications. No information that would identify you personally will be provided to sponsors or third parties without your permission.</p>\n<p class="p2">While MyHPOM uses policies and procedures to manage the access to content according to the access control settings set by users all information posted or stored on myhpom.org is potentially available to other users of myhpom.org and the public. The MyHPOM participating institutions and myhpom.org disclaim any responsibility for the preservation of confidentiality of such information. <i>Do not post or store information on myhpom.org if you expect to or are obligated to protect the confidentiality of that information.</i></p>
-4	<p>Discover</p>
 3	<p>my-documents</p>
 13	<p>my-connections</p>
 5	<p>Frequently Asked Questions</p>
 14	<div style="margin: 10px 20px 10px 20px;">\n<p><em>My Health Peace of Mind</em> offers you a chance to connect the dots between the health care you want and to the people who might be called on to make those decisions on your behalf. In a way, we see <em>My Health Peace of Mind</em> as helping you to own your own health.</p>\n<p><em>My Health Peace of Mind</em> is a free tool for you, funded by a generous grant from The Duke Endowment.</p>\n<p><em>My Health Peace of Mind</em> encourages people to have important conversations about the healthcare they would like to receive in the future if they were facing a life limiting condition. By encouraging these conversations with those closest to you, you can formalize your wishes into legal documents called <strong>Advance Directives</strong>. Advance Directives include a <strong>Living Will</strong> (a document that states your healthcare preferences) and a <strong>Healthcare Power of Attorney</strong> (a document that lets you name a trusted person to make healthcare decisions on your behalf if you are unable to make the decisions yourself).</p>\n<p><em>My Health Peace of Mind</em> allows you to upload your documents online where they can be shared with the people who might be called on to make decisions one day. This can include anyone you name – members of your family, a friend, your physician or some other trusted person. Uploading and sharing your documents increases the chance that your healthcare wishes will be honored. And through a secure partnership with hospitals or Vynca, <em>My Health Peace of Mind</em> will allow your <strong>Advance Directives</strong> to be accessed if you need emergency care.</p>\n<p><em>My Health Peace of Mind</em> will provide you with the ability to explore and discover information about health conditions, aging in general and how to have conversations about your future healthcare preferences, no matter what you choose. What’s important to us is that your voice is heard, documented and shared with the people closest to you.</p>\n<p>By joining <em>My Health Peace of Mind</em>, you begin a journey of making important personal decisions that are a gift to your loved ones.</p>\n<p><em>My Health Peace of Mind</em> is a collaborative project of <a href="http://cchospice.org/">The Carolinas Center</a>, a member organization that has led the way for patient-centered care at the end of life in the Carolinas. Together with our members and project partners (need page with project partners named), we want you to receive the care you desire when it is needed. Without planning in advance, your healthcare preferences might not be known or honored.</p>\n</div>
+4	<p>**"In a future development phase for My Health Peace of Mind, the ability to search and discover new resources relevant to your health care planning will be added.</p>\n<p>Once you identify new information the goal is to enable the ability to add the new information to your personal set of resources and/or to share within your network."**</p>
 \.
 
 
