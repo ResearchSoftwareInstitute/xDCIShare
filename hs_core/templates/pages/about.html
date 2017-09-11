@@ -1,0 +1,79 @@
+{% extends 'pages/page.html' %}
+
+{% load pages_tags mezzanine_tags %}
+
+{% block main %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>About My Health Peace of Mind</h2>
+                <p><em>My Health Peace of Mind</em> offers you a chance to connect the dots between the health care you want and to the people who might be called on to make those decisions on your behalf.
+                In a way, we see <em>My Health Peace of Mind</em> as helping you to own your own health.</p>
+            </div>
+        </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Nav tabs category -->
+            <ul class="nav nav-tabs faq-cat-tabs">
+                <li class="active"><a href="#faq-cat-1" data-toggle="tab">About</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content faq-cat-content">
+                <div class="tab-pane active in fade" id="faq-cat-1">
+                    <div class="panel-group" id="accordion-cat-1">
+                        <div class="panel panel-default panel-faq">
+                            <div class="panel-heading">
+                                <a data-toggle="collapse" data-parent="#accordion-cat-1" href="#faq-cat-1-sub-1">
+                                    <h4 class="panel-title">
+                                        My Health Peace of Mind
+                                        <span class="pull-right"><i class="glyphicon glyphicon-plus"></i></span>
+                                    </h4>
+                                </a>
+                            </div>
+                            <div id="faq-cat-1-sub-1" class="panel-collapse in">
+                                <div class="panel-body">
+                                    <p><em>My Health Peace of Mind</em> is a free tool for you, funded by a generous grant from The Duke Endowment.</p>
+
+                                    <p><em>My Health Peace of Mind</em> encourages people to have important conversations about the healthcare they would like to receive in the future if they were facing a life limiting condition.
+                                    By encouraging these conversations with those closest to you, you can formalize your wishes into legal documents called <strong>Advance Directives</strong>.
+                                    Advance Directives include a <strong>Living Will</strong> (a document that states your healthcare preferences) and a <strong>Healthcare Power of Attorney</strong> (a document that lets you name a trusted person to make healthcare decisions on your behalf if you are unable to make the decisions yourself).</p>
+
+                                    <p><em>My Health Peace of Mind</em> allows you to upload your documents online where they can be shared with the people who might be called on to make decisions one day.
+                                    This can include anyone you name – members of your family, a friend, your physician or some other trusted person.
+                                    Uploading and sharing your documents increases the chance that your healthcare wishes will be honored.
+                                    And through a secure partnership with hospitals or Vynca, <em>My Health Peace of Mind</em> will allow your <strong>Advance Directives</strong> to be accessed if you need emergency care.</p>
+
+                                    <p><em>My Health Peace of Mind</em> will provide you with the ability to explore and discover information about health conditions, aging in general and how to have conversations about your future healthcare preferences, no matter what you choose.
+                                    What’s important to us is that your voice is heard, documented and shared with the people closest to you.</p>
+
+                                    <p>By joining <em>My Health Peace of Mind</em>, you begin a journey of making important personal decisions that are a gift to your loved ones.</p>
+
+                                    <p><em>My Health Peace of Mind</em> is a collaborative project of <a href="http://cchospice.org/">The Carolinas Center</a>, a member organization that has led the way for patient-centered care at the end of life in the Carolinas.
+                                    Together with our members and project partners (need page with project partners named), we want you to receive the care you desire when it is needed. Without planning in advance, your healthcare preferences might not be known or honored.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {% block extra_js %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var url = 'https://api.github.com/repos/hydroshare/hydroshare/releases/latest';
+                $.get(url).done(function (data) {
+                  var version = data.tag_name;
+                  $('#release_no').html(version);
+                });
+            });
+        </script>
+    {% endblock %}
+{% endblock %}
