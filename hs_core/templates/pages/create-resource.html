@@ -31,13 +31,13 @@
                         <div class="alert alert-danger alert-dismissible" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                     aria-hidden="true">&times;</span></button>
-                            <strong>Failed to Create Resource: {{ resource_creation_error }}</strong>
+                            <strong>Failed to Create Document: {{ resource_creation_error }}</strong>
                         </div>
                     {% endif %}
                 {% endblock %}
 
                 <div class="alert alert-info">
-                    <p>When you click Create Resource, the files will be uploaded to the MyHPOM server. Click
+                    <p>When you click Create Document, the files will be uploaded to the MyHPOM server. <!--Click
                         <strong><a href="https://pages.hydroshare.org/sharing-and-privacy/formally-publishing-resources/"
                            target="_blank">here</a></strong>
                         to learn more about next steps to share and formally publish your data.</p>
@@ -45,24 +45,30 @@
             </div>
 
             <div class="col-xs-12">
-                <h2 class="page-title">Create Resource</h2>
+                <h2 class="page-title">Create Document</h2>
             </div>
 
             <div class="col-xs-12 height-fix">
-                <span class="btn btn-primary btn-create-resource pull-right">Create Resource</span>
+                <span class="btn btn-primary btn-create-resource pull-right">Create Document</span>
             </div>
 
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="display: none;">
                 <label for="dropdown-resource-type" class="col-form-label">Select a resource type</label>
+
+
                 <div id="dropdown-resource-type" class="dropdown">
+
+
                     <div id="select-resource-type" class="resource-type selected-type" data-toggle="dropdown"
                          aria-haspopup="true" aria-expanded="true">
-                        <img src="{{ STATIC_URL }}img/resource-icons/composite48x48.png"
-                             alt="Composite Resource Icon" class="resource-type-icon"/>
-                        <div class="resource-type-name">&nbsp;Composite</div>
+                        <img src="{{ STATIC_URL }}img/resource-icons/generic48x48.png"
+                             alt="Generic Resource Icon" class="resource-type-icon"/>
+                        <div class="resource-type-name">&nbsp;Generic</div>
                     </div>
 
                     <ul class="dropdown-menu shadow-md" aria-labelledby="select-resource-type">
+
+                        <!--
                         <li>
                             <a data-toggle="tooltip" data-placement="right"
                                title="A resource that holds a list of other resources in MyHPOM."
@@ -99,7 +105,7 @@
                                 <div class="resource-type-name">&nbsp;Web App</div>
                             </a>
                         </li>
-                        <!--
+
                         <li role="separator" class="divider"></li>
                         <li>
                             <a data-toggle="tooltip" data-placement="right"
@@ -195,7 +201,7 @@
             <label for="title" class="col-xs-12 col-form-label">Input a title</label>
 
             <div class="col-xs-12">
-                <input id="txtTitle" placeholder="Untitled Resource" class="form-control" type="text">
+                <input id="txtTitle" placeholder="Untitled Document" class="form-control" type="text">
                 <br>
             </div>
 
@@ -244,9 +250,11 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <br>
+                                    <!--
                                     <span>To load files from an iRODS server including your iRODS user MyHPOM server:</span>
-
+                                    -->
                                     <div id="irods-browse">
+                                    <!--
                                         <div id="log-into-irods">
                                             <a id="btn-signin-irods" type="button" class="btn btn-info"
                                                data-toggle="modal"
@@ -303,6 +311,7 @@
                                                 iRODS
                                             </a>
                                         </div>
+                                        -->
                                     </div>
                                 </div>
                             </div>
@@ -362,6 +371,7 @@
                             <li class="list-group-item">File size is limited to 1 GB per file for direct browser
                                 upload from your local disk.
                             </li>
+                            <!--
                             <li class="list-group-item"><p>Files larger than 1GB can be imported directly from any
                                 iRODS account. You can create
                                 a MyHPOM iRODS account from your <a href="/user/{{ user.id }}/">User Profile</a>
@@ -373,13 +383,14 @@
                             <li class="list-group-item"> You can also add files directly from any iRODS server
                                 regardless of the file size.
                             </li>
+                            -->
                         </ul>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12">
-                        <span class="btn btn-primary btn-create-resource pull-right">Create Resource</span>
+                        <span class="btn btn-primary btn-create-resource pull-right">Create Document</span>
                     </div>
                 </div>
             </div>
