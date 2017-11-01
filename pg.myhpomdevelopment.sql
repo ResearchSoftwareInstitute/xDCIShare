@@ -14190,14 +14190,14 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 12		1	Sign Up	sign-up	Sign Up	sign up	t	2016-01-25 19:40:35.894321+00	2016-01-25 19:40:35.894321+00	2	2016-01-25 19:40:35.893206+00	\N	\N	t	12	\N		Sign Up	richtextpage	f
 2		1	Home	/		My Health Peace of Mind gives you a place to plan and communicate important information about your future healthcare wishes to those closest to you and those who provide medical care to you. Join today to express you wishes.	t	2016-01-25 19:17:47.144396+00	2017-08-24 20:29:22.387597+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
 3		1	My Documents	my-documents	My Documents	my-documents	t	2016-01-25 19:22:48.667099+00	2017-08-30 19:05:23.007931+00	2	2016-01-25 19:22:48+00	\N	\N	t	2	\N	1,2,3	My Documents	richtextpage	f
-13		1	My Connections	my-connections	My Connections	my-connections	t	2016-06-23 17:07:04.042277+00	2017-08-30 19:09:08.603166+00	2	2016-06-23 17:07:04+00	\N	\N	t	4	\N	1	My Connections	richtextpage	f
+13		1	My Connections	my-connections	My Connections	my-connections	t	2016-06-23 17:07:04.042277+00	2017-08-30 19:09:08.603166+00	2	2016-06-23 17:07:04+00	\N	\N	t	3	\N	1	My Connections	richtextpage	f
 6		1	Apps	https://appsdev.myhpom.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 23:07:32.01117+00	1	2016-01-25 19:26:44+00	\N	\N	f	5	\N	1,2,3	Apps	link	f
 5		1	FAQS	faqs	FAQs	Frequently Asked Questions	t	2016-01-25 19:25:35.644671+00	2017-09-01 21:03:48.619822+00	2	2016-01-25 19:25:35+00	\N	\N	t	6	\N	1,2,3	FAQS	richtextpage	f
 7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for MyHPOM! We have sent you an email from myhpom.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started expressing your wishes with MyHPOM.	t	2016-01-25 19:28:12.867432+00	2017-08-01 23:13:58.772728+00	2	2016-01-25 19:28:12+00	\N	\N	t	7	\N		Verify Account	richtextpage	f
 8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation.	t	2016-01-25 19:32:20.248488+00	2017-08-01 23:14:46.696705+00	2	2016-01-25 19:32:20+00	\N	\N	t	8	\N		Resend Verification Email	form	f
 9		1	Terms of Use	terms-of-use	Terms of Use	MyHPOM Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-08-01 23:30:15.102304+00	2	2016-01-25 19:33:24+00	\N	\N	t	9	\N		Terms of Use	richtextpage	f
 14		1	About	about	About	About My Health Peace of Mind	f	2017-09-01 21:05:38.108141+00	2017-09-07 20:12:12.049697+00	2	2017-09-01 21:05:38+00	\N	\N	t	1	\N	1,2,3	About	richtextpage	f
-4		1	Discover	discover	Discover	**"In a future development phase for My Health Peace of Mind, the ability to search and discover new resources relevant to your health care planning will be added.	t	2016-01-25 19:23:52.174668+00	2017-09-11 05:23:37.953318+00	2	2016-01-25 19:23:52+00	\N	\N	t	3	\N	1,2,3	Discover	richtextpage	f
+4		1	Discover	discover	Discover	**"In a future development phase for My Health Peace of Mind, the ability to search and discover new resources relevant to your health care planning will be added.	t	2016-01-25 19:23:52.174668+00	2017-09-11 05:23:37.953318+00	2	2016-01-25 19:23:52+00	\N	\N	t	4	\N	1,2,3	Discover	richtextpage	f
 \.
 
 
