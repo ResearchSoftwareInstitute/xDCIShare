@@ -268,6 +268,8 @@ class UserProfile(models.Model):
 
     state = models.CharField(max_length=1024, null=True, blank=True)
     country = models.CharField(max_length=1024, null=True, blank=True)
+    zip_code = models.CharField(max_length=5)
+    ssn_last_four = models.CharField(max_length=4, null=True)
 
     create_irods_user_account = models.BooleanField(default=False,
                                                     help_text=('Check to create an iRODS user account in {s_name} user '

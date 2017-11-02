@@ -7356,6 +7356,8 @@ CREATE TABLE theme_userprofile (
     state character varying(1024),
     user_type character varying(1024),
     website character varying(200),
+    create_irods_user_account boolean NOT NULL,
+    ssn_last_four character varying(4),
     create_irods_user_account boolean NOT NULL
 );
 
@@ -10752,6 +10754,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 185	hs_tracking	0005_auto_20170613_1925	2017-07-26 17:17:57.757155+00
 186	theme	0008_auto_20170613_1925	2017-07-26 17:17:59.818007+00
 187	hs_core	0036_remove_baseresource_comments_count	2017-08-23 17:55:22.715575+00
+188	theme	0009_auto_20171102_0508	2017-11-02 05:14:34.032178+00
 \.
 
 
