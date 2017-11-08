@@ -1,23 +1,15 @@
 import requests
 
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
-from django.utils.encoding import force_text
-from django.utils import timezone
+from django.utils.translation import ugettext
 from django.contrib.auth.models import User
 
-from mezzanine.core.forms import Html5Mixin
 from mezzanine.generic.models import Rating
 from django_comments.forms import CommentSecurityForm
-from mezzanine.utils.views import ip_for_request
-from mezzanine.utils.email import split_addresses, send_mail_template
-from mezzanine.utils.cache import add_cache_bypass
 from mezzanine.conf import settings
 
 from .models import UserProfile
 from hs_core.hydroshare.users import create_account
-from hs_core.templatetags.hydroshare_tags import best_name
 
 
 class RatingForm(CommentSecurityForm):
