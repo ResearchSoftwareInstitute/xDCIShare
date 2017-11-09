@@ -3,6 +3,7 @@ import requests
 from django import forms
 from django.utils.translation import ugettext
 from django.contrib.auth.models import User
+from localflavor.us.forms import USZipCodeField
 
 from mezzanine.generic.models import Rating
 from django_comments.forms import CommentSecurityForm
@@ -69,10 +70,14 @@ class RatingForm(CommentSecurityForm):
 class SignupForm(forms.ModelForm):
     class Meta:
         model = User
-        exclude = ['last_login', 'date_joined', 'password']
+        fields = ['password1', 'password2', 'email', 'zip_code', 'username',
+                  'first_name', 'last_name', 'Captcha', 'challenge', 'response']
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput())
+
+    zip_code = USZipCodeField()
+
     Captcha = forms.CharField(required=False)
     challenge = forms.CharField()
     response = forms.CharField()
@@ -107,7 +112,7 @@ class SignupForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         data = self.cleaned_data
-        return create_account(
+        user = create_account(
             email=data['email'],
             username=data['username'],
             first_name=data['first_name'],
@@ -116,6 +121,9 @@ class SignupForm(forms.ModelForm):
             password=data['password'],
             active=False,
         )
+        user.userprofile.zip_code = data['zip_code']
+        user.userprofile.save()
+        return user
 
 
 class UserForm(forms.ModelForm):
