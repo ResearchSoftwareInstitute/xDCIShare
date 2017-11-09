@@ -12,6 +12,8 @@
 
     {% if readonly %}
         {% render_field field readonly="readonly" %}
+    {% elif label %}
+        {% render_field field placeholder=label %}
     {% elif inline_label %}
         {% render_field field placeholder=field.label %}
     {% else %}
