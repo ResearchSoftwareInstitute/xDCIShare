@@ -6,7 +6,8 @@ RUN pip install --upgrade pip && pip install djangorestframework==3.6.4
 RUN pip install \
   robot_detection \
   django-ipware \
-  django-test-without-migrations
+  django-test-without-migrations \
+  django-localflavor==1.5.2
 
 # Patch for Mezzanone 4.10 collecttemplates bugfix
 RUN echo -e "\
