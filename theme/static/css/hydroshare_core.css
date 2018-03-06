@@ -1313,6 +1313,10 @@ table.table-plain td{
     border-bottom: 1px solid #DDD;
 }
 
+.page-title + p{
+  margin: -24px 0 30px 0;
+}
+
 .label-file-name{
     font-weight: bold;
 }
