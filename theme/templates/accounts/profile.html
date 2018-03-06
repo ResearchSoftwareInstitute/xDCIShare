@@ -5,6 +5,13 @@
 
 {% block main %}
     <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <b>My Profile:</b> By including more about yourself, you can engage more targeted services and tools.
+                    <br>
+                </div>
+            </div>
+
         {% with profile_user.userprofile as profile %}
             <input type="hidden" id="url-create-irods-account" value="{% url 'create_irods_account' %}">
             <input type="hidden" id="url-delete-irods-account" value="{% url 'delete_irods_account' %}">
