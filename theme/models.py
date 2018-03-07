@@ -16,6 +16,8 @@ from mezzanine.pages.models import Page
 from mezzanine.utils.models import upload_to
 from mezzanine.conf import settings
 
+from localflavor.us.models import USZipCodeField
+
 
 DEFAULT_COPYRIGHT = ('&copy {{% now "Y" %}} {copy}').format(copy=settings.XDCI_DEFAULT_COPYRIGHT)
 
@@ -268,6 +270,8 @@ class UserProfile(models.Model):
 
     state = models.CharField(max_length=1024, null=True, blank=True)
     country = models.CharField(max_length=1024, null=True, blank=True)
+    zip_code = USZipCodeField()
+    ssn_last_four = models.CharField(max_length=4, null=True)
 
     create_irods_user_account = models.BooleanField(default=False,
                                                     help_text=('Check to create an iRODS user account in {s_name} user '

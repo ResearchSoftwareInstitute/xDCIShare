@@ -1,23 +1,16 @@
 import requests
 
 from django import forms
-from django.utils.translation import ugettext, ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
-from django.utils.encoding import force_text
-from django.utils import timezone
+from django.utils.translation import ugettext
 from django.contrib.auth.models import User
+from localflavor.us.forms import USZipCodeField
 
-from mezzanine.core.forms import Html5Mixin
 from mezzanine.generic.models import Rating
 from django_comments.forms import CommentSecurityForm
-from mezzanine.utils.views import ip_for_request
-from mezzanine.utils.email import split_addresses, send_mail_template
-from mezzanine.utils.cache import add_cache_bypass
 from mezzanine.conf import settings
 
 from .models import UserProfile
 from hs_core.hydroshare.users import create_account
-from hs_core.templatetags.hydroshare_tags import best_name
 
 from hydroshare import settings as hydroshare_settings
 
@@ -79,10 +72,14 @@ class RatingForm(CommentSecurityForm):
 class SignupForm(forms.ModelForm):
     class Meta:
         model = User
-        exclude = ['last_login', 'date_joined', 'password']
+        exclude = ['last_login', 'date_joined', 'password', 'zip_code']
+        fields = ['password1', 'password2', 'email', 'zip_code', 'username',
+                  'first_name', 'last_name']
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput())
+
+    zip_code = USZipCodeField()
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -119,7 +116,7 @@ class SignupForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         data = self.cleaned_data
-        return create_account(
+        user = create_account(
             email=data['email'],
             username=data['username'],
             first_name=data['first_name'],
@@ -128,6 +125,9 @@ class SignupForm(forms.ModelForm):
             password=data['password'],
             active=False,
         )
+        user.userprofile.zip_code = data['zip_code']
+        user.userprofile.save()
+        return user
 
 
 class UserForm(forms.ModelForm):
