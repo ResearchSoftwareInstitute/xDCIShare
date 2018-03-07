@@ -9863,7 +9863,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-09-07 20:02:36.12563+00	t	admin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$HJL7rtEltpLI$zXLakyO2wgliQoLrjALPwKLqsDRsrzTTcwFiX94jqc4=	2018-03-07 16:09:37.797679+00	t	myhpomadmin	MyHPOM	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -9872,7 +9872,7 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 --
 
 COPY auth_user_groups (id, user_id, group_id) FROM stdin;
-5	4	1
+8	4	1
 \.
 
 
@@ -9880,14 +9880,14 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 7, true);
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 8, true);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 6, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 7, true);
 
 
 --
@@ -10111,6 +10111,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 79	2017-09-07 20:07:32.486976+00	14	About	2	Changed content and keywords.	33	4
 80	2017-09-07 20:12:12.056248+00	14	About	2	Changed content and keywords.	33	4
 81	2017-09-11 05:23:37.961927+00	4	Discover	2	Changed status, content, slug, description and keywords.	33	4
+84	2018-03-07 16:10:05.665514+00	7	tempadmin	3		3	4
 \.
 
 
@@ -10118,7 +10119,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 81, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 84, true);
 
 
 --
@@ -10813,6 +10814,7 @@ hrp7ct4vtkcxjumiflobfvzlmsia52mf	ZjExNTBiZDNjYmJkOTY2OWNhMDkwMmYzNzU5ZTMzMzZiNjV
 t5vfpg0e972kq0ttvwugrp0vc7pkf89f	Y2Q2ZDg1ZjIxMGMwN2I2NTkyMjhmN2ExYjExMmM5NWJlMGVlMGIyYTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPVGg5OjFkbnRCUTpUeVUxaFprcUhuUzVEMEhCRTF0WHdUaVFvakEifQ==	2017-09-15 21:08:56.030892+00
 ypi9fizq5ba3w56r6b09q8vissf2k5mn	YjQ0MWI5OWI3NzNkYWVlODZmOGM4ZmZjMzc4MDEyMTdkY2E3NzM2Zjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEF3ZlE6MWRwRWdPOnZseFgwaVdpbDA5eVdkOVVlTllGN2REbXBvcyJ9	2017-09-19 14:18:28.421124+00
 0ez7kji9ii9hdwd6wbzfz9jkciwf8oyk	NzM0ZmUwZDUwMzU3MGJhMTMyM2E0OTJmNWIxMjgxNjk3NzNmZGM0MDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEEwZlE6MWRySENEOkdnRU5oNUtpNjJyRm9lMXl1anM3ZjBLZTRxcyJ9	2017-09-25 05:23:45.100701+00
+6q18ax7prqe5nfgv28ylphc5o43qv01b	YmRmMWNmNjc5YmQ3YjU5OTFkMTY0NjllMzZmOTI2YmJiZTJmZThmMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEE0ZlE6MWV0YmUyOmQ4ems4NGZXdlZnTXJvQlNoYXc3cDZwUFM5VSJ9	2018-03-21 16:10:22.788581+00
 \.
 
 
@@ -12982,6 +12984,8 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 102	2017-09-11 04:07:40.002769+00	1
 103	2017-09-11 05:23:10.352444+00	1
 104	2017-09-11 05:23:45.095113+00	86
+107	2018-03-07 16:09:15.433795+00	1
+108	2018-03-07 16:10:22.782385+00	90
 \.
 
 
@@ -12989,7 +12993,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 104, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 108, true);
 
 
 --
@@ -14019,6 +14023,21 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 1062	2017-09-11 05:23:45.098433+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	104
 1063	2017-09-11 05:23:46.604048+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/discover/	104
 1064	2017-09-11 05:23:49.257671+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	104
+1112	2018-03-07 16:09:15.435338+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	107
+1113	2018-03-07 16:09:15.437067+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	107
+1114	2018-03-07 16:09:23.682488+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	107
+1115	2018-03-07 16:09:26.288274+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	107
+1116	2018-03-07 16:09:37.810218+00	login	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	107
+1117	2018-03-07 16:09:37.925102+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/	107
+1118	2018-03-07 16:09:46.506036+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/	107
+1119	2018-03-07 16:09:51.451698+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	107
+1120	2018-03-07 16:09:51.50549+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	107
+1121	2018-03-07 16:10:00.395238+00	visit	2	user_ip=192.168.59.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	107
+1122	2018-03-07 16:10:05.923932+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	107
+1123	2018-03-07 16:10:05.980475+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	107
+1124	2018-03-07 16:10:22.737741+00	logout	2	user_ip=192.168.59.1 user_type=Unspecified user_email_domain=org	107
+1125	2018-03-07 16:10:22.784277+00	begin_session	2	user_ip=192.168.59.1 user_type=None user_email_domain=None	108
+1126	2018-03-07 16:10:22.785722+00	visit	2	user_ip=192.168.59.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	108
 \.
 
 
@@ -14026,7 +14045,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 1064, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 1126, true);
 
 
 --
@@ -14101,6 +14120,9 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 84	2017-09-05 14:18:28.414119+00	\N
 85	2017-09-07 20:02:16.943233+00	\N
 86	2017-09-11 05:23:45.091084+00	\N
+88	2018-03-07 16:07:28.778022+00	\N
+89	2018-03-07 16:09:15.431908+00	\N
+90	2018-03-07 16:10:22.780385+00	\N
 \.
 
 
@@ -14108,7 +14130,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 86, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 90, true);
 
 
 --
@@ -14506,7 +14528,7 @@ COPY theme_userprofile (id, picture, title, subject_areas, organization, phone_1
 -- Name: theme_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('theme_userprofile_id_seq', 6, true);
+SELECT pg_catalog.setval('theme_userprofile_id_seq', 7, true);
 
 
 --
