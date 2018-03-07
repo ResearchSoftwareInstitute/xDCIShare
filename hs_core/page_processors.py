@@ -1,5 +1,6 @@
 from functools import partial, wraps
 
+from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.forms.models import formset_factory
 
@@ -22,6 +23,16 @@ def landing_page(request, page):
     edit_resource = check_resource_mode(request)
 
     return get_page_context(page, request.user, resource_edit=edit_resource, request=request)
+
+
+@processor_for('sign-up')
+def sign_up(request, page):
+    """
+    Add Captcha SITE_KEY to the sign up page context.
+    """
+    return {
+        'SITE_KEY': settings.RECAPTCHA_SITE_KEY
+    }
 
 
 # resource type specific app needs to call this method to inject a crispy_form layout
