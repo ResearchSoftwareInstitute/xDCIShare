@@ -83,6 +83,7 @@ class SignupForm(forms.ModelForm):
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput())
+    organization = forms.CharField(required=True)
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
@@ -122,6 +123,7 @@ class SignupForm(forms.ModelForm):
         return create_account(
             email=data['email'],
             username=data['username'],
+            organization=data['organization'],
             first_name=data['first_name'],
             last_name=data['last_name'],
             superuser=False,

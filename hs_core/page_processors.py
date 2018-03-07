@@ -1,3 +1,6 @@
+"""Page processors for hs_core app."""
+
+from dateutil import parser
 from functools import partial, wraps
 
 from django.conf import settings
@@ -6,20 +9,20 @@ from django.forms.models import formset_factory
 
 from mezzanine.pages.page_processors import processor_for
 
-from hs_core.models import AbstractResource, GenericResource, Relation
+from hs_core.models import GenericResource, Relation
 from hs_core import languages_iso
 from forms import CreatorForm, ContributorForm, SubjectsForm, AbstractForm, RelationForm, \
     SourceForm, FundingAgencyForm, BaseCreatorFormSet, BaseContributorFormSet, BaseFormSet, \
     MetaDataElementDeleteForm, CoverageTemporalForm, CoverageSpatialForm, ExtendedMetadataForm
-from hs_tools_resource.models import SupportedResTypes, ToolResource
-from hs_core.views.utils import authorize, ACTION_TO_AUTHORIZE, show_relations_section, \
+from hs_core.views.utils import show_relations_section, \
     can_user_copy_resource
 from hs_core.hydroshare.resource import METADATA_STATUS_SUFFICIENT, METADATA_STATUS_INSUFFICIENT
-from hs_tools_resource.utils import parse_app_url_template
+from hs_tools_resource.app_launch_helper import resource_level_tool_urls
 
 
 @processor_for(GenericResource)
 def landing_page(request, page):
+    """Return resource landing page context."""
     edit_resource = check_resource_mode(request)
 
     return get_page_context(page, request.user, resource_edit=edit_resource, request=request)
@@ -37,8 +40,11 @@ def sign_up(request, page):
 
 # resource type specific app needs to call this method to inject a crispy_form layout
 # object for displaying metadata UI for the extended metadata for their resource
+
+
 def get_page_context(page, user, resource_edit=False, extended_metadata_layout=None, request=None):
-    """
+    """Inject a crispy_form layout into the page to display extended metadata.
+
     :param page: which page to get the template context for
     :param user: the user who is viewing the page
     :param resource_edit: True if and only if the page should render in edit mode
@@ -47,6 +53,8 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
     :return: the basic template context (a python dict) used to render a resource page. can and
     should be extended by page/resource-specific page_processors
 
+    Resource type specific app needs to call this method to inject a crispy_form layout
+    object for displaying metadata UI for the extended metadata for their resource
 
     TODO: refactor to make it clear that there are two different modes = EDITABLE | READONLY
                 - split into two functions: get_readonly_page_context(...) and
@@ -77,62 +85,13 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
     relevant_tools = None
     tool_homepage_url = None
     if not resource_edit:  # In view mode
-        content_model_str = str(content_model.content_model).lower()
-        if content_model_str.lower() == "toolresource":
-            if content_model.metadata.homepage_url.exists():
-                tool_homepage_url = content_model.metadata.homepage_url.first().value
-
-        relevant_tools = []
-        # loop through all SupportedResTypes objs (one webapp resources has one
-        # SupportedResTypes obj)
-        for res_type in SupportedResTypes.objects.all():
-            supported_flag = False
-            for supported_type in res_type.supported_res_types.all():
-                if content_model_str == supported_type.description.lower():
-                    supported_flag = True
-                    break
-
-            if supported_flag:
-                # reverse lookup: metadata obj --> res obj
-                tool_res_obj = ToolResource.objects.get(object_id=res_type.object_id)
-                if tool_res_obj:
-                    sharing_status_supported = False
-
-                    supported_sharing_status_obj = tool_res_obj.metadata.\
-                        supported_sharing_status.first()
-                    if supported_sharing_status_obj is not None:
-                        suppored_sharing_status_str = supported_sharing_status_obj.\
-                                                      get_sharing_status_str()
-                        if len(suppored_sharing_status_str) > 0:
-                            res_sharing_status = content_model.raccess.sharing_status
-                            if suppored_sharing_status_str.lower().\
-                                    find(res_sharing_status.lower()) != -1:
-                                sharing_status_supported = True
-                    else:
-                        # backward compatible: webapp without supported_sharing_status metadata
-                        # is considered to support all sharing status
-                        sharing_status_supported = True
-
-                    if sharing_status_supported:
-                        is_authorized = authorize(
-                            request, tool_res_obj.short_id,
-                            needed_permission=ACTION_TO_AUTHORIZE.VIEW_RESOURCE,
-                            raises_exception=False)[1]
-                        if is_authorized:
-                            tool_url = tool_res_obj.metadata.url_bases.first().value \
-                                if tool_res_obj.metadata.url_bases.first() else None
-                            tool_icon_url = tool_res_obj.metadata.tool_icon.first().data_url \
-                                if tool_res_obj.metadata.tool_icon.first() else "raise-img-error"
-                            hs_term_dict_user = {}
-                            hs_term_dict_user["HS_USR_NAME"] = request.user.username if \
-                                request.user.is_authenticated() else "anonymous"
-                            tool_url_new = parse_app_url_template(
-                                tool_url, [content_model.get_hs_term_dict(), hs_term_dict_user])
-                            if tool_url_new is not None:
-                                tl = {'title': str(tool_res_obj.metadata.title.value),
-                                      'icon_url': tool_icon_url,
-                                      'url': tool_url_new}
-                                relevant_tools.append(tl)
+        landing_page_res_obj = content_model
+        landing_page_res_type_str = landing_page_res_obj.resource_type
+        if landing_page_res_type_str.lower() == "toolresource":
+            if landing_page_res_obj.metadata.app_home_page_url:
+                tool_homepage_url = content_model.metadata.app_home_page_url.value
+        else:
+            relevant_tools = resource_level_tool_urls(landing_page_res_obj, request)
 
     just_created = False
     just_copied = False
@@ -157,7 +116,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
         if 'just_published' in request.session:
             del request.session['just_published']
 
-    bag_url = AbstractResource.bag_url(content_model.short_id)
+    bag_url = content_model.bag_url
 
     if user.is_authenticated():
         show_content_files = user.uaccess.can_view_resource(content_model)
@@ -168,7 +127,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
 
     allow_copy = can_user_copy_resource(content_model, user)
 
-    qholder = content_model.raccess.get_quota_holder()
+    qholder = content_model.get_quota_holder()
 
     # user requested the resource in READONLY mode
     if not resource_edit:
@@ -176,8 +135,10 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
         if len(temporal_coverages) > 0:
             temporal_coverage_data_dict = {}
             temporal_coverage = temporal_coverages[0]
-            temporal_coverage_data_dict['start_date'] = temporal_coverage.value['start']
-            temporal_coverage_data_dict['end_date'] = temporal_coverage.value['end']
+            start_date = parser.parse(temporal_coverage.value['start'])
+            end_date = parser.parse(temporal_coverage.value['end'])
+            temporal_coverage_data_dict['start_date'] = start_date.strftime('%Y-%m-%d')
+            temporal_coverage_data_dict['end_date'] = end_date.strftime('%Y-%m-%d')
             temporal_coverage_data_dict['name'] = temporal_coverage.value.get('name', '')
         else:
             temporal_coverage_data_dict = None
@@ -366,8 +327,10 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
     temporal_coverage_data_dict = {}
     if len(temporal_coverages) > 0:
         temporal_coverage = temporal_coverages[0]
-        temporal_coverage_data_dict['start'] = temporal_coverage.value['start']
-        temporal_coverage_data_dict['end'] = temporal_coverage.value['end']
+        start_date = parser.parse(temporal_coverage.value['start'])
+        end_date = parser.parse(temporal_coverage.value['end'])
+        temporal_coverage_data_dict['start'] = start_date.strftime('%m-%d-%Y')
+        temporal_coverage_data_dict['end'] = end_date.strftime('%m-%d-%Y')
         temporal_coverage_data_dict['name'] = temporal_coverage.value.get('name', '')
         temporal_coverage_data_dict['id'] = temporal_coverage.id
     else:
@@ -435,6 +398,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
                'metadata_status': metadata_status,
                'missing_metadata_elements': content_model.metadata.get_required_missing_elements(),
                'citation': content_model.get_citation(),
+               'rights': content_model.metadata.rights,
                'extended_metadata_layout': extended_metadata_layout,
                'bag_url': bag_url,
                'current_user': user,
@@ -456,8 +420,8 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
 
 
 def check_resource_mode(request):
-    """
-    Determines whether the `request` represents an attempt to edit a resource.
+    """Determine whether the `request` represents an attempt to edit a resource.
+
     A request is considered an attempt
     to edit if any of the following conditions are met:
         1. the HTTP verb is not "GET"
@@ -481,6 +445,7 @@ def check_resource_mode(request):
 
 
 def check_for_validation(request):
+    """Check for validation error in request session."""
     if request.method == "GET":
         validation_error = request.session.get('validation_error', None)
         if validation_error:

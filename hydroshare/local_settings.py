@@ -146,6 +146,7 @@ HS_USER_ZONE_PROXY_USER = ''
 HS_USER_ZONE_PROXY_USER_PWD = ''
 HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD = ''
 HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD = ''
+HS_USER_ZONE_PRODUCTION_PATH = '/hydroshareuserZone/home/localHydroProxy'
 
 # the local MyHPOM proxy user (a counterpart of wwwHydroProxy) in a federated zone with HydroShare Zone
 HS_LOCAL_PROXY_USER_IN_FED_ZONE = 'localTestHydroProxy'
@@ -164,7 +165,15 @@ HS_WWW_IRODS_ZONE = ''
 HS_USER_IRODS_ZONE = 'hydroshareuserZone'
 
 # Email configuration
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = 'myhpom@gmail.com'
+EMAIL_HOST_PASSWORD = 'MyHpomBuildUser123!'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'myhpom@gmail.com'
+DEFAULT_SUPPORT_EMAIL = 'myhpom@gmail.com'
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_USER = ''
 #EMAIL_HOST_PASSWORD = ''
 #EMAIL_HOST = ''
@@ -176,3 +185,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 HYDROSHARE_SHARED_TEMP = '/shared_tmp'
 
 TIME_ZONE = "Etc/UTC"
+
+RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
+RECAPTCHA_SITE_KEY="6LfjNkMUAAAAAFdhtKLWQ6Knt0-3PulxNi6hMXBX"
+RECAPTCHA_SECRET_KEY="6LfjNkMUAAAAAAvo2uNsE3WinW_k9dQGHAi7rXz6"

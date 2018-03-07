@@ -7,14 +7,15 @@ from hs_core.hydroshare import resource
 from hs_core.testing import MockIRODSTestCaseMixin
 from hs_core import hydroshare
 from hs_access_control.models import PrivilegeCodes
+from hs_core.hydroshare.utils import QuotaException
 
 
 class TestChangeQuotaHolder(MockIRODSTestCaseMixin, TestCase):
     def setUp(self):
         super(TestChangeQuotaHolder, self).setUp()
 
-        self.hs_group, _ = Group.objects.get_or_create(name='Resource Author')
-        # create a user
+        self.hs_group, _ = Group.objects.get_or_create(name='Hydroshare Author')
+        # create two users
         self.user1 = hydroshare.create_account(
             'test_user1@email.com',
             username='owner1',
@@ -41,22 +42,31 @@ class TestChangeQuotaHolder(MockIRODSTestCaseMixin, TestCase):
             )
 
         self.assertTrue(res.creator == self.user1)
-        self.assertTrue(res.raccess.get_quota_holder() == self.user1)
+        self.assertTrue(res.get_quota_holder() == self.user1)
         self.assertFalse(res.raccess.public)
         self.assertFalse(res.raccess.discoverable)
 
         with self.assertRaises(PermissionDenied):
-            res.raccess.set_quota_holder(self.user1, self.user2)
+            res.set_quota_holder(self.user1, self.user2)
 
         # test to make sure one owner can transfer quota holder to another owner
         self.user1.uaccess.share_resource_with_user(res, self.user2, PrivilegeCodes.OWNER)
-        res.raccess.set_quota_holder(self.user1, self.user2)
-        self.assertTrue(res.raccess.get_quota_holder() == self.user2)
-        self.assertFalse(res.raccess.get_quota_holder() == self.user1)
+        res.set_quota_holder(self.user1, self.user2)
+        self.assertTrue(res.get_quota_holder() == self.user2)
+        self.assertFalse(res.get_quota_holder() == self.user1)
 
         # test to make sure quota holder cannot be removed from ownership
         with self.assertRaises(PermissionDenied):
             self.user1.uaccess.unshare_resource_with_user(res, self.user2)
+
+        # test to make sure quota holder cannot be changed to an owner who is over-quota
+        uquota = self.user1.quotas.first()
+        # make user1's quota over hard limit 125%
+        uquota.used_value = uquota.allocated_value * 1.3
+        uquota.save()
+        # QuotaException should be raised when attempting to change quota holder to user1
+        with self.assertRaises(QuotaException):
+            res.set_quota_holder(self.user2, self.user1)
 
         if res:
             res.delete()

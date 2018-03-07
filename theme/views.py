@@ -1,7 +1,7 @@
 from json import dumps
 
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login
@@ -29,6 +29,7 @@ from mezzanine.accounts.forms import LoginForm
 from mezzanine.utils.views import render
 
 from hs_core.views.utils import run_ssh_command
+from hs_core.hydroshare.utils import user_from_id
 from hs_access_control.models import GroupMembershipRequest
 from theme.forms import RatingForm, UserProfileForm, UserForm
 from theme.models import UserProfile
@@ -81,6 +82,16 @@ class UserProfileView(TemplateView):
         }
 
 
+class UserPasswordResetView(TemplateView):
+    template_name = 'accounts/reset_password.html'
+
+    def get_context_data(self, **kwargs):
+        token = kwargs.pop('token', None)
+        if token is None:
+            raise ValidationError('Unauthorised access to reset password')
+        context = super(UserPasswordResetView, self).get_context_data(**kwargs)
+        return context
+
 # added by Hong Yi to address issue #186 to customize Mezzanine-based rating form and view
 def rating(request):
     """
@@ -130,12 +141,13 @@ def signup(request, template="accounts/account_signup.html", extra_context=None)
                                     "an email when your account is activated."))
                 else:
                     send_verification_mail(request, new_user, "signup_verify")
-                    info(request, _("A verification email has been sent with "
-                                    "a link for activating your account. If you "
-                                    "do not receive this email please check your "
-                                    "spam folder as sometimes the confirmation email "
-                                    "gets flagged as spam. If you entered an incorrect "
-                                    "email address, please request an account again."))
+                    info(request, _("A verification email has been sent to " + new_user.email +
+                                    " with a link that must be clicked prior to your account "
+                                    "being activated. If you do not receive this email please "
+                                    "check that you entered your address correctly, or your " 
+                                    "spam folder as sometimes the email gets flagged as spam. "
+                                    "If you entered an incorrect email address, please request "
+                                    "an account again."))
                 return redirect(next_url(request) or "/")
             else:
                 info(request, _("Successfully signed up"))
@@ -166,21 +178,21 @@ def update_user_profile(request):
     old_email = user.email
     user_form = UserForm(request.POST, instance=user)
     user_profile = UserProfile.objects.filter(user=user).first()
+
+    dict_items = user_profile.organization.split(",")
+    for dict_item in dict_items:
+        # Update Dictionaries
+        try:
+            University.objects.get(name=dict_item)
+        except ObjectDoesNotExist:
+            new_term = UncategorizedTerm(name=dict_item)
+            new_term.save()
+
     profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
     try:
         with transaction.atomic():
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
-
-                password1 = request.POST['password1']
-                password2 = request.POST['password2']
-                if len(password1) > 0:
-                    if password1 == password2:
-                        user.set_password(password1)
-                        user.save()
-                    else:
-                        raise ValidationError("Passwords do not match.")
-
                 profile = profile_form.save(commit=False)
                 profile.user = request.user
                 profile.save()
@@ -241,6 +253,79 @@ def update_user_profile(request):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
+def request_password_reset(request):
+    username_or_email = request.POST['username']
+    try:
+        user = user_from_id(username_or_email)
+    except Exception as ex:
+        messages.error(request, "No user is found for the provided username or email")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    messages.info(request,
+                  _("A verification email has been sent to your email with "
+                    "a link for resetting your password. If you "
+                    "do not receive this email please check your "
+                    "spam folder as sometimes the confirmation email "
+                    "gets flagged as spam."
+                    ))
+
+    # send an email to the the user notifying the password reset request
+    send_verification_mail_for_password_reset(request, user)
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def update_user_password(request):
+    user = request.user
+    old_password = request.POST['password']
+    password1 = request.POST['password1']
+    password2 = request.POST['password2']
+    password1 = password1.strip()
+    password2 = password2.strip()
+    if not user.check_password(old_password):
+        messages.error(request, "Your current password does not match.")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    if len(password1) < 6:
+        messages.error(request, "Password must be at least 6 characters long.")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    if password1 == password2:
+        user.set_password(password1)
+        user.save()
+    else:
+        messages.error(request, "Passwords do not match.")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    messages.info(request, 'Password reset was successful')
+    return HttpResponseRedirect('/user/{}/'.format(user.id))
+
+
+@login_required
+def reset_user_password(request):
+    user = request.user
+    password1 = request.POST['password1']
+    password2 = request.POST['password2']
+    password1 = password1.strip()
+    password2 = password2.strip()
+
+    if len(password1) < 6:
+        messages.error(request, "Password must be at least 6 characters long.")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    if password1 == password2:
+        user.set_password(password1)
+        user.save()
+    else:
+        messages.error(request, "Passwords do not match.")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+    messages.info(request, 'Password reset was successful')
+    # redirect to home page
+    return HttpResponseRedirect('/')
+
+
 def send_verification_mail_for_email_update(request, user, new_email, verification_type):
     """
     Sends an email with a verification link to users when
@@ -269,6 +354,32 @@ def send_verification_mail_for_email_update(request, user, new_email, verificati
                        context=context)
 
 
+def send_verification_mail_for_password_reset(request, user):
+    """
+    Sends an email with a verification link to users when
+    they request to reset forgotten password to their email. The email is sent to the new email.
+    The actual reset of of password will begin after the user clicks the link
+    provided in the email.
+    The ``verification_type`` arg is both the name of the urlpattern for
+    the verification link, as well as the names of the email templates
+    to use.
+    """
+    reset_url = reverse('email_verify_password_reset', kwargs={
+        "uidb36": int_to_base36(user.id),
+        "token": default_token_generator.make_token(user)
+    }) + "?next=" + (next_url(request) or "/")
+    context = {
+        "request": request,
+        "user": user,
+        "reset_url": reset_url
+    }
+    subject_template_name = "email/reset_password_subject.txt"
+    subject = subject_template(subject_template_name, context)
+    send_mail_template(subject, "email/reset_password",
+                       settings.DEFAULT_FROM_EMAIL, user.email,
+                       context=context)
+
+
 def login(request, template="accounts/account_login.html",
           form_class=LoginForm, extra_context=None):
     """
@@ -279,10 +390,9 @@ def login(request, template="accounts/account_login.html",
     if request.method == "POST" and form.is_valid():
         login_msg = "Successfully logged in"
         authenticated_user = form.save()
-        # Comment out for now to hide quota info message until backend script is hooked up
-        # add_msg = get_quota_message(authenticated_user)
-        # if add_msg:
-        #    login_msg += add_msg
+        add_msg = get_quota_message(authenticated_user)
+        if add_msg:
+            login_msg += ' - ' + add_msg
         info(request, _(login_msg))
         auth_login(request, authenticated_user)
         return login_redirect(request)
@@ -311,6 +421,22 @@ def email_verify(request, new_email, uidb36=None, token=None):
         messages.error(request, _("The link you clicked is no longer valid."))
         return redirect("/")
 
+
+def email_verify_password_reset(request, uidb36=None, token=None):
+    """
+    View for the link in the reset password email sent to a user
+    when they clicked the forgot password link.
+    User is redirected to password reset page where the user can enter new password.
+    """
+
+    user = authenticate(uidb36=uidb36, token=token, is_active=True)
+    if user is not None:
+        auth_login(request, user)
+        # redirect to user to password reset page
+        return HttpResponseRedirect(reverse('new_password_for_reset', kwargs={'token': token}))
+    else:
+        messages.error(request, _("The link you clicked is no longer valid."))
+        return redirect("/")
 
 @login_required
 def deactivate_user(request):
