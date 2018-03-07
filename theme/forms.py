@@ -72,8 +72,9 @@ class RatingForm(CommentSecurityForm):
 class SignupForm(forms.ModelForm):
     class Meta:
         model = User
+        exclude = ['last_login', 'date_joined', 'password', 'zip_code']
         fields = ['password1', 'password2', 'email', 'zip_code', 'username',
-                  'first_name', 'last_name', 'Captcha', 'challenge', 'response']
+                  'first_name', 'last_name']
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput())
