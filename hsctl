@@ -5,15 +5,21 @@
 # Author: Michael Stealey <michael.j.stealey@gmail.com>
 
 ### Local Config ###
+
 CONFIG_DIRECTORY='./config'
 CONFIG_FILE=${CONFIG_DIRECTORY}'/hydroshare-config.yaml'
 HOME_DIR=${PWD}
+
+# Read any CONFIG_FILE overrides from the local environment:
+if [ -f .env ]; then
+    source .env
+fi
 
 # Read hydroshare-config.yaml into environment
 sed -e "s/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g" ${CONFIG_FILE} > $CONFIG_DIRECTORY/hydroshare-config.sh
 sed -i 's/#.*$//' ${CONFIG_DIRECTORY}/hydroshare-config.sh
 sed -i '/^\s*$/d' ${CONFIG_DIRECTORY}/hydroshare-config.sh
-while read line; do export $line; done < <(cat ${CONFIG_DIRECTORY}/hydroshare-config.sh)
+source ${CONFIG_DIRECTORY}/hydroshare-config.sh
 
 ### Docker Variables ###
 HS_DOCKER_CONTAINERS=(hydroshare defaultworker)

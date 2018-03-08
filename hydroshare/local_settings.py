@@ -8,14 +8,20 @@ import os
 from kombu import Queue, Exchange
 from kombu.common import Broadcast
 
-DEBUG = True
+DEBUG = os.environ.get('DEBUG') == 'True'
 
-# DEVELOPMENT EXAMPLE ONLY
-# Make these unique, and don't share it with anybody
-SECRET_KEY = "9e2e3c2d-8282-41b2-a027-de304c0bc3d944963c9a-4778-43e0-947c-38889e976dcab9f328cb-1576-4314-bfa6-70c42a6e773c"
-NEVERCACHE_KEY = "7b205669-41dd-40db-9b96-c6f93b66123496a56be1-607f-4dbf-bf62-3315fb353ce6f12a7d28-06ad-4ef7-9266-b5ea66ed2519"
+# These secret keys are used by the pg.myhpomdevelopment.sql development dump,
+# if you change these, you will not be able to login with users setup in the
+# dump:
+# TODO These should not be a part of any production configuration, as anyone that
+# gets a copy of the git repository will be able to access passwords on the
+# sysstem. They should ultimately be a part of the dev settings template.
+SECRET_KEY = os.environ.get('SECRET_KEY', '9e2e3c2d-8282-41b2-a027-de304c0bc3d944963c9a-4778-43e0-947c-38889e976dcab9f328cb-1576-4314-bfa6-70c42a6e773c')
+NEVERCACHE_KEY = os.environ.get('NEVERCACHE_KEY', '7b205669-41dd-40db-9b96-c6f93b66123496a56be1-607f-4dbf-bf62-3315fb353ce6f12a7d28-06ad-4ef7-9266-b5ea66ed2519')
 
-ALLOWED_HOSTS = "*"
+# TODO we should not allow any host by default, as it represents a security
+# risk. See the Django docs: http://devdocs.io/django~1.8/ref/settings#std:setting-ALLOWED_HOSTS
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*')
 
 RABBITMQ_HOST = os.environ.get('RABBITMQ_PORT_5672_TCP_ADDR', 'localhost')
 RABBITMQ_PORT = '5672'
@@ -164,15 +170,19 @@ HS_WWW_IRODS_ZONE = ''
 HS_USER_IRODS_ZONE = 'hydroshareuserZone'
 
 # Email configuration
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_HOST_USER = ''
-#EMAIL_HOST_PASSWORD = ''
-#EMAIL_HOST = ''
-#EMAIL_PORT = ''
-#EMAIL_USE_TLS = True
-#DEFAULT_FROM_EMAIL = ''
-#DEFAULT_SUPPORT_EMAIL=''
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 0))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
+DEFAULT_SUPPORT_EMAIL = os.environ.get('DEFAULT_SUPPORT_EMAIL')
 
-HYDROSHARE_SHARED_TEMP = '/shared_tmp'
+HYDROSHARE_SHARED_TEMP = os.environ.get('HYDROSHARE_SHARED_TEMP', '/shared_tmp')
 
 TIME_ZONE = "Etc/UTC"
+
+RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
+RECAPTCHA_SITE_KEY=os.environ.get('RECAPTCHA_SITE_KEY')
+RECAPTCHA_SECRET_KEY=os.environ.get('RECAPTCHA_SECRET_KEY')
