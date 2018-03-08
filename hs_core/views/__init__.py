@@ -1084,34 +1084,29 @@ def create_resource(request, *args, **kwargs):
     res_title = request.POST['title']
     resource_files = request.FILES.values()
     source_names = []
-
-    # NOTE: We want to remove any access that users have to upload a file from
-    # iRods, so this following code is irrelevant to a front-facing create_resource method
-
-    # irods_fnames = request.POST.get('irods_file_names')
-    # federated = request.POST.get("irods_federated").lower() == 'true'
+    irods_fnames = request.POST.get('irods_file_names')
+    federated = request.POST.get("irods_federated").lower() == 'true'
     # TODO: need to make REST API consistent with internal API. This is just "move" now there.
     fed_copy_or_move = request.POST.get("copy-or-move")
+    if irods_fnames:
+        if federated:
+            source_names = irods_fnames.split(',')
+        else:
+            user = request.POST.get('irods-username')
+            password = request.POST.get("irods-password")
+            port = request.POST.get("irods-port")
+            host = request.POST.get("irods-host")
+            zone = request.POST.get("irods-zone")
+            try:
+                upload_from_irods(username=user, password=password, host=host, port=port,
+                                  zone=zone, irods_fnames=irods_fnames, res_files=resource_files)
+            except utils.ResourceFileSizeException as ex:
+                ajax_response_data['message'] = ex.message
+                return JsonResponse(ajax_response_data)
 
-    # if irods_fnames:
-    #     if federated:
-    #         source_names = irods_fnames.split(',')
-    #     else:
-    #         user = request.POST.get('irods-username')
-    #         password = request.POST.get("irods-password")
-    #         port = request.POST.get("irods-port")
-    #         host = request.POST.get("irods-host")
-    #         zone = request.POST.get("irods-zone")
-    #         try:
-    #             upload_from_irods(username=user, password=password, host=host, port=port,
-    #                               zone=zone, irods_fnames=irods_fnames, res_files=resource_files)
-    #         except utils.ResourceFileSizeException as ex:
-    #             ajax_response_data['message'] = ex.message
-    #             return JsonResponse(ajax_response_data)
-
-    #         except SessionException as ex:
-    #             ajax_response_data['message'] = ex.stderr
-    #             return JsonResponse(ajax_response_data)
+            except SessionException as ex:
+                ajax_response_data['message'] = ex.stderr
+                return JsonResponse(ajax_response_data)
 
     url_key = "page_redirect_url"
     try:
