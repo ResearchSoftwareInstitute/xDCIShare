@@ -164,35 +164,6 @@
                                         <input class="form-control form-required" value="{{ profile_user.last_name }}" name="last_name">
                                     </fieldset>
                                 </div>
-
-                                <div class="row">
-                                    {# Organization #}
-                                    <fieldset class="col-sm-6">
-                                        <label>Organization *</label>
-                                        <input class="form-control form-required" {% if profile.organization %}value="{{ profile.organization }}"{% endif %} name="organization">
-                                        <small class="text-muted">The name of the organization you work for.</small>
-                                    </fieldset>
-
-                                    {# Title #}
-                                    <fieldset class="col-sm-6">
-                                        <label>Title</label>
-                                        <input class="form-control" {% if profile.title %}value="{{ profile.title }}"{% endif %} name="title">
-                                        <small class="text-muted">e.g. Assistant Professor, Program Director, Adjunct
-                                            Professor, Software Developer.
-                                        </small>
-                                    </fieldset>
-                                </div>
-
-                                <div class="row">
-                                    {# Subject areas #}
-                                    <fieldset class="col-sm-12">
-                                        <label>Subject areas</label>
-                                        <input class="form-control" {% if profile.subject_areas %}value="{{ profile.subject_areas }}"{% endif %} name="subject_areas">
-                                        <small class="text-muted">A comma-separated list of subject areas you are interested
-                                            in researching. e.g. "Computer Science, Hydrology, Water Management"
-                                        </small>
-                                    </fieldset>
-                                </div>
                             </div>
                             {% endif %}
 
@@ -218,19 +189,6 @@
                                                         class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </div>
-                                        {% else %}
-                                            <hr>
-                                            <fieldset>
-                                            <label>Add a CV</label>
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <span id="cv-custom-upload" class="btn btn-primary btn-file">
-                                                        Browse&hellip; <input type="file" name="cv">
-                                                    </span>
-                                                </span>
-                                                <input type="text" class="form-control" readonly>
-                                            </div>
-                                            </fieldset>
                                         {% endif %}
                                     </div>
                                 </div>

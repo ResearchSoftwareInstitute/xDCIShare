@@ -159,12 +159,6 @@ class UserProfileForm(forms.ModelForm):
         model = UserProfile
         exclude = ['user', 'public', 'create_irods_user_account']
 
-    def clean_organization(self):
-        data = self.cleaned_data['organization']
-        if len(data.strip()) == 0:
-            raise forms.ValidationError("Organization is a required field.")
-        return data
-
     def clean_country(self):
         data = self.cleaned_data['country']
         if len(data.strip()) == 0:
