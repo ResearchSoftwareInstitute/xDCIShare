@@ -10,6 +10,9 @@ CONFIG_DIRECTORY='./config'
 CONFIG_FILE=${CONFIG_DIRECTORY}'/hydroshare-config.yaml'
 HOME_DIR=${PWD}
 
+# by default use the same group id as the user id:
+GID=$UID
+
 # Read any CONFIG_FILE overrides from the local environment:
 if [ -f .env ]; then
     source .env
