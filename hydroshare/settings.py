@@ -5,6 +5,9 @@ TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
 import os
 import importlib
+from dotenv import load_dotenv
+
+load_dotenv()
 
 local_settings_module = os.environ.get('LOCAL_SETTINGS', 'hydroshare.local_settings')
 

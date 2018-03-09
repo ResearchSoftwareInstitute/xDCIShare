@@ -17,3 +17,34 @@ MyHPOM is a collaborative website being developed for better management of perso
 If you want to contribute to MyHPOM, please see the [MyHPOM Wiki](https://github.com/SoftwareResearchInstitute/MyHPOM/wiki/).
 
 More information can be found in the [MyHPOM Wiki](https://github.com/SoftwareResearchInstitute/MyHPOM/wiki/).
+
+Environments
+============
+
+This project is set up to read environmental settings from your .env file.
+Common configurable settings will be picked up from this file.
+
+Development
+-----------
+
+To get started with your own configurable developer setup perform the following
+commands:
+
+```shell
+
+cp ./.env.example .env
+cp ./hydroshare/dev_settings.example.py ./hydroshare/dev_settings.py
+```
+
+Once these changes are made you can customize your development environment
+within your dev_settings.py (which will not be added to git).
+
+Deployment
+----------
+
+Deployments settings can also take advantage of dotenv based settings by
+specifying any variables directly in a .env file.
+
+You can also use the .env file to specify a different hydroshare-config.yaml
+derived file (i.e., a production version).
+
