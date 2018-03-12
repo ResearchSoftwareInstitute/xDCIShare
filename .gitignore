@@ -9,6 +9,7 @@
 .DS_Store
 .idea
 .env
+.env.template
 /celery
 /config/hydroshare-config.sh
 /config/hydroshare-config.yaml
