@@ -82,7 +82,7 @@ CARTO_HOME='/hs_tmp/node_modules/carto'
 USE_SOUTH = False
 SITE_TITLE = "MyHPOM"
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = true
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 
 #############
