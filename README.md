@@ -48,3 +48,15 @@ specifying any variables directly in a .env file.
 You can also use the .env file to specify a different hydroshare-config.yaml
 derived file (i.e., a production version).
 
+The staging deployment configuration is configured this way and requires the
+following steps to do a formal deploy:
+
+ 1. Any custom configuration is stored within `.env.staging.template.gpg`, a
+    [gpg](https://www.gnupg.org/) encrypted file. Ask another developer or
+    sysadmin for the password to edit this file.
+
+ 2. When Jenkins checks out a version of this project it will decrypt this file
+    to `.env.staging.template`, and run it through the `envsubst` built-in linux
+    command. This allows template files to pick up any environmental variables
+    configured by the Jenkins system. The result is stored in `.env` in the
+    deployed system, which is read by the Django app and hsctl script on startup.
