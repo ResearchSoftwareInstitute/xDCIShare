@@ -39,24 +39,39 @@ cp ./hydroshare/dev_settings.example.py ./hydroshare/dev_settings.py
 Once these changes are made you can customize your development environment
 within your dev_settings.py (which will not be added to git).
 
+You can also use the .env file to specify a different hydroshare-config.yaml
+derived file (i.e., a production version).
+
 Deployment
 ----------
 
 Deployments settings can also take advantage of dotenv based settings by
-specifying any variables directly in a .env file.
+specifying any variables directly in a .env file. The staging deployment
+configuration is configured this way and requires the following steps to do a
+formal deploy:
 
-You can also use the .env file to specify a different hydroshare-config.yaml
-derived file (i.e., a production version).
+Any custom configuration is stored within `.env.staging.template.gpg`, a
+[gpg](https://www.gnupg.org/) encrypted file. Ask another developer or
+sysadmin for the password to edit this file. To make changes to the
+configuration decrypt the file, make changes, and encrypt it again:
 
-The staging deployment configuration is configured this way and requires the
-following steps to do a formal deploy:
+```shell
+# decrypt the settings that are under version control:
+echo PASSWORD | gpg --batch --yes --passphrase-fd 0 .env.staging.template.gpg
 
- 1. Any custom configuration is stored within `.env.staging.template.gpg`, a
-    [gpg](https://www.gnupg.org/) encrypted file. Ask another developer or
-    sysadmin for the password to edit this file.
+# edit the decrypted file .env.staging.template
 
- 2. When Jenkins checks out a version of this project it will decrypt this file
-    to `.env.staging.template`, and run it through the `envsubst` built-in linux
-    command. This allows template files to pick up any environmental variables
-    configured by the Jenkins system. The result is stored in `.env` in the
-    deployed system, which is read by the Django app and hsctl script on startup.
+# encrypt the modified file, and commit:
+echo PASSWORD | gpg --batch --yes --passphrase-fd 0 -c .env.staging.template
+```
+
+When Jenkins checks out a version of this project it will decrypt this file ,
+run it through the `envsubst` to fill in any variables provided by Jenkins, and
+save the results in `.env`. Jenkins uses the following simple script to deploy:
+
+```shell
+rm -f .env .env.template
+echo PASSWORD | gpg --batch --yes --passphrase-fd 0 .env.staging.template.gpg
+cat .env.staging.template | envsubst > .env
+./hsctl rebuild --db
+```
