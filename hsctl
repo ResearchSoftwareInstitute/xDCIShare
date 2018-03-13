@@ -23,6 +23,7 @@ fi
 sed -e "s/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g" ${CONFIG_FILE} > $CONFIG_DIRECTORY/hydroshare-config.sh
 sed -i 's/#.*$//' ${CONFIG_DIRECTORY}/hydroshare-config.sh
 sed -i '/^\s*$/d' ${CONFIG_DIRECTORY}/hydroshare-config.sh
+sed -i 's/^/export /' ${CONFIG_DIRECTORY}/hydroshare-config.sh
 source ${CONFIG_DIRECTORY}/hydroshare-config.sh
 
 # Read the .env file a second time in case it overrides values that were set in
