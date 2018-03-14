@@ -104,17 +104,17 @@ class TestWebAppFeature(TransactionTestCase):
 
         # create 2 SupportedResTypes obj with required params
         resource.create_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
-                                         supported_res_types=['NetcdfResource'])
+                                         supported_res_types=['GenericResource'])
         resource.create_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
-                                         supported_res_types=['NetcdfResource'])
+                                         supported_res_types=['GenericResource'])
         self.assertEqual(SupportedResTypes.objects.all().count(), 2)
 
         # update existing meta
         resource.update_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
                                          element_id=SupportedResTypes.objects.first().id,
-                                         supported_res_types=['TimeSeriesResource'])
+                                         supported_res_types=['CollectionResource'])
         self.assertEqual(SupportedResTypes.objects.first().supported_res_types.all()[0].description,
-                         'TimeSeriesResource')
+                         'CollectionResource')
 
         # try to delete 1st SupportedResTypes obj
         with self.assertRaises(Exception):
@@ -213,7 +213,7 @@ class TestWebAppFeature(TransactionTestCase):
         self.assertTrue(data["is_valid"])
 
         # SupportedResTypes
-        request.POST = {'supportedResTypes': ['NetCDF Resource']}
+        request.POST = {'supportedResTypes': ['Generic Resource']}
         data = metadata_element_pre_create_handler(sender=ToolResource,
                                                    element_name="SupportedResTypes",
                                                    request=request)
@@ -257,7 +257,7 @@ class TestWebAppFeature(TransactionTestCase):
 
         # create SupportedResTypes obj with required params
         metadata.append({'supportedrestypes': {'supported_res_types':
-                                               ['NetcdfResource', 'TimeSeriesResource']}})
+                                               ['GenericResource', 'CollectionResource']}})
 
         # update tool version
         metadata.append({'toolversion': {'value': '2.0'}})
@@ -266,7 +266,7 @@ class TestWebAppFeature(TransactionTestCase):
         self.assertEqual(SupportedResTypes.objects.all().count(), 1)
         supported_res_type = SupportedResTypes.objects.first()
         for res_type in supported_res_type.supported_res_types.all():
-            self.assertIn(res_type.description, ['NetcdfResource', 'TimeSeriesResource'])
+            self.assertIn(res_type.description, ['GenericResource', 'CollectionResource'])
         self.assertEqual(supported_res_type.supported_res_types.count(), 2)
         self.assertEqual(ToolVersion.objects.first().value, '2.0')
 

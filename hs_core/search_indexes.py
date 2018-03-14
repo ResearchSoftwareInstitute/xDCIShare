@@ -44,8 +44,6 @@ class BaseResourceIndex(indexes.SearchIndex, indexes.Indexable):
     sources = indexes.MultiValueField()
     relations = indexes.MultiValueField()
     resource_type = indexes.CharField(faceted=True)
-    comments = indexes.MultiValueField()
-    comments_count = indexes.IntegerField(faceted=True)
     owners_logins = indexes.MultiValueField(faceted=True)
     owners_names = indexes.MultiValueField(faceted=True)
     owners_count = indexes.IntegerField(faceted=True)
@@ -320,11 +318,6 @@ class BaseResourceIndex(indexes.SearchIndex, indexes.Indexable):
     def prepare_resource_type(self, obj):
         return obj.verbose_name
 
-    def prepare_comments(self, obj):
-        return [comment.comment for comment in obj.comments.all()]
-
-    def prepare_comments_count(self, obj):
-        return obj.comments_count
 
     def prepare_owners_logins(self, obj):
         if hasattr(obj, 'raccess'):
