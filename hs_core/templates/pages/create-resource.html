@@ -40,35 +40,37 @@
                     <p>When you click Create Document, the files will be uploaded to the MyHPOM server. <!--Click
                         <strong><a href="https://pages.hydroshare.org/sharing-and-privacy/formally-publishing-resources/"
                            target="_blank">here</a></strong>
-                        to learn more about next steps to share and formally publish your data.</p>
+                        to learn more about next steps to share and formally publish your data.--> </p>
                 </div>
             </div>
 
-            <div class="col-xs-12">
+            <!-- <div class="col-xs-12">
                 <h2 class="page-title">Create Document</h2>
             </div>
 
             <div class="col-xs-12 height-fix">
                 <span class="btn btn-primary btn-create-resource pull-right">Create Document</span>
-            </div>
+            </div> -->
 
-            <div class="col-xs-12" style="display: none;">
-                <label for="dropdown-resource-type" class="col-form-label">Select a resource type</label>
+            <div class="col-xs-12">
+                <label for="dropdown-resource-type" class="col-form-label">Resource type</label>
 
 
                 <div id="dropdown-resource-type" class="dropdown">
 
-
-                    <div id="select-resource-type" class="resource-type selected-type" data-toggle="dropdown"
-                         aria-haspopup="true" aria-expanded="true">
+                    <!--NOTE: to change back to the standard bootstrap dropdown,
+                     Remove `disabled` from classes.
+                     Change data-toggle="dropdown".
+                     Remove attributes `data-placement` and `title`-->
+                    <div id="select-resource-type" class="resource-type selected-type disabled" data-toggle="tooltip"
+                         aria-haspopup="true" aria-expanded="true" data-placement="right"
+                               title="An arbitrary file or collection of files that are logically grouped together as a resource.">
                         <img src="{{ STATIC_URL }}img/resource-icons/generic48x48.png"
                              alt="Generic Resource Icon" class="resource-type-icon"/>
-                        <div class="resource-type-name">&nbsp;Generic</div>
+                        <div class="resource-type-name">&nbsp;Document</div>
                     </div>
 
                     <ul class="dropdown-menu shadow-md" aria-labelledby="select-resource-type">
-
-                        <!--
                         <li>
                             <a data-toggle="tooltip" data-placement="right"
                                title="A resource that holds a list of other resources in MyHPOM."
@@ -191,7 +193,7 @@
                                 <div class="resource-type-name">&nbsp;Time Series</div>
                             </a>
                         </li>
-                        -->
+
                     </ul>
                 </div>
                 <div id="ajax-upload-alert-container"></div>
@@ -233,9 +235,9 @@
                                 </div>
                                 <div id="dz-container">
                                     <input id="form-title" type="hidden" name="title" value=""/>
-                                    {# Defaults to CompositeResource #}
+                                    {# Defaults to GenericResource #}
                                     <input id="form-resource-type" type="hidden" name="resource-type"
-                                           value="CompositeResource"/>
+                                           value="GenericResource"/>
                                 </div>
                             </div>
 
@@ -253,13 +255,15 @@
                                 </div>
                             </div>
 
+                            <!--
                             <div class="row">
                                 <div class="col-xs-12">
                                     <br>
-                                    <!--
+
                                     <span>To load files from an iRODS server including your iRODS user MyHPOM server:</span>
-                                    -->
+
                                     <div id="irods-browse">
+
                                         <!-- These hidden fields are added to avoid errors -->
                                         <input type="hidden" id="irods_file_names" name="irods_file_names" value="">
                                         <input type="hidden" id="irods_federated" name="irods_federated" value="">
@@ -320,10 +324,10 @@
                                                 iRODS
                                             </a>
                                         </div>
-                                        -->
+
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </form>
 
                         <div id="preview-template" class="dz-preview dz-file-preview" style="display: none;">
@@ -412,7 +416,6 @@
     {% endblock %}
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/hs-file-icons.js"></script>
-
     <script type="text/javascript">
         $(document).ready(function () {
             var json_response_file_types = {};
@@ -674,6 +677,7 @@
         });
     </script>
     <script type="text/javascript" src="{{ STATIC_URL }}js/dropzone.js"></script>
+
     {% block extra_js %}
         {{ block.super }}
         <script type="text/javascript" src="{{ STATIC_URL }}js/create-resource-hydro.js"></script>
