@@ -57,12 +57,12 @@ configuration decrypt the file, make changes, and encrypt it again:
 
 ```shell
 # decrypt the settings that are under version control:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 .env.staging.template.gpg
+echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.template.gpg
 
 # edit the decrypted file .env.staging.template
 
 # encrypt the modified file, and commit:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 -c .env.staging.template
+echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --symmetric .env.staging.template
 ```
 
 When Jenkins checks out a version of this project it will decrypt this file ,
@@ -71,7 +71,34 @@ save the results in `.env`. Jenkins uses the following simple script to deploy:
 
 ```shell
 rm -f .env .env.template
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 .env.staging.template.gpg
+
+# Decrypt the environmental variables for staging:
+echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.template.gpg
+
+# substitutes Jenkins environmental variables into the .env file
 cat .env.staging.template | envsubst > .env
 ./hsctl rebuild --db
+```
+
+Provisioning New Servers
+------------------------
+
+When a new server is created, MyHPOM requires a few additional packages. The
+following steps have been used to set up docker (for hsctl) and java (for
+jenkins) and add the deploy user to docker group.
+
+```shell
+sudo yum install java-1.8.0-openjdk docker docker-compose
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo groupadd docker
+sudo usermod -aG docker xdci-service
+sudo systemctl restart docker
+# at this point I had to disconnect the one node I had set up for mhpom-dev b/c it was keeping itself online
+# and therefor not getting a refresh of its groups and couldn't connect to docker.
+
+# create the xdci-service user's home directory by logging in for the first time:
+sudu su - xdci-service
+
+# also I copied /root/ssl from myhpom into /home/xdci-service/ssl for use of the dev deploy.
 ```
