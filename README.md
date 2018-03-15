@@ -18,17 +18,29 @@ If you want to contribute to MyHPOM, please see the [MyHPOM Wiki](https://github
 
 More information can be found in the [MyHPOM Wiki](https://github.com/SoftwareResearchInstitute/MyHPOM/wiki/).
 
-Environments
-============
-
-This project is set up to read environmental settings from your .env file.
-Common configurable settings will be picked up from this file.
-
 Development
------------
+===========
 
-To get started with your own configurable developer setup perform the following
-commands:
+There are very good instructions on the [hydroshare
+wiki](https://github.com/hydroshare/hydroshare/wiki/getting_started) to set up a
+local dev environment that matches production.
+
+If you have docker installed locally, you can use `hsctl` commands to setup a
+local development environment without VirtualBox.
+
+*OS X Users* note that `hsctl` requires gnu sed. You can use
+[homebrew](https://brew.sh) to install it as the default using the following
+command: `brew install gnu-sed --with-default-names`.
+
+Environments
+------------
+
+This project extends the hydroshare configuration by allowing one to override
+settings from a .env file. Most common configurable settings will be picked up
+from this file.
+
+In local development one can override local settings by copying a local .env
+template and customizing it:
 
 ```shell
 
