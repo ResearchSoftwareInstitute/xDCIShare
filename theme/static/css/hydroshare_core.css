@@ -4555,6 +4555,29 @@ span.caption-file-type {
 	padding: 12px;
 	min-height: 100%;
 	border: 2px solid transparent;
+  position: relative;
+}
+
+#resource-content #dz-container::after {
+  content: url(/static/img/ajax-loader.gif);
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  padding-top: 15%;
+  z-index: 2000;
+  display: none;
+}
+
+#resource-content #dz-container.loading {
+  pointer-events: none;
+}
+
+#resource-content #dz-container.loading::after {
+  display: block;
 }
 
 #resource-content .hs-dropzone-footer {
