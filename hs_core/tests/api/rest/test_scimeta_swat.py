@@ -2,6 +2,7 @@ import os
 import tempfile
 import shutil
 
+from unittest import skip
 from lxml import etree
 
 from hs_core.hydroshare import resource
@@ -10,6 +11,7 @@ from .base import ModelInstanceSciMetaTestCase
 
 class TestScienceMetadataSWAT(ModelInstanceSciMetaTestCase):
 
+    @skip("skip this test, as we do not support SWATModelInstanceResource types in myHPOM")
     def test_put_scimeta_swat_model_instance(self):
         # Update science metadata XML
         title_1 = 'Flat River SWAT Instance'

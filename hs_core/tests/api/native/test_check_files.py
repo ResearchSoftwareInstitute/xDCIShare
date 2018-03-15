@@ -114,7 +114,7 @@ class TestResourceFileAPI(MockIRODSTestCaseMixin,
              'data/contents/fuzz.txt does not exist in iRODS'))
         self.assertTrue(errors[1].endswith(
             'data/contents/file1.txt in iRODs does not exist in Django'))
-        self.assertTrue(errors[2].endswith(
+        self.assertTrue(errors[4].endswith(
             "type is GenericResource, title is 'My Test Resource'"))
 
         # TODO: how to eliminate this kind of error
@@ -195,7 +195,7 @@ class TestResourceFileAPI(MockIRODSTestCaseMixin,
              'data/contents/fuzz.txt does not exist in iRODS'))
         self.assertTrue(errors[1].endswith(
             'data/contents/foo/file1.txt in iRODs does not exist in Django'))
-        self.assertTrue(errors[2].endswith(
+        self.assertTrue(errors[4].endswith(
             "type is GenericResource, title is 'My Test Resource'"))
 
         # TODO: how to eliminate this particular error.
@@ -384,7 +384,7 @@ class TestResourceFileAPI(MockIRODSTestCaseMixin,
              'data/contents/fuzz.txt does not exist in iRODS'))
         self.assertTrue(errors[1].endswith(
             'data/contents/foo/file1.txt in iRODs does not exist in Django'))
-        self.assertTrue(errors[2].endswith(
+        self.assertTrue(errors[4].endswith(
             "type is GenericResource, title is 'My Test Resource'"))
 
         # delete resources to clean up

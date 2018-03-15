@@ -693,7 +693,7 @@ def validate_user_quota(user, size):
     """
     if user:
         # validate it is within quota hard limit
-        uq = user.quotas.filter(zone='hydroshare_internal').first()
+        uq = user.quotas.filter(zone='myhpom_internal').first()
         if uq:
             if not QuotaMessage.objects.exists():
                 QuotaMessage.objects.create()
@@ -704,7 +704,8 @@ def validate_user_quota(user, size):
             if used_percent >= hard_limit or uq.remaining_grace_period == 0:
                 msg_template_str = '{}{}\n\n'.format(qmsg.enforce_content_prepend,
                                                      qmsg.content)
-                msg_str = msg_template_str.format(used=used_size,
+                msg_str = msg_template_str.format(email=user.email,
+                                                  used=used_size,
                                                   unit=uq.unit,
                                                   allocated=uq.allocated_value,
                                                   zone=uq.zone,
