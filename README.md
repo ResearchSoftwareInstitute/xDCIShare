@@ -17,3 +17,39 @@ MyHPOM is a collaborative website being developed for better management of perso
 If you want to contribute to MyHPOM, please see the [MyHPOM Wiki](https://github.com/SoftwareResearchInstitute/MyHPOM/wiki/).
 
 More information can be found in the [MyHPOM Wiki](https://github.com/SoftwareResearchInstitute/MyHPOM/wiki/).
+
+Development
+===========
+
+There are very good instructions on the [hydroshare
+wiki](https://github.com/hydroshare/hydroshare/wiki/getting_started) to set up a
+local dev environment that matches production.
+
+If you have docker installed locally, you can use `hsctl` commands to setup a
+local development environment without VirtualBox.
+
+*OS X Users* note that `hsctl` requires gnu sed. You can use
+[homebrew](https://brew.sh) to install it as the default using the following
+command: `brew install gnu-sed --with-default-names`.
+
+Environments
+------------
+
+This project extends the hydroshare configuration by allowing one to override
+settings from a .env file. Most common configurable settings will be picked up
+from this file.
+
+In local development one can override local settings by copying a local .env
+template and customizing it:
+
+```shell
+
+cp ./.env.example .env
+cp ./hydroshare/dev_settings.example.py ./hydroshare/dev_settings.py
+```
+
+Deployments settings can also take advantage of dotenv based settings by
+specifying any variables directly in a .env file.
+
+The .env file can also specify a different hydroshare-config.yaml
+derived file (i.e., a production version).

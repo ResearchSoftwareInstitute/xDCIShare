@@ -8,10 +8,12 @@
 .coverage
 .DS_Store
 .idea
+.env
 /celery
 /config/hydroshare-config.sh
 /config/hydroshare-config.yaml
 /hydroshare/local_settings.py
+/hydroshare/dev_settings.py
 /hydroshare/static
 /log
 /nginx/config-files/hs-nginx.conf
