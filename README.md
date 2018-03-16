@@ -100,7 +100,22 @@ following steps have been used to set up docker (for hsctl) and java (for
 jenkins) and add the deploy user to docker group.
 
 ```shell
-sudo yum install java-1.8.0-openjdk docker docker-compose
+# Install docker repositories:
+# https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce
+sudo yum install -y yum-utils \
+  device-mapper-persistent-data \
+  lvm2
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+sudo yum install java-1.8.0-openjdk docker-ce
+
+# Install docker-compose
+# https://docs.docker.com/compose/install/#install-compose
+sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo groupadd docker
