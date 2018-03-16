@@ -62,8 +62,13 @@ $(document).ready(function () {
 
         init: function () {
             myDropzone = this;
+            var uploadAlertHTML = '<div class="alert alert-danger alert-dismissible" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>' +
+                '</button><strong>Failed to Upload Resources</strong></div>';
+
             $(".btn-create-resource").click(function () {
-                $("html, #dz-container").css("cursor", "progress");
+                $("#dz-container").addClass("loading");
+                $("#ajax-upload-alert-container").html('');
 
                 // Delete invalid files from queue before uploading
                 $(".dz-error .btn-remove").trigger("click");
@@ -91,7 +96,8 @@ $(document).ready(function () {
                             }
                         },
                         error: function (response) {
-                            console.log(response);
+                            $("#dz-container").removeClass("loading");
+                            $("#ajax-upload-alert-container").html(uploadAlertHTML);
                         }
                     });
                 }

@@ -79,7 +79,7 @@
                                     {#        Account deactivation       #}
                                     <div><a data-toggle="modal" data-target="#deactivate-account-dialog">Deactivate account</a></div>
 
-                                    {# Account creation/deletion in iRODS user zone #}
+                                    <!-- {# Account creation/deletion in iRODS user zone #}
                                     <div id="irods-account-container">
                                         {% if profile.create_irods_user_account %}
                                             {# an iRODS account already exists #}
@@ -88,7 +88,7 @@
                                             {# an iRODS account does not exist #}
                                             <a data-toggle="modal" data-target="#create-irods-account-dialog">Create your iRODS user account</a>
                                         {% endif %}
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             {% endif %}
@@ -147,35 +147,6 @@
                                         <input class="form-control form-required" value="{{ profile_user.last_name }}" name="last_name">
                                     </fieldset>
                                 </div>
-
-                                <div class="row">
-                                    {# Organization #}
-                                    <fieldset class="col-sm-6">
-                                        <label>Organization *</label>
-                                        <input class="form-control form-required tagsinput" {% if profile.organization %}value="{{ profile.organization }}"{% endif %} name="organization">
-                                        <br /><small class="text-muted">The names of the organizations you are associated with.</small><br />
-                                    </fieldset>
-
-                                    {# Title #}
-                                    <fieldset class="col-sm-6">
-                                        <label>Title</label>
-                                        <input class="form-control" {% if profile.title %}value="{{ profile.title }}"{% endif %} name="title">
-                                        <small class="text-muted">e.g. Assistant Professor, Program Director, Adjunct
-                                            Professor, Software Developer.
-                                        </small>
-                                    </fieldset>
-                                </div>
-
-                                <div class="row">
-                                    {# Subject areas #}
-                                    <fieldset class="col-sm-12">
-                                        <label>Subject areas</label>
-                                        <input class="form-control" {% if profile.subject_areas %}value="{{ profile.subject_areas }}"{% endif %} name="subject_areas">
-                                        <small class="text-muted">A comma-separated list of subject areas you are interested
-                                            in researching. e.g. "Computer Science, Hydrology, Water Management"
-                                        </small>
-                                    </fieldset>
-                                </div>
                             </div>
                             {% endif %}
 
@@ -201,19 +172,6 @@
                                                         class="glyphicon glyphicon-trash"></span>
                                                 </button>
                                             </div>
-                                        {% else %}
-                                            <hr>
-                                            <fieldset>
-                                            <label>Add a CV</label>
-                                            <div class="input-group">
-                                                <span class="input-group-btn">
-                                                    <span id="cv-custom-upload" class="btn btn-primary btn-file">
-                                                        Browse&hellip; <input type="file" name="cv">
-                                                    </span>
-                                                </span>
-                                                <input type="text" class="form-control" readonly>
-                                            </div>
-                                            </fieldset>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -343,15 +301,17 @@
                                                 </tr>
                                                 </tbody>
                                             </table>
-                                            {% if profile_user.id == user.id %}
+                                            <!-- {% if profile_user.id == user.id %}
                                                 <br>
                                                 {% if profile.create_irods_user_account %}
                                                     <div class="alert alert-success">You have created an associated iRODS account (username: <strong>{{ profile_user.username }}</strong>) in MyHPOM user zone (<strong>users.myhpom.renci.org</strong>). </div>
                                                 {% else %}
                                                     <div class="alert alert-warning">You have not created an associated iRODS account in MyHPOM user zone (<strong>users.myhpom.renci.org</strong>). </div>
                                                 {% endif %}
-                                                {% if quota_message %}<div class="alert alert-info">{{ quota_message }}</div>{% endif %}
-                                            {% endif %}    
+                                                {#  Hide quota message for now until backend script is hooked up #}
+                                                {#  <div class="text-muted">{{ quota_message }}</div> #}
+
+                                            {% endif %}  -->
                                         </div>
 
                                         {% if profile_user.id == user.id %}
@@ -547,16 +507,16 @@
                                             <td><span>All</span></td>
                                             <td><span class="badge">0</span></td>
                                         </tr>
-                                        <tr id="badge-collection" data-type="type-Collection Resource">
+                                        <!-- <tr id="badge-collection" data-type="type-Collection Resource">
                                             <td><span>Collection</span></td>
                                             <td><span class="badge">0</span></td>
                                         </tr>
                                         <tr id="badge-composite" data-type="type-Composite Resource">
                                             <td><span>Composite Resource</span></td>
                                             <td><span class="badge">0</span></td>
-                                        </tr>
+                                        </tr> -->
                                         <tr id="badge-generic" data-type="type-Generic">
-                                            <td><span>Generic</span></td>
+                                            <td><span>Document</span></td>
                                             <td><span class="badge">0</span></td>
                                         </tr>
                                         <!--
@@ -601,10 +561,10 @@
                                             <td><span class="badge">0</span></td>
                                         </tr>
                                         -->
-                                        <tr id="badge-web-app" data-type="type-Web App Resource">
+                                        <!-- <tr id="badge-web-app" data-type="type-Web App Resource">
                                             <td><span>Web App</span></td>
                                             <td><span class="badge">0</span></td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

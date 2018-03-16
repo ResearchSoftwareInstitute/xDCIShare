@@ -1,10 +1,10 @@
 ### Local Configuration Variables ###
-HS_PATH: /home/hydro/hydroshare
-HOST_SSL_DIR: /home/hydro/hs-certs
+HS_PATH: $HOME_DIR
+HOST_SSL_DIR: $HS_PATH/hs-certs
 HS_DATABASE: pg.myhpomdevelopment.sql
-HS_LOG_FILES: /home/hydro/hydroshare/log
-HS_SERVICE_UID: 1000
-HS_SERVICE_GID: 1000
+HS_LOG_FILES: $HS_PATH/log
+HS_SERVICE_UID: $UID
+HS_SERVICE_GID: $GID
 
 ### Deployment Options ###
 USE_NGINX: false
@@ -14,10 +14,10 @@ USE_HTTP_AUTH: false
 
 ### nginx Configuration Variables ###
 FQDN_OR_IP: localhost
-NGINX_DIR: /home/hydro/hydroshare/nginx
+NGINX_DIR: $HS_PATH/nginx
 
 ### SSL Configuration Variables ###
-SSL_CERT_DIR: /home/hydro/hydroshare/nginx/cert-files
+SSL_CERT_DIR: $HS_PATH/nginx/cert-files
 SSL_CERT_FILE: hydrodev-vb.example.org.cert
 SSL_KEY_FILE: hydrodev-vb.example.org.key
 

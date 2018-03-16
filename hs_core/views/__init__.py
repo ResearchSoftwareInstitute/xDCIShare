@@ -1092,7 +1092,6 @@ def create_resource_select_resource_type(request, *args, **kwargs):
 @login_required
 def create_resource(request, *args, **kwargs):
     # Note: This view function must be called by ajax
-
     ajax_response_data = {'status': 'error', 'message': ''}
     resource_type = request.POST['resource-type']
     res_title = request.POST['title']
@@ -1102,7 +1101,6 @@ def create_resource(request, *args, **kwargs):
     federated = request.POST.get("irods_federated").lower() == 'true'
     # TODO: need to make REST API consistent with internal API. This is just "move" now there.
     fed_copy_or_move = request.POST.get("copy-or-move")
-
     if irods_fnames:
         if federated:
             source_names = irods_fnames.split(',')

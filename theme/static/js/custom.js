@@ -173,22 +173,6 @@ $(document).ready(function () {
 
     $.ajax({
         url: "/hsapi/userInfo/",
-        success: function(user) {
-            if(!user.organization) {
-                // Disable publishing resources
-                if ($("#publish").length) {
-                    $("#publish").toggleClass("disabled", true);
-                    $("#publish").removeAttr("data-toggle");   // Disable the agreement modal
-                    $("#publish > [data-toggle='tooltip']").attr("data-original-title",
-                        "Your profile information must be complete before you can formally publish resources.");
-                }
-
-                var message = 'Your profile is nearly complete. Please fill in the '
-                    + '<strong>Organization</strong> field'
-                    + ' on the <a href="/user/' + user.id + '/">User Profile</a> page';
-                showUniversalMessage("warn", message, 10000)();
-            }
-        },
         error: showUniversalMessage()
     })
 });

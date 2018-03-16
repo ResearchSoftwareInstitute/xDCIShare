@@ -179,7 +179,7 @@ def update_user_profile(request):
     user_form = UserForm(request.POST, instance=user)
     user_profile = UserProfile.objects.filter(user=user).first()
 
-    dict_items = user_profile.organization.split(",")
+    dict_items = user_profile.organization.split(",") if user_profile.organization else []
     for dict_item in dict_items:
         # Update Dictionaries
         try:

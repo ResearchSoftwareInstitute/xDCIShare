@@ -3,8 +3,11 @@ from __future__ import absolute_import, unicode_literals
 TEST_RUNNER = 'hs_core.tests.runner.CustomTestSuiteRunner'
 TEST_WITHOUT_MIGRATIONS_COMMAND = 'django_nose.management.commands.test.Command'
 
-import os
 import importlib
+
+from dotenv import load_dotenv
+load_dotenv('.env')
+import os
 
 local_settings_module = os.environ.get('LOCAL_SETTINGS', 'hydroshare.local_settings')
 
