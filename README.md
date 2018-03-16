@@ -77,7 +77,7 @@ echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.templ
 echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --symmetric .env.staging.template
 ```
 
-When Jenkins checks out a version of this project it will decrypt this file ,
+When Jenkins checks out a version of this project it will decrypt this file,
 run it through the `envsubst` to fill in any variables provided by Jenkins, and
 save the results in `.env`. Jenkins uses the following simple script to deploy:
 
@@ -109,7 +109,9 @@ sudo yum-config-manager \
     --add-repo \
     https://download.docker.com/linux/centos/docker-ce.repo
 
-sudo yum install java-1.8.0-openjdk docker-ce
+# Jenkins needs java installed for to use a server as a node, and to build
+# htpasswd in a reliable way, htpasswd command is needed:
+sudo yum install java-1.8.0-openjdk docker-ce httpd-tools
 
 # Install docker-compose
 # https://docs.docker.com/compose/install/#install-compose
