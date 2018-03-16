@@ -10,10 +10,11 @@ CONFIG_DIRECTORY='./config'
 CONFIG_FILE=${CONFIG_DIRECTORY}'/hydroshare-config.yaml'
 HOME_DIR=${PWD}
 
-# by default use the same group id as the user id:
+# Defaults for the hydroshare-config.yaml files.
 GID=$UID
 
-# Read any CONFIG_FILE overrides from the local environment:
+# Read any CONFIG_FILE overrides from the local environment so that they can be
+# referenced in hydroshare-config.yaml if one wants to:
 if [ -f .env ]; then
     source .env
 fi
@@ -22,7 +23,14 @@ fi
 sed -e "s/:[^:\/\/]/=/g;s/$//g;s/ *=/=/g" ${CONFIG_FILE} > $CONFIG_DIRECTORY/hydroshare-config.sh
 sed -i 's/#.*$//' ${CONFIG_DIRECTORY}/hydroshare-config.sh
 sed -i '/^\s*$/d' ${CONFIG_DIRECTORY}/hydroshare-config.sh
+sed -i 's/^/export /' ${CONFIG_DIRECTORY}/hydroshare-config.sh
 source ${CONFIG_DIRECTORY}/hydroshare-config.sh
+
+# Read the .env file a second time in case it overrides values that were set in
+# hydroshare-config.yaml:
+if [ -f .env ]; then
+    source .env
+fi
 
 ### Docker Variables ###
 HS_DOCKER_CONTAINERS=(hydroshare defaultworker)

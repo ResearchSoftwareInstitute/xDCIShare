@@ -8,7 +8,7 @@ import os
 from kombu import Queue, Exchange
 from kombu.common import Broadcast
 
-DEBUG = os.environ.get('DEBUG') == 'True'
+DEBUG = os.environ.get('DEBUG') == 'true'
 
 # These secret keys are used by the pg.myhpomdevelopment.sql development dump,
 # if you change these, you will not be able to login with users setup in the
@@ -108,66 +108,66 @@ DATABASES = {
 POSTGIS_VERSION=(2,1,1)
 
 # Local resource iRODS configuration
-USE_IRODS = True
-IRODS_ROOT = '/tmp'
-IRODS_ICOMMANDS_PATH = '/usr/bin'
-IRODS_HOST = 'hydrotest41.renci.org'
-IRODS_PORT = '1247'
-IRODS_DEFAULT_RESOURCE = 'hydrotest41Resc'
-IRODS_HOME_COLLECTION = '/hydrotest41Zone/home/hsproxy'
-IRODS_CWD = '/hydrotest41Zone/home/hsproxy'
-IRODS_ZONE = 'hydrotest41Zone'
-IRODS_USERNAME = 'hsproxy'
-IRODS_AUTH = 'proxywater1'
-IRODS_GLOBAL_SESSION = True
+USE_IRODS = os.environ.get('USE_IRODS', 'true') == 'true'
+IRODS_ROOT = os.environ.get('IRODS_ROOT', '/tmp')
+IRODS_ICOMMANDS_PATH = os.environ.get('IRODS_ICOMMANDS_PATH', '/usr/bin')
+IRODS_HOST = os.environ.get('IRODS_HOST', 'hydrotest41.renci.org')
+IRODS_PORT = os.environ.get('IRODS_PORT', '1247')
+IRODS_DEFAULT_RESOURCE = os.environ.get('IRODS_DEFAULT_RESOURCE', 'hydrotest41Resc')
+IRODS_HOME_COLLECTION = os.environ.get('IRODS_HOME_COLLECTION', '/hydrotest41Zone/home/hsproxy')
+IRODS_CWD = os.environ.get('IRODS_CWD', '/hydrotest41Zone/home/hsproxy')
+IRODS_ZONE = os.environ.get('IRODS_ZONE', 'hydrotest41Zone')
+IRODS_USERNAME = os.environ.get('IRODS_USERNAME', 'hsproxy')
+IRODS_AUTH = os.environ.get('IRODS_AUTH', 'proxywater1')
+IRODS_GLOBAL_SESSION = os.environ.get('IRODS_GLOBAL_SESSION', 'true') == 'true'
 
 # Remote user zone iRODS configuration
-REMOTE_USE_IRODS = False
+REMOTE_USE_IRODS = os.environ.get('REMOTE_USE_IRODS', 'false') == 'true'
 
 # iRODS customized bagit rule path
-IRODS_BAGIT_RULE='hydroshare/irods/ruleGenerateBagIt_HS.r'
-IRODS_BAGIT_PATH = 'bags'
-IRODS_BAGIT_POSTFIX = 'zip'
+IRODS_BAGIT_RULE = os.environ.get('IRODS_BAGIT_RULE', 'hydroshare/irods/ruleGenerateBagIt_HS.r')
+IRODS_BAGIT_PATH = os.environ.get('IRODS_BAGIT_PATH', 'bags')
+IRODS_BAGIT_POSTFIX = os.environ.get('IRODS_BAGIT_POSTFIX', 'zip')
 
-HS_BAGIT_README_FILE_WITH_PATH = 'docs/bagit/readme.txt'
+HS_BAGIT_README_FILE_WITH_PATH = os.environ.get('HS_BAGIT_README_FILE_WITH_PATH', 'docs/bagit/readme.txt')
 
 # crossref login credential for resource publication
-USE_CROSSREF_TEST = True
-CROSSREF_LOGIN_ID = ''
-CROSSREF_LOGIN_PWD = ''
+USE_CROSSREF_TEST = os.environ.get('USE_CROSSREF_TEST', 'true') == 'true'
+CROSSREF_LOGIN_ID = os.environ.get('CROSSREF_LOGIN_ID', '')
+CROSSREF_LOGIN_PWD = os.environ.get('CROSSREF_LOGIN_PWD', '')
 
 # Since Hyrax server on-demand update is only needed when private netCDF resources on www
 # are made public, in local development environments or VM deployments other than the www
 # production, this should not be run by setting RUN_HYRAX_UPDATE to False. RUN_HYRAX_UPDATE
-# should only be set to True on www.hydroshare.org
-RUN_HYRAX_UPDATE = False
-HYRAX_SSH_HOST = ''
-HYRAX_SSH_PROXY_USER = ''
-HYRAX_SSH_PROXY_USER_PWD = ''
-HYRAX_SCRIPT_RUN_COMMAND = ''
+# should only be set to true on www.hydroshare.org
+RUN_HYRAX_UPDATE = os.environ.get('RUN_HYRAX_UPDATE', 'false') == 'true'
+HYRAX_SSH_HOST = os.environ.get('HYRAX_SSH_HOST', '')
+HYRAX_SSH_PROXY_USER = os.environ.get('HYRAX_SSH_PROXY_USER', '')
+HYRAX_SSH_PROXY_USER_PWD = os.environ.get('HYRAX_SSH_PROXY_USER_PWD', '')
+HYRAX_SCRIPT_RUN_COMMAND = os.environ.get('HYRAX_SCRIPT_RUN_COMMAND', '')
 
 # hsuserproxy system user configuration used to create MyHPOM iRODS users on-demand
-HS_USER_ZONE_HOST = ''
-HS_USER_ZONE_PROXY_USER = ''
-HS_USER_ZONE_PROXY_USER_PWD = ''
-HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD = ''
-HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD = ''
+HS_USER_ZONE_HOST = os.environ.get('HS_USER_ZONE_HOST', '')
+HS_USER_ZONE_PROXY_USER = os.environ.get('HS_USER_ZONE_PROXY_USER', '')
+HS_USER_ZONE_PROXY_USER_PWD = os.environ.get('HS_USER_ZONE_PROXY_USER_PWD', '')
+HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD = os.environ.get('HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD', '')
+HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD = os.environ.get('HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD', '')
 
 # the local MyHPOM proxy user (a counterpart of wwwHydroProxy) in a federated zone with HydroShare Zone
-HS_LOCAL_PROXY_USER_IN_FED_ZONE = 'localTestHydroProxy'
+HS_LOCAL_PROXY_USER_IN_FED_ZONE = os.environ.get('HS_LOCAL_PROXY_USER_IN_FED_ZONE', 'localTestHydroProxy')
 
 # Please keep the line below unchanged since it is used to check whether
 # the current site is in production or not
-HS_WWW_IRODS_PROXY_USER = 'wwwHydroProxy'
+HS_WWW_IRODS_PROXY_USER = os.environ.get('HS_WWW_IRODS_PROXY_USER', 'wwwHydroProxy')
 # credentials for MyHPOM proxy user iRODS account which is set to have own access control
 # to all collections in any federated zone with HydroShare zone, which is only useful when
 # testing HydroShare federated zone in local test development environment since in www
 # production environment, IRODS_USERNAME and other associated settings already represent wwwHydroProxy settings
-HS_WWW_IRODS_PROXY_USER_PWD = ''
-HS_WWW_IRODS_HOST = ''
-HS_IRODS_LOCAL_ZONE_DEF_RES = 'hydroshareLocalResc'
-HS_WWW_IRODS_ZONE = ''
-HS_USER_IRODS_ZONE = 'hydroshareuserZone'
+HS_WWW_IRODS_PROXY_USER_PWD = os.environ.get('HS_WWW_IRODS_PROXY_USER_PWD', '')
+HS_WWW_IRODS_HOST = os.environ.get('HS_WWW_IRODS_HOST', '')
+HS_IRODS_LOCAL_ZONE_DEF_RES = os.environ.get('HS_IRODS_LOCAL_ZONE_DEF_RES', 'hydroshareLocalResc')
+HS_WWW_IRODS_ZONE = os.environ.get('HS_WWW_IRODS_ZONE', '')
+HS_USER_IRODS_ZONE = os.environ.get('HS_USER_IRODS_ZONE', 'hydroshareuserZone')
 
 # Email configuration
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.console.EmailBackend')
@@ -175,7 +175,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 0))
-EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'true') == 'true'
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL')
 DEFAULT_SUPPORT_EMAIL = os.environ.get('DEFAULT_SUPPORT_EMAIL')
 
