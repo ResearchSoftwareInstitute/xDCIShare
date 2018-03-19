@@ -31,6 +31,7 @@ from mezzanine.utils.views import render
 from hs_core.views.utils import run_ssh_command
 from hs_core.hydroshare.utils import user_from_id
 from hs_access_control.models import GroupMembershipRequest
+from hs_dictionary.models import University, UncategorizedTerm
 from theme.forms import RatingForm, UserProfileForm, UserForm
 from theme.models import UserProfile
 from theme.utils import get_quota_message
