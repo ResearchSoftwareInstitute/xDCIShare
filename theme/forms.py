@@ -83,7 +83,7 @@ class SignupForm(forms.ModelForm):
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput())
-    organization = forms.CharField(required=True)
+    organization = forms.CharField(required=False)
 
     def __init__(self, request, *args, **kwargs):
         self.request = request
