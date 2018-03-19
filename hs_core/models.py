@@ -2676,7 +2676,7 @@ class BaseResource(Page, AbstractResource):
     collections = models.ManyToManyField('BaseResource', related_name='resources')
 
     class Meta:
-        verbose_name = 'Generic'
+        verbose_name = 'Resource'
         db_table = 'hs_core_genericresource'
 
     def can_add(self, request):
