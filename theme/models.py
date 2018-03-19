@@ -8,6 +8,7 @@ from django.template import RequestContext, Template, TemplateSyntaxError
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import strip_tags
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator
 
 from mezzanine.core.fields import FileField, RichTextField
 from mezzanine.core.models import Orderable, SiteRelated
@@ -265,6 +266,29 @@ class UserProfile(models.Model):
                                help_text=('Tell the {s_name} community a little about yourself.'
                                          ).format(s_name=settings.XDCI_SITE_NAME_MIXED),
                                null=True, blank=True)
+
+    GENDER_NO_DISCLOSURE = 'ND'
+    GENDER_MALE = 'M'
+    GENDER_FEMALE = 'F'
+    GENDER_OTHER = 'O'
+    GENDER_CHOICES = (
+        (GENDER_NO_DISCLOSURE, 'Prefer not to disclose'),
+        (GENDER_MALE, 'Male'),
+        (GENDER_FEMALE, 'Female'),
+        (GENDER_OTHER, 'Other'),
+    )
+    gender = models.CharField(max_length=100, choices=GENDER_CHOICES, default=None, null=True, blank=True)
+    date_of_birth = models.CharField(max_length=1024, null=True, blank=True)
+    address_1 = models.CharField(max_length=1024, null=True, blank=True)
+    address_2 = models.CharField(max_length=1024, null=True, blank=True)
+    city = models.CharField(max_length=1024, null=True, blank=True)
+    zip_code = models.CharField(max_length=1024, null=True, blank=True)
+    last_four_ss = models.PositiveSmallIntegerField( null=True, blank=True, validators=[MaxValueValidator(9999)])
+    emergency_name = models.CharField(max_length=1024, null=True, blank=True)
+    emergency_relationship = models.CharField(max_length=1024, null=True, blank=True)
+    emergency_email = models.CharField(max_length=1024, null=True, blank=True)
+    emergency_phone_1 = models.CharField(max_length=1024, null=True, blank=True)
+    emergency_phone_2 = models.CharField(max_length=1024, null=True, blank=True)
 
     state = models.CharField(max_length=1024, null=True, blank=True)
     country = models.CharField(max_length=1024, null=True, blank=True)

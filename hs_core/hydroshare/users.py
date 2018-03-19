@@ -10,7 +10,7 @@ from django.db.models import Q
 
 from hs_core.models import BaseResource, Contributor, Creator, Subject, Description, Title, Coverage
 from .utils import user_from_id, group_from_id, get_profile
-from theme.models import UserQuota
+from theme.models import UserQuota, UserProfile
 
 DO_NOT_DISTRIBUTE = 'donotdistribute'
 EDIT = 'edit'
@@ -19,7 +19,7 @@ PUBLIC = 'public'
 
 
 def create_account(
-        email, username=None, first_name=None, last_name=None, superuser=None, groups=None,
+        email, username=None, first_name=None, middle_name=None, last_name=None, superuser=None, groups=None,
         password=None, active=True
 ):
     """
@@ -63,6 +63,12 @@ def create_account(
 
     # make the user a member of the MyHPOM role group
     u.groups.add(Group.objects.get(name='Resource Author'))
+
+    # save middle_name to userprofile
+    up = UserProfile.objects.filter(user=u).first()
+    if up:
+        up.middle_name = middle_name
+        up.save()
 
     user_access = UserAccess(user=u)
     user_access.save()
