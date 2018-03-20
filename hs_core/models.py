@@ -2698,6 +2698,10 @@ class BaseResource(Page, AbstractResource):
             return IrodsStorage()
 
     @property
+    def author(self):
+        return self.get_content_model().user
+
+    @property
     def is_federated(self):
         return self.resource_federation_path is not None and \
                self.resource_federation_path != ''

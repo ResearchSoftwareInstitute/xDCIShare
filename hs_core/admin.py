@@ -13,7 +13,7 @@ class CorePageAdmin(admin.ModelAdmin):
     list_display = ('title', 'status')
 
     def get_queryset(self, request):
-        ''' excludes resources pages from Pages admin'''
+        ''' excludes resources pages from Pagesadmin'''
         qs = super(CorePageAdmin, self).get_queryset(request)
         return qs.exclude(slug__startswith='resource/')
 
@@ -22,7 +22,7 @@ class BaseResourceAdmin(admin.ModelAdmin):
     model = BaseResource
     inlines = [InlineResourceFiles]
     list_per_page = 20
-    list_display = ('title', 'short_id', 'resource_type')
+    list_display = ('title', 'author', 'short_id', 'resource_type')
     search_fields = ('title', 'short_id', 'resource_type')
 
 
