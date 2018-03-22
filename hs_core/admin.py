@@ -8,6 +8,7 @@ from .models import *
 class InlineResourceFiles(GenericTabularInline):
     model = ResourceFile
 
+
 class CorePageAdmin(admin.ModelAdmin):
     model = Page
     list_display = ('title', 'status')
@@ -22,8 +23,9 @@ class BaseResourceAdmin(admin.ModelAdmin):
     model = BaseResource
     inlines = [InlineResourceFiles]
     list_per_page = 20
-    list_display = ('title', 'author', 'short_id', 'resource_type')
-    search_fields = ('title', 'short_id', 'resource_type')
+    list_display = ('title', 'user', 'resource_type', 'short_id', 'url')
+    search_fields = ('title', 'user', 'resource_type', 'short_id',)
+    list_filter = ('resource_type', 'user',)
 
 
 admin.site.unregister(Page)

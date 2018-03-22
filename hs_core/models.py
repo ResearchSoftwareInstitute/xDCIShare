@@ -25,6 +25,7 @@ from django.core.files import File
 from django.core.exceptions import ObjectDoesNotExist, ValidationError, SuspiciousFileOperation
 from django.forms.models import model_to_dict
 from django.core.urlresolvers import reverse
+from django.utils.safestring import mark_safe
 
 from mezzanine.pages.models import Page
 from mezzanine.core.models import Ownable
@@ -2698,8 +2699,9 @@ class BaseResource(Page, AbstractResource):
             return IrodsStorage()
 
     @property
-    def author(self):
-        return self.get_content_model().user
+    def url(self):
+        resource_link = '<a href="{}" target="_blank">view on site</a>'.format(self.get_content_model().get_absolute_url())
+        return mark_safe(resource_link)
 
     @property
     def is_federated(self):
