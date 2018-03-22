@@ -67,7 +67,11 @@ class Migration(migrations.Migration):
             name='last_four_ss',
             field=models.PositiveSmallIntegerField(blank=True, null=True, validators=[django.core.validators.MaxValueValidator(9999)]),
         ),
-
+        migrations.AddField(
+            model_name='userprofile',
+            name='zipcode',
+            field=models.CharField(max_length=1024, null=True, blank=True),
+        ),
         migrations.AlterField(
             model_name='quotamessage',
             name='content',

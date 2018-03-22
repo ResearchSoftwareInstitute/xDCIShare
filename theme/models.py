@@ -282,7 +282,7 @@ class UserProfile(models.Model):
     address_1 = models.CharField(max_length=1024, null=True, blank=True)
     address_2 = models.CharField(max_length=1024, null=True, blank=True)
     city = models.CharField(max_length=1024, null=True, blank=True)
-    zip_code = models.CharField(max_length=1024, null=True, blank=True)
+    zipcode = models.CharField(max_length=1024, null=True, blank=True)
     last_four_ss = models.PositiveSmallIntegerField( null=True, blank=True, validators=[MaxValueValidator(9999)])
     emergency_name = models.CharField(max_length=1024, null=True, blank=True)
     emergency_relationship = models.CharField(max_length=1024, null=True, blank=True)
