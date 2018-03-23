@@ -381,7 +381,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         # create a netcdf resource
         netcdf_file = 'hs_core/tests/data/netcdf_valid.nc'
         file_to_upload = open(netcdf_file, "r")
-        self._create_resource(resource_type="NetcdfResource", file_to_upload=file_to_upload)
+        self._create_resource(resource_type="GenericResource", file_to_upload=file_to_upload)
         sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
@@ -468,7 +468,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         # create a netcdf resource
         netcdf_file = 'hs_core/tests/data/netcdf_valid.nc'
         file_to_upload = open(netcdf_file, "r")
-        self._create_resource(resource_type="NetcdfResource", file_to_upload=file_to_upload)
+        self._create_resource(resource_type="GenericResource", file_to_upload=file_to_upload)
         sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
@@ -1287,7 +1287,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
                 "value": "1.12"
             },
             "supportedrestypes": {
-                "supported_res_types": ["NetcdfResource", "TimeSeriesResource"]
+                "supported_res_types": ["GenericResource"]
             },
             "supportedsharingstatuses": {
                 "sharing_status": ["Public", "Discoverable"]
@@ -1320,7 +1320,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
                 "value": "1.12"
             },
             "supportedrestypes": {
-                "supported_res_types": ["NetcdfResource", "TimeSeriesResource"]
+                "supported_res_types": ["GenericResource"]
             },
             "supportedsharingstatuses": {
                 "sharing_status": ["Public", "Discoverable"]
