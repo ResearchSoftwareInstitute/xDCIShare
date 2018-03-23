@@ -105,9 +105,11 @@ class TestWebAppFeature(TransactionTestCase):
         # create 1 SupportedResTypes obj with required params
         resource.create_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
                                          supported_res_types=['GenericResource'])
-        resource.create_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
-                                         supported_res_types=['GenericResource'])
-        self.assertEqual(SupportedResTypes.objects.all().count(), 2)
+        # Try creating the 2nd SupportedResTypes obj with required params
+        with self.assertRaises(Exception):
+            resource.create_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
+                                             supported_res_types=['GenericResource'])
+        self.assertEqual(SupportedResTypes.objects.all().count(), 1)
 
         # update existing meta
         resource.update_metadata_element(self.resWebApp.short_id, 'SupportedResTypes',
