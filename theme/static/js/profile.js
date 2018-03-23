@@ -342,4 +342,13 @@ $(document).ready(function () {
         yearRange: '1918:'
     });
 
+
+    // restricting SSN (last_four_ss) to numbers only
+
+    $("#id_last_four_ss").keyup(function(e){
+        if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+           this.value = this.value.replace(/[^0-9\.]/g, '');
+        }
+    })
+
 });
