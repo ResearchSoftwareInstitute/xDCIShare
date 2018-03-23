@@ -154,8 +154,8 @@
 
                                     {# Middle name #}
                                     <fieldset class="col-sm-4">
-                                        <label>Middle name</label>
-                                        <input class="form-control" {% if profile.middle_name %}value="{{ profile.middle_name }}"{% endif %} name="middle_name">
+                                        <label>Middle name *</label>
+                                        <input class="form-control  form-required" {% if profile.middle_name %}value="{{ profile.middle_name }}"{% endif %} name="middle_name">
                                     </fieldset>
 
                                     {# Last name #}
@@ -327,7 +327,7 @@
 
                                         {% if profile_user.id == user.id %}
                                         <div data-page-mode="edit">
-                                            {#        Description       #}
+                                            <!-- {#        Description       #}
                                             <fieldset>
                                                 <label>Description</label>
                                                 <textarea class="form-control"
@@ -358,6 +358,47 @@
                                             <fieldset id="user-type-other">
                                                 <label>Specify: *</label>
                                                 <input name="user_type" class="form-control">
+                                            </fieldset> -->
+
+                                            <!-- User type is required so we need to pass value for it here -->
+                                            <input type="hidden" name="user_type" value="Unspecified">
+
+                                            {#        Date Joined       #}
+                                            <fieldset>
+                                                <label>User since</label>
+                                                <input readonly class="form-control" value='{{ profile_user.date_joined }}'>
+                                            </fieldset>
+
+                                            {#        Address 1       #}
+                                            <fieldset>
+                                                <label>Address 1</label>
+                                                <input name="address_1" class="form-control" data-address_1="{{ profile.address_1 }}" {%if profile.address_1 %}value="{{ profile.address_1 }}"{% endif %}></input>
+                                            </fieldset>
+
+                                            {#        Address 2       #}
+                                            <fieldset>
+                                                <label>Address 2</label>
+                                                <input name="address_2" class="form-control" data-address_2="{{ profile.address_2 }}" {%if profile.address_2 %}value="{{ profile.address_2 }}"{% endif %}></input>
+                                            </fieldset>
+
+                                            {#        City       #}
+                                            <fieldset>
+                                                <label>City</label>
+                                                <input name="city" class="form-control" data-city="{{ profile.city }}" {%if profile.city %}value="{{ profile.city }}"{% endif %}></input>
+                                            </fieldset>
+
+
+                                            {#        State       #}
+                                            <fieldset>
+                                                <label>State/Province *</label>
+                                                <input name="state" class="form-control form-required" {% if profile.state %}value="{{ profile.state }}"{% else %}value="Unspecified"{% endif %}>
+                                            </fieldset>
+
+                                            {#        Zip Code       #}
+                                            <fieldset>
+                                                <label>Zip Code *</label>
+                                                <input name="zipcode" maxlength="5" class="form-control form-required" data-city="{{ profile.zipcode }}"
+                                                    {% if profile.zipcode %}value="{{ profile.zipcode }}"{% endif %}></input>
                                             </fieldset>
 
                                             {#        Country       #}
@@ -366,17 +407,28 @@
                                                 <select name="country" class="form-control form-required input-medium bfh-countries" data-country="{{ profile.country }}"></select>
                                             </fieldset>
 
-                                            {#        State       #}
+                                            {#        Gender       #}
                                             <fieldset>
-                                                <label>State/Province *</label>
-                                                <input name="state" class="form-control form-required" {% if  profile.state %}value="{{ profile.state }}"{% else %}value="Unspecified"{% endif %}>
+                                                <label>Gender</label>
+                                                <select name="gender" class="form-control form-required input-medium" data-gender="{{ profile.gender }}">
+                                                    {% for choice in profile.GENDER_CHOICES %}
+                                                        <option value="{{ choice.0 }}" {% if profile.gender == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </fieldset>
 
-                                            {#        Date Joined       #}
+                                            {#        Date of Birth       #}
                                             <fieldset>
-                                                <label>User since</label>
-                                                <input readonly class="form-control" value='{{ profile_user.date_joined }}'>
+                                                <label>Date of Birth  *</label>
+                                                <input name="date_of_birth" id="id_date_of_birth" class="form-control form-required input-medium" data-date_of_birth="{{ profile.date_of_birth }}" {% if profile.date_of_birth %}value="{{ profile.date_of_birth }}"{% endif %}></input>
                                             </fieldset>
+
+                                            {# Last 4 digits of social security number #}
+                                            <fieldset>
+                                                <label>Last four digits of social security number *</label>
+                                                <input name="last_four_ss" id="id_last_four_ss" maxlength="4" class="form-control form-required input-medium" data-last_four_ss="{{ profile.last_four_ss }}" {% if profile.last_four_ss %}value="{{ profile.last_four_ss }}"{% endif %}></input>
+                                            </fieldset>
+
                                         </div>
                                         {% endif %}
                                     </div>
@@ -435,20 +487,20 @@
                                                     {% endif %}
                                                 {% endif %}
 
-                                                {#        Website       #}
+                                                <!-- {#        Website       #}
                                                 {% if profile.website %}
                                                         <tr>
                                                             <td><span class="text-muted">Website</span></td>
                                                             <td><a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a></td>
                                                         </tr>
-                                                {% endif %}
+                                                {% endif %} -->
                                                 </tbody>
                                             </table>
 
                                             {% if profile_user.id == user.id %}
                                             <div class="row" data-page-mode="edit">
                                                 <fieldset>
-                                                    <div class="col-sm-12"><label>Phone 1</label></div>
+                                                    <div class="col-sm-12"><label>Phone 1 *</label></div>
 
                                                     <div class="col-sm-6">
                                                         <select name="phone_1_type" class="form-control">
@@ -464,7 +516,7 @@
                                                         </select>
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input id="phone1" name="phone_1" class="form-control phone" {% if profile.phone_1 %}value="{{ profile.phone_1 }}"{% endif %}>
+                                                        <input id="phone1" name="phone_1" class="form-control form-required phone" {% if profile.phone_1 %}value="{{ profile.phone_1 }}"{% endif %}>
                                                     </div>
                                                 </fieldset>
 
@@ -495,10 +547,42 @@
                                                 </fieldset>
 
                                                 <fieldset class="col-sm-12">
+                                                    <label>Emergency contact full name</label>
+                                                    <input class="form-control" id="id_emergency_name"
+                                                          {% if profile.emergency_name %}value="{{ profile.emergency_name }}"{% endif %} name="emergency_name">
+                                                </fieldset>
+
+                                                <fieldset class="col-sm-12">
+                                                    <label>Emergency contact relationship </label>
+                                                    <input class="form-control" id="id_emergency_relationship"
+                                                           {% if profile.emergency_relationship %}value="{{ profile.emergency_relationship }}"{% endif %} name="emergency_relationship">
+                                                </fieldset>
+
+                                                <fieldset class="col-sm-12">
+                                                    <label>Emergency phone 1 </label>
+                                                    <input class="form-control" id="id_emergency_phone_1"
+                                                           {% if profile.emergency_phone_1 %}value="{{ profile.emergency_phone_1 }}"{% endif %} name="emergency_phone_1">
+                                                </fieldset>
+
+                                                <fieldset class="col-sm-12">
+                                                    <label>Emergency phone 2 </label>
+                                                    <input class="form-control" id="id_emergency_phone_2"
+                                                           {% if profile.emergency_phone_2 %}value="{{ profile.emergency_phone_2 }}"{% endif %} name="emergency_phone_2">
+                                                </fieldset>
+
+                                                <fieldset class="col-sm-12">
+                                                    <label>Emergency email </label>
+                                                    <input class="form-control" id="id_emergency_email"
+                                                            {% if profile.emergency_email %}value="{{ profile.emergency_email }}"{% endif %} name="emergency_email">
+                                                </fieldset>
+
+
+
+                                                <!-- <fieldset class="col-sm-12">
                                                     <label>Website</label>
                                                     <input class="form-control"
                                                            {% if profile.website %}value="{{ profile.website }}"{% endif %} name="website">
-                                                </fieldset>
+                                                </fieldset> -->
                                             </div>
                                             {% endif %}
                                     </div>
@@ -507,7 +591,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div role="tabpanel" class="tab-pane fade" id="contributions">
                         <div class="row" data-page-mode='on-edit-blur'>
                             <div class="col-sm-12"><legend>Resources</legend></div>
