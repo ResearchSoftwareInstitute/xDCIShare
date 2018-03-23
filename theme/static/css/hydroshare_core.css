@@ -361,6 +361,10 @@ a.sign-out-inline:hover {
 	text-decoration: none;
 }
 
+.info-link {
+  margin-left: 10px;
+}
+
 /* Modal window */
 
 .modal-content {

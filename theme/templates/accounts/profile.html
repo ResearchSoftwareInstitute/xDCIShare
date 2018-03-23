@@ -396,7 +396,7 @@
 
                                             {#        Zip Code       #}
                                             <fieldset>
-                                                <label>Zip Code *</label>
+                                                <label> Zip Code * <a class="info-link"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" aria-haspopup="true" data-original-title="We ask for your zip code as an additional piece of information to help verify your identity."></span></a></label>
                                                 <input name="zipcode" maxlength="5" class="form-control form-required" data-city="{{ profile.zipcode }}"
                                                     {% if profile.zipcode %}value="{{ profile.zipcode }}"{% endif %}></input>
                                             </fieldset>
