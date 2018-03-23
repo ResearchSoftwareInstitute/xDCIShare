@@ -341,5 +341,24 @@ $(document).ready(function () {
         $(this).trigger(jQuery.Event('keypress', { which: 13 }));
       }
     });
-});
 
+    // calendar widget for date of birth field
+    $("#id_date_of_birth").datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1918:'
+    });
+
+
+    // restricting SSN (last_four_ss) to numbers only
+
+    $("#id_last_four_ss").keyup(function(e){
+        if (this.value != this.value.replace(/[^0-9\.]/g, '')) {
+           this.value = this.value.replace(/[^0-9\.]/g, '');
+        }
+        if(e.keyCode == 190){
+            this.value = this.value.replace('.', '');
+        }
+    })
+});

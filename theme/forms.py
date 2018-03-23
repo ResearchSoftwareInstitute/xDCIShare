@@ -81,6 +81,7 @@ class SignupForm(forms.ModelForm):
         model = User
         exclude = ['last_login', 'date_joined', 'password']
 
+    middle_name = forms.CharField(label="Middle name")
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput())
     password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput())
     organization = forms.CharField(required=False)
@@ -118,6 +119,7 @@ class SignupForm(forms.ModelForm):
         else:
             raise forms.ValidationError("Password must be confirmed")
 
+
     def save(self, *args, **kwargs):
         data = self.cleaned_data
         return create_account(
@@ -125,6 +127,7 @@ class SignupForm(forms.ModelForm):
             username=data['username'],
             organization=data['organization'],
             first_name=data['first_name'],
+            middle_name=data['middle_name'],
             last_name=data['last_name'],
             superuser=False,
             password=data['password'],
