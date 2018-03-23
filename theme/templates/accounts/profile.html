@@ -372,19 +372,19 @@
                                             {#        Address 1       #}
                                             <fieldset>
                                                 <label>Address 1</label>
-                                                <input name="address_1" class="form-control" data-address_1="{{ profile.address_1 }}"></input>
+                                                <input name="address_1" class="form-control" data-address_1="{{ profile.address_1 }}" {%if profile.address_1 %}value="{{ profile.address_1 }}"{% endif %}></input>
                                             </fieldset>
 
                                             {#        Address 2       #}
                                             <fieldset>
                                                 <label>Address 2</label>
-                                                <input name="address_2" class="form-control" data-address_2="{{ profile.address_2 }}"></input>
+                                                <input name="address_2" class="form-control" data-address_2="{{ profile.address_2 }}" {%if profile.address_2 %}value="{{ profile.address_2 }}"{% endif %}></input>
                                             </fieldset>
 
                                             {#        City       #}
                                             <fieldset>
                                                 <label>City</label>
-                                                <input name="city" class="form-control" data-city="{{ profile.city }}"></input>
+                                                <input name="city" class="form-control" data-city="{{ profile.city }}" {%if profile.city %}value="{{ profile.city }}"{% endif %}></input>
                                             </fieldset>
 
 
@@ -420,7 +420,7 @@
                                             {#        Date of Birth       #}
                                             <fieldset>
                                                 <label>Date of Birth  *</label>
-                                                <input name="date_of_birth" class="form-control form-required input-medium" data-date_of_birth="{{ profile.date_of_birth }}" {% if profile.date_of_birth %}value="{{ profile.date_of_birth }}"{% endif %}></input>
+                                                <input name="date_of_birth" id="id_date_of_birth" class="form-control form-required input-medium" data-date_of_birth="{{ profile.date_of_birth }}" {% if profile.date_of_birth %}value="{{ profile.date_of_birth }}"{% endif %}></input>
                                             </fieldset>
 
                                             {# Last 4 digits of social security number #}
@@ -591,7 +591,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div role="tabpanel" class="tab-pane fade" id="contributions">
                         <div class="row" data-page-mode='on-edit-blur'>
                             <div class="col-sm-12"><legend>Resources</legend></div>

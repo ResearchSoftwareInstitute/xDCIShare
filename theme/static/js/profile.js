@@ -332,4 +332,14 @@ $(document).ready(function () {
             }
         }
     );
+
+
+    // calendar widget for date of birth field
+    $("#id_date_of_birth").datepicker({
+        dateFormat: 'mm/dd/yy',
+        changeMonth: true,
+        changeYear: true,
+        yearRange: '1918:'
+    });
+
 });
