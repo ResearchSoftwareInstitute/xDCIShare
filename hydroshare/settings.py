@@ -266,6 +266,7 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.gis",
     "django.contrib.postgres",
+    "rest_framework_swagger",
     "inplaceeditform",
     "django_nose",
     "django_irods",
@@ -309,6 +310,8 @@ INSTALLED_APPS = (
     "hs_file_types",
     "hs_composite_resource",
     "django_comments",
+    "hs_rest_api",
+    "hs_dictionary",
     "security",
 )
 
@@ -496,7 +499,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE_QUERY_PARAM': 'PAGE_SIZE',
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'oauth2_provider.ext.rest_framework.OAuth2Authentication',
     ),
@@ -587,7 +589,7 @@ LOGGING = {
             'level': 'WARNING',
             'propagate': False,
         },
-        # Catch-all logger for MyHPOM apps
+        # Catch-all logger for HydroShare apps
         '': {
             'handlers': ['hydrosharelog'],
             'propagate': False,
@@ -709,3 +711,7 @@ SECURE_HSTS_SECONDS = 31536000
 # Cookie Stuff
 SESSION_COOKIE_SECURE = USE_SECURITY
 CSRF_COOKIE_SECURE = USE_SECURITY
+
+SWAGGER_SETTINGS = {
+    "VALIDATOR_URL": False
+}

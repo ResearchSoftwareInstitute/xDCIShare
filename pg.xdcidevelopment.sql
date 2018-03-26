@@ -2361,7 +2361,8 @@ CREATE TABLE hs_access_control_resourceaccess (
     shareable boolean NOT NULL,
     published boolean NOT NULL,
     immutable boolean NOT NULL,
-    resource_id integer NOT NULL
+    resource_id integer NOT NULL,
+    require_download_agreement boolean NOT NULL
 );
 
 
@@ -3115,7 +3116,7 @@ CREATE TABLE hs_app_timeseries_site (
     object_id integer NOT NULL,
     site_code character varying(200) NOT NULL,
     site_name character varying(255) NOT NULL,
-    elevation_m integer,
+    elevation_m double precision,
     elevation_datum character varying(50),
     site_type character varying(100),
     content_type_id integer NOT NULL,
@@ -4276,6 +4277,75 @@ ALTER SEQUENCE hs_file_types_genericlogicalfile_id_seq OWNED BY hs_file_types_ge
 
 
 --
+-- Name: hs_file_types_geofeaturefilemetadata; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE hs_file_types_geofeaturefilemetadata (
+    id integer NOT NULL,
+    extra_metadata hstore NOT NULL,
+    keywords character varying(100)[] NOT NULL,
+    is_dirty boolean NOT NULL
+);
+
+
+ALTER TABLE hs_file_types_geofeaturefilemetadata OWNER TO postgres;
+
+--
+-- Name: hs_file_types_geofeaturefilemetadata_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hs_file_types_geofeaturefilemetadata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hs_file_types_geofeaturefilemetadata_id_seq OWNER TO postgres;
+
+--
+-- Name: hs_file_types_geofeaturefilemetadata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE hs_file_types_geofeaturefilemetadata_id_seq OWNED BY hs_file_types_geofeaturefilemetadata.id;
+
+
+--
+-- Name: hs_file_types_geofeaturelogicalfile; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE hs_file_types_geofeaturelogicalfile (
+    id integer NOT NULL,
+    dataset_name character varying(255),
+    metadata_id integer NOT NULL
+);
+
+
+ALTER TABLE hs_file_types_geofeaturelogicalfile OWNER TO postgres;
+
+--
+-- Name: hs_file_types_geofeaturelogicalfile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hs_file_types_geofeaturelogicalfile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hs_file_types_geofeaturelogicalfile_id_seq OWNER TO postgres;
+
+--
+-- Name: hs_file_types_geofeaturelogicalfile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE hs_file_types_geofeaturelogicalfile_id_seq OWNED BY hs_file_types_geofeaturelogicalfile.id;
+
+
+--
 -- Name: hs_file_types_georasterfilemetadata; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -4411,6 +4481,76 @@ ALTER TABLE hs_file_types_netcdflogicalfile_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE hs_file_types_netcdflogicalfile_id_seq OWNED BY hs_file_types_netcdflogicalfile.id;
+
+
+--
+-- Name: hs_file_types_reftimeseriesfilemetadata; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE hs_file_types_reftimeseriesfilemetadata (
+    id integer NOT NULL,
+    extra_metadata hstore NOT NULL,
+    keywords character varying(100)[] NOT NULL,
+    is_dirty boolean NOT NULL,
+    json_file_content text NOT NULL
+);
+
+
+ALTER TABLE hs_file_types_reftimeseriesfilemetadata OWNER TO postgres;
+
+--
+-- Name: hs_file_types_reftimeseriesfilemetadata_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hs_file_types_reftimeseriesfilemetadata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hs_file_types_reftimeseriesfilemetadata_id_seq OWNER TO postgres;
+
+--
+-- Name: hs_file_types_reftimeseriesfilemetadata_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE hs_file_types_reftimeseriesfilemetadata_id_seq OWNED BY hs_file_types_reftimeseriesfilemetadata.id;
+
+
+--
+-- Name: hs_file_types_reftimeserieslogicalfile; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE hs_file_types_reftimeserieslogicalfile (
+    id integer NOT NULL,
+    dataset_name character varying(255),
+    metadata_id integer NOT NULL
+);
+
+
+ALTER TABLE hs_file_types_reftimeserieslogicalfile OWNER TO postgres;
+
+--
+-- Name: hs_file_types_reftimeserieslogicalfile_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hs_file_types_reftimeserieslogicalfile_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE hs_file_types_reftimeserieslogicalfile_id_seq OWNER TO postgres;
+
+--
+-- Name: hs_file_types_reftimeserieslogicalfile_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE hs_file_types_reftimeserieslogicalfile_id_seq OWNED BY hs_file_types_reftimeserieslogicalfile.id;
 
 
 --
@@ -4673,45 +4813,6 @@ ALTER TABLE hs_geographic_feature_resource_originalcoverage_id_seq OWNER TO post
 --
 
 ALTER SEQUENCE hs_geographic_feature_resource_originalcoverage_id_seq OWNED BY hs_geographic_feature_resource_originalcoverage.id;
-
-
---
--- Name: hs_geographic_feature_resource_originalfileinfo; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE hs_geographic_feature_resource_originalfileinfo (
-    id integer NOT NULL,
-    object_id integer NOT NULL,
-    "fileType" text NOT NULL,
-    "baseFilename" text NOT NULL,
-    "fileCount" integer NOT NULL,
-    "filenameString" text,
-    content_type_id integer NOT NULL,
-    CONSTRAINT hs_geographic_feature_resource_originalfileinfo_object_id_check CHECK ((object_id >= 0))
-);
-
-
-ALTER TABLE hs_geographic_feature_resource_originalfileinfo OWNER TO postgres;
-
---
--- Name: hs_geographic_feature_resource_originalfileinfo_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE hs_geographic_feature_resource_originalfileinfo_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE hs_geographic_feature_resource_originalfileinfo_id_seq OWNER TO postgres;
-
---
--- Name: hs_geographic_feature_resource_originalfileinfo_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE hs_geographic_feature_resource_originalfileinfo_id_seq OWNED BY hs_geographic_feature_resource_originalfileinfo.id;
 
 
 --
@@ -7390,8 +7491,8 @@ ALTER SEQUENCE theme_userprofile_id_seq OWNED BY theme_userprofile.id;
 
 CREATE TABLE theme_userquota (
     id integer NOT NULL,
-    allocated_value bigint NOT NULL,
-    used_value bigint NOT NULL,
+    allocated_value double precision NOT NULL,
+    used_value double precision NOT NULL,
     unit character varying(10) NOT NULL,
     zone character varying(100) NOT NULL,
     remaining_grace_period integer NOT NULL,
@@ -8168,6 +8269,20 @@ ALTER TABLE ONLY hs_file_types_genericlogicalfile ALTER COLUMN id SET DEFAULT ne
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY hs_file_types_geofeaturefilemetadata ALTER COLUMN id SET DEFAULT nextval('hs_file_types_geofeaturefilemetadata_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hs_file_types_geofeaturelogicalfile ALTER COLUMN id SET DEFAULT nextval('hs_file_types_geofeaturelogicalfile_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY hs_file_types_georasterfilemetadata ALTER COLUMN id SET DEFAULT nextval('hs_file_types_georasterfilemetadata_id_seq'::regclass);
 
 
@@ -8190,6 +8305,20 @@ ALTER TABLE ONLY hs_file_types_netcdffilemetadata ALTER COLUMN id SET DEFAULT ne
 --
 
 ALTER TABLE ONLY hs_file_types_netcdflogicalfile ALTER COLUMN id SET DEFAULT nextval('hs_file_types_netcdflogicalfile_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hs_file_types_reftimeseriesfilemetadata ALTER COLUMN id SET DEFAULT nextval('hs_file_types_reftimeseriesfilemetadata_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hs_file_types_reftimeserieslogicalfile ALTER COLUMN id SET DEFAULT nextval('hs_file_types_reftimeserieslogicalfile_id_seq'::regclass);
 
 
 --
@@ -8232,13 +8361,6 @@ ALTER TABLE ONLY hs_geographic_feature_resource_geometryinformation ALTER COLUMN
 --
 
 ALTER TABLE ONLY hs_geographic_feature_resource_originalcoverage ALTER COLUMN id SET DEFAULT nextval('hs_geographic_feature_resource_originalcoverage_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY hs_geographic_feature_resource_originalfileinfo ALTER COLUMN id SET DEFAULT nextval('hs_geographic_feature_resource_originalfileinfo_id_seq'::regclass);
 
 
 --
@@ -8736,7 +8858,7 @@ ALTER TABLE ONLY theme_userquota ALTER COLUMN id SET DEFAULT nextval('theme_user
 --
 
 COPY auth_group (id, name) FROM stdin;
-1	Resource Author
+1	Hydroshare Author
 \.
 
 
@@ -8752,402 +8874,402 @@ SELECT pg_catalog.setval('auth_group_id_seq', 1, true);
 --
 
 COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
-2749	1	139
-2750	1	140
-2751	1	141
-2752	1	142
-2753	1	143
-2754	1	144
-2755	1	145
-2756	1	146
-2757	1	147
-2758	1	148
-2759	1	149
-2760	1	150
-2761	1	151
-2762	1	152
-2763	1	153
-2764	1	154
-2765	1	155
-2766	1	156
-2767	1	157
-2768	1	158
-2769	1	159
-2770	1	160
-2771	1	161
-2772	1	162
-2773	1	163
-2774	1	164
-2775	1	165
-2776	1	166
-2777	1	167
-2778	1	168
-2779	1	169
-2780	1	170
-2781	1	171
-2782	1	172
-2783	1	173
-2784	1	174
-2785	1	175
-2786	1	176
-2787	1	177
-2788	1	178
-2789	1	179
-2790	1	180
-2791	1	181
-2792	1	182
-2793	1	183
-2794	1	184
-2795	1	185
-2796	1	186
-2797	1	187
-2798	1	188
-2799	1	189
-2800	1	190
-2801	1	191
-2802	1	192
-2803	1	193
-2804	1	194
-2805	1	195
-2806	1	196
-2807	1	197
-2808	1	198
-2809	1	199
-2810	1	200
-2811	1	201
-2812	1	202
-2813	1	203
-2814	1	204
-2815	1	271
-2816	1	272
-2817	1	273
-2818	1	274
-2819	1	275
-2820	1	276
-2821	1	277
-2822	1	278
-2823	1	279
-2824	1	280
-2825	1	281
-2826	1	282
-2827	1	283
-2828	1	284
-2829	1	285
-2830	1	313
-2831	1	314
-2832	1	315
-2833	1	316
-2834	1	317
-2835	1	318
-2836	1	319
-2837	1	320
-2838	1	321
-2839	1	322
-2840	1	323
-2841	1	324
-2842	1	325
-2843	1	326
-2844	1	327
-2845	1	328
-2846	1	329
-2847	1	330
-2848	1	331
-2849	1	332
-2850	1	333
-2851	1	334
-2852	1	335
-2853	1	336
-2854	1	337
-2855	1	338
-2856	1	339
-2857	1	340
-2858	1	341
-2859	1	342
-2860	1	343
-2861	1	344
-2862	1	345
-2863	1	346
-2864	1	347
-2865	1	348
-2866	1	349
-2867	1	350
-2868	1	351
-2869	1	352
-2870	1	353
-2871	1	354
-2872	1	355
-2873	1	356
-2874	1	357
-2875	1	358
-2876	1	359
-2877	1	360
-2878	1	361
-2879	1	362
-2880	1	363
-2881	1	364
-2882	1	365
-2883	1	366
-2884	1	367
-2885	1	368
-2886	1	369
-2887	1	370
-2888	1	371
-2889	1	372
-2890	1	373
-2891	1	374
-2892	1	375
-2893	1	376
-2894	1	377
-2895	1	378
-2896	1	379
-2897	1	380
-2898	1	381
-2899	1	382
-2900	1	383
-2901	1	384
-2902	1	385
-2903	1	386
-2904	1	387
-2905	1	388
-2906	1	389
-2907	1	390
-2908	1	391
-2909	1	392
-2910	1	393
-2911	1	394
-2912	1	395
-2913	1	396
-2914	1	397
-2915	1	398
-2916	1	399
-2917	1	400
-2918	1	401
-2919	1	402
-2920	1	403
-2921	1	404
-2922	1	405
-2923	1	406
-2924	1	407
-2925	1	408
-2926	1	409
-2927	1	410
-2928	1	411
-2929	1	412
-2930	1	413
-2931	1	414
-2932	1	415
-2933	1	416
-2934	1	417
-2935	1	418
-2936	1	419
-2937	1	420
-2938	1	421
-2939	1	422
-2940	1	423
-2941	1	424
-2942	1	425
-2943	1	426
-2944	1	427
-2945	1	428
-2946	1	429
-2947	1	430
-2948	1	431
-2949	1	432
-2950	1	433
-2951	1	434
-2952	1	435
-2953	1	436
-2954	1	437
-2955	1	438
-2956	1	439
-2957	1	440
-2958	1	441
-2959	1	442
-2960	1	443
-2961	1	444
-2962	1	445
-2963	1	446
-2964	1	447
-2965	1	448
-2966	1	449
-2967	1	450
-2968	1	451
-2969	1	452
-2970	1	453
-2971	1	454
-2972	1	455
-2973	1	456
-2974	1	457
-2975	1	458
-2976	1	459
-2977	1	460
-2978	1	461
-2979	1	462
-2980	1	463
-2981	1	464
-2982	1	465
-2983	1	476
-2984	1	477
-2985	1	478
-2986	1	479
-2987	1	480
-2988	1	481
-2989	1	482
-2990	1	483
-2991	1	484
-2992	1	485
-2993	1	486
-2994	1	487
-2995	1	488
-2996	1	489
-2997	1	490
-2998	1	491
-2999	1	492
-3000	1	493
-3001	1	494
-3002	1	495
-3003	1	496
-3004	1	497
-3005	1	498
-3006	1	499
-3007	1	500
-3008	1	501
-3009	1	502
-3010	1	503
-3011	1	504
-3012	1	505
-3013	1	506
-3014	1	507
-3015	1	508
-3016	1	509
-3017	1	510
-3018	1	511
-3019	1	512
-3020	1	513
-3021	1	514
-3022	1	522
-3023	1	523
-3024	1	524
-3025	1	528
-3026	1	529
-3027	1	530
-3028	1	531
-3029	1	532
-3030	1	533
-3031	1	543
-3032	1	544
-3033	1	545
-3034	1	552
-3035	1	553
-3036	1	554
-3037	1	555
-3038	1	556
-3039	1	557
-3040	1	558
-3041	1	559
-3042	1	560
-3043	1	561
-3044	1	562
-3045	1	563
-3046	1	564
-3047	1	565
-3048	1	566
-3049	1	567
-3050	1	568
-3051	1	569
-3052	1	570
-3053	1	571
-3054	1	572
-3055	1	573
-3056	1	574
-3057	1	575
-3058	1	576
-3059	1	577
-3060	1	578
-3061	1	579
-3062	1	580
-3063	1	581
-3064	1	582
-3065	1	583
-3066	1	584
-3067	1	585
-3068	1	586
-3069	1	587
-3070	1	588
-3071	1	589
-3072	1	590
-3073	1	591
-3074	1	592
-3075	1	593
-3076	1	594
-3077	1	595
-3078	1	596
-3079	1	597
-3080	1	598
-3081	1	599
-3082	1	600
-3083	1	601
-3084	1	602
-3085	1	603
-3086	1	604
-3087	1	605
-3088	1	606
-3089	1	607
-3090	1	608
-3091	1	609
-3092	1	610
-3093	1	611
-3094	1	612
-3095	1	613
-3096	1	614
-3097	1	615
-3098	1	616
-3099	1	617
-3100	1	618
-3101	1	619
-3102	1	620
-3103	1	621
-3104	1	622
-3105	1	623
-3106	1	624
-3107	1	625
-3108	1	626
-3109	1	627
-3110	1	628
-3111	1	629
-3112	1	630
-3113	1	631
-3114	1	632
-3115	1	633
-3116	1	634
-3117	1	635
-3118	1	636
-3119	1	637
-3120	1	638
-3121	1	639
-3122	1	640
-3123	1	641
-3124	1	642
-3125	1	643
-3126	1	644
-3127	1	645
-3128	1	646
-3129	1	647
-3130	1	648
-3131	1	649
-3132	1	650
-3133	1	651
-3134	1	652
-3135	1	653
-3136	1	654
-3137	1	655
-3138	1	656
-3139	1	657
-3140	1	658
-3141	1	659
-3142	1	660
-3143	1	661
-3144	1	662
+2137	1	412
+2138	1	413
+2139	1	414
+2140	1	415
+2141	1	416
+2142	1	417
+2143	1	418
+2144	1	419
+2145	1	420
+2146	1	421
+2147	1	422
+2148	1	423
+2149	1	424
+2150	1	425
+2151	1	426
+2152	1	427
+2153	1	428
+2154	1	429
+2155	1	430
+2156	1	431
+2157	1	432
+2158	1	433
+2159	1	434
+2160	1	435
+2161	1	436
+2162	1	437
+2163	1	438
+2164	1	439
+2165	1	440
+2166	1	441
+2167	1	442
+2168	1	443
+2169	1	444
+2170	1	445
+2171	1	446
+2172	1	447
+2173	1	448
+2174	1	449
+2175	1	450
+2176	1	451
+2177	1	452
+2178	1	453
+2179	1	454
+2180	1	455
+2181	1	456
+2182	1	457
+2183	1	458
+2184	1	459
+2185	1	460
+2186	1	461
+2187	1	462
+2188	1	463
+2189	1	464
+2190	1	465
+2191	1	476
+2192	1	477
+2193	1	478
+2194	1	479
+2195	1	480
+2196	1	481
+2197	1	482
+2198	1	483
+2199	1	484
+2200	1	485
+2201	1	486
+2202	1	487
+2203	1	488
+2204	1	489
+2205	1	490
+2206	1	491
+2207	1	492
+2208	1	493
+2209	1	494
+2210	1	495
+2211	1	496
+2212	1	497
+2213	1	498
+2214	1	499
+2215	1	500
+2216	1	501
+2217	1	502
+2218	1	503
+2219	1	504
+2220	1	505
+2221	1	506
+2222	1	507
+2223	1	508
+2224	1	509
+2225	1	510
+2226	1	511
+2227	1	512
+2228	1	513
+2229	1	514
+2230	1	522
+2231	1	523
+2232	1	524
+2233	1	528
+2234	1	529
+2235	1	530
+2236	1	531
+2237	1	532
+2238	1	533
+2239	1	543
+2240	1	544
+2241	1	545
+2242	1	552
+2243	1	553
+2244	1	554
+2245	1	555
+2246	1	556
+2247	1	557
+2248	1	558
+2249	1	559
+2250	1	560
+2251	1	561
+2252	1	562
+2253	1	563
+2254	1	564
+2255	1	565
+2256	1	566
+2257	1	567
+2258	1	568
+2259	1	569
+2260	1	570
+2261	1	571
+2262	1	572
+2263	1	573
+2264	1	574
+2265	1	575
+2266	1	576
+2267	1	577
+2268	1	578
+2269	1	579
+2270	1	580
+2271	1	581
+2272	1	582
+2273	1	583
+2274	1	584
+2275	1	585
+2276	1	586
+2277	1	587
+2278	1	588
+2279	1	589
+2280	1	590
+2281	1	591
+2282	1	592
+2283	1	593
+2284	1	594
+2285	1	595
+2286	1	596
+2287	1	597
+2288	1	598
+2289	1	599
+2290	1	600
+2291	1	601
+2292	1	602
+2293	1	603
+2294	1	604
+2295	1	605
+2296	1	606
+2297	1	607
+2298	1	608
+2299	1	609
+2300	1	610
+2301	1	611
+2302	1	612
+2303	1	613
+2304	1	614
+1957	1	139
+1958	1	140
+1959	1	141
+1960	1	142
+1961	1	143
+1962	1	144
+1963	1	145
+1964	1	146
+1965	1	147
+1966	1	148
+1967	1	149
+1968	1	150
+1969	1	151
+1970	1	152
+1971	1	153
+1972	1	154
+1973	1	155
+1974	1	156
+1975	1	157
+1976	1	158
+1977	1	159
+1978	1	160
+1979	1	161
+1980	1	162
+1981	1	163
+1982	1	164
+1983	1	165
+1984	1	166
+1985	1	167
+1986	1	168
+1987	1	169
+1988	1	170
+1989	1	171
+1990	1	172
+1991	1	173
+1992	1	174
+1993	1	175
+1994	1	176
+1995	1	177
+1996	1	178
+1997	1	179
+1998	1	180
+1999	1	181
+2000	1	182
+2001	1	183
+2002	1	184
+2003	1	185
+2004	1	186
+2005	1	187
+2006	1	188
+2007	1	189
+2008	1	190
+2009	1	191
+2010	1	192
+2011	1	193
+2012	1	194
+2013	1	195
+2014	1	196
+2015	1	197
+2016	1	198
+2017	1	199
+2018	1	200
+2019	1	201
+2020	1	202
+2021	1	203
+2022	1	204
+2023	1	271
+2024	1	272
+2025	1	273
+2026	1	274
+2027	1	275
+2028	1	276
+2029	1	277
+2030	1	278
+2031	1	279
+2032	1	280
+2033	1	281
+2034	1	282
+2035	1	283
+2036	1	284
+2037	1	285
+2038	1	313
+2039	1	314
+2040	1	315
+2041	1	316
+2042	1	317
+2043	1	318
+2044	1	319
+2045	1	320
+2046	1	321
+2047	1	322
+2048	1	323
+2049	1	324
+2050	1	325
+2051	1	326
+2052	1	327
+2053	1	328
+2054	1	329
+2055	1	330
+2056	1	331
+2057	1	332
+2058	1	333
+2059	1	334
+2060	1	335
+2061	1	336
+2062	1	337
+2063	1	338
+2064	1	339
+2065	1	340
+2066	1	341
+2067	1	342
+2068	1	343
+2069	1	344
+2070	1	345
+2071	1	346
+2072	1	347
+2073	1	348
+2074	1	349
+2075	1	350
+2076	1	351
+2077	1	352
+2078	1	353
+2079	1	354
+2080	1	355
+2081	1	356
+2082	1	357
+2083	1	358
+2084	1	359
+2085	1	360
+2086	1	361
+2087	1	362
+2088	1	363
+2089	1	364
+2090	1	365
+2091	1	366
+2092	1	367
+2093	1	368
+2094	1	369
+2095	1	370
+2096	1	371
+2097	1	372
+2098	1	373
+2099	1	374
+2100	1	375
+2101	1	376
+2102	1	377
+2103	1	378
+2104	1	379
+2105	1	380
+2106	1	381
+2107	1	382
+2108	1	383
+2109	1	384
+2110	1	385
+2111	1	386
+2112	1	387
+2113	1	388
+2114	1	389
+2115	1	390
+2116	1	391
+2117	1	392
+2118	1	393
+2119	1	394
+2120	1	395
+2121	1	396
+2122	1	397
+2123	1	398
+2124	1	399
+2125	1	400
+2126	1	401
+2127	1	402
+2128	1	403
+2129	1	404
+2130	1	405
+2131	1	406
+2132	1	407
+2133	1	408
+2134	1	409
+2135	1	410
+2136	1	411
+2305	1	615
+2306	1	616
+2307	1	617
+2308	1	618
+2309	1	619
+2310	1	620
+2311	1	621
+2312	1	622
+2313	1	623
+2314	1	624
+2315	1	625
+2316	1	626
+2317	1	627
+2318	1	628
+2319	1	629
+2320	1	630
+2321	1	631
+2322	1	632
+2323	1	633
+2324	1	634
+2325	1	635
+2326	1	636
+2327	1	637
+2328	1	638
+2329	1	639
+2330	1	640
+2331	1	641
+2332	1	642
+2333	1	643
+2334	1	644
+2335	1	645
+2336	1	646
+2337	1	647
+2338	1	648
+2339	1	649
+2340	1	650
+2341	1	651
+2342	1	652
+2343	1	653
+2344	1	654
+2345	1	655
+2346	1	656
+2347	1	657
+2348	1	658
+2349	1	659
+2350	1	660
+2351	1	661
+2352	1	662
 \.
 
 
@@ -9155,7 +9277,7 @@ COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_group_permissions_id_seq', 3144, true);
+SELECT pg_catalog.setval('auth_group_permissions_id_seq', 2352, true);
 
 
 --
@@ -9849,6 +9971,18 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 687	Can add csp report	215	add_cspreport
 688	Can change csp report	215	change_cspreport
 689	Can delete csp report	215	delete_cspreport
+690	Can add geo feature file meta data	216	add_geofeaturefilemetadata
+691	Can change geo feature file meta data	216	change_geofeaturefilemetadata
+692	Can delete geo feature file meta data	216	delete_geofeaturefilemetadata
+693	Can add geo feature logical file	217	add_geofeaturelogicalfile
+694	Can change geo feature logical file	217	change_geofeaturelogicalfile
+695	Can delete geo feature logical file	217	delete_geofeaturelogicalfile
+696	Can add ref timeseries file meta data	218	add_reftimeseriesfilemetadata
+697	Can change ref timeseries file meta data	218	change_reftimeseriesfilemetadata
+698	Can delete ref timeseries file meta data	218	delete_reftimeseriesfilemetadata
+699	Can add ref timeseries logical file	219	add_reftimeserieslogicalfile
+700	Can change ref timeseries logical file	219	change_reftimeserieslogicalfile
+701	Can delete ref timeseries logical file	219	delete_reftimeserieslogicalfile
 \.
 
 
@@ -9856,7 +9990,7 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
+SELECT pg_catalog.setval('auth_permission_id_seq', 701, true);
 
 
 --
@@ -9864,7 +9998,7 @@ SELECT pg_catalog.setval('auth_permission_id_seq', 689, true);
 --
 
 COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-4	pbkdf2_sha256$20000$9vh7DIUwZx5T$ErXP+7DbA+ywH3LDzQnaWBx09lgKh+7LJTMs/xcark8=	2017-08-08 21:51:02+00	t	admin	xDCIShare	Administrator	xdci-support@renci.org	t	t	2016-01-25 19:47:54+00
+4	pbkdf2_sha256$20000$zWpscL2LEyIq$lU5ALtHtJIeE+GKzxE1g3/y5ING28gAzY0S2CJdUn54=	2017-09-01 18:11:00.078101+00	t	admin	HydroShare	Administrator	admin@example.com	t	t	2016-01-25 19:47:54+00
 \.
 
 
@@ -9873,7 +10007,7 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 --
 
 COPY auth_user_groups (id, user_id, group_id) FROM stdin;
-8	4	1
+2	4	1
 \.
 
 
@@ -9881,14 +10015,14 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 8, true);
+SELECT pg_catalog.setval('auth_user_groups_id_seq', 2, true);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 5, true);
+SELECT pg_catalog.setval('auth_user_id_seq', 4, true);
 
 
 --
@@ -10065,33 +10199,21 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 32	2016-01-25 19:52:16.941687+00	4	Discover	2	Changed slug and keywords.	33	4
 33	2016-01-25 19:52:37.395438+00	4	Discover	2	Changed _meta_title and keywords.	33	4
 34	2016-01-25 19:54:21.104577+00	2	root	3		3	4
-35	2016-02-24 17:41:41.504891+00	1	Resource Author	2	Changed permissions.	2	4
+35	2016-02-24 17:41:41.504891+00	1	Hydroshare Author	2	Changed permissions.	2	4
 36	2016-06-23 17:07:04.049586+00	13	Collaborate	1		33	4
-37	2017-02-02 17:25:53.744625+00	1	Resource Author	2	Changed permissions.	2	4
-38	2017-02-02 17:26:10.173151+00	1	Resource Author	2	Changed permissions.	2	4
-39	2017-02-02 17:26:32.707066+00	1	Resource Author	2	Changed permissions.	2	4
-40	2017-02-02 17:26:47.958444+00	1	Resource Author	2	Changed permissions.	2	4
-41	2017-05-05 13:47:22.842788+00	2	Home	2	Changed heading, content, message_start_date, message_end_date, message_type, in_menus and keywords.	17	4
-42	2017-05-05 13:49:03.819452+00	2	Home	2	Changed content, message_start_date, in_menus and keywords.	17	4
-43	2017-05-05 13:52:11.658026+00	6	Apps	2	Changed slug.	34	4
-44	2017-05-05 13:54:23.851527+00	7	Verify Account	2	Changed content, in_menus and keywords.	33	4
-45	2017-05-05 14:08:48.392883+00	9	Terms of Use	2	Changed content, in_menus, description and keywords.	33	4
-46	2017-05-05 14:13:10.186432+00	10	Statement of Privacy	2	Changed content, in_menus, description and keywords.	33	4
-47	2017-05-05 14:16:27.533827+00	4	admin	2	Changed first_name.	3	4
-48	2017-05-05 14:16:51.48684+00	1	xDCIshare Author	2	Changed name.	2	4
-49	2017-05-05 14:17:42.985039+00	1	Resource Author	2	Changed name.	2	4
-50	2017-05-05 14:20:45.489007+00	1	QuotaMessage object	1		207	4
-51	2017-05-05 14:24:29.244065+00	1	SiteConfiguration object	2	Changed col1_content, col3_heading, col3_content, twitter_link, facebook_link, youtube_link, github_link, linkedin_link and copyright.	16	4
-52	2017-07-26 18:02:34.737492+00	1	SiteConfiguration object	2	Changed col3_content and copyright.	16	4
-53	2017-08-01 15:08:19.974747+00	6	Apps	2	Changed status.	34	4
-54	2017-08-01 23:36:08.641488+00	4	admin	2	Changed first_name.	3	4
-55	2017-08-01 23:38:18.810835+00	1	QuotaMessage object	2	Changed warning_content_prepend, grace_period_content_prepend, enforce_content_prepend and content.	207	4
-56	2017-08-01 23:39:39.520638+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
-57	2017-08-04 16:58:19.230761+00	5	cbc	2	Changed is_active.	3	4
-58	2017-08-07 19:52:36.405255+00	1	SiteConfiguration object	2	Changed col1_content and col3_content.	16	4
-59	2017-08-08 21:53:24.643731+00	4	admin	2	Changed first_name.	3	4
-60	2017-08-08 21:54:21.79744+00	5	cbc	3		3	4
-61	2017-08-08 21:55:17.555145+00	4	admin	2	Changed email.	3	4
+37	2017-02-02 17:25:53.744625+00	1	Hydroshare Author	2	Changed permissions.	2	4
+38	2017-02-02 17:26:10.173151+00	1	Hydroshare Author	2	Changed permissions.	2	4
+39	2017-02-02 17:26:32.707066+00	1	Hydroshare Author	2	Changed permissions.	2	4
+40	2017-02-02 17:26:47.958444+00	1	Hydroshare Author	2	Changed permissions.	2	4
+41	2017-09-01 18:12:16.42384+00	5	Help	3		33	4
+42	2017-09-01 18:12:49.58398+00	14	Help	1		34	4
+43	2017-09-01 18:13:41.541669+00	15	About	1		34	4
+44	2017-09-01 18:13:50.020573+00	14	Help	2	Changed slug.	34	4
+45	2017-09-01 18:25:48.020365+00	9	Terms of Use	2	Changed content, in_menus, slug, description and keywords.	33	4
+46	2017-09-01 18:26:27.338099+00	10	Statement of Privacy	2	Changed content, in_menus, slug, description and keywords.	33	4
+47	2017-09-01 18:30:38.121036+00	1	terms-of-use ---> https://help.hydroshare.org/about-hydroshare/policies/terms-of-use/	1		10	4
+48	2017-09-01 18:33:16.492416+00	2	/privacy/ ---> https://help.hydroshare.org/about-hydroshare/policies/statement-of-privacy/	1		10	4
+49	2017-09-01 18:33:32.402925+00	1	/terms-of-use/ ---> https://help.hydroshare.org/about-hydroshare/policies/terms-of-use/	2	Changed old_path.	10	4
 \.
 
 
@@ -10099,7 +10221,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 61, true);
+SELECT pg_catalog.setval('django_admin_log_id_seq', 49, true);
 
 
 --
@@ -10351,6 +10473,10 @@ COPY django_content_type (id, app_label, model) FROM stdin;
 213	hs_file_types	netcdflogicalfile
 214	security	passwordexpiry
 215	security	cspreport
+216	hs_file_types	geofeaturefilemetadata
+217	hs_file_types	geofeaturelogicalfile
+218	hs_file_types	reftimeseriesfilemetadata
+219	hs_file_types	reftimeserieslogicalfile
 \.
 
 
@@ -10358,7 +10484,7 @@ COPY django_content_type (id, app_label, model) FROM stdin;
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_content_type_id_seq', 215, true);
+SELECT pg_catalog.setval('django_content_type_id_seq', 219, true);
 
 
 --
@@ -10713,25 +10839,31 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 165	hs_tools_resource	0010_auto_20161203_1913	2017-02-02 16:15:54.219542+00
 166	hs_tracking	0004_auto_20161010_1402	2017-02-02 16:15:54.69361+00
 167	robots	0001_initial	2017-02-02 16:15:58.401584+00
-168	hs_access_control	0017_auto_add_provenance	2017-05-05 13:41:49.70712+00
-169	hs_access_control	0018_auto_tune_provenance	2017-05-05 13:41:50.912473+00
-170	hs_access_control	0019_manual_populate_provenance	2017-05-05 13:41:50.933487+00
-171	hs_access_control	0017_groupaccess_auto_approve	2017-05-05 13:41:51.095253+00
-172	hs_access_control	0020_merge	2017-05-05 13:41:51.098691+00
-173	hs_app_netCDF	0007_netcdfmetadata_is_dirty	2017-05-05 13:41:51.129644+00
-174	hs_core	0033_resourcefile_attributes	2017-05-05 13:41:51.717935+00
-175	hs_core	0034_manual_migrate_file_paths	2017-05-05 13:41:51.736427+00
-176	hs_core	0035_remove_deprecated_fields	2017-05-05 13:41:52.095568+00
-177	hs_file_types	0002_auto_20170216_1904	2017-05-05 13:41:52.203428+00
-178	hs_file_types	0003_auto_20170302_2257	2017-05-05 13:41:52.285303+00
-179	hs_tools_resource	0011_toolicon_data_url	2017-05-05 13:41:52.958208+00
-180	security	0001_initial	2017-05-05 13:41:53.970416+00
-181	theme	0005_userquota	2017-05-05 13:41:55.396172+00
-182	theme	0006_auto_20170309_1516	2017-05-05 13:41:55.432509+00
-183	theme	0007_auto_20170427_1553	2017-05-05 13:41:57.537779+00
-184	hs_access_control	0021_auto_20170613_1925	2017-07-26 17:17:57.382159+00
-185	hs_tracking	0005_auto_20170613_1925	2017-07-26 17:17:57.757155+00
-186	theme	0008_auto_20170613_1925	2017-07-26 17:17:59.818007+00
+168	hs_access_control	0017_auto_add_provenance	2017-05-18 23:34:10.356163+00
+169	hs_access_control	0018_auto_tune_provenance	2017-05-18 23:34:12.131222+00
+170	hs_access_control	0019_manual_populate_provenance	2017-05-18 23:34:12.160846+00
+171	hs_access_control	0017_groupaccess_auto_approve	2017-05-18 23:34:12.404434+00
+172	hs_access_control	0020_merge	2017-05-18 23:34:12.407975+00
+173	hs_access_control	0021_auto_20170506_1538	2017-05-18 23:34:12.571445+00
+174	hs_app_netCDF	0007_netcdfmetadata_is_dirty	2017-05-18 23:34:12.622232+00
+175	hs_core	0033_resourcefile_attributes	2017-05-18 23:34:13.328468+00
+176	hs_core	0034_manual_migrate_file_paths	2017-05-18 23:34:13.344792+00
+177	hs_core	0035_remove_deprecated_fields	2017-05-18 23:34:13.770136+00
+178	hs_file_types	0002_auto_20170216_1904	2017-05-18 23:34:14.190622+00
+179	hs_file_types	0003_auto_20170302_2257	2017-05-18 23:34:14.296269+00
+180	hs_script_resource	0002_repo_charfield_to_urlfield	2017-05-18 23:34:14.684829+00
+181	hs_tools_resource	0011_toolicon_data_url	2017-05-18 23:34:15.088274+00
+182	hs_tracking	0005_auto_20170506_1538	2017-05-18 23:34:15.545637+00
+183	security	0001_initial	2017-05-18 23:34:17.232353+00
+184	theme	0005_userquota	2017-05-18 23:34:18.968212+00
+185	theme	0006_auto_20170309_1516	2017-05-18 23:34:18.99764+00
+186	theme	0007_auto_20170427_1553	2017-05-18 23:34:22.056523+00
+187	hs_access_control	0022_resourceaccess_require_download_agreement	2017-08-17 21:08:41.410271+00
+188	hs_app_timeseries	0002_auto_20170602_2007	2017-08-17 21:08:41.607018+00
+189	hs_file_types	0004_geofeaturefilemetadata_geofeaturelogicalfile	2017-08-17 21:08:41.659203+00
+190	hs_file_types	0005_reftimeseriesfilemetadata_reftimeserieslogicalfile	2017-08-17 21:08:41.719251+00
+191	hs_geographic_feature_resource	0002_auto_20170612_2159	2017-08-17 21:08:42.181189+00
+192	theme	0008_auto_20170622_2141	2017-08-17 21:08:43.301783+00
 \.
 
 
@@ -10739,7 +10871,7 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 186, true);
+SELECT pg_catalog.setval('django_migrations_id_seq', 192, true);
 
 
 --
@@ -10747,6 +10879,8 @@ SELECT pg_catalog.setval('django_migrations_id_seq', 186, true);
 --
 
 COPY django_redirect (id, site_id, old_path, new_path) FROM stdin;
+2	1	/privacy/	https://help.hydroshare.org/about-hydroshare/policies/statement-of-privacy/
+1	1	/terms-of-use/	https://help.hydroshare.org/about-hydroshare/policies/terms-of-use/
 \.
 
 
@@ -10754,7 +10888,7 @@ COPY django_redirect (id, site_id, old_path, new_path) FROM stdin;
 -- Name: django_redirect_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('django_redirect_id_seq', 1, false);
+SELECT pg_catalog.setval('django_redirect_id_seq', 2, true);
 
 
 --
@@ -10767,10 +10901,9 @@ r95gvslruo55bqar11kco2o9ynh41mrq	NmM0MTZkOGYzNTBkNDEwMTBiZTc3NTFmODg5ZDU4N2VkNmV
 yq96gavkvlu0skywfwgvdock65xnq3tc	ZTIwZWRiZTQzZjI5ODhkYTE0NDQxYzFmZmQzMTRjZDc3MWUxNGUzYTp7Il9hdXRoX3VzZXJfaGFzaCI6IjBkNTY4M2MyYWVkNjA4OWNhMDc5YTE4ZmFlZTNjNjdlMjExNTRmZDciLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjo0fQ==	2016-03-09 17:40:31.568514+00
 5eflr6q0pn7qgkuu6mbo84kuqoxk5plt	ZjZmMTlkMThkOGJmNWIzY2IxODNjODM5ZTA2MmFjNTRmNTlmYTRkOTp7InF1ZXJ5X2NoYW5nZWQiOmZhbHNlLCJoc190cmFja2luZ19pZCI6ImV5SnBaQ0k2TW4wOjFiRzg2ZDpGNWs4M3pGcnQ2Mzg5WWMyZUhRc3BNRGVBR2siLCJmYWNldHNfaXRlbXMiOnsiZmllbGRzIjp7ImF1dGhvciI6W10sIm93bmVyc19uYW1lcyI6W10sInN1YmplY3RzIjpbXSwiZGlzY292ZXJhYmxlIjpbXSwicHVibGljIjpbXSwicmVzb3VyY2VfdHlwZSI6W119LCJkYXRlcyI6e30sInF1ZXJpZXMiOnt9fSwidG90YWxfcmVzdWx0cyI6MH0=	2016-07-07 17:17:57.67608+00
 yg9nko1xsebjvcc6wk4ynygw4m8l3ofk	ZTg1M2RhMWVmMzk3YTcwYTFlMWE5MDhlNWRiYjAyZGU0Yzk2YmVmYzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZObjA6MWNaTEJZOnhCdHhZT3oxQ3RXb0lBVFR2aFVqcW5UaDBwOCJ9	2017-02-16 17:28:40.816975+00
-sbfc9qcoi728qf2c38jscng5q7ccra4a	ZWI2ZjgwZmQ3NmRhYTA3NDAyYzI4MzEyMzgwMjNmMGExODU3ZjNhMzp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWQ2ZFdIOmx4S0hCN1NrVWgwS3NaT2tqSHVEVndhMGcxbyIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-05-19 13:43:51.032176+00
-k7nt7rugdkbcm58fglbsdrepdqaytp43	M2Q0Y2ZiM2Q0MDdhMjA5MWNmZTc4MDM0NjA0YzY1MjYxM2U4YjY5NTp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEY5OjFkYVJVNDpPU1Z0SWNpeXBBcE96OWpJQmpPLXI0QmZwQ3ciLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-09 18:56:46.438769+00
-pzmfpuc10goyvs830hivrzi9cj5qryyj	ZjIyMTYxMGU3YjcwZWI4Mjc1YzY4YjlkN2M1NGMxODk1NjBmOGMwMjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVGQ5OjFkY2dnZDpya3Z0a0ZBOVlGVUNkUUNkWTVfNjRFRU1HMU0iLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9pZCI6IjQiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQifQ==	2017-08-15 23:34:51.800083+00
-sa8adlikrlsrjjls0k5gugzzibnpxeyy	ZWI2MjMzNDdjZmI0MjgwMmI5NWY5MjFjMzIyYjhiZmYzODRiYjVmODp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNalY5OjFkZkNPVTplTUYyOWV4ZDBlb2RDa0xGa3lmS0ZBdXBIS2MiLCJfYXV0aF91c2VyX2hhc2giOiIyYTc3ODVjMTg5ZDRjY2EwY2RhZjM1NDMyYmJiZjA3ZWIxMTU4ZDVmIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoibWV6emFuaW5lLmNvcmUuYXV0aF9iYWNrZW5kcy5NZXp6YW5pbmVCYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjQifQ==	2017-08-22 21:51:03.002445+00
+mtzyl7dumuj30g4jb8tmyf7scec5ni6y	MmQ4MTVjNDgwY2RlOGVkY2JkZGIyMWU3NzFkMDY4N2JjYmFmMzEyZjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZOMzA6MWRCVjBMOlFXNHRRWmpRR0xvendJZVJUNUliMWI4YkhvVSJ9	2017-06-01 23:38:49.600605+00
+y094t1jbv59xrxfczsvga85awa6ubxvm	MmMzMTRlM2M4OWE3ODc3ZWFiNGUwNzc5MDQ3MDFhYTczMGI4OGY4Yjp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZPSDA6MWRpaVNrOm5YTmU5ZVNtcXowdU5uWTViaEFzdW9PQVdDTSIsIl9hdXRoX3VzZXJfaGFzaCI6IjBjZGYxNDBkN2Q1NDRhMGUyMWMwM2EyMTdjMDJlNGQyMjFhZjhiYTUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJtZXp6YW5pbmUuY29yZS5hdXRoX2JhY2tlbmRzLk1lenphbmluZUJhY2tlbmQiLCJfYXV0aF91c2VyX2lkIjoiNCJ9	2017-09-01 14:43:23.173974+00
+diphhiv8ucfe8it42h9hobejjw96ejc5	NzEwY2NkZGY3MWJjOWQ1MzFmYjcxY2M0NmUzNTZiNGIyNTQ3ZGEzMDp7ImhzX3RyYWNraW5nX2lkIjoiZXlKcFpDSTZNVEI5OjFkbnFsdTo0bFRzQUxPTnh1TnM2czJzWkZ0YWFIZ25VaVUifQ==	2017-09-15 18:34:26.171288+00
 \.
 
 
@@ -11190,7 +11323,7 @@ SELECT pg_catalog.setval('hs_access_control_groupresourceprovenance_id_seq', 1, 
 -- Data for Name: hs_access_control_resourceaccess; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY hs_access_control_resourceaccess (id, active, discoverable, public, shareable, published, immutable, resource_id) FROM stdin;
+COPY hs_access_control_resourceaccess (id, active, discoverable, public, shareable, published, immutable, resource_id, require_download_agreement) FROM stdin;
 \.
 
 
@@ -11198,7 +11331,7 @@ COPY hs_access_control_resourceaccess (id, active, discoverable, public, shareab
 -- Name: hs_access_control_resourceaccess_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_access_control_resourceaccess_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_access_control_resourceaccess_id_seq', 1, false);
 
 
 --
@@ -11214,7 +11347,7 @@ COPY hs_access_control_useraccess (id, user_id) FROM stdin;
 -- Name: hs_access_control_useraccess_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_access_control_useraccess_id_seq', 2, true);
+SELECT pg_catalog.setval('hs_access_control_useraccess_id_seq', 1, true);
 
 
 --
@@ -11259,7 +11392,7 @@ COPY hs_access_control_userresourceprivilege (id, privilege, start, grantor_id, 
 -- Name: hs_access_control_userresourceprivilege_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_access_control_userresourceprivilege_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_access_control_userresourceprivilege_id_seq', 1, false);
 
 
 --
@@ -11274,7 +11407,7 @@ COPY hs_access_control_userresourceprovenance (id, privilege, start, grantor_id,
 -- Name: hs_access_control_userresourceprovenance_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_access_control_userresourceprovenance_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_access_control_userresourceprovenance_id_seq', 1, false);
 
 
 --
@@ -11605,7 +11738,7 @@ COPY hs_core_bags (id, object_id, "timestamp", content_type_id) FROM stdin;
 -- Name: hs_core_bags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_bags_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_bags_id_seq', 1, false);
 
 
 --
@@ -11628,7 +11761,6 @@ SELECT pg_catalog.setval('hs_core_contributor_id_seq', 1, false);
 --
 
 COPY hs_core_coremetadata (id) FROM stdin;
-1
 \.
 
 
@@ -11636,7 +11768,7 @@ COPY hs_core_coremetadata (id) FROM stdin;
 -- Name: hs_core_coremetadata_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_coremetadata_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_coremetadata_id_seq', 1, false);
 
 
 --
@@ -11659,7 +11791,6 @@ SELECT pg_catalog.setval('hs_core_coverage_id_seq', 1, false);
 --
 
 COPY hs_core_creator (id, object_id, description, name, organization, email, address, phone, homepage, "order", content_type_id) FROM stdin;
-1	1	/user/5/	Chris Calloway	\N	cbc@renci.org	\N	\N	\N	1	68
 \.
 
 
@@ -11667,7 +11798,7 @@ COPY hs_core_creator (id, object_id, description, name, organization, email, add
 -- Name: hs_core_creator_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_creator_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_creator_id_seq', 1, false);
 
 
 --
@@ -11675,8 +11806,6 @@ SELECT pg_catalog.setval('hs_core_creator_id_seq', 1, true);
 --
 
 COPY hs_core_date (id, object_id, type, start_date, end_date, content_type_id) FROM stdin;
-1	1	created	2017-08-04 16:59:37.653222+00	\N	68
-2	1	modified	2017-08-04 16:59:37.666291+00	\N	68
 \.
 
 
@@ -11684,7 +11813,7 @@ COPY hs_core_date (id, object_id, type, start_date, end_date, content_type_id) F
 -- Name: hs_core_date_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_date_id_seq', 2, true);
+SELECT pg_catalog.setval('hs_core_date_id_seq', 1, false);
 
 
 --
@@ -11722,7 +11851,6 @@ SELECT pg_catalog.setval('hs_core_externalprofilelink_id_seq', 1, false);
 --
 
 COPY hs_core_format (id, object_id, value, content_type_id) FROM stdin;
-1	1	image/vnd.microsoft.icon	68
 \.
 
 
@@ -11730,7 +11858,7 @@ COPY hs_core_format (id, object_id, value, content_type_id) FROM stdin;
 -- Name: hs_core_format_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_format_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_format_id_seq', 1, false);
 
 
 --
@@ -11791,7 +11919,6 @@ SELECT pg_catalog.setval('hs_core_groupownership_id_seq', 1, false);
 --
 
 COPY hs_core_identifier (id, object_id, name, url, content_type_id) FROM stdin;
-1	1	hydroShareIdentifier	http://localhost:8000/resource/058f2dcfb349441096802dbfee44c522	68
 \.
 
 
@@ -11799,7 +11926,7 @@ COPY hs_core_identifier (id, object_id, name, url, content_type_id) FROM stdin;
 -- Name: hs_core_identifier_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_identifier_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_identifier_id_seq', 1, false);
 
 
 --
@@ -11807,7 +11934,6 @@ SELECT pg_catalog.setval('hs_core_identifier_id_seq', 1, true);
 --
 
 COPY hs_core_language (id, object_id, code, content_type_id) FROM stdin;
-1	1	eng	68
 \.
 
 
@@ -11815,7 +11941,7 @@ COPY hs_core_language (id, object_id, code, content_type_id) FROM stdin;
 -- Name: hs_core_language_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_language_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_language_id_seq', 1, false);
 
 
 --
@@ -11860,7 +11986,7 @@ COPY hs_core_resourcefile (id, object_id, resource_file, content_type_id, fed_re
 -- Name: hs_core_resourcefile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_resourcefile_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_resourcefile_id_seq', 1, false);
 
 
 --
@@ -11868,7 +11994,6 @@ SELECT pg_catalog.setval('hs_core_resourcefile_id_seq', 1, true);
 --
 
 COPY hs_core_rights (id, object_id, statement, url, content_type_id) FROM stdin;
-1	1	This resource is shared under the Creative Commons Attribution CC BY.	http://creativecommons.org/licenses/by/4.0/	68
 \.
 
 
@@ -11876,7 +12001,7 @@ COPY hs_core_rights (id, object_id, statement, url, content_type_id) FROM stdin;
 -- Name: hs_core_rights_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_rights_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_rights_id_seq', 1, false);
 
 
 --
@@ -11914,7 +12039,6 @@ SELECT pg_catalog.setval('hs_core_subject_id_seq', 1, false);
 --
 
 COPY hs_core_title (id, object_id, value, content_type_id) FROM stdin;
-1	1	My Generic Resource	68
 \.
 
 
@@ -11922,7 +12046,7 @@ COPY hs_core_title (id, object_id, value, content_type_id) FROM stdin;
 -- Name: hs_core_title_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_title_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_title_id_seq', 1, false);
 
 
 --
@@ -11930,7 +12054,6 @@ SELECT pg_catalog.setval('hs_core_title_id_seq', 1, true);
 --
 
 COPY hs_core_type (id, object_id, url, content_type_id) FROM stdin;
-1	1	http://localhost:8000/terms/GenericResource	68
 \.
 
 
@@ -11938,7 +12061,7 @@ COPY hs_core_type (id, object_id, url, content_type_id) FROM stdin;
 -- Name: hs_core_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_core_type_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_core_type_id_seq', 1, false);
 
 
 --
@@ -11969,6 +12092,36 @@ COPY hs_file_types_genericlogicalfile (id, dataset_name, metadata_id) FROM stdin
 --
 
 SELECT pg_catalog.setval('hs_file_types_genericlogicalfile_id_seq', 1, false);
+
+
+--
+-- Data for Name: hs_file_types_geofeaturefilemetadata; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY hs_file_types_geofeaturefilemetadata (id, extra_metadata, keywords, is_dirty) FROM stdin;
+\.
+
+
+--
+-- Name: hs_file_types_geofeaturefilemetadata_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hs_file_types_geofeaturefilemetadata_id_seq', 1, false);
+
+
+--
+-- Data for Name: hs_file_types_geofeaturelogicalfile; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY hs_file_types_geofeaturelogicalfile (id, dataset_name, metadata_id) FROM stdin;
+\.
+
+
+--
+-- Name: hs_file_types_geofeaturelogicalfile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hs_file_types_geofeaturelogicalfile_id_seq', 1, false);
 
 
 --
@@ -12029,6 +12182,36 @@ COPY hs_file_types_netcdflogicalfile (id, dataset_name, metadata_id) FROM stdin;
 --
 
 SELECT pg_catalog.setval('hs_file_types_netcdflogicalfile_id_seq', 1, false);
+
+
+--
+-- Data for Name: hs_file_types_reftimeseriesfilemetadata; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY hs_file_types_reftimeseriesfilemetadata (id, extra_metadata, keywords, is_dirty, json_file_content) FROM stdin;
+\.
+
+
+--
+-- Name: hs_file_types_reftimeseriesfilemetadata_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hs_file_types_reftimeseriesfilemetadata_id_seq', 1, false);
+
+
+--
+-- Data for Name: hs_file_types_reftimeserieslogicalfile; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY hs_file_types_reftimeserieslogicalfile (id, dataset_name, metadata_id) FROM stdin;
+\.
+
+
+--
+-- Name: hs_file_types_reftimeserieslogicalfile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hs_file_types_reftimeserieslogicalfile_id_seq', 1, false);
 
 
 --
@@ -12138,21 +12321,6 @@ SELECT pg_catalog.setval('hs_geographic_feature_resource_originalcoverage_id_seq
 
 
 --
--- Data for Name: hs_geographic_feature_resource_originalfileinfo; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY hs_geographic_feature_resource_originalfileinfo (id, object_id, "fileType", "baseFilename", "fileCount", "filenameString", content_type_id) FROM stdin;
-\.
-
-
---
--- Name: hs_geographic_feature_resource_originalfileinfo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('hs_geographic_feature_resource_originalfileinfo_id_seq', 1, false);
-
-
---
 -- Data for Name: hs_labels_resourcelabels; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -12164,7 +12332,7 @@ COPY hs_labels_resourcelabels (id, resource_id) FROM stdin;
 -- Name: hs_labels_resourcelabels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_labels_resourcelabels_id_seq', 1, true);
+SELECT pg_catalog.setval('hs_labels_resourcelabels_id_seq', 1, false);
 
 
 --
@@ -12180,7 +12348,7 @@ COPY hs_labels_userlabels (id, user_id) FROM stdin;
 -- Name: hs_labels_userlabels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_labels_userlabels_id_seq', 2, true);
+SELECT pg_catalog.setval('hs_labels_userlabels_id_seq', 1, true);
 
 
 --
@@ -12872,23 +13040,10 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 4	2017-02-02 17:23:27.983199+00	1
 5	2017-02-02 17:27:56.526549+00	1
 6	2017-02-02 17:28:40.81141+00	6
-7	2017-05-05 13:43:41.852248+00	1
-8	2017-07-26 17:31:09.012614+00	1
-9	2017-07-26 18:24:36.55158+00	1
-10	2017-07-26 18:24:36.603147+00	9
-11	2017-07-26 18:56:36.900837+00	1
-12	2017-08-01 15:06:57.040757+00	1
-13	2017-08-01 15:08:28.330869+00	1
-14	2017-08-01 15:08:56.548879+00	13
-15	2017-08-01 22:49:37.20019+00	1
-16	2017-08-01 22:52:18.83025+00	1
-17	2017-08-01 23:34:51.793147+00	1
-18	2017-08-04 16:53:17.98147+00	1
-21	2017-08-07 19:49:03.270891+00	1
-22	2017-08-08 17:54:32.801006+00	1
-23	2017-08-08 17:54:32.884678+00	19
-24	2017-08-08 21:25:24.393851+00	20
-25	2017-08-08 21:50:30.829877+00	1
+7	2017-05-18 23:38:49.595277+00	7
+8	2017-08-18 14:41:26.36915+00	1
+9	2017-09-01 18:10:51.832185+00	1
+10	2017-09-01 18:34:26.166302+00	10
 \.
 
 
@@ -12896,7 +13051,7 @@ COPY hs_tracking_session (id, begin, visitor_id) FROM stdin;
 -- Name: hs_tracking_session_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_session_id_seq', 25, true);
+SELECT pg_catalog.setval('hs_tracking_session_id_seq', 10, true);
 
 
 --
@@ -12980,412 +13135,139 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 74	2017-02-02 17:28:40.710661+00	logout	4	none	5
 75	2017-02-02 17:28:40.81281+00	begin_session	4	none	6
 76	2017-02-02 17:28:40.814548+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	6
-77	2017-05-05 13:43:41.853727+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	7
-78	2017-05-05 13:43:41.855266+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	7
-79	2017-05-05 13:43:45.585703+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	7
-80	2017-05-05 13:43:51.029905+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	7
-81	2017-05-05 13:43:51.133028+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	7
-82	2017-05-05 13:44:00.211724+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	7
-83	2017-05-05 13:44:05.248595+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-84	2017-05-05 13:44:05.303099+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-85	2017-05-05 13:44:08.980437+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	7
-86	2017-05-05 13:44:09.03879+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-87	2017-05-05 13:44:48.768412+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	7
-88	2017-05-05 13:44:49.032345+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	7
-89	2017-05-05 13:44:49.080507+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-90	2017-05-05 13:47:22.753596+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	7
-91	2017-05-05 13:47:23.105793+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-92	2017-05-05 13:47:23.168256+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-93	2017-05-05 13:47:27.280254+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/3/	7
-94	2017-05-05 13:47:27.34037+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-95	2017-05-05 13:47:48.585224+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-96	2017-05-05 13:47:59.344877+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/4/	7
-97	2017-05-05 13:47:59.405058+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-98	2017-05-05 13:48:13.538811+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-99	2017-05-05 13:48:13.586145+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-100	2017-05-05 13:48:18.744687+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/4/	7
-101	2017-05-05 13:48:18.798374+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-102	2017-05-05 13:48:29.287553+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-103	2017-05-05 13:48:29.34512+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-104	2017-05-05 13:48:32.489829+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	7
-105	2017-05-05 13:48:32.543173+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-106	2017-05-05 13:49:03.739814+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	7
-107	2017-05-05 13:49:04.092741+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-108	2017-05-05 13:49:04.147509+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-109	2017-05-05 13:49:08.788916+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	7
-110	2017-05-05 13:49:15.98142+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-111	2017-05-05 13:49:16.663399+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/4/	7
-112	2017-05-05 13:49:17.547584+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-113	2017-05-05 13:49:18.242485+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/4/	7
-114	2017-05-05 13:49:19.187231+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-115	2017-05-05 13:49:30.619389+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-116	2017-05-05 13:49:35.672673+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-117	2017-05-05 13:49:35.711799+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-118	2017-05-05 13:49:38.329731+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	7
-119	2017-05-05 13:49:58.739124+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-120	2017-05-05 13:49:58.790091+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-121	2017-05-05 13:50:02.460983+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	7
-122	2017-05-05 13:50:02.509291+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-123	2017-05-05 13:50:18.132463+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-124	2017-05-05 13:50:22.057313+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/3/	7
-125	2017-05-05 13:50:22.114237+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-126	2017-05-05 13:50:25.083021+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/3/	7
-127	2017-05-05 13:50:25.130216+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-128	2017-05-05 13:50:51.812696+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-129	2017-05-05 13:50:51.869842+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-130	2017-05-05 13:50:55.913616+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/4/	7
-131	2017-05-05 13:50:55.961863+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-132	2017-05-05 13:51:00.778112+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-133	2017-05-05 13:51:00.824155+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-134	2017-05-05 13:51:03.244391+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/13/	7
-135	2017-05-05 13:51:03.291892+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-136	2017-05-05 13:51:10.798729+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-137	2017-05-05 13:51:10.853857+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-138	2017-05-05 13:51:13.171674+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/link/6/	7
-139	2017-05-05 13:51:13.224516+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-140	2017-05-05 13:52:11.917576+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-141	2017-05-05 13:52:11.963161+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-142	2017-05-05 13:52:15.156689+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/13/	7
-143	2017-05-05 13:52:15.20073+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-144	2017-05-05 13:52:18.172027+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-145	2017-05-05 13:52:18.228086+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-146	2017-05-05 13:52:23.716799+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/link/6/	7
-147	2017-05-05 13:52:23.763331+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-148	2017-05-05 13:52:27.949419+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-149	2017-05-05 13:52:27.998948+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-150	2017-05-05 13:52:32.584181+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/5/	7
-151	2017-05-05 13:52:32.632268+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-152	2017-05-05 13:52:35.036808+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-153	2017-05-05 13:52:35.086548+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-154	2017-05-05 13:52:36.773666+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/link/6/	7
-155	2017-05-05 13:52:36.817275+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-156	2017-05-05 13:52:42.024719+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-157	2017-05-05 13:52:42.076119+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-158	2017-05-05 13:52:44.527298+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/5/	7
-159	2017-05-05 13:52:44.585026+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-160	2017-05-05 13:52:48.292251+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-161	2017-05-05 13:52:48.343992+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-162	2017-05-05 13:52:50.890654+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/7/	7
-163	2017-05-05 13:52:50.94915+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-164	2017-05-05 13:54:23.795211+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	7
-165	2017-05-05 13:54:24.1916+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-166	2017-05-05 13:54:24.243408+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-167	2017-05-05 13:54:27.799159+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/7/	7
-168	2017-05-05 13:54:27.847815+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-169	2017-05-05 13:54:30.966698+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-170	2017-05-05 13:54:31.020196+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-171	2017-05-05 13:54:33.427147+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/forms/form/8/	7
-172	2017-05-05 13:54:33.482389+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-173	2017-05-05 13:54:53.681968+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-174	2017-05-05 13:54:53.737525+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-175	2017-05-05 13:55:06.963533+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/forms/form/8/	7
-176	2017-05-05 13:55:07.019789+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-177	2017-05-05 13:55:10.738828+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-178	2017-05-05 13:55:21.129216+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/forms/form/8/	7
-179	2017-05-05 13:55:21.191685+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-180	2017-05-05 13:55:27.456913+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-181	2017-05-05 13:55:27.509513+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-182	2017-05-05 13:55:30.011032+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/9/	7
-183	2017-05-05 13:55:30.076627+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-184	2017-05-05 14:08:48.323384+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	7
-185	2017-05-05 14:08:48.670997+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-186	2017-05-05 14:08:48.722271+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-187	2017-05-05 14:08:51.394672+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/10/	7
-188	2017-05-05 14:08:51.445102+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-189	2017-05-05 14:13:10.126391+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin_keywords_submit/	7
-190	2017-05-05 14:13:10.456163+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-191	2017-05-05 14:13:10.522541+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-192	2017-05-05 14:13:15.837257+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/9/	7
-193	2017-05-05 14:13:15.893944+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-194	2017-05-05 14:13:32.111637+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-195	2017-05-05 14:13:32.170547+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-196	2017-05-05 14:13:35.372859+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/11/	7
-197	2017-05-05 14:13:35.430437+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-198	2017-05-05 14:13:40.72414+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	7
-199	2017-05-05 14:13:40.788503+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-200	2017-05-05 14:13:42.511068+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/richtextpage/12/	7
-201	2017-05-05 14:13:42.568646+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-202	2017-05-05 14:13:49.049127+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	7
-203	2017-05-05 14:13:49.098894+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-204	2017-05-05 14:13:51.688423+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/blog/blogpost/	7
-205	2017-05-05 14:13:51.731554+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-206	2017-05-05 14:13:53.299156+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/generic/threadedcomment/	7
-207	2017-05-05 14:13:53.343254+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-208	2017-05-05 14:13:54.951611+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	7
-209	2017-05-05 14:13:59.88942+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/rename/	7
-210	2017-05-05 14:14:03.117046+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	7
-211	2017-05-05 14:14:05.10835+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	7
-212	2017-05-05 14:14:07.920611+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	7
-213	2017-05-05 14:14:10.368129+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	7
-214	2017-05-05 14:14:10.417396+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-215	2017-05-05 14:14:15.042297+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/1/	7
-216	2017-05-05 14:14:15.092063+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-217	2017-05-05 14:14:17.103009+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	7
-218	2017-05-05 14:14:18.451576+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/redirects/redirect/	7
-219	2017-05-05 14:14:18.493951+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-220	2017-05-05 14:14:20.809895+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	7
-221	2017-05-05 14:14:20.854303+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-222	2017-05-05 14:15:16.638573+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	7
-223	2017-05-05 14:15:16.692813+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-224	2017-05-05 14:15:18.204349+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/redirects/redirect/	7
-225	2017-05-05 14:15:18.248944+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-226	2017-05-05 14:15:19.556301+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	7
-227	2017-05-05 14:15:19.608698+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-228	2017-05-05 14:15:35.362452+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	7
-229	2017-05-05 14:15:35.417085+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-230	2017-05-05 14:15:42.01467+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	7
-231	2017-05-05 14:15:42.061876+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-232	2017-05-05 14:16:27.717945+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	7
-233	2017-05-05 14:16:27.766535+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-234	2017-05-05 14:16:29.228224+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/	7
-235	2017-05-05 14:16:29.269878+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-236	2017-05-05 14:16:32.621664+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/1/	7
-237	2017-05-05 14:16:32.668351+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-238	2017-05-05 14:16:51.613413+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/	7
-239	2017-05-05 14:16:51.660561+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-240	2017-05-05 14:16:56.094141+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	7
-241	2017-05-05 14:16:56.136741+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-242	2017-05-05 14:17:00.824456+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/	7
-243	2017-05-05 14:17:00.867035+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-244	2017-05-05 14:17:04.155813+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	7
-245	2017-05-05 14:17:04.205097+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-246	2017-05-05 14:17:07.493521+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	7
-247	2017-05-05 14:17:07.541823+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-248	2017-05-05 14:17:20.892518+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/	7
-249	2017-05-05 14:17:20.94119+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-250	2017-05-05 14:17:23.582906+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/1/	7
-251	2017-05-05 14:17:23.631642+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-252	2017-05-05 14:17:43.110817+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/group/	7
-253	2017-05-05 14:17:43.157939+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-254	2017-05-05 14:17:45.500007+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	7
-255	2017-05-05 14:17:45.549392+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-256	2017-05-05 14:17:47.193115+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	7
-257	2017-05-05 14:17:47.244933+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-258	2017-05-05 14:18:01.971924+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	7
-259	2017-05-05 14:18:02.022821+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-260	2017-05-05 14:18:13.815811+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/accesstoken/	7
-261	2017-05-05 14:18:13.864719+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-262	2017-05-05 14:18:16.504769+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/accesstoken/	7
-263	2017-05-05 14:18:16.542874+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-264	2017-05-05 14:18:19.346291+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/application/	7
-265	2017-05-05 14:18:19.393083+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-266	2017-05-05 14:18:20.854127+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/grant/	7
-267	2017-05-05 14:18:20.907772+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-268	2017-05-05 14:18:22.509487+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/refreshtoken/	7
-269	2017-05-05 14:18:22.55106+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-270	2017-05-05 14:18:25.098663+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/robots/rule/	7
-271	2017-05-05 14:18:25.141839+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-272	2017-05-05 14:18:27.347767+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/robots/rule/	7
-273	2017-05-05 14:18:27.386195+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-274	2017-05-05 14:18:29.161546+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/robots/url/	7
-275	2017-05-05 14:18:29.209823+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-276	2017-05-05 14:18:34.440133+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/security/cspreport/	7
-277	2017-05-05 14:18:34.481606+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-278	2017-05-05 14:18:38.079256+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/security/cspreport/	7
-279	2017-05-05 14:18:38.120411+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-280	2017-05-05 14:18:42.512666+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/security/passwordexpiry/	7
-281	2017-05-05 14:18:42.555206+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-282	2017-05-05 14:18:46.848188+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/quotamessage/add/	7
-283	2017-05-05 14:18:46.896695+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-284	2017-05-05 14:20:45.609969+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	7
-285	2017-05-05 14:20:51.229753+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/quotamessage/1/	7
-286	2017-05-05 14:20:51.279809+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-287	2017-05-05 14:20:58.00192+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	7
-288	2017-05-05 14:20:58.045984+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-289	2017-05-05 14:21:04.996446+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/userquota/	7
-290	2017-05-05 14:21:05.045538+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-291	2017-05-05 14:21:09.837984+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	7
-292	2017-05-05 14:21:09.893575+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	7
-293	2017-05-05 14:24:29.356625+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	7
-294	2017-07-26 17:31:09.014263+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	8
-295	2017-07-26 17:31:09.016239+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	8
-296	2017-07-26 17:41:54.794559+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/help/	8
-297	2017-07-26 17:41:57.657977+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	8
-298	2017-07-26 17:56:08.285256+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	8
-299	2017-07-26 18:01:12.792136+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	8
-300	2017-07-26 18:01:25.300191+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	8
-301	2017-07-26 18:01:25.411202+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	8
-302	2017-07-26 18:01:37.625382+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	8
-303	2017-07-26 18:01:47.745036+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	8
-304	2017-07-26 18:01:47.842586+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	8
-305	2017-07-26 18:02:34.851896+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	8
-306	2017-07-26 18:24:36.555432+00	begin_session	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	9
-307	2017-07-26 18:24:36.557306+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	9
-308	2017-07-26 18:24:36.60436+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	10
-309	2017-07-26 18:24:36.606287+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	10
-310	2017-07-26 18:24:45.267249+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	10
-311	2017-07-26 18:56:36.902457+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	11
-312	2017-07-26 18:56:36.904584+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	11
-313	2017-07-26 18:56:46.437019+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	11
-314	2017-07-26 18:56:46.544814+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	11
-315	2017-08-01 15:06:57.042512+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	12
-316	2017-08-01 15:06:57.045161+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	12
-317	2017-08-01 15:07:10.995866+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	12
-318	2017-08-01 15:07:21.431805+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	12
-319	2017-08-01 15:07:21.530151+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	12
-320	2017-08-01 15:07:34.796952+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	12
-321	2017-08-01 15:07:55.427995+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	12
-322	2017-08-01 15:07:55.50393+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	12
-323	2017-08-01 15:08:02.458851+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/link/6/	12
-324	2017-08-01 15:08:02.514143+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	12
-325	2017-08-01 15:08:20.247512+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	12
-326	2017-08-01 15:08:20.295012+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	12
-327	2017-08-01 15:08:28.287897+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	12
-328	2017-08-01 15:08:28.332899+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	13
-329	2017-08-01 15:08:28.334584+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/logout/	13
-330	2017-08-01 15:08:34.318152+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	13
-331	2017-08-01 15:08:38.813627+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	13
-332	2017-08-01 15:08:48.84354+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	13
-333	2017-08-01 15:08:48.942074+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	13
-334	2017-08-01 15:08:56.48372+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	13
-335	2017-08-01 15:08:56.550391+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	14
-336	2017-08-01 15:08:56.552012+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	14
-337	2017-08-01 15:15:25.287042+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	14
-338	2017-08-01 22:49:37.201903+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	15
-339	2017-08-01 22:49:37.204327+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	15
-340	2017-08-01 22:49:57.949483+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	15
-341	2017-08-01 22:50:11.231279+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	15
-342	2017-08-01 22:50:22.65515+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	15
-343	2017-08-01 22:50:25.355339+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	15
-344	2017-08-01 22:50:34.591066+00	visit	2	user_ip=192.168.56.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	15
-345	2017-08-01 22:50:57.949471+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	15
-346	2017-08-01 22:50:58.060736+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	15
-347	2017-08-01 22:51:08.940795+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	15
-348	2017-08-01 22:51:11.531178+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	15
-349	2017-08-01 22:51:11.62499+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	15
-350	2017-08-01 22:51:13.434117+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	15
-351	2017-08-01 22:51:13.523843+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	15
-352	2017-08-01 22:51:30.627236+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	15
-353	2017-08-01 22:51:40.298649+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	15
-354	2017-08-01 22:52:13.226094+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	15
-355	2017-08-01 22:52:18.755423+00	logout	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	15
-356	2017-08-01 22:52:18.831655+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	16
-357	2017-08-01 22:52:18.833193+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	16
-358	2017-08-01 22:53:28.320415+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	16
-359	2017-08-01 22:53:28.422404+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	16
-360	2017-08-01 22:53:33.883396+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	16
-361	2017-08-01 22:53:59.375167+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	16
-362	2017-08-01 22:54:11.52136+00	login	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	16
-363	2017-08-01 22:54:11.640095+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	16
-364	2017-08-01 22:54:22.159214+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	16
-365	2017-08-01 22:54:24.93763+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	16
-366	2017-08-01 22:54:24.99444+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	16
-367	2017-08-01 22:54:26.882628+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	16
-368	2017-08-01 22:54:26.948985+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	16
-369	2017-08-01 22:58:03.091769+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/pages/page/	16
-370	2017-08-01 22:58:03.154983+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	16
-371	2017-08-01 22:58:05.189078+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/homepage/2/	16
-372	2017-08-01 22:58:05.24979+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	16
-373	2017-08-01 23:34:51.796924+00	begin_session	2	user_ip=192.168.56.1 user_type=Unspecified user_email_domain=com	17
-374	2017-08-01 23:34:51.798755+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/blog/blogpost/	17
-375	2017-08-01 23:34:51.851542+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-376	2017-08-01 23:34:53.733925+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/generic/threadedcomment/	17
-377	2017-08-01 23:34:53.786626+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-378	2017-08-01 23:34:55.165854+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	17
-379	2017-08-01 23:34:59.028166+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/media-library/browse/	17
-380	2017-08-01 23:35:06.004287+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	17
-381	2017-08-01 23:35:06.067613+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-382	2017-08-01 23:35:11.812305+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/sites/site/	17
-383	2017-08-01 23:35:11.862765+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-384	2017-08-01 23:35:14.877436+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/redirects/redirect/	17
-385	2017-08-01 23:35:14.92912+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-386	2017-08-01 23:35:19.383731+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	17
-387	2017-08-01 23:35:19.447264+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-388	2017-08-01 23:35:39.3069+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/conf/setting/	17
-389	2017-08-01 23:35:39.359157+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-390	2017-08-01 23:35:41.651325+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	17
-391	2017-08-01 23:35:41.69535+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-392	2017-08-01 23:35:47.83231+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	17
-393	2017-08-01 23:35:47.918066+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-394	2017-08-01 23:36:08.796349+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	17
-395	2017-08-01 23:36:08.852499+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-396	2017-08-01 23:36:21.103929+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/accesstoken/	17
-397	2017-08-01 23:36:21.164016+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-398	2017-08-01 23:36:22.439152+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/application/	17
-399	2017-08-01 23:36:22.521416+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-400	2017-08-01 23:36:24.048527+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/grant/	17
-401	2017-08-01 23:36:24.107747+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-402	2017-08-01 23:36:24.945848+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/oauth2_provider/refreshtoken/	17
-403	2017-08-01 23:36:24.995247+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-404	2017-08-01 23:36:27.536394+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/robots/rule/	17
-405	2017-08-01 23:36:27.583718+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-406	2017-08-01 23:36:29.258858+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/robots/url/	17
-407	2017-08-01 23:36:29.317324+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-408	2017-08-01 23:36:32.420836+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/security/cspreport/	17
-409	2017-08-01 23:36:32.47893+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-410	2017-08-01 23:36:37.292302+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/security/passwordexpiry/	17
-411	2017-08-01 23:36:37.353474+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-412	2017-08-01 23:36:41.505809+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/quotamessage/1/	17
-413	2017-08-01 23:36:41.561216+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-414	2017-08-01 23:38:18.931645+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	17
-415	2017-08-01 23:38:23.958513+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	17
-416	2017-08-01 23:38:24.01699+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-417	2017-08-01 23:39:39.649415+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	17
-418	2017-08-01 23:39:44.704622+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/userquota/	17
-419	2017-08-01 23:39:44.761722+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	17
-420	2017-08-01 23:39:52.918179+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	17
-421	2017-08-04 16:53:17.985147+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	18
-422	2017-08-04 16:53:17.989597+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	18
-423	2017-08-04 16:53:20.991457+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	18
-424	2017-08-04 16:53:33.292274+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	18
-425	2017-08-04 16:53:49.538623+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	18
-426	2017-08-04 16:53:51.515831+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/sign-up/	18
-427	2017-08-04 16:54:24.713789+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	18
-428	2017-08-04 16:55:14.929722+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	18
-429	2017-08-04 16:56:44.299244+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	18
-430	2017-08-04 16:57:00.090792+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	18
-431	2017-08-04 16:57:07.1876+00	login	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	18
-432	2017-08-04 16:57:07.290385+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	18
-433	2017-08-04 16:57:31.924045+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	18
-434	2017-08-04 16:57:41.813615+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	18
-435	2017-08-04 16:57:45.140798+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	18
-436	2017-08-04 16:57:45.219603+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	18
-437	2017-08-04 16:57:47.830359+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/5/	18
-438	2017-08-04 16:57:47.876433+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	18
-439	2017-08-04 16:58:19.378168+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	18
-440	2017-08-04 16:58:19.42932+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	18
-441	2017-08-04 16:58:26.911117+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	18
-442	2017-08-04 16:58:42.002313+00	logout	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	18
-462	2017-08-07 19:49:03.272841+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	21
-463	2017-08-07 19:49:03.274451+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	21
-464	2017-08-07 19:49:05.295368+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	21
-465	2017-08-07 19:49:14.048142+00	login	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	21
-466	2017-08-07 19:49:14.143152+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	21
-467	2017-08-07 19:49:19.578696+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/user/4/	21
-468	2017-08-07 19:49:26.723549+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	21
-469	2017-08-07 19:49:52.324407+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	21
-470	2017-08-07 19:49:52.390306+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	21
-471	2017-08-07 19:51:29.123923+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	21
-472	2017-08-07 19:51:39.132463+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/theme/siteconfiguration/1/	21
-473	2017-08-07 19:52:36.519206+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	21
-474	2017-08-07 19:52:55.703687+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	21
-475	2017-08-08 17:54:32.810135+00	begin_session	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	22
-476	2017-08-08 17:54:32.814477+00	logout	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	22
-477	2017-08-08 17:54:32.886147+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	23
-478	2017-08-08 17:54:32.889661+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	23
-479	2017-08-08 21:25:24.395366+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	24
-480	2017-08-08 21:25:24.396942+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	24
-481	2017-08-08 21:25:31.429952+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/admin/login/	24
-482	2017-08-08 21:50:30.83151+00	begin_session	2	user_ip=192.168.57.1 user_type=None user_email_domain=None	25
-483	2017-08-08 21:50:30.83331+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	25
-484	2017-08-08 21:50:36.498957+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	25
-485	2017-08-08 21:50:54.990461+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=None user_email_domain=None request_url=/accounts/login/	25
-486	2017-08-08 21:51:03.000578+00	login	2	user_ip=192.168.57.1 user_type=Unspecified user_email_domain=com	25
-487	2017-08-08 21:51:03.103926+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/	25
-488	2017-08-08 21:51:10.285542+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/	25
-489	2017-08-08 21:51:13.317825+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
-490	2017-08-08 21:51:13.38665+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
-491	2017-08-08 21:53:07.930981+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	25
-492	2017-08-08 21:53:08.043344+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
-493	2017-08-08 21:53:24.804726+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
-494	2017-08-08 21:53:24.872948+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
-495	2017-08-08 21:54:17.402746+00	visit	2	user_ip=192.168.57.1 http_method=POST http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
-496	2017-08-08 21:54:22.19879+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/	25
-497	2017-08-08 21:54:22.233026+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
-498	2017-08-08 21:55:12.289702+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/auth/user/4/	25
-499	2017-08-08 21:55:12.341406+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=com request_url=/admin/jsi18n/	25
-500	2017-08-08 21:55:17.697638+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/auth/user/	25
-501	2017-08-08 21:55:17.743297+00	visit	2	user_ip=192.168.57.1 http_method=GET http_code=200 user_type=Unspecified user_email_domain=org request_url=/admin/jsi18n/	25
+77	2017-05-18 23:38:49.596672+00	begin_session	2	user_ip=192.168.56.1 user_type=None user_email_domain=None	7
+78	2017-05-18 23:38:49.598486+00	visit	2	user_ip=192.168.56.1 http_method=GET http_code=200 user_type=None user_email_domain=None request_url=/	7
+79	2017-08-18 14:41:26.37093+00	begin_session	2	user_ip=192.168.56.1|user_type=None|user_email_domain=None	8
+80	2017-08-18 14:41:26.372707+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/	8
+81	2017-08-18 14:41:26.68745+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	8
+82	2017-08-18 14:41:31.109255+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/help/	8
+83	2017-08-18 14:41:31.330216+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	8
+84	2017-08-18 14:41:59.495708+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/terms-of-use/	8
+85	2017-08-18 14:41:59.707129+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	8
+86	2017-08-18 14:42:09.01361+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/privacy/	8
+87	2017-08-18 14:42:09.222581+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	8
+88	2017-08-18 14:43:08.418714+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/accounts/login/	8
+89	2017-08-18 14:43:08.640749+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	8
+90	2017-08-18 14:43:23.172241+00	login	2	user_ip=192.168.56.1|user_type=Unspecified|user_email_domain=com	8
+91	2017-08-18 14:43:23.273113+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=Unspecified|user_email_domain=com|request_url=/	8
+92	2017-08-18 14:43:23.540091+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=Unspecified|user_email_domain=com|request_url=/hsapi/userInfo/	8
+93	2017-08-18 14:43:30.327452+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=Unspecified|user_email_domain=com|request_url=/user/4/	8
+94	2017-08-18 14:43:30.607109+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=Unspecified|user_email_domain=com|request_url=/hsapi/userInfo/	8
+95	2017-08-18 14:44:04.119077+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/user/4/	8
+96	2017-08-18 14:44:04.386389+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	8
+97	2017-08-18 14:49:06.870383+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/	8
+98	2017-08-18 14:49:11.581645+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	8
+99	2017-08-18 14:49:11.663938+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	8
+100	2017-08-18 14:49:15.093103+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/9/	8
+101	2017-08-18 14:49:15.170222+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	8
+102	2017-08-18 14:49:36.961493+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	8
+103	2017-08-18 14:49:37.017793+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	8
+104	2017-08-18 14:49:39.935549+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/9/	8
+105	2017-08-18 14:49:39.986086+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	8
+106	2017-08-18 14:49:51.985418+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	8
+107	2017-08-18 14:49:52.030657+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	8
+108	2017-09-01 18:10:51.835432+00	begin_session	2	user_ip=192.168.56.1|user_type=None|user_email_domain=None	9
+109	2017-09-01 18:10:51.838809+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/	9
+110	2017-09-01 18:10:52.092611+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	9
+111	2017-09-01 18:10:54.913194+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/accounts/login/	9
+112	2017-09-01 18:10:55.126297+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	9
+113	2017-09-01 18:11:00.096183+00	login	2	user_ip=192.168.56.1|user_type=|user_email_domain=com	9
+114	2017-09-01 18:11:00.198224+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/	9
+115	2017-09-01 18:11:00.549976+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+116	2017-09-01 18:11:11.925214+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/	9
+117	2017-09-01 18:11:16.792542+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/auth/user/	9
+118	2017-09-01 18:11:16.896024+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+119	2017-09-01 18:11:22.014511+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+120	2017-09-01 18:11:22.130432+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+121	2017-09-01 18:11:24.415939+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/5/	9
+122	2017-09-01 18:11:24.523589+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+123	2017-09-01 18:12:13.301857+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/5/delete/	9
+124	2017-09-01 18:12:16.676691+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+125	2017-09-01 18:12:16.721076+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+126	2017-09-01 18:12:25.227323+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/link/add/	9
+127	2017-09-01 18:12:25.306909+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+128	2017-09-01 18:12:49.855774+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+129	2017-09-01 18:12:49.905028+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+130	2017-09-01 18:13:03.552141+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/link/add/	9
+131	2017-09-01 18:13:03.616113+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+132	2017-09-01 18:13:41.882203+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+133	2017-09-01 18:13:41.931486+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+134	2017-09-01 18:13:44.496554+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/link/14/	9
+135	2017-09-01 18:13:44.550091+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+136	2017-09-01 18:13:50.290076+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+137	2017-09-01 18:13:50.335162+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+138	2017-09-01 18:14:07.489304+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin_page_ordering/	9
+139	2017-09-01 18:14:24.062034+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin_page_ordering/	9
+140	2017-09-01 18:14:28.216599+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin_page_ordering/	9
+141	2017-09-01 18:14:31.06684+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/	9
+142	2017-09-01 18:14:31.44987+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+143	2017-09-01 18:23:19.040525+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/terms-of-use/	9
+144	2017-09-01 18:23:19.309727+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+145	2017-09-01 18:23:25.330575+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/privacy/	9
+146	2017-09-01 18:23:25.573448+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+147	2017-09-01 18:23:30.396642+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/sitemap/	9
+148	2017-09-01 18:23:30.659632+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+149	2017-09-01 18:24:24.515638+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/	9
+150	2017-09-01 18:24:28.71583+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+151	2017-09-01 18:24:28.778898+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+152	2017-09-01 18:24:31.13236+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/9/	9
+153	2017-09-01 18:24:31.174932+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+154	2017-09-01 18:25:47.92566+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin_keywords_submit/	9
+155	2017-09-01 18:25:48.319793+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+156	2017-09-01 18:25:48.386326+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+157	2017-09-01 18:26:05.228541+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/10/	9
+158	2017-09-01 18:26:05.298139+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+159	2017-09-01 18:26:27.274143+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin_keywords_submit/	9
+160	2017-09-01 18:26:27.602237+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+161	2017-09-01 18:26:27.64587+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+162	2017-09-01 18:27:19.67518+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/	9
+163	2017-09-01 18:27:20.051144+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+164	2017-09-01 18:27:42.390151+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/	9
+165	2017-09-01 18:27:45.715743+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+166	2017-09-01 18:27:45.772333+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+167	2017-09-01 18:27:48.44955+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/richtextpage/9/	9
+168	2017-09-01 18:27:48.516585+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+169	2017-09-01 18:28:03.248267+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/	9
+170	2017-09-01 18:28:03.530175+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+171	2017-09-01 18:28:50.577674+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/	9
+172	2017-09-01 18:28:59.241291+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	9
+173	2017-09-01 18:28:59.308313+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+174	2017-09-01 18:29:04.107942+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/add/	9
+175	2017-09-01 18:29:04.159245+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+176	2017-09-01 18:29:42.523937+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/add/	9
+177	2017-09-01 18:29:42.599272+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+178	2017-09-01 18:29:59.362776+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/sites/site/	9
+179	2017-09-01 18:29:59.414452+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+180	2017-09-01 18:30:04.134304+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	9
+181	2017-09-01 18:30:04.181827+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+182	2017-09-01 18:30:08.469813+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/sites/site/	9
+183	2017-09-01 18:30:10.861791+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/sites/site/	9
+184	2017-09-01 18:30:12.092742+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	9
+185	2017-09-01 18:30:14.572093+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/add/	9
+186	2017-09-01 18:30:14.628338+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+187	2017-09-01 18:30:38.236852+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	9
+188	2017-09-01 18:30:38.284108+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+189	2017-09-01 18:30:41.966393+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/add/	9
+190	2017-09-01 18:30:42.024719+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+191	2017-09-01 18:33:12.02615+00	visit	2	user_ip=192.168.56.1|http_method=POST|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/add/	9
+192	2017-09-01 18:33:12.085458+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+193	2017-09-01 18:33:16.62184+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	9
+194	2017-09-01 18:33:16.699057+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+195	2017-09-01 18:33:20.787212+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/1/	9
+196	2017-09-01 18:33:20.862496+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+197	2017-09-01 18:33:32.516301+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/redirects/redirect/	9
+198	2017-09-01 18:33:32.582932+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+199	2017-09-01 18:33:36.93989+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+200	2017-09-01 18:33:36.989427+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+201	2017-09-01 18:33:43.364234+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/link/6/	9
+202	2017-09-01 18:33:43.423753+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/jsi18n/	9
+203	2017-09-01 18:33:52.602182+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/admin/pages/page/	9
+204	2017-09-01 18:33:55.134136+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/	9
+205	2017-09-01 18:33:55.528412+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=|user_email_domain=com|request_url=/hsapi/userInfo/	9
+206	2017-09-01 18:34:26.09324+00	logout	2	user_ip=192.168.56.1|user_type=|user_email_domain=com	9
+207	2017-09-01 18:34:26.167777+00	begin_session	2	user_ip=192.168.56.1|user_type=None|user_email_domain=None	10
+208	2017-09-01 18:34:26.169191+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/	10
+209	2017-09-01 18:34:26.397144+00	visit	2	user_ip=192.168.56.1|http_method=GET|http_code=200|user_type=None|user_email_domain=None|request_url=/hsapi/userInfo/	10
 \.
 
 
@@ -13393,7 +13275,7 @@ COPY hs_tracking_variable (id, "timestamp", name, type, value, session_id) FROM 
 -- Name: hs_tracking_variable_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 501, true);
+SELECT pg_catalog.setval('hs_tracking_variable_id_seq', 209, true);
 
 
 --
@@ -13407,20 +13289,10 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 4	2017-02-02 17:23:27.980519+00	\N
 5	2017-02-02 17:27:56.524908+00	\N
 6	2017-02-02 17:28:40.809782+00	\N
-7	2017-05-05 13:43:41.849519+00	\N
-8	2017-07-26 17:31:09.010077+00	\N
-9	2017-07-26 18:24:36.601826+00	\N
-10	2017-07-26 18:56:36.899178+00	\N
-11	2017-08-01 15:06:57.035709+00	\N
-12	2017-08-01 15:08:28.329029+00	\N
-13	2017-08-01 15:08:56.547244+00	\N
-14	2017-08-01 22:49:37.192301+00	\N
-15	2017-08-01 22:52:18.828605+00	\N
-16	2017-08-04 16:53:17.97207+00	\N
-18	2017-08-07 19:49:03.267995+00	\N
-19	2017-08-08 17:54:32.882957+00	\N
-20	2017-08-08 21:25:24.391258+00	\N
-21	2017-08-08 21:50:30.826945+00	\N
+7	2017-05-18 23:38:49.592669+00	\N
+8	2017-08-18 14:41:26.366412+00	\N
+9	2017-09-01 18:10:51.822911+00	\N
+10	2017-09-01 18:34:26.164483+00	\N
 \.
 
 
@@ -13428,7 +13300,7 @@ COPY hs_tracking_visitor (id, first_seen, user_id) FROM stdin;
 -- Name: hs_tracking_visitor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 21, true);
+SELECT pg_catalog.setval('hs_tracking_visitor_id_seq', 10, true);
 
 
 --
@@ -13497,6 +13369,8 @@ SELECT pg_catalog.setval('oauth2_provider_refreshtoken_id_seq', 1, false);
 
 COPY pages_link (page_ptr_id) FROM stdin;
 6
+14
+15
 \.
 
 
@@ -13505,18 +13379,19 @@ COPY pages_link (page_ptr_id) FROM stdin;
 --
 
 COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, description, gen_description, created, updated, status, publish_date, expiry_date, short_url, in_sitemap, _order, parent_id, in_menus, titles, content_model, login_required) FROM stdin;
-11		1	Create Resource	create-resource	Create Resource	create resource	t	2016-01-25 19:35:15.10115+00	2016-01-25 19:35:15.10115+00	2	2016-01-25 19:35:15.100153+00	\N	\N	t	10	\N		Create Resource	richtextpage	f
-12		1	Sign Up	sign-up	Sign Up	sign up	t	2016-01-25 19:40:35.894321+00	2016-01-25 19:40:35.894321+00	2	2016-01-25 19:40:35.893206+00	\N	\N	t	11	\N		Sign Up	richtextpage	f
+8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation	t	2016-01-25 19:32:20.248488+00	2016-01-25 19:32:20.248488+00	2	2016-01-25 19:32:20.247193+00	\N	\N	t	8	\N		Resend Verification Email	form	f
+11		1	Create Resource	create-resource	Create Resource	create resource	t	2016-01-25 19:35:15.10115+00	2016-01-25 19:35:15.10115+00	2	2016-01-25 19:35:15.100153+00	\N	\N	t	11	\N		Create Resource	richtextpage	f
+12		1	Sign Up	sign-up	Sign Up	sign up	t	2016-01-25 19:40:35.894321+00	2016-01-25 19:40:35.894321+00	2	2016-01-25 19:40:35.893206+00	\N	\N	t	12	\N		Sign Up	richtextpage	f
+9		1	Terms of Use	https://help.hydroshare.org/about-hydroshare/policies/terms-of-use	Terms of Use	HydroShare Terms of Use\nLast modified July 7, 2013	t	2016-01-25 19:33:24.439209+00	2017-09-01 18:25:48.01336+00	2	2016-01-25 19:33:24+00	\N	\N	t	9	\N		Terms of Use	richtextpage	f
+10		1	Statement of Privacy	https://help.hydroshare.org/about-hydroshare/policies/statement-of-privacy	Statement of Privacy	HydroShare Statement of Privacy\nLast modified July 7, 2013	t	2016-01-25 19:34:22.084583+00	2017-09-01 18:26:27.33157+00	2	2016-01-25 19:34:22+00	\N	\N	t	10	\N		Statement of Privacy	richtextpage	f
+2		1	Home	/		HydroShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.	t	2016-01-25 19:17:47.144396+00	2016-01-25 19:17:47.144396+00	2	2016-01-25 19:17:47.143386+00	\N	\N	t	0	\N		Home	homepage	f
 3		1	My Resources	my-resources	My Resources	my-resources	t	2016-01-25 19:22:48.667099+00	2016-01-25 19:29:50.956511+00	2	2016-01-25 19:22:48+00	\N	\N	t	1	\N	1,2,3	My Resources	richtextpage	f
 4		1	Discover	search	Discover	Discover	t	2016-01-25 19:23:52.174668+00	2016-01-25 19:52:37.387455+00	2	2016-01-25 19:23:52+00	\N	\N	t	2	\N	1,2,3	Discover	richtextpage	f
 13		1	Collaborate	collaborate		collaborate	t	2016-06-23 17:07:04.042277+00	2016-06-23 17:07:04.042277+00	2	2016-06-23 17:07:04.008329+00	\N	\N	t	3	\N	1	Collaborate	richtextpage	f
-5		1	Help	help	Help	help	t	2016-01-25 19:25:35.644671+00	2016-01-25 19:25:35.644671+00	2	2016-01-25 19:25:35.643697+00	\N	\N	t	5	\N	1,2,3	Help	richtextpage	f
-8		1	Resend Verification Email	resend-verification-email	Resend Email Verification	Please give us your email address and we will resend the confirmation	t	2016-01-25 19:32:20.248488+00	2016-01-25 19:32:20.248488+00	2	2016-01-25 19:32:20.247193+00	\N	\N	t	7	\N		Resend Verification Email	form	f
-2		1	Home	/		xDCIShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.	t	2016-01-25 19:17:47.144396+00	2017-05-05 13:49:03.81146+00	2	2016-01-25 19:17:47+00	\N	\N	t	0	\N		Home	homepage	f
-7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for xDCIShare! We have sent you an email from xdcishare.renci.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with xDCIShare.	t	2016-01-25 19:28:12.867432+00	2017-05-05 13:54:23.845+00	2	2016-01-25 19:28:12+00	\N	\N	t	6	\N		Verify Account	richtextpage	f
-9		1	Terms of Use	terms-of-use	Terms of Use	xDCIShare Terms of Use\nLast modified May 5, 2017	t	2016-01-25 19:33:24.439209+00	2017-05-05 14:08:48.384616+00	2	2016-01-25 19:33:24+00	\N	\N	t	8	\N		Terms of Use	richtextpage	f
-10		1	Statement of Privacy	privacy	Statement of Privacy	xDCIShare Statement of Privacy\nLast modified May 5, 2017	t	2016-01-25 19:34:22.084583+00	2017-05-05 14:13:10.178601+00	2	2016-01-25 19:34:22+00	\N	\N	t	9	\N		Statement of Privacy	richtextpage	f
-6		1	Apps	https://appsdev.xdcishare.renci.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2017-08-01 15:08:19.972084+00	1	2016-01-25 19:26:44+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
+6		1	Apps	https://appsdev.hydroshare.org/apps	\N	Apps	t	2016-01-25 19:26:44.887463+00	2016-01-25 19:26:44.887463+00	2	2016-01-25 19:26:44.886468+00	\N	\N	f	4	\N	1,2,3	Apps	link	f
+14		1	Help	http://help.hydroshare.org/	\N	Help	t	2017-09-01 18:12:49.579765+00	2017-09-01 18:13:50.018396+00	2	2017-09-01 18:12:49+00	\N	\N	f	5	\N	1	Help	link	f
+15		1	About	http://help.hydroshare.org//about-hydroshare/	\N	About	t	2017-09-01 18:13:41.539301+00	2017-09-01 18:13:50.015184+00	2	2017-09-01 18:13:41.539168+00	\N	\N	f	6	\N	1	About	link	f
+7		1	Verify Account	verify-account	Verify Account	Thank you for signing up for HydroShare! We have sent you an email from hydroshare.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with HydroShare.	t	2016-01-25 19:28:12.867432+00	2016-01-25 19:28:12.867432+00	2	2016-01-25 19:28:12.866419+00	\N	\N	t	7	\N		Verify Account	richtextpage	f
 \.
 
 
@@ -13524,7 +13399,7 @@ COPY pages_page (id, keywords_string, site_id, title, slug, _meta_title, descrip
 -- Name: pages_page_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('pages_page_id_seq', 14, true);
+SELECT pg_catalog.setval('pages_page_id_seq', 15, true);
 
 
 --
@@ -13532,15 +13407,14 @@ SELECT pg_catalog.setval('pages_page_id_seq', 14, true);
 --
 
 COPY pages_richtextpage (page_ptr_id, content) FROM stdin;
-5	<p>help</p>
+7	<p class="p1">Thank you for signing up for HydroShare! We have sent you an email from hydroshare.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with HydroShare.</p>\n<p class="p2"><a href="http://dev.hydroshare.org/hsapi/_internal/resend_verification_email/">Please click here if you do not receive a verification email within 1 hour.</a></p>
 3	<p>my-resources</p>
 11	<p>create resource</p>
 12	<p>sign up</p>
 4	<p>Discover</p>
 13	<p>collaborate</p>
-7	<p class="p1">Thank you for signing up for xDCIShare! We have sent you an email from xdcishare.renci.org to verify your account.  Please click on the link within the email and verify your account with us and you can get started sharing data and models with xDCIShare.</p>\n<p class="p2"><a href="http://dev.xdcishare.renci.org/hsapi/_internal/resend_verification_email/">Please click here if you do not receive a verification email within 1 hour.</a></p>
-9	<h2 class="p1"><b>xDCIShare Terms of Use</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">Thank you for using the xDCIShare scientific data sharing system hosted at xdcishare.renci.org.  xDCIShare services are provided by a team of researchers associated with the Renaissance Computing Institue of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of the University of North Carolina at Chapel Hil. Your access to xdcishare.renci.org is subject to your agreement to these Terms of Use. By using our services at xdcishare.renci.org, you are agreeing to these terms.  Please read them carefully.</p>\n<h2 class="p3"><b>Modification of the Agreement</b></h2>\n<p class="p2">We maintain the right to modify these Terms of Use and may do so by posting modifications on this page. Any modification is effective immediately upon posting the modification unless otherwise stated. Your continued use of xdcishare.renci.org following the posting of any modification signifies your acceptance of that modification. You should regularly visit this page to review the current Terms of Use.</p>\n<h2 class="p3"><b>Conduct Using our Services</b></h2>\n<p class="p2">The xdcishare.renci.org site is intended to support data and model sharing for scientific domains.  This is broadly interpreted to include any discipline or endeavor that has something to do with scientific domains.  You are responsible at all times for using xdcishare.renci.org in a manner that is legal, ethical, and not to the detriment of others and for purposes related to science. You agree that you will not in your use of xdcishare.renci.org:</p>\n<ul class="ul1">\n<li class="li2">Violate any applicable law, commit a criminal offense or perform actions that might encourage others to commit a criminal offense or give rise to a civil liability;</li>\n<li class="li2">Post or transmit any unlawful, threatening, libelous, harassing, defamatory, vulgar, obscene, pornographic, profane, or otherwise objectionable content;</li>\n<li class="li2">Use xdcishare.renci.org to impersonate other parties or entities;</li>\n<li class="li2">Use xdcishare.renci.org to upload any content that contains a software virus, "Trojan Horse" or any other computer code, files, or programs that may alter, damage, or interrupt the functionality of xdcishare.renci.org or the hardware or software of any other person who accesses xdcishare.renci.org;</li>\n<li class="li2">Upload, post, email, or otherwise transmit any materials that you do not have a right to transmit under any law or under a contractual relationship;</li>\n<li class="li2">Alter, damage, or delete any content posted on xdcishare.renci.org, except where such alterations or deletions are consistent with the access control settings of that content in xdcishare.renci.org;</li>\n<li class="li2">Disrupt the normal flow of communication in any way;</li>\n<li class="li2">Claim a relationship with or speak for any business, association, or other organization for which you are not authorized to claim such a relationship;</li>\n<li class="li2">Post or transmit any unsolicited advertising, promotional materials, or other forms of solicitation;</li>\n<li class="li2">Post any material that infringes or violates the intellectual property rights of another.</li>\n</ul>\n<p class="p2">Certain portions of xdcishare.renci.org are limited to registered users and/or allow a user to participate in online services by entering personal information. You agree that any information provided to xdcishare.renci.org in these areas will be complete and accurate, and that you will neither register under the name of another person or entity of nor attempt to enter xdcishare.renci.org under the name of another person or entity.</p>\n<p class="p2">You are responsible for maintaining the confidentiality of your user ID and password, if any, and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. Xdcishare.org does not authorize use of your User ID by third-parties.</p>\n<p class="p2">We may, in our sole discretion, terminate or suspend your access to and use of xdcishare.renci.org without notice and for any reason, including for violation of these Terms of Use or for other conduct that we, in our sole discretion, believe to be unlawful or harmful to others. In the event of termination, you are no longer authorized to access xdcishare.renci.org.</p>\n<h2 class="p3"><b>Disclaimers</b></h2>\n<p class="p2">XDCISHARE.ORG AND ANY INFORMATION, PRODUCTS OR SERVICES ON IT ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Xdcishare.org and its participating institutions do not warrant, and hereby disclaim any warranties, either express or implied, with respect to the accuracy, adequacy or completeness of any good, service, or information obtained from xdcishare.renci.org. Xdcishare.org and its participating institutions do not warrant that xdcishare.renci.org will operate in an uninterrupted or error-free manner or that xdcishare.renci.org is free of viruses or other harmful components. Use of xdcishare.renci.org is at your own risk.</p>\n<p class="p2">You agree that xdcishare.renci.org and its participating institutions shall have no liability for any consequential, indirect, punitive, special or incidental damages, whether foreseeable or unforeseeable (including, but not limited to, claims for defamation, errors, loss of data, or interruption in availability of data), arising out of or relating to your use of any resource that you access through xdcishare.renci.org.</p>\n<p class="p2">The xdcishare.renci.org site hosts content from a number of authors. The statements and views of these authors are theirs alone, and do not reflect the stances or policies of the xDCIShare research team or their sponsors, nor does their posting imply the endorsement of xDCIShare or their sponsors.</p>\n<h2 class="p3"><b>Choice of Law/Forum Selection/Attorney Fees</b></h2>\n<p class="p2">You agree that any dispute arising out of or relating to xdcishare.renci.org, whether based in contract, tort, statutory or other law, will be governed by federal law and by the laws of North Carolina, excluding its conflicts of law provisions. You further consent to the personal jurisdiction of and exclusive venue in the federal and state courts located in and serving the United States of America, North Carolina as the exclusive legal forums for any such dispute.</p>
-10	<h2 class="p1"><b>xDCIShare Statement of Privacy</b></h2>\n<p class="p2"><i>Last modified May 5, 2017<br></i></p>\n<p class="p2">XDCIShare is operated by a team of researchers associated with the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  The services are hosted at participating institutions including the Renaissance Computing Institute of the University of North Carolina at Chapel Hill.  In the following these are referred to as participating institutions.</p>\n<p class="p2">We respect your privacy. We will only use your personal identification information to support and manage your use of xdcioshare.org, including the use of tracking cookies to facilitate xdcishare.renci.org security procedures. The xDCIShare participating institutions regularly request xdcishare.renci.org usages statistics and other information. Usage of xdcishare.renci.org is monitored and usage statistics are collected and reported on a regular basis. Xdcishare.org also reserves the right to contact you to request additional information or to keep you updated on changes to xdcishare.renci.org. You may opt out of receiving newsletters and other non-essential communications. No information that would identify you personally will be provided to sponsors or third parties without your permission.</p>\n<p class="p2">While xDCIoShare uses policies and procedures to manage the access to content according to the access control settings set by users all information posted or stored on xdcishare.renci.org is potentially available to other users of xdcishare.renci.org and the public. The xDCIShare participating institutions and xdcishare.renci.org disclaim any responsibility for the preservation of confidentiality of such information. <i>Do not post or store information on xdcishare.renci.org if you expect to or are obligated to protect the confidentiality of that information.</i></p>
+9	<h2 class="p1"><b>HydroShare Terms of Use</b></h2>\n<p class="p2"><i>Last modified July 7, 2013</i></p>\n<p class="p2">Thank you for using the HydroShare hydrologic data sharing system hosted at hydroshare.org.  HydroShare services are provided by a team of researchers associated with the Consortium of Universities for the Advancement of Hydrologic Science, Inc. and funded by the National Science Foundation.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of North Carolina, Utah State University, Brigham Young University, Tufts, University of Virginia, University of California at San Diego, University of Texas, Purdue and CUAHSI. Your access to hydroshare.org is subject to your agreement to these Terms of Use. By using our services at hydroshare.org, you are agreeing to these terms.  Please read them carefully.</p>\n<h2 class="p3"><b>Modification of the Agreement</b></h2>\n<p class="p2">We maintain the right to modify these Terms of Use and may do so by posting modifications on this page. Any modification is effective immediately upon posting the modification unless otherwise stated. Your continued use of hydroshare.org following the posting of any modification signifies your acceptance of that modification. You should regularly visit this page to review the current Terms of Use.</p>\n<h2 class="p3"><b>Conduct Using our Services</b></h2>\n<p class="p2">The hydroshare.org site is intended to support data and model sharing in hydrology.  This is broadly interpreted to include any discipline or endeavor that has something to do with water.  You are responsible at all times for using hydroshare.org in a manner that is legal, ethical, and not to the detriment of others and for purposes related to hydrology. You agree that you will not in your use of hydroshare.org:</p>\n<ul class="ul1">\n<li class="li2">Violate any applicable law, commit a criminal offense or perform actions that might encourage others to commit a criminal offense or give rise to a civil liability;</li>\n<li class="li2">Post or transmit any unlawful, threatening, libelous, harassing, defamatory, vulgar, obscene, pornographic, profane, or otherwise objectionable content;</li>\n<li class="li2">Use hydroshare.org to impersonate other parties or entities;</li>\n<li class="li2">Use hydroshare.org to upload any content that contains a software virus, "Trojan Horse" or any other computer code, files, or programs that may alter, damage, or interrupt the functionality of hydroshare.org or the hardware or software of any other person who accesses hydroshare.org;</li>\n<li class="li2">Upload, post, email, or otherwise transmit any materials that you do not have a right to transmit under any law or under a contractual relationship;</li>\n<li class="li2">Alter, damage, or delete any content posted on hydroshare.org, except where such alterations or deletions are consistent with the access control settings of that content in hydroshare.org;</li>\n<li class="li2">Disrupt the normal flow of communication in any way;</li>\n<li class="li2">Claim a relationship with or speak for any business, association, or other organization for which you are not authorized to claim such a relationship;</li>\n<li class="li2">Post or transmit any unsolicited advertising, promotional materials, or other forms of solicitation;</li>\n<li class="li2">Post any material that infringes or violates the intellectual property rights of another.</li>\n</ul>\n<p class="p2">Certain portions of hydroshare.org are limited to registered users and/or allow a user to participate in online services by entering personal information. You agree that any information provided to hydroshare.org in these areas will be complete and accurate, and that you will neither register under the name of nor attempt to enter hydroshare.org under the name of another person or entity.</p>\n<p class="p2">You are responsible for maintaining the confidentiality of your user ID and password, if any, and for restricting access to your computer, and you agree to accept responsibility for all activities that occur under your account or password. Hydroshare.org does not authorize use of your User ID by third-parties.</p>\n<p class="p2">We may, in our sole discretion, terminate or suspend your access to and use of hydroshare.org without notice and for any reason, including for violation of these Terms of Use or for other conduct that we, in our sole discretion, believe to be unlawful or harmful to others. In the event of termination, you are no longer authorized to access hydroshare.org.</p>\n<h2 class="p3"><b>Disclaimers</b></h2>\n<p class="p2">HYDROSHARE AND ANY INFORMATION, PRODUCTS OR SERVICES ON IT ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Hydroshare.org and its participating institutions do not warrant, and hereby disclaim any warranties, either express or implied, with respect to the accuracy, adequacy or completeness of any good, service, or information obtained from hydroshare.org. Hydroshare.org and its participating institutions do not warrant that Hydroshare.org will operate in an uninterrupted or error-free manner or that hydroshare.org is free of viruses or other harmful components. Use of hydroshare.org is at your own risk.</p>\n<p class="p2">You agree that hydroshare.org and its participating institutions shall have no liability for any consequential, indirect, punitive, special or incidental damages, whether foreseeable or unforeseeable (including, but not limited to, claims for defamation, errors, loss of data, or interruption in availability of data), arising out of or relating to your use of water-hub.org or any resource that you access through hydroshare.org.</p>\n<p class="p2">The hydroshare.org site hosts content from a number of authors. The statements and views of these authors are theirs alone, and do not reflect the stances or policies of the HydroShare research team or their sponsors, nor does their posting imply the endorsement of HydroShare or their sponsors.</p>\n<h2 class="p3"><b>Choice of Law/Forum Selection/Attorney Fees</b></h2>\n<p class="p2">You agree that any dispute arising out of or relating to hydroshare.org, whether based in contract, tort, statutory or other law, will be governed by federal law and by the laws of North Carolina, excluding its conflicts of law provisions. You further consent to the personal jurisdiction of and exclusive venue in the federal and state courts located in and serving the United States of America, North Carolina as the exclusive legal forums for any such dispute.</p>
+10	<h2 class="p1"><b>HydroShare Statement of Privacy</b></h2>\n<p class="p2"><i>Last modified July 7, 2013</i></p>\n<p class="p2">HydroShare is operated by a team of researchers associated with the Consortium of Universities for the Advancement of Hydrologic Science, Inc. and funded by the National Science Foundation.  The services are hosted at participating institutions including the Renaissance Computing Institute at University of North Carolina, Utah State University, Brigham Young University, Tufts, University of Virginia, University of California at San Diego, University of Texas, Purdue and CUAHSI.  In the following these are referred to as participating institutions.</p>\n<p class="p2">We respect your privacy. We will only use your personal identification information to support and manage your use of hydroshare.org, including the use of tracking cookies to facilitate hydroshare.org security procedures. The HydroShare participating institutions and the National Science Foundation (which funds hydroshare.org development) regularly request hydroshare.org usages statistics and other information. Usage of hydroshare.org is monitored and usage statistics are collected and reported on a regular basis. Hydroshare.org also reserves the right to contact you to request additional information or to keep you updated on changes to Hydroshare.org. You may opt out of receiving newsletters and other non-essential communications. No information that would identify you personally will be provided to sponsors or third parties without your permission.</p>\n<p class="p2">While HydroShare uses policies and procedures to manage the access to content according to the access control settings set by users all information posted or stored on hydroshare.org is potentially available to other users of hydroshare.org and the public. The HydroShare participating institutions and hydroshare.org disclaim any responsibility for the preservation of confidentiality of such information. <i>Do not post or store information on hydroshare.org if you expect to or are obligated to protect the confidentiality of that information.</i></p>
 \.
 
 
@@ -13760,7 +13634,7 @@ COPY spatial_ref_sys  FROM stdin;
 --
 
 COPY theme_homepage (page_ptr_id, heading, slide_in_one_icon, slide_in_one, slide_in_two_icon, slide_in_two, slide_in_three_icon, slide_in_three, header_background, header_image, welcome_heading, content, recent_blog_heading, number_recent_posts, message_end_date, message_start_date, message_type, show_message) FROM stdin;
-2	xDCIShare									Share and Collaborate	<p class="p1">xDCIShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.</p>	Latest blog posts	3	2047-05-05	2016-01-25	warning	f
+2	HydroShare									Share and Collaborate	<p class="p1">HydroShare is an online collaboration environment for sharing data, models, and code.  Join the community to start sharing.</p>	Latest blog posts	3	\N	\N	Information	f
 \.
 
 
@@ -13784,7 +13658,7 @@ SELECT pg_catalog.setval('theme_iconbox_id_seq', 1, false);
 --
 
 COPY theme_quotamessage (id, warning_content_prepend, grace_period_content_prepend, enforce_content_prepend, content, soft_limit_percent, hard_limit_percent, grace_period) FROM stdin;
-1	Your quota for MyHPOM resources is {allocated}{unit} in {zone} zone. You currently have resources that consume {used}{unit}, {percent}% of your quota. Once your quota reaches 100% you will no longer be able to create new resources in xDCIShare. 	You have exceeded your MyHPOM quota. Your quota for MyHPOM resources is {allocated}{unit} in {zone} zone. You currently have resources that consume {used}{unit}, {percent}% of your quota. You have a grace period until {cut_off_date} to reduce your use to below your quota, or to acquire additional quota, after which you will no longer be able to create new resources in MyHPOM. 	Your action to add content to MyHPOM was refused because you have exceeded your quota. Your quota for MyHPOM resources is {allocated}{unit} in {zone} zone. You currently have resources that consume {used}{unit}, {percent}% of your quota. 	To request additional quota, please contact support@myhpom.org. We will try to accommodate reasonable requests for additional quota. If you have a large quota request you may need to contribute toward the costs of providing the additional space you need. See https://pages.myhpom.org/ for more information about the quota policy.	80	125	7
+1	Your quota for HydroShare resources is {allocated}{unit} in {zone} zone. You currently have resources that consume {used}{unit}, {percent}% of your quota. Once your quota reaches 100% you will no longer be able to create new resources in HydroShare. 	You have exceeded your HydroShare quota. Your quota for HydroShare resources is {allocated}{unit} in {zone} zone. You currently have resources that consume {used}{unit}, {percent}% of your quota. You have a grace period until {cut_off_date} to reduce your use to below your quota, or to acquire additional quota, after which you will no longer be able to create new resources in HydroShare. 	Your action was refused because you have exceeded your quota. Your quota for HydroShare resources is {allocated}{unit} in {zone} zone. You currently have resources that consume {used}{unit}, {percent}% of your quota. 	To request additional quota, please contact help@cuahsi.org. We will try to accommodate reasonable requests for additional quota. If you have a large quota request you may need to contribute toward the costs of providing the additional space you need. See https://help.hydroshare.org/about-hydroshare/policies/quota/ for more information about the quota policy.	80	125	7
 \.
 
 
@@ -13800,7 +13674,7 @@ SELECT pg_catalog.setval('theme_quotamessage_id_seq', 1, true);
 --
 
 COPY theme_siteconfiguration (id, col1_heading, col1_content, col2_heading, col2_content, col3_heading, col3_content, twitter_link, facebook_link, pinterest_link, youtube_link, github_link, linkedin_link, vk_link, gplus_link, has_social_network_links, copyright, site_id) FROM stdin;
-1	Contact us	<p class="p1">Email us at <a href="mailto:xdci-support@renci.org">xdci-support@renci.org</a></p>	Follow		Version	<p>This is MyHPOM Version<b> DEVELOPMENT</b></p>									f	&copy 2017-{% now "Y" %} University of North Carolina at Chapel Hill. &copy 2012-2016 CUAHSI. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.	1
+1	Contact us	<p class="p1">Email us at <a href="mailto:help@cuahsi.org">help@cuahsi.org</a></p>	Follow		Open Source	<p class="p1">HydroShare is Open Source. Find us on <a href="https://github.com/hydroshare/"><b>Github</b></a>.</p>\n<p class="p1">Report a bug <a href="https://github.com/hydroshare/hydroshare/issues?state=open"><b>here</b></a></p>\n<p class="p1">This is HydroShare Version<b> DEVELOPMENT</b></p>	http://twitter.com/cuahsi 	https://www.facebook.com/pages/CUAHSI-Consortium-of-Universities-for-the-Advancement-of-Hydrologic-Science-Inc/179921902590		http://www.youtube.com/user/CUAHSI	http://github.com/hydroshare	https://www.linkedin.com/company/2632114			t	&copy {% now "Y" %} CUAHSI. This material is based upon work supported by the National Science Foundation (NSF) under awards 1148453 and 1148090.  Any opinions, findings, conclusions, or recommendations expressed in this material are those of the authors and do not necessarily reflect the views of the NSF.	1
 \.
 
 
@@ -13816,7 +13690,7 @@ SELECT pg_catalog.setval('theme_siteconfiguration_id_seq', 1, true);
 --
 
 COPY theme_userprofile (id, picture, title, subject_areas, organization, phone_1, phone_1_type, phone_2, phone_2_type, public, cv, details, user_id, country, middle_name, state, user_type, website, create_irods_user_account) FROM stdin;
-4		\N	\N	\N	\N	\N	\N	\N	t		\N	4	\N	\N	\N	Unspecified	\N	f
+4		Research Software Engineer		RENCI		Mobile		Mobile	t			4	Unspecified		Unspecified			f
 \.
 
 
@@ -13824,7 +13698,7 @@ COPY theme_userprofile (id, picture, title, subject_areas, organization, phone_1
 -- Name: theme_userprofile_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('theme_userprofile_id_seq', 5, true);
+SELECT pg_catalog.setval('theme_userprofile_id_seq', 4, true);
 
 
 --
@@ -13839,7 +13713,7 @@ COPY theme_userquota (id, allocated_value, used_value, unit, zone, remaining_gra
 -- Name: theme_userquota_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('theme_userquota_id_seq', 1, true);
+SELECT pg_catalog.setval('theme_userquota_id_seq', 1, false);
 
 
 --
@@ -15179,6 +15053,30 @@ ALTER TABLE ONLY hs_file_types_genericlogicalfile
 
 
 --
+-- Name: hs_file_types_geofeaturefilemetadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hs_file_types_geofeaturefilemetadata
+    ADD CONSTRAINT hs_file_types_geofeaturefilemetadata_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hs_file_types_geofeaturelogicalfile_metadata_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hs_file_types_geofeaturelogicalfile
+    ADD CONSTRAINT hs_file_types_geofeaturelogicalfile_metadata_id_key UNIQUE (metadata_id);
+
+
+--
+-- Name: hs_file_types_geofeaturelogicalfile_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hs_file_types_geofeaturelogicalfile
+    ADD CONSTRAINT hs_file_types_geofeaturelogicalfile_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: hs_file_types_georasterfilemetadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -15224,6 +15122,30 @@ ALTER TABLE ONLY hs_file_types_netcdflogicalfile
 
 ALTER TABLE ONLY hs_file_types_netcdflogicalfile
     ADD CONSTRAINT hs_file_types_netcdflogicalfile_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hs_file_types_reftimeseriesfilemetadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hs_file_types_reftimeseriesfilemetadata
+    ADD CONSTRAINT hs_file_types_reftimeseriesfilemetadata_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: hs_file_types_reftimeserieslogicalfile_metadata_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hs_file_types_reftimeserieslogicalfile
+    ADD CONSTRAINT hs_file_types_reftimeserieslogicalfile_metadata_id_key UNIQUE (metadata_id);
+
+
+--
+-- Name: hs_file_types_reftimeserieslogicalfile_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY hs_file_types_reftimeserieslogicalfile
+    ADD CONSTRAINT hs_file_types_reftimeserieslogicalfile_pkey PRIMARY KEY (id);
 
 
 --
@@ -15275,14 +15197,6 @@ ALTER TABLE ONLY hs_geo_raster_resource_rastermetadata
 
 
 --
--- Name: hs_geographic_feature_res_content_type_id_28e85abff23b5f53_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY hs_geographic_feature_resource_originalfileinfo
-    ADD CONSTRAINT hs_geographic_feature_res_content_type_id_28e85abff23b5f53_uniq UNIQUE (content_type_id, object_id);
-
-
---
 -- Name: hs_geographic_feature_res_content_type_id_304dc81d9f5c66f1_uniq; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -15328,14 +15242,6 @@ ALTER TABLE ONLY hs_geographic_feature_resource_geometryinformation
 
 ALTER TABLE ONLY hs_geographic_feature_resource_originalcoverage
     ADD CONSTRAINT hs_geographic_feature_resource_originalcoverage_pkey PRIMARY KEY (id);
-
-
---
--- Name: hs_geographic_feature_resource_originalfileinfo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY hs_geographic_feature_resource_originalfileinfo
-    ADD CONSTRAINT hs_geographic_feature_resource_originalfileinfo_pkey PRIMARY KEY (id);
 
 
 --
@@ -17616,13 +17522,6 @@ CREATE INDEX hs_geographic_feature_resource_originalcoverage_417f1b1c ON hs_geog
 
 
 --
--- Name: hs_geographic_feature_resource_originalfileinfo_417f1b1c; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE INDEX hs_geographic_feature_resource_originalfileinfo_417f1b1c ON hs_geographic_feature_resource_originalfileinfo USING btree (content_type_id);
-
-
---
 -- Name: hs_labels_userresourceflags_e2f3ef5b; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -18237,6 +18136,14 @@ ALTER TABLE ONLY ref_ts_reftsmetadata
 
 
 --
+-- Name: D14f4d644c6fd8096a3e6064242122ef; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hs_file_types_geofeaturelogicalfile
+    ADD CONSTRAINT "D14f4d644c6fd8096a3e6064242122ef" FOREIGN KEY (metadata_id) REFERENCES hs_file_types_geofeaturefilemetadata(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- Name: D160961fcba05fdd989826403bd5f914; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -18706,6 +18613,14 @@ ALTER TABLE ONLY auth_user_groups
 
 ALTER TABLE ONLY auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permiss_user_id_7f0938558328534a_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: b20d482030b02e9f2ccb0e6458b6c281; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY hs_file_types_reftimeserieslogicalfile
+    ADD CONSTRAINT b20d482030b02e9f2ccb0e6458b6c281 FOREIGN KEY (metadata_id) REFERENCES hs_file_types_reftimeseriesfilemetadata(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -19578,14 +19493,6 @@ ALTER TABLE ONLY hs_geo_raster_resource_cellinformation
 
 ALTER TABLE ONLY hs_geographic_feature_resource_fieldinformation
     ADD CONSTRAINT hs_g_content_type_id_322c34901bfae5cb_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: hs_g_content_type_id_3a67e16436568536_fk_django_content_type_id; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY hs_geographic_feature_resource_originalfileinfo
-    ADD CONSTRAINT hs_g_content_type_id_3a67e16436568536_fk_django_content_type_id FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --

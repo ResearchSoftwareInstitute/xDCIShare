@@ -61,3 +61,11 @@ def get_SupportedResTypes_choices():
             if verbose_name not in xdci_excluded_types:
                 result_list.append([class_name, verbose_name])
     return result_list
+
+
+def get_SupportedSharingStatus_choices():
+    return [['Published', 'Published'],
+            ['Public', 'Public'],
+            ['Discoverable', 'Discoverable'],
+            ['Private', 'Private'],
+            ]

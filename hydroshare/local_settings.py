@@ -152,6 +152,7 @@ HS_USER_ZONE_PROXY_USER = os.environ.get('HS_USER_ZONE_PROXY_USER', '')
 HS_USER_ZONE_PROXY_USER_PWD = os.environ.get('HS_USER_ZONE_PROXY_USER_PWD', '')
 HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD = os.environ.get('HS_USER_ZONE_PROXY_USER_CREATE_USER_CMD', '')
 HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD = os.environ.get('HS_USER_ZONE_PROXY_USER_DELETE_USER_CMD', '')
+HS_USER_ZONE_PRODUCTION_PATH = os.environ.get('HS_USER_ZONE_PRODUCTION_PATH', '/hydroshareuserZone/home/localHydroProxy')
 
 # the local MyHPOM proxy user (a counterpart of wwwHydroProxy) in a federated zone with HydroShare Zone
 HS_LOCAL_PROXY_USER_IN_FED_ZONE = os.environ.get('HS_LOCAL_PROXY_USER_IN_FED_ZONE', 'localTestHydroProxy')

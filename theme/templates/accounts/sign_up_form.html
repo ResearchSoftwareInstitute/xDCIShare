@@ -1,3 +1,23 @@
+{% load static %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.tagsinput-revisited.min.css" />
+  <style>
+    .tagsinput {
+      border: 1px solid #ccc;
+    }
+
+    .tagsinput div input::-webkit-input-placeholder {
+      color: #777;
+    }
+
+    .tagsinput .tag {
+      background: #DDD;
+      color: #111;
+    }
+  </style>
+{% endblock %}
+
 <form id="form-signup" action="/accounts/signup/" method="post" role="form">
     {% csrf_token %}
     {{ form.non_field_errors }}
@@ -36,6 +56,8 @@
   </div>
 </form>
 
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tagsinput-revisited.min.js"></script>
+<script type="text/javascript" src="//www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
          $('input[type="button"]').prop('disabled', false);
@@ -132,5 +154,17 @@ ord (again)'];
                 }
             }
         });
+    });
+
+    $('.ui-autocomplete-input').on('blur', function(e) {
+      e.preventDefault();
+      $('.ui-autocomplete-input').trigger(jQuery.Event('keypress', { which: 13 }));
+    });
+
+    $('.ui-autocomplete-input').on('keydown', function(e) {
+      if(e.keyCode === 9 && $(this).val() !== '') {
+        e.preventDefault();
+        $(this).trigger(jQuery.Event('keypress', { which: 13 }));
+      }
     });
 </script>

@@ -1,4 +1,5 @@
 (function ($) {
+    // Used to instantiate clickable urls in dynamically generated items
     $.fn.urlClickable = function () {
         var item = $(this);
 
@@ -45,6 +46,18 @@
         }
 
         $(this).html(newText);
+
+        return item;
+    }
+})(jQuery);
+
+// Formats dates from "yyyy-mm-dd" to "mm/dd/yyyy"
+(function ($) {
+    $.fn.formatDate = function () {
+        var item = $(this);
+        var dateString = item.attr("data-date").trim().substr(0, 10).split("-");    // original format: yyyy-mm-dd (10 characters)
+        var formattedDate = dateString[1] + "/" + dateString[2] + "/" + dateString[0];
+        item.text(formattedDate);
 
         return item;
     }
@@ -137,11 +150,6 @@ $(document).ready(function () {
 
     $("#keywords").remove();
 
-    // Make URLs inside text clickable
-    $(".url-clickable").each(function () {
-        $(this).urlClickable();
-    });
-
     // Make apps link open in new tab
     $('a[href^="https://appsdev.myhpom.renci.org/apps"]').attr('target', '_blank');
 
@@ -152,4 +160,52 @@ $(document).ready(function () {
 
 	// Initialize tooltips
 	$('[data-toggle="tooltip"]').tooltip();
+
+    // Format the dates before displaying them
+    $(".format-date").each(function () {
+        $(this).formatDate();
+    });
+
+    $("#universalMessage a").on('click', function() {
+        $("#universalMessage").slideUp();
+        return false
+    });
+
+    $.ajax({
+        url: "/hsapi/userInfo/",
+        // success: function(user) {
+        //     if(!user.organization) {
+        //         // Disable publishing resources
+        //         if ($("#publish").length) {
+        //             $("#publish").toggleClass("disabled", true);
+        //             $("#publish").removeAttr("data-toggle");   // Disable the agreement modal
+        //             $("#publish > [data-toggle='tooltip']").attr("data-original-title",
+        //                 "Your profile information must be complete before you can formally publish resources.");
+        //         }
+        //
+        //         var message = 'Your profile is nearly complete. Please fill in the '
+        //             + '<strong>Organization</strong> field'
+        //             + ' on the <a href="/user/' + user.id + '/">User Profile</a> page';
+        //         showUniversalMessage("warn", message, 10000)();
+        //     }
+        // },
+        error: showUniversalMessage()
+    })
 });
+
+function showUniversalMessage(type, message, timeout) {
+    return function(response,returnType,content) {
+        if(!message) message = content;
+        if(!type) type = returnType;
+        if(!timeout) timeout = 5000;
+
+        $("#universalMessage span").html(message);
+        $("#universalMessage").attr('class','');
+        $("#universalMessage").addClass(type);
+        $("#universalMessage").slideDown();
+
+        setTimeout(function() {
+            $("#universalMessage a.um_close").click()
+        }, timeout)
+    }
+}

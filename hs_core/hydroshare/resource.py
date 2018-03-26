@@ -33,7 +33,7 @@ def get_resource(pk):
     """
     Retrieve an instance of type Bags associated with the resource identified by **pk**
 
-    Parameters:    pk - Unique MyHPOM identifier for the resource to be retrieved.
+    Parameters:    pk - Unique HydroShare identifier for the resource to be retrieved.
 
     Returns:    An instance of type Bags.
 
@@ -51,7 +51,7 @@ def get_science_metadata(pk):
 
     REST URL:  GET /scimeta/{pid}
 
-    Parameters:    pk  - Unique MyHPOM identifier for the resource whose science metadata is to
+    Parameters:    pk  - Unique HydroShare identifier for the resource whose science metadata is to
     be retrieved.
 
     Returns:    Science metadata document describing the resource.
@@ -69,11 +69,11 @@ def get_science_metadata(pk):
 def get_capabilities(pk):
     """
     Describes API services exposed for a resource.  If there are extra capabilites for a particular
-    resource type over and above the standard MyHPOM API, then this API call will list these
+    resource type over and above the standard Hydroshare API, then this API call will list these
 
     REST URL: GET /capabilites/{pid}
 
-    Parameters: Unique MyHPOM identifier for the resource whose capabilites are to be retrieved.
+    Parameters: Unique HydroShare identifier for the resource whose capabilites are to be retrieved.
 
     Return Type: Capabilites
 
@@ -88,12 +88,12 @@ def get_capabilities(pk):
 
 def get_resource_file(pk, filename):
     """
-    Called by clients to get an individual file within a MyHPOM resource.
+    Called by clients to get an individual file within a HydroShare resource.
 
     REST URL:  GET /resource/{pid}/files/{filename}
 
     Parameters:
-    pid - Unique MyHPOM identifier for the resource from which the file will be extracted.
+    pid - Unique HydroShare identifier for the resource from which the file will be extracted.
     filename - The data bytes of the file that will be extracted from the resource identified by pid
 
     Returns: The bytes of the file extracted from the resource
@@ -115,12 +115,12 @@ def get_resource_file(pk, filename):
 
 def update_resource_file(pk, filename, f):
     """
-    Called by clients to update an individual file within a MyHPOM resource.
+    Called by clients to update an individual file within a HydroShare resource.
 
     REST URL:  PUT /resource/{pid}/files/{filename}
 
     Parameters:
-    pid - Unique MyHPOM identifier for the resource from which the file will be extracted.
+    pid - Unique HydroShare identifier for the resource from which the file will be extracted.
     filename - The data bytes of the file that will be extracted from the resource identified by pid
     file - the data bytes of the file to update
 
@@ -139,11 +139,15 @@ def update_resource_file(pk, filename, f):
     for rf in ResourceFile.objects.filter(object_id=resource.id):
         if rf.short_path == filename:
             if rf.resource_file:
+                # TODO: should use delete_resource_file
                 rf.resource_file.delete()
+                # TODO: should use add_file_to_resource
                 rf.resource_file = File(f) if not isinstance(f, UploadedFile) else f
                 rf.save()
             if rf.fed_resource_file:
+                # TODO: should use delete_resource_file
                 rf.fed_resource_file.delete()
+                # TODO: should use add_file_to_resource
                 rf.fed_resource_file = File(f) if not isinstance(f, UploadedFile) else f
                 rf.save()
             return rf
@@ -158,7 +162,7 @@ def get_related(pk):
     REST URL:  GET /related/{pid}
 
     Parameters:
-    pid - Unique MyHPOM identifier for the resource whose related resources are to be retrieved.
+    pid - Unique HydroShare identifier for the resource whose related resources are to be retrieved.
 
     Returns:    List of pids for resources that are related to the specified resource.
 
@@ -182,7 +186,7 @@ def get_checksum(pk):
     REST URL:  GET /checksum/{pid}
 
     Parameters:
-    pid - Unique MyHPOM identifier for the resource for which the checksum is to be returned.
+    pid - Unique HydroShare identifier for the resource for which the checksum is to be returned.
 
     Returns:    Checksum of the resource identified by pid.
 
@@ -295,8 +299,8 @@ def create_resource(
         create_metadata=True,
         create_bag=True, unpack_file=False, **kwargs):
     """
-    Called by a client to add a new resource to MyHPOM. The caller must have authorization to
-    write content to MyHPOM. The pid for the resource is assigned by MyHPOM upon inserting
+    Called by a client to add a new resource to HydroShare. The caller must have authorization to
+    write content to HydroShare. The pid for the resource is assigned by HydroShare upon inserting
     the resource.  The create method returns the newly-assigned pid.
 
     REST URL:  POST /resource
@@ -456,8 +460,14 @@ def create_resource(
         if create_bag:
             hs_bagit.create_bag(resource)
 
+    # set the resource to private
+    resource.setAVU('isPublic', resource.raccess.public)
+
+    # set the resource type (which is immutable)
+    resource.setAVU("resourceType", resource._meta.object_name)
+
     # set quota of this resource to this creator
-    resource.raccess.set_quota_holder(owner, owner)
+    resource.set_quota_holder(owner, owner)
 
     return resource
 
@@ -470,7 +480,7 @@ def create_empty_resource(pk, user, action='version'):
     resource. This separate routine is needed to return a new resource object to the calling
     view so that if an exception is raised, this empty resource object can be deleted for clean-up.
     Args:
-        pk: the unique MyHPOM identifier for the resource that is to be versioned or copied.
+        pk: the unique HydroShare identifier for the resource that is to be versioned or copied.
         user: the user who requests to create a new version for the resource or copy the resource.
         action: "version" or "copy" with default action being "version"
     Returns:
@@ -590,12 +600,12 @@ def create_new_version_resource(ori_res, new_res, user):
 
 def add_resource_files(pk, *files, **kwargs):
     """
-    Called by clients to update a resource in MyHPOM by adding one or more files.
+    Called by clients to update a resource in HydroShare by adding one or more files.
 
     REST URL:  PUT /resource/{pid}/files/{file}
 
     Parameters:
-    pk - Unique MyHPOM identifier for the resource that is to be updated.
+    pk - Unique HydroShare identifier for the resource that is to be updated.
     files - A list of file-like objects representing files that will be added
     to the existing resource identified by pid
 
@@ -643,15 +653,16 @@ def add_resource_files(pk, *files, **kwargs):
     return ret
 
 
-def update_science_metadata(pk, metadata):
+def update_science_metadata(pk, metadata, user):
     """
     Updates science metadata for a resource
 
     Args:
-        pk: Unique MyHPOM identifier for the resource for which science metadata needs to be
+        pk: Unique HydroShare identifier for the resource for which science metadata needs to be
         updated.
         metadata: a list of dictionary items containing data for each metadata element that needs to
         be updated
+        user: user who is updating metadata
         example metadata format:
         [
             {'title': {'value': 'Updated Resource Title'}},
@@ -681,16 +692,19 @@ def update_science_metadata(pk, metadata):
 
     Returns:
     """
-
     resource = utils.get_resource_by_shortkey(pk)
-    resource.metadata.update(metadata)
+    resource.metadata.update(metadata, user)
+    utils.resource_modified(resource, user, overwrite_bag=False)
+
+    # set to private if metadata has become non-compliant
+    resource.update_public_and_discoverable()  # set to False if necessary
 
 
 def delete_resource(pk):
     """
-    Deletes a resource managed by MyHPOM. The caller must be an owner of the resource or an
+    Deletes a resource managed by HydroShare. The caller must be an owner of the resource or an
     administrator to perform this function. The operation removes the resource from further
-    interaction with MyHPOM services and interfaces. The implementation may delete the resource
+    interaction with HydroShare services and interfaces. The implementation may delete the resource
     bytes, and should do so since a delete operation may be in response to a problem with the
     resource (e.g., it contains malicious content, is inappropriate, or is subject to a legal
     request). If the resource does not exist, the Exceptions.NotFound exception is raised.
@@ -698,7 +712,7 @@ def delete_resource(pk):
     REST URL:  DELETE /resource/{pid}
 
     Parameters:
-    pid - The unique MyHPOM identifier of the resource to be deleted
+    pid - The unique HydroShare identifier of the resource to be deleted
 
     Returns:
     The pid of the resource that was deleted
@@ -710,7 +724,7 @@ def delete_resource(pk):
     Exceptions.NotFound - The resource identified by pid does not exist
     Exception.ServiceFailure - The service is unable to process the request
 
-    Note:  Only MyHPOM administrators will be able to delete formally published resour
+    Note:  Only HydroShare administrators will be able to delete formally published resour
     """
 
     res = utils.get_resource_by_shortkey(pk)
@@ -772,7 +786,7 @@ def delete_resource_file_only(resource, f):
 def delete_format_metadata_after_delete_file(resource, file_name):
     """
     delete format metadata as appropriate after a file is deleted.
-    :param resource: BaseResource object representing a MyHPOM resource
+    :param resource: BaseResource object representing a HydroShare resource
     :param file_name: the file name to be deleted
     :return:
     """
@@ -809,13 +823,13 @@ def filter_condition(filename_or_id, fl):
 # TODO: Test that short_path deletes properly.
 def delete_resource_file(pk, filename_or_id, user, delete_logical_file=True):
     """
-    Deletes an individual file from a MyHPOM resource. If the file does not exist,
+    Deletes an individual file from a HydroShare resource. If the file does not exist,
     the Exceptions.NotFound exception is raised.
 
     REST URL:  DELETE /resource/{pid}/files/{filename}
 
     Parameters:
-    :param pk: The unique MyHPOM identifier for the resource from which the file will be deleted
+    :param pk: The unique HydroShare identifier for the resource from which the file will be deleted
     :param filename_or_id: Name of the file or id of the file to be deleted from the resource
     :param user: requesting user
     :param delete_logical_file: If True then if the ResourceFile object to be deleted is part of a
@@ -849,18 +863,18 @@ def delete_resource_file(pk, filename_or_id, user, delete_logical_file=True):
             signals.pre_delete_file_from_resource.send(sender=res_cls, file=f,
                                                        resource=resource, user=user)
 
+            # Pabitra: better to use f.delete() here and get rid of the
+            # delete_resource_file_only() util function
             file_name = delete_resource_file_only(resource, f)
 
             # This presumes that the file is no longer in django
             delete_format_metadata_after_delete_file(resource, file_name)
 
-            if resource.raccess.public or resource.raccess.discoverable:
-                if not resource.can_be_public_or_discoverable:
-                    resource.raccess.public = False
-                    resource.raccess.discoverable = False
-                    resource.raccess.save()
-
             signals.post_delete_file_from_resource.send(sender=res_cls, resource=resource)
+
+            # set to private if necessary -- AFTER post_delete_file handling
+            resource.update_public_and_discoverable()  # set to False if necessary
+
             # generate bag
             utils.resource_modified(resource, user, overwrite_bag=False)
 
@@ -938,13 +952,13 @@ def deposit_res_metadata_with_crossref(res):
 
 def publish_resource(user, pk):
     """
-    Formally publishes a resource in MyHPOM. Triggers the creation of a DOI for the resource,
-    and triggers the exposure of the resource to the MyHPOM DataONE Member Node. The user must
+    Formally publishes a resource in HydroShare. Triggers the creation of a DOI for the resource,
+    and triggers the exposure of the resource to the HydroShare DataONE Member Node. The user must
     be an owner of a resource or an administrator to perform this action.
 
     Parameters:
         user - requesting user to publish the resource who must be one of the owners of the resource
-        pk - Unique MyHPOM identifier for the resource to be formally published.
+        pk - Unique HydroShare identifier for the resource to be formally published.
 
     Returns:    The id of the resource that was published
 
@@ -960,6 +974,8 @@ def publish_resource(user, pk):
     """
     resource = utils.get_resource_by_shortkey(pk)
 
+    # TODO: whether a resource can be published is not considered in can_be_published
+    # TODO: can_be_published is currently an alias for can_be_public_or_discoverable
     if not resource.can_be_published:
         raise ValidationError("This resource cannot be published since it does not have required "
                               "metadata or content files or this resource type is not allowed "
@@ -977,7 +993,7 @@ def publish_resource(user, pk):
         resource.doi = get_resource_doi(pk, 'failure')
         resource.save()
 
-    resource.raccess.public = True
+    resource.set_public(True)  # also sets discoverable to True
     resource.raccess.immutable = True
     resource.raccess.shareable = False
     resource.raccess.published = True
@@ -1004,13 +1020,13 @@ def publish_resource(user, pk):
 
 def resolve_doi(doi):
     """
-    Takes as input a DOI and returns the internal MyHPOM identifier (pid) for a resource.
-    This method will be used to get the MyHPOM pid for a resource identified by a doi for
+    Takes as input a DOI and returns the internal HydroShare identifier (pid) for a resource.
+    This method will be used to get the HydroShare pid for a resource identified by a doi for
     further operations using the web service API.
 
     REST URL:  GET /resolveDOI/{doi}
 
-    Parameters:    doi - A doi assigned to a resource in MyHPOM.
+    Parameters:    doi - A doi assigned to a resource in HydroShare.
 
     Returns:    The pid of the resource that was published
 
@@ -1021,7 +1037,7 @@ def resolve_doi(doi):
     Exceptions.NotFound - The resource identified by pid does not exist
     Exception.ServiceFailure - The service is unable to process the request
 
-    Note:  All MyHPOM methods (except this one) will use MyHPOM internal identifiers
+    Note:  All HydroShare methods (except this one) will use HydroShare internal identifiers
     (pids). This method exists so that a program can resolve the pid for a DOI.
     """
     return utils.get_resource_by_doi(doi).short_id
