@@ -64,6 +64,36 @@
         command: "usermod -aG docker {{ deploy_user }}"
         notify: [ "restart docker" ]
         when: '"docker" not in user_groups.stdout'
+    - name: "Setup {{ deploy_user }} MyHPOM certs"
+      block:
+      - name: Create ssl directory
+        file:
+          path: "/home/{{ deploy_user }}/ssl"
+          state: directory
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0700
+      - name: Setup ssl keys
+        copy:
+          src: files/ssl
+          dest: "/home/{{ deploy_user }}"
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0600
+      - name: Create cert-files directory
+        file:
+          path: "/home/{{ deploy_user }}/cert-files"
+          state: directory
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0700
+      - name: Setup cert-files keys
+        copy:
+          src: files/cert-files
+          dest: "/home/{{ deploy_user }}"
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0600
   handlers:
     - name: restart docker
       service: name=docker enabled=yes state=restarted
