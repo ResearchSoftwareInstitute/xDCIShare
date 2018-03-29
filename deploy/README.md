@@ -11,6 +11,8 @@ Some certificates managed by ansible are encrypted using ansible vault. You must
 obtain a password and store it in `deploy/.vault-key` in order for files to be
 unencrypted. Contact another developer or check the Keybase channels.
 
+This requires that you have ansible installed (v2.3+).
+
 Provisioning
 ------------
 
