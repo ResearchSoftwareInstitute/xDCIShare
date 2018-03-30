@@ -53,10 +53,9 @@ from . import debug_resource_view
 from . import apps
 
 from hs_core.hydroshare import utils
-
+from hs_core.decorators import profile_required
 from hs_core.signals import *
 from hs_access_control.models import PrivilegeCodes, GroupMembershipRequest, GroupResourcePrivilege
-
 from hs_collection_resource.models import CollectionDeletedResource
 
 logger = logging.getLogger(__name__)
@@ -1085,6 +1084,7 @@ def add_generic_context(request, page):
 
 
 @login_required
+@profile_required
 def create_resource_select_resource_type(request, *args, **kwargs):
     return render_to_response('pages/create-resource.html', context_instance=RequestContext(request))
 

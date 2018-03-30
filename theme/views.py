@@ -145,7 +145,7 @@ def signup(request, template="accounts/account_signup.html", extra_context=None)
                     info(request, _("A verification email has been sent to " + new_user.email +
                                     " with a link that must be clicked prior to your account "
                                     "being activated. If you do not receive this email please "
-                                    "check that you entered your address correctly, or your " 
+                                    "check that you entered your address correctly, or your "
                                     "spam folder as sometimes the email gets flagged as spam. "
                                     "If you entered an incorrect email address, please request "
                                     "an account again."))
@@ -397,6 +397,8 @@ def login(request, template="accounts/account_login.html",
         info(request, _(login_msg))
         auth_login(request, authenticated_user)
         return login_redirect(request)
+
+    request.GET.next = "/#_:_"
     context = {"form": form, "title": _("Log in")}
     context.update(extra_context or {})
     return TemplateResponse(request, template, context)

@@ -19,8 +19,11 @@ from hs_core.views.utils import show_relations_section, \
 from hs_core.hydroshare.resource import METADATA_STATUS_SUFFICIENT, METADATA_STATUS_INSUFFICIENT
 from hs_tools_resource.app_launch_helper import resource_level_tool_urls
 
+from hs_core.decorators import profile_required
+
 
 @processor_for(GenericResource)
+@profile_required
 def landing_page(request, page):
     """Return resource landing page context."""
     edit_resource = check_resource_mode(request)
