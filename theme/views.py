@@ -398,7 +398,7 @@ def login(request, template="accounts/account_login.html",
         auth_login(request, authenticated_user)
         return login_redirect(request)
 
-    request.GET.next = "/#_:_"
+    request.GET.next = "/#_"
     context = {"form": form, "title": _("Log in")}
     context.update(extra_context or {})
     return TemplateResponse(request, template, context)
