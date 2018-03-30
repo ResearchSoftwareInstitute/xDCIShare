@@ -1,0 +1,6 @@
+[hsctl_hosts]
+myhpom-dev.edc.renci.org
+myhpom-build.edc.renci.org
+
+[local]
+localhost ansible_connection=local
