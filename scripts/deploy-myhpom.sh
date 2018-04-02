@@ -3,7 +3,7 @@
 # errexit: abort script at first error
 set -e
 
-PARSED=$(getopt --options=h,a: --longoptions=help,auth: --name "$0" -- "$@")
+PARSED=$(getopt --options=h,d,a: --longoptions=help,db,auth: --name "$0" -- "$@")
 if [[ $? -ne 0 ]]; then
   # e.g. $? == 1
   #  then getopt has complained about wrong arguments to stdout
@@ -11,6 +11,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 BASIC_AUTH=""
+HSCTL_OPTS=""
 
 eval set -- "$PARSED"
 while true; do
@@ -22,6 +23,10 @@ while true; do
       echo ""
       echo "Options: When -a/--auth is provided, configure HTTP Basic Auth."
       exit 0
+      ;;
+    -d|--db)
+      HSCTL_OPTS="--db"
+      shift 2
       ;;
     -a|--auth)
       BASIC_AUTH="$2"
@@ -66,5 +71,5 @@ fi
 
 ./hsctl maint_on
 ./scripts/backup-hs
-./hsctl rebuild
+./hsctl rebuild $HSCTL_OPTS
 ./hsctl maint_off
