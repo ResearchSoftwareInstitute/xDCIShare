@@ -52,5 +52,9 @@ run it through the `envsubst` to fill in any variables provided by Jenkins, and
 save the results in `.env`. Jenkins uses the following simple script to deploy:
 
 ```shell
-./scripts/deploy-myhpom.sh
+# see options available:
+./scripts/deploy-myhpom.sh --help
+
+# deploy to staging:
+./scripts/deploy-myhpom.sh ANSIBLE_VAULT_PASSWORD
 ```
