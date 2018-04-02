@@ -3,7 +3,7 @@
 # errexit: abort script at first error
 set -e
 
-PARSED=$(getopt --options=h,d,a: --longoptions=help,db,auth: --name "$0" -- "$@")
+PARSED=$(getopt --options=h,d,a:,e --longoptions=help,db,auth:,environment: --name "$0" -- "$@")
 if [[ $? -ne 0 ]]; then
   # e.g. $? == 1
   #  then getopt has complained about wrong arguments to stdout
@@ -11,6 +11,7 @@ if [[ $? -ne 0 ]]; then
 fi
 
 BASIC_AUTH=""
+ENV="staging"
 HSCTL_OPTS=""
 
 eval set -- "$PARSED"
@@ -19,7 +20,7 @@ while true; do
     -h|--help)
       echo "$0: deploy MyHPOM"
       echo ""
-      echo "Usage: deploy-myhpom [-h,--help,-a,--auth] HOST VAULT_PASSWORD"
+      echo "Usage: deploy-myhpom [-h,--help,-a,--auth,-e,--environment] VAULT_PASSWORD"
       echo ""
       echo "Options: When -a/--auth is provided, configure HTTP Basic Auth."
       exit 0
@@ -27,6 +28,15 @@ while true; do
     -d|--db)
       HSCTL_OPTS="--db"
       shift
+      ;;
+    -e|--environment)
+      ENV="$2"
+      shift 2
+      if [[ ! "${ENV}" =~ ^(staging|production)$ ]]
+      then
+	echo "--environment must be staging or production"
+	exit 2
+      fi
       ;;
     -a|--auth)
       BASIC_AUTH="$2"
@@ -40,25 +50,17 @@ while true; do
 done
 
 # handle non-option arguments
-if [[ $# -ne 2 ]]; then
-  echo "$0: This script takes HOST and ANSIBLE_PASSWORD"
+if [[ $# -ne 1 ]]; then
+  echo "$0: This script takes ANSIBLE_PASSWORD"
   exit 4
 fi
 
-NODE_NAME=$1
-ANSIBLE_PASSWORD=$2
+ANSIBLE_PASSWORD=$1
 
 rm -f .env .env.template
 
-# ANSIBLE_PASSWORD and NODE_NAME are assumed to be provided by Jenkins:
+# ANSIBLE_PASSWORD and assumed to be provided by Jenkins:
 echo "${ANSIBLE_PASSWORD}" > deploy/.vault-key
-
-ENV=staging
-if [ "${NODE_NAME}" = 'myhpom' ]; then
-  ENV=production
-fi
-
-echo "environment = $ENV"
 
 cd deploy
 ansible-vault decrypt files/environment/_env.$ENV.template
