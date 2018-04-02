@@ -26,7 +26,7 @@ while true; do
       ;;
     -d|--db)
       HSCTL_OPTS="--db"
-      shift 2
+      shift
       ;;
     -a|--auth)
       BASIC_AUTH="$2"
