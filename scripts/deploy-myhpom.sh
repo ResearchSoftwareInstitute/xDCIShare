@@ -3,7 +3,7 @@
 # errexit: abort script at first error
 set -e
 
-PARSED=$(getopt --options=h,d,a:,e --longoptions=help,db,auth:,environment: --name "$0" -- "$@")
+PARSED=$(getopt --options=h,d,a:,e,v --longoptions=help,db,auth:,environment:,verbose --name "$0" -- "$@")
 if [[ $? -ne 0 ]]; then
   # e.g. $? == 1
   #  then getopt has complained about wrong arguments to stdout
@@ -20,10 +20,20 @@ while true; do
     -h|--help)
       echo "$0: deploy MyHPOM"
       echo ""
-      echo "Usage: deploy-myhpom [-h,--help,-a,--auth,-e,--environment] VAULT_PASSWORD"
+      echo "Usage: deploy-myhpom [-h/help,-a/auth,-e/environment,-d/db,-v/verbose] VAULT_PASSWORD"
       echo ""
-      echo "Options: When -a/--auth is provided, configure HTTP Basic Auth."
+      echo "Options:"
+      echo " -a|--auth        : configure HTTP Basic Auth with the supplied password."
+      echo " -d|--db          : If supplied, run hsctl with --db option"
+      echo " -e|--environment : Deploy staging/production environment (default: staging)."
+      echo " -h|--help"
+      echo " -v|--verbose"
       exit 0
+      ;;
+    -v|--verbose)
+      # print command to stdout before executing it:
+      set -x
+      shift
       ;;
     -d|--db)
       HSCTL_OPTS="--db"
