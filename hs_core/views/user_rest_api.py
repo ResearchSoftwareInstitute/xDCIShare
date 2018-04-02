@@ -16,7 +16,7 @@ class UserInfo(APIView):
             "first_name": ['First name', ''],
             "last_name": ['Last name', ''],
             "middle_name": [UserProfileForm.base_fields['middle_name'].label, ''],
-            "state": [UserProfileForm.base_fields['state'], ''].label,
+            "state": [UserProfileForm.base_fields['state'].label, ''],
             "zipcode": [UserProfileForm.base_fields['zipcode'].label, ''],
             "country": [UserProfileForm.base_fields['country'].label, ''],
             "date_of_birth": [UserProfileForm.base_fields['date_of_birth'].label, ''],
