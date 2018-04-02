@@ -175,11 +175,12 @@ $(document).ready(function () {
         $.ajax({
             url: "/hsapi/userInfo/",
             success: function(user) {
+                console.log(user)
 
                 var missing_fields = []
                 for(key in user){
-                    if(!user[key]){
-                        missing_fields.push(key)
+                    if(!user[key][1]){
+                        missing_fields.push(user[key][0])
                     }
                 }
 
@@ -188,7 +189,7 @@ $(document).ready(function () {
                     var message = 'In order to edit or create resources, you must complete your User Profile. '
                         + 'The following required fields are missing: '
                         + '<br><strong>'+ missing_fields_string + '</strong>'
-                        + '<br><br>Visit your <a href="/user/' + user.id + '/">User Profile</a> page.';
+                        + '<br><br>Visit your <a href="/user/' + user['id'][1] + '/">User Profile</a> page.';
                     showUniversalMessage("warn", message, 10000)();
                 }
 

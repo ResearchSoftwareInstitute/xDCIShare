@@ -163,6 +163,14 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ['user', 'public', 'create_irods_user_account']
+        labels = {
+            "state": 'State/Province',
+            "zipcode": 'Zip code',
+            "date_of_birth": 'Date of birth',
+            "last_four_ss": 'Last four digits of social security number',
+            "emergency_name": 'Emergency contact full name',
+            "emergency_relationship": 'Emergency contact relationship'
+        }
 
     def clean_country(self):
         data = self.cleaned_data['country']

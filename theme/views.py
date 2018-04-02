@@ -38,6 +38,8 @@ from theme.utils import get_quota_message
 
 from .forms import SignupForm
 
+from theme.forms import UserProfileForm
+
 
 class UserProfileView(TemplateView):
     template_name='accounts/profile.html'
@@ -75,7 +77,12 @@ class UserProfileView(TemplateView):
                 # for anonymous requesting user show only resources that are either public or discoverable
                 resources = resources.filter(Q(raccess__public=True) | Q(raccess__discoverable=True))
 
+
+        # pass in UserProfileForm.base_fields to the view to use labels
+        profile_form_fields = UserProfileForm.base_fields
+
         return {
+            'profile_form_fields': profile_form_fields,
             'profile_user': u,
             'resources': resources,
             'quota_message': get_quota_message(u),

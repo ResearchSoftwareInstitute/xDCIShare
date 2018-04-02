@@ -6,6 +6,7 @@ from functools import partial, wraps
 from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.forms.models import formset_factory
+from django.contrib.auth.decorators import login_required
 
 from mezzanine.pages.page_processors import processor_for
 
@@ -23,6 +24,7 @@ from hs_core.decorators import profile_required
 
 
 @processor_for(GenericResource)
+@login_required
 @profile_required
 def landing_page(request, page):
     """Return resource landing page context."""
