@@ -54,80 +54,10 @@ within your dev_settings.py (which will not be added to git).
 You can also use the .env file to specify a different hydroshare-config.yaml
 derived file (i.e., a production version).
 
-Deployment
-----------
-
-Deployments settings can also take advantage of dotenv based settings by
-specifying any variables directly in a .env file. The staging deployment
-configuration is configured this way and requires the following steps to do a
-formal deploy:
-
-Any custom configuration is stored within `.env.staging.template.gpg`, a
-[gpg](https://www.gnupg.org/) encrypted file. Ask another developer or
-sysadmin for the password to edit this file. To make changes to the
-configuration decrypt the file, make changes, and encrypt it again:
-
-```shell
-# decrypt the settings that are under version control:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.template.gpg
-
-# edit the decrypted file .env.staging.template
-
-# encrypt the modified file, and commit:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --symmetric .env.staging.template
-```
-
-When Jenkins checks out a version of this project it will decrypt this file,
-run it through the `envsubst` to fill in any variables provided by Jenkins, and
-save the results in `.env`. Jenkins uses the following simple script to deploy:
-
-```shell
-rm -f .env .env.template
-
-# Decrypt the environmental variables for staging:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.template.gpg
-
-# substitutes Jenkins environmental variables into the .env file
-cat .env.staging.template | envsubst > .env
-./hsctl rebuild --db
-```
-
-Provisioning New Servers
-------------------------
+Deployment and Provisioning
+---------------------------
 
 When a new server is created, MyHPOM requires a few additional packages. The
 following steps have been used to set up docker (for hsctl) and java (for
-jenkins) and add the deploy user to docker group.
-
-```shell
-# Install docker repositories:
-# https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce
-sudo yum install -y yum-utils \
-  device-mapper-persistent-data \
-  lvm2
-sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
-
-# Jenkins needs java installed for to use a server as a node, and to build
-# htpasswd in a reliable way, htpasswd command is needed:
-sudo yum install java-1.8.0-openjdk docker-ce httpd-tools
-
-# Install docker-compose
-# https://docs.docker.com/compose/install/#install-compose
-sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo groupadd docker
-sudo usermod -aG docker xdci-service
-sudo systemctl restart docker
-# at this point I had to disconnect the one node I had set up for mhpom-dev b/c it was keeping itself online
-# and therefor not getting a refresh of its groups and couldn't connect to docker.
-
-# create the xdci-service user's home directory by logging in for the first time:
-sudu su - xdci-service
-
-# also I copied /root/ssl from myhpom into /home/xdci-service/ssl for use of the dev deploy.
-```
+jenkins) and add the deploy user to docker group. See the [deployment
+docs](deploy/README.md) for more information.

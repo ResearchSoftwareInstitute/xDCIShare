@@ -24,3 +24,33 @@ have SSH conigured, and that docker is properly configured.
 
 Note that sudo requires you by default to enter your password on the renci.org
 password - so you must pass your password while provisioning the servers.
+
+Deployment
+----------
+
+Deployment settings can also take advantage of dotenv based settings by
+specifying any variables directly in a .env file. The staging deployment
+configuration is configured this way and requires the following steps to do a
+formal deploy:
+
+Any custom configuration is stored within
+`deploy/files/environment/_env.staging.template` (or the production equivalent), which is an
+[Ansible Vault](https://docs.ansible.com/ansible/2.4/vault.html) encrypted file. Ask another developer or
+sysadmin for the `.vault-key` password file, which should be stored in the deploy directory.
+
+```shell
+cd deploy
+
+# to edit staging variables
+ansible-vault edit files/environment/_env.staging.template
+
+# commit changes to git.
+```
+
+When Jenkins checks out a version of this project it will decrypt this file,
+run it through the `envsubst` to fill in any variables provided by Jenkins, and
+save the results in `.env`. Jenkins uses the following simple script to deploy:
+
+```shell
+./scripts/deploy-myhpom.sh
+```
