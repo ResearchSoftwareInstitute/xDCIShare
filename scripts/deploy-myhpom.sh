@@ -77,7 +77,7 @@ ansible-vault decrypt files/environment/_env.$ENV.template
 cat files/environment/_env.$ENV.template | envsubst > ../.env
 cd ..
 
-if [[ "$BASIC_AUTH" -ne "" ]]; then
+if [[ -n "$BASIC_AUTH" ]]; then
   htpasswd -bc nginx/.htpasswd $BASIC_AUTH $BASIC_AUTH
 fi
 
