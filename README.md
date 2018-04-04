@@ -28,9 +28,11 @@ local dev environment that matches production.
 If you have docker installed locally, you can use `hsctl` commands to setup a
 local development environment without VirtualBox.
 
-*OS X Users* note that `hsctl` requires gnu sed. You can use
-[homebrew](https://brew.sh) to install it as the default using the following
-command: `brew install gnu-sed --with-default-names`.
+*OS X Users* note that scripts require some gnu versions of builtin libraries.
+You can use [homebrew](https://brew.sh) to install it as the default using the
+following commands:
+ * `brew install gnu-sed --with-default-names`.
+ * `brew install gnu-getopt --with-default-names`.
 
 Environments
 ------------
