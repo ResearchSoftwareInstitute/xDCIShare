@@ -1,10 +1,16 @@
 from functools import wraps
 from django.shortcuts import redirect
-from django.utils.decorators import method_decorator
+from django.utils.decorators import available_attrs
 
 
 def profile_required(view_func):
-    '''Checks all required UserProfile fields.'''
+    '''Checks all required UserProfile fields.  If any required fields are missing,
+        user will be redirected to the referer page if one exists,
+        otherwise defaults to '/my-documents/#_'.
+        If all required fields on the profile are filled in, the user will
+        be able to access this view this decorator is placed on.
+    '''
+    @wraps(view_func, assigned=available_attrs(view_func))
     def _wrapped_view(request, *args, **kwargs):
         profile = request.user.userprofile
         profile_valid = (profile.middle_name and

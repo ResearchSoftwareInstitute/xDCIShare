@@ -171,21 +171,20 @@ $(document).ready(function () {
         return false
     });
 
-    if (window.location.hash == '#_'){
+    if (window.location.hash == '#_') {
         $.ajax({
             url: "/hsapi/userInfo/",
             success: function(user) {
-                console.log(user)
 
-                var missing_fields = []
-                for(key in user){
-                    if(!user[key][1]){
-                        missing_fields.push(user[key][0])
+                var missing_fields = [];
+                for (key in user) {
+                    if (!user[key][1]) {
+                        missing_fields.push(user[key][0]);
                     }
                 }
 
-                if(missing_fields.length != 0) {
-                    var missing_fields_string = missing_fields.join('</strong>, <strong> ')
+                if (missing_fields.length != 0) {
+                    var missing_fields_string = missing_fields.join('</strong>, <strong> ');
                     var message = 'In order to edit or create resources, you must complete your User Profile. '
                         + 'The following required fields are missing: '
                         + '<br><strong>'+ missing_fields_string + '</strong>'
@@ -196,7 +195,7 @@ $(document).ready(function () {
                 // clearing out the hash from URL
                 history.pushState("", document.title, window.location.pathname);
             },
-            error: function(e){
+            error: function(e) {
                 var message = 'Cannot connect to your User Profile. '
                     + 'Please note, in order to edit or create resources, '
                     + 'you must complete your User Profile. ';
