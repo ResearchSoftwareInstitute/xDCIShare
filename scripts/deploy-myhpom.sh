@@ -73,8 +73,9 @@ rm -f .env .env.template
 echo "${ANSIBLE_PASSWORD}" > deploy/.vault-key
 
 cd deploy
-ansible-vault decrypt files/environment/_env.$ENV.template
-cat files/environment/_env.$ENV.template | envsubst > ../.env
+ansible-vault decrypt --output=_env.$ENV.template files/environment/_env.$ENV.template
+cat _env.$ENV.template | envsubst > ../.env
+rm _env.$ENV.template
 cd ..
 
 if [[ -n "$BASIC_AUTH" ]]; then
