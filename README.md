@@ -32,7 +32,7 @@ local development environment without VirtualBox.
 You can use [homebrew](https://brew.sh) to install it as the default using the
 following commands:
  * `brew install gnu-sed --with-default-names`.
- * `brew install gnu-getopt --with-default-names`.
+ * `brew install gnu-getopt ; brew link --force gnu-getopt`.
 
 Environments
 ------------
