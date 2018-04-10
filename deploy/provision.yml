@@ -10,11 +10,11 @@
         state: present
     - name: Setup docker and docker-compose
       block:
-      - name: ensure packages needed by docker are installed
+      - name: ensure packages needed by myhpom are installed
         yum: 
           name: "{{ item }}"
           state: present
-        with_items: ["yum-utils", "device-mapper-persistent-data", "lvm2"]
+        with_items: ["yum-utils", "device-mapper-persistent-data", "lvm2", "ansible"]
       - name: add docker yum repository
         yum_repository:
           name: docker-ce-stable
