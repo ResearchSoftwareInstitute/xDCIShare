@@ -65,13 +65,6 @@
             {# ======= Subject ======= #}
             {% include "resource-landing-page/subject.html" %}
 
-            {# ======= Citation ======= #}
-            {% if metadata_form %}
-                {% include "resource-landing-page/citation.html" with resource_mode="edit" %}
-            {% else %}
-                {% include "resource-landing-page/citation.html" with resource_mode="view" %}
-            {% endif %}
-
 
             {# ======= Coverage ======= #}
             <!-- {% if spatial_coverage.north or spatial_coverage.northlimit or temporal_coverage or metadata_form %}
@@ -579,6 +572,13 @@
                 </div>
             {% endif %}
             {% endblock %} {# content_block #}
+
+            {# ======= Citation ======= #}
+            {% if metadata_form %}
+                {% include "resource-landing-page/citation.html" with resource_mode="edit" %}
+            {% else %}
+                {% include "resource-landing-page/citation.html" with resource_mode="view" %}
+            {% endif %}
 
             {# ======= Content tabs (code moved here because django does not render blocks inside included templates) ======= #}
             <div class="col-sm-12">
@@ -1194,7 +1194,7 @@
 
             {%  block modal %}
                 {% include "resource-landing-page/modals.html" %}
-                {% include "resource-landing-page/coordinates_picker.html" %}
+                <!-- {% include "resource-landing-page/coordinates_picker.html" %} -->
             {%  endblock %}
             </div>
 
