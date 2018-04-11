@@ -11,6 +11,16 @@
             </ul>
         </div>
     </div>
+    {% else %}
+    <div class="col-xs-12">
+        <h3>Subject</h3>
+        <hr>
+        <div class="alert  alert-info" role="alert">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            <small> Click on the edit button ( <span class="glyphicon glyphicon-pencil"></span> ) above to add keywords this resource.</small>
+        </div>
+        <br>
+    </div>
     {% endif %}
 {% else %}
     <div class="col-sm-12 content-block">

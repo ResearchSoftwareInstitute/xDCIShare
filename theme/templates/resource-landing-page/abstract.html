@@ -4,6 +4,16 @@
             <h3>Abstract</h3>
             <span class="abstract">{{ abstract|urlize|linebreaks }}</span>
         </div>
+    {% else %}
+    <div class="col-xs-12">
+        <h3>Notes</h3>
+        <hr>
+        <div class="alert alert-info" role="alert">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            <small> Click on the edit button ( <span class="glyphicon glyphicon-pencil"></span> ) above to add notes to this resource.</small>
+        </div>
+        <br>
+    </div>
     {% endif %}
 {% else %}
     <div class="col-xs-12 content-block">
