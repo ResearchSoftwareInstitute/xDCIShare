@@ -182,7 +182,7 @@ DEFAULT_SUPPORT_EMAIL = os.environ.get('DEFAULT_SUPPORT_EMAIL')
 
 HYDROSHARE_SHARED_TEMP = os.environ.get('HYDROSHARE_SHARED_TEMP', '/shared_tmp')
 
-TIME_ZONE = "Etc/UTC"
+TIME_ZONE = "America/New_York"
 
 RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY=os.environ.get('RECAPTCHA_SITE_KEY')
