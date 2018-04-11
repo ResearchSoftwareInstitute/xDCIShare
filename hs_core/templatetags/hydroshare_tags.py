@@ -153,3 +153,11 @@ def res_uuid_from_res_path(path):
 @register.filter
 def remove_last_char(statement):
     return statement[:len(statement)-1]
+
+
+@register.simple_tag
+def pluralize_title(title, queryset):
+    if queryset.count() > 1:
+        return '%ss'%title
+    else:
+        return title
