@@ -1,0 +1,99 @@
+---
+- hosts: hsctl_hosts
+  become: yes
+  vars:
+    deploy_user: myhpom-service
+  tasks:
+    - name: Ensure java exists for jenkins
+      yum: 
+        name: java-1.8.0-openjdk
+        state: present
+    - name: Setup docker and docker-compose
+      block:
+      - name: ensure packages needed by docker are installed
+        yum: 
+          name: "{{ item }}"
+          state: present
+        with_items: ["yum-utils", "device-mapper-persistent-data", "lvm2"]
+      - name: add docker yum repository
+        yum_repository:
+          name: docker-ce-stable
+          description: Docker CE Stable - $basearch
+          baseurl: https://download.docker.com/linux/centos/7/$basearch/stable
+          gpgcheck: yes
+          gpgkey: https://download.docker.com/linux/centos/gpg
+      - name: Ensure deployment packages exist
+        yum: 
+          name: docker-ce
+          state: present
+      - name: ensure that there is a docker group
+        group: name=docker
+        notify: [ "restart docker" ]
+      - name: docker-compose exists?
+        stat:
+          path: /usr/local/bin/docker-compose
+        register: docker_compose_exists
+      - name: Install docker-compose
+        get_url:
+          url: https://github.com/docker/compose/releases/download/1.20.1/docker-compose-Linux-x86_64
+          dest: /usr/local/bin/docker-compose
+          mode: 0755
+        when: docker_compose_exists.stat.exists == False
+    - name: "Setup {{ deploy_user }} access"
+      block:
+      - name: Create .ssh directory
+        file:
+          path: "/home/{{ deploy_user }}/.ssh"
+          state: directory
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0700
+      - name: Setup authorized keys
+        copy:
+          src: files/jenkins_deploy_key.pub
+          dest: "/home/{{ deploy_user }}/.ssh/authorized_keys"
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0600
+      - name: user in docker group?
+        shell: "groups {{ deploy_user }}"
+        # This never 'changes' per se
+        changed_when: False
+        register: user_groups
+      - name: ensure user is in the group
+        command: "usermod -aG docker {{ deploy_user }}"
+        notify: [ "restart docker" ]
+        when: '"docker" not in user_groups.stdout'
+    - name: "Setup {{ deploy_user }} MyHPOM certs"
+      block:
+      - name: Create ssl directory
+        file:
+          path: "/home/{{ deploy_user }}/ssl"
+          state: directory
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0700
+      - name: Setup ssl keys
+        copy:
+          src: files/ssl
+          dest: "/home/{{ deploy_user }}"
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0600
+      - name: Create cert-files directory
+        file:
+          path: "/home/{{ deploy_user }}/cert-files"
+          state: directory
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0700
+      - name: Setup cert-files keys
+        copy:
+          src: files/cert-files
+          dest: "/home/{{ deploy_user }}"
+          owner: "{{ deploy_user }}"
+          group: service accounts
+          mode: 0600
+  handlers:
+    - name: restart docker
+      service: name=docker enabled=yes state=restarted

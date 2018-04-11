@@ -72,10 +72,11 @@
                 {% include "resource-landing-page/citation.html" with resource_mode="view" %}
             {% endif %}
 
+
             {# ======= Coverage ======= #}
-            {% if spatial_coverage.north or spatial_coverage.northlimit or temporal_coverage or metadata_form %}
+            <!-- {% if spatial_coverage.north or spatial_coverage.northlimit or temporal_coverage or metadata_form %}
                 {% include "resource-landing-page/coverage.html" %}
-            {% endif %}
+            {% endif %} -->
 
             {% block content_block %}
             {# ======= Content (code moved here because django does not render blocks inside included templates) ======= #}
@@ -603,7 +604,7 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            {% if extended_metadata_exists or metadata_form %}
+                            <!-- {% if extended_metadata_exists or metadata_form %}
                                 {#  Resource specific metadata can't be edited for HIS Referenced Time Series #}
                                 {% if cm|resource_type != "HIS Referenced Time Series" or not metadata_form %}
                                     {% if  cm|resource_type != "Generic" and cm.resource_type != "CompositeResource"%}
@@ -621,7 +622,7 @@
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% endif %}
+                            {% endif %} -->
                             {% if relevant_tools %}
                                 <li class="col-xs-2 col-md-2">
                                     <a href="#relevantTools" data-toggle="tab" title="Relevant tools">
@@ -1053,7 +1054,7 @@
                                 </div>
                             {% endif %}
                             <!-- ========= RESOURCE SPECIFIC TAB ========= -->
-                            {% if site or extended_metadata_exists or res_add_metadata or metadata_form %}
+                           <!--  {% if site or extended_metadata_exists or res_add_metadata or metadata_form %}
                                 {#  Resource specific metadata can't be edited for HIS Referenced Time Series #}
                                 {% if cm|resource_type != "HIS Referenced Time Series" or not metadata_form %}
                                     {% if  cm|resource_type != "Generic" and cm.resource_type != "CompositeResource" %}
@@ -1075,7 +1076,7 @@
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% endif %}
+                            {% endif %} -->
 
                             <!-- ========= RELEVANT TOOLS TAB ========= -->
                             {% if relevant_tools %}
@@ -1180,13 +1181,13 @@
             </div>
 
             {# ======= Credits ======= #}
-            {% include "resource-landing-page/credits.html" %}
+            <!-- {% include "resource-landing-page/credits.html" %} -->
 
             {# ======= Change quota holder ======= #}
-            {% include "resource-landing-page/quota.html" %}
+            <!-- {% include "resource-landing-page/quota.html" %} -->
 
             {# ======= Ratings ======= #}
-            {% include "resource-landing-page/ratings.html" %}
+            <!-- {% include "resource-landing-page/ratings.html" %} -->
 
             {# ======= Comments ======= #}
             {% include "resource-landing-page/comments.html" %}

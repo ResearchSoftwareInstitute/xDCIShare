@@ -34,3 +34,5 @@ celerybeat.pid
 .config
 *~
 #*#
+deploy/.vault-key
+deploy/*.retry
