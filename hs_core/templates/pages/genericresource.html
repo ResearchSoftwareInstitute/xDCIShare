@@ -604,10 +604,10 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            <!-- {% if extended_metadata_exists or metadata_form %}
+                            {% if extended_metadata_exists or metadata_form %}
                                 {#  Resource specific metadata can't be edited for HIS Referenced Time Series #}
                                 {% if cm|resource_type != "HIS Referenced Time Series" or not metadata_form %}
-                                    {% if  cm|resource_type != "Generic" and cm.resource_type != "CompositeResource"%}
+                                    {% if  cm|resource_type != "Document" and cm.resource_type != "CompositeResource"%}
                                         {% if  cm|resource_type|lower != "collection resource" %}
                                             {% if is_resource_specific_tab_active %}
                                                 <li class="active col-xs-2 col-md-2">
@@ -622,7 +622,7 @@
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% endif %} -->
+                            {% endif %}
                             {% if relevant_tools %}
                                 <li class="col-xs-2 col-md-2">
                                     <a href="#relevantTools" data-toggle="tab" title="Relevant tools">
@@ -1054,7 +1054,7 @@
                                 </div>
                             {% endif %}
                             <!-- ========= RESOURCE SPECIFIC TAB ========= -->
-                           <!--  {% if site or extended_metadata_exists or res_add_metadata or metadata_form %}
+                            {% if site or extended_metadata_exists or res_add_metadata or metadata_form %}
                                 {#  Resource specific metadata can't be edited for HIS Referenced Time Series #}
                                 {% if cm|resource_type != "HIS Referenced Time Series" or not metadata_form %}
                                     {% if  cm|resource_type != "Generic" and cm.resource_type != "CompositeResource" %}
@@ -1076,7 +1076,7 @@
                                         {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% endif %} -->
+                            {% endif %}
 
                             <!-- ========= RELEVANT TOOLS TAB ========= -->
                             {% if relevant_tools %}
