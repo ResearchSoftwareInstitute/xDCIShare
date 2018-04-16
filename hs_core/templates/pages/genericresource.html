@@ -65,17 +65,11 @@
             {# ======= Subject ======= #}
             {% include "resource-landing-page/subject.html" %}
 
-            {# ======= Citation ======= #}
-            {% if metadata_form %}
-                {% include "resource-landing-page/citation.html" with resource_mode="edit" %}
-            {% else %}
-                {% include "resource-landing-page/citation.html" with resource_mode="view" %}
-            {% endif %}
 
             {# ======= Coverage ======= #}
-            {% if spatial_coverage.north or spatial_coverage.northlimit or temporal_coverage or metadata_form %}
+            <!-- {% if spatial_coverage.north or spatial_coverage.northlimit or temporal_coverage or metadata_form %}
                 {% include "resource-landing-page/coverage.html" %}
-            {% endif %}
+            {% endif %} -->
 
             {% block content_block %}
             {# ======= Content (code moved here because django does not render blocks inside included templates) ======= #}
@@ -579,8 +573,15 @@
             {% endif %}
             {% endblock %} {# content_block #}
 
+            {# ======= Citation ======= #}
+            {% if metadata_form %}
+                {% include "resource-landing-page/citation.html" with resource_mode="edit" %}
+            {% else %}
+                {% include "resource-landing-page/citation.html" with resource_mode="view" %}
+            {% endif %}
+
             {# ======= Content tabs (code moved here because django does not render blocks inside included templates) ======= #}
-            <div class="col-sm-12">
+            <div class="col-sm-12" id="content_tabs">
                 <!-- === Tabs begin === -->
                 <div class="tab-elements">
                     <div class="panel-tabs">
@@ -606,7 +607,7 @@
                             {% if extended_metadata_exists or metadata_form %}
                                 {#  Resource specific metadata can't be edited for HIS Referenced Time Series #}
                                 {% if cm|resource_type != "HIS Referenced Time Series" or not metadata_form %}
-                                    {% if  cm|resource_type != "Generic" and cm.resource_type != "CompositeResource"%}
+                                    {% if  cm|resource_type != "Document" and cm.resource_type != "CompositeResource"%}
                                         {% if  cm|resource_type|lower != "collection resource" %}
                                             {% if is_resource_specific_tab_active %}
                                                 <li class="active col-xs-2 col-md-2">
@@ -1180,20 +1181,20 @@
             </div>
 
             {# ======= Credits ======= #}
-            {% include "resource-landing-page/credits.html" %}
+            <!-- {% include "resource-landing-page/credits.html" %} -->
 
             {# ======= Change quota holder ======= #}
-            {% include "resource-landing-page/quota.html" %}
+            <!-- {% include "resource-landing-page/quota.html" %} -->
 
             {# ======= Ratings ======= #}
-            {% include "resource-landing-page/ratings.html" %}
+            <!-- {% include "resource-landing-page/ratings.html" %} -->
 
             {# ======= Comments ======= #}
             {% include "resource-landing-page/comments.html" %}
 
             {%  block modal %}
                 {% include "resource-landing-page/modals.html" %}
-                {% include "resource-landing-page/coordinates_picker.html" %}
+                <!-- {% include "resource-landing-page/coordinates_picker.html" %} -->
             {%  endblock %}
             </div>
 

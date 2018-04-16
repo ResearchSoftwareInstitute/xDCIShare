@@ -139,6 +139,12 @@ function updateKeywords() {
         }
     }
 
+    if (count > 0) {
+        $("#lst-tags").addClass('custom-well');
+    } else {
+        $("#lst-tags").removeClass('custom-well');
+    }
+
     $("#id-subject").find("#id_value").val(keywords);
 }
 

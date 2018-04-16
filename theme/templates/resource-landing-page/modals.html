@@ -789,7 +789,7 @@
                 <h4 class="modal-title" id="add-creator"> Add Author </h4>
             </div>
 
-            <div class="modal-body">
+            <!-- <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-5 text-center">
                         <div class="radio-inline center-radio-inline text-center">
@@ -819,12 +819,12 @@
                         <hr>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             {# Person #}
             <div data-hs-user-type="person">
                 <div class="modal-body">
-                    <div class="row">
+                   <!--  <div class="row">
                         <div class="col-sm-5 text-center">
                             <div class="radio-inline center-radio-inline text-center">
                                 <label>
@@ -852,10 +852,10 @@
                         <div class="col-sm-12">
                             <hr>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 {#  Existing MyHPOM User  #}
-                <div data-hs-person-type="hs_user">
+                <!-- <div data-hs-person-type="hs_user">
                     <div class="modal-body">
                         {{ add_view_user_form.user }}
                     </div>
@@ -933,10 +933,10 @@
                             <button id="btn-add-author" type="button" class="btn btn-primary">Save Changes</button>
                         </div>
                     </form>
-                </div>
+                </div> -->
                 {# Other Person #}
-                <div data-hs-person-type="other_person", style="display:none;">
-                    <form action="/hsapi/_internal/{{ cm.short_id }}/creator/add-metadata/" method="POST"
+                <div data-hs-person-type="other_person">
+                    <form action="/hsapi/_internal/{{ cm.short_id }}/creator/add-metadata/#content_tabs" method="POST"
                           enctype="multipart/form-data">
                         {% csrf_token %}
                         <input name="resource-mode" type="hidden" value="edit">
@@ -1004,9 +1004,9 @@
             </div>
 
             {#  Organization  #}
-            <div data-hs-user-type="organization" style="display:none">
+            <!-- <div data-hs-user-type="organization" style="display:none">
                 {# This code block should be uncommented after the auto complete for Existing HS Groups is working #}
-                <!--<div class="modal-body">
+                <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-5 text-center">
                             <div class="radio-inline center-radio-inline text-center">
@@ -1111,7 +1111,7 @@
                                     onclick="get_user_info_ajax_submit('/hsapi/_internal/get-user-or-group-data/', this)">Save Changes</button>
                         </div>
                     </form>
-                </div> -->
+                </div>
                 {#  Other Organization  #}
                 <div data-hs-org-type="other_organization">
                     <form action="/hsapi/_internal/{{ cm.short_id }}/creator/add-metadata/" method="POST"
@@ -1179,7 +1179,7 @@
                         </div>
                     </form>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -1194,7 +1194,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-sm-5 text-center">
                         <div class="radio-inline center-radio-inline text-center">
                             <label>
@@ -1222,12 +1222,12 @@
                     <div class="col-sm-12">
                         <hr>
                     </div>
-                </div>
+                </div> -->
 
             </div>
 
             {#  Existing MyHPOM User  #}
-            <div data-hs-user-type="hs_user">
+            <!-- <div data-hs-user-type="hs_user" style="display:none">
                 <div class="modal-body">
                     {{ add_view_user_form.user }}
                 </div>
@@ -1236,7 +1236,7 @@
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <input name="resource-mode" type="hidden" value="edit">
-                    <div class="modal-body" style="display:none;">
+                    <div class="modal-body"s>
                         <div class="form-group">
                             <fieldset>
                                 <div id="div_id_name" class="control-group">
@@ -1305,11 +1305,11 @@
                         <button id="btn-add-hydroshare-user" type="button" class="btn btn-primary">Save Changes</button>
                     </div>
                 </form>
-            </div>
+            </div> -->
 
             {#  Other  #}
-            <div data-hs-user-type="other" style="display:none">
-                <form action="/hsapi/_internal/{{ cm.short_id }}/contributor/add-metadata/" method="POST"
+            <div data-hs-user-type="other" >
+                <form action="/hsapi/_internal/{{ cm.short_id }}/contributor/add-metadata/#content_tabs" method="POST"
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <input name="resource-mode" type="hidden" value="edit">
@@ -1427,14 +1427,16 @@
 
                 <div class="modal-body">
                     <div class="alert alert-info" role="alert">
-                        <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="collapse" data-target="#usage-info">&nbsp;</span>Use this window to share your resource with specific MyHPOM users. You can give other
+                        <p><span class="glyphicon glyphicon-info-sign" aria-hidden="true" data-toggle="collapse" data-target="#usage-info">&nbsp;</span><!-- Use this window to share your resource with specific MyHPOM users. You can give other
                             users the ability to view or edit this resource. You can also add additional owners who
                             will
+                            have full permissions. --> This window is to be used for sharing your resources with people. You will be able to give other
+                            users the ability to view or edit this resource. You will also be able to add additional owners who will
                             have full permissions.</p>
 
-                        <p><a href="#" data-toggle="collapse" data-target="#usage-info">Show more/less</a></p>
+                        <!-- <p><a href="#" data-toggle="collapse" data-target="#usage-info">Show more/less</a></p> -->
 
-                        <div id="usage-info" class="collapse">
+                        <!-- <div id="usage-info" class="collapse">
                             <ul>
                                 <li>
                                     <p><strong>Owners</strong> can perform all operations on a resource and set whether
@@ -1462,7 +1464,7 @@
                                     Shareable viewers can use manage access to extend viewing access to other users.</p>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
 
                     <p>Who has access</p>
@@ -1959,7 +1961,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="modal-body">
+                <!-- <div class="modal-body">
                     <div id="div-invite-people">
                         <span>Invite:</span>
 
@@ -2016,7 +2018,7 @@
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="modal-footer">
                     <a type="button" data-dismiss="modal" class="btn btn-primary">Close</a>
