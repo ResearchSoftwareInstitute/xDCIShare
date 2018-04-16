@@ -1,10 +1,10 @@
 {% load hydroshare_tags %}
 
 <div class="col-sm-12 content-block">
-    <h3>How to cite</h3>
+    <!-- <h3>How to cite</h3> -->
 
     <div class="row">
-        <div class="col-xs-12">
+       <!--  <div class="col-xs-12">
             <div class="flex">
                 <div id="citation-text">{{ citation|urlize }}</div>
 
@@ -128,7 +128,7 @@
                                       {% if cm.raccess.require_download_agreement %}checked{% endif %}>
                       </span>
                       <span class="form-control">Require agreement to rights statement before downloading</span>
-                    </div><!-- /input-group -->
+                    </div>
                 </form>
             {% else %}
                 {% if cm.raccess.require_download_agreement %}
@@ -141,12 +141,12 @@
                     </li>
                 {% endif %}
             {% endif %}
-        </div>
+        </div> -->
         <div id="sharing-status" class="col-xs-12 pull-left">
             <br>
-            <h4>Sharing status:</h4>
+            <h3>Sharing</h3>
             {% if can_change_resource_flags %}
-                <div class="btn-group" role="group">
+                <!-- <div class="btn-group" role="group">
                     {# -------- PUBLIC -------- #}
                     <form class="pull-left"
                               action="/hsapi/_internal/{{ cm.short_id }}/set-resource-flag/"
@@ -201,7 +201,7 @@
                                     >Private
                             </button>
                     </form>
-                </div>
+                </div> -->
 
                 {% if is_owner_user and cm.resource_type == "NetcdfResource" and not cm.raccess.public %}
                     <div class="label-public">Note that making the resource public may take a little extra time to update
@@ -232,7 +232,7 @@
                 {% endif %}
             {% else %}
                 <ul class="list-group">
-                {% if cm.raccess.published %}
+                <!-- {% if cm.raccess.published %}
                     <li class="list-group-item">
                     <div>
                         <img src="{{ STATIC_URL }}img/published.png" alt="Published Resource"/>
@@ -260,7 +260,7 @@
                         <span>&nbsp;Private</span>
                     </div>
                     </li>
-                {% endif %}
+                {% endif %} -->
                 {% if cm.raccess.published %}
                     {% if "pending" in cm.doi or "failure" in cm.doi %}
                         <li class="list-group-item">
