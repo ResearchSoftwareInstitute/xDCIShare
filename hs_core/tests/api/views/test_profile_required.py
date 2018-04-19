@@ -6,11 +6,10 @@ from django.core.urlresolvers import reverse
 
 from rest_framework import status
 
-from mezzanine.pages.models import Page
 from mezzanine.pages.models import RichTextPage
 
 from hs_core import hydroshare
-from hs_core.views import create_resource_select_resource_type, my_resources
+from hs_core.views import create_resource_select_resource_type
 from hs_core.testing import MockIRODSTestCaseMixin, ViewTestCase
 
 
@@ -64,10 +63,9 @@ class TestProfileRequiredViewFunctions(MockIRODSTestCaseMixin, ViewTestCase):
         # on a view when a user has not filled out their profile
 
         # removing fields from profile
-        self.user.userprofile.last_four_ss=None
-        self.user.userprofile.phone_1=None
+        self.user.userprofile.last_four_ss = None
+        self.user.userprofile.phone_1 = None
         self.user.userprofile.save()
-
 
         url = reverse('create_resource_select_resource_type')
         request = self.factory.get(url)
@@ -82,12 +80,14 @@ class TestProfileRequiredViewFunctions(MockIRODSTestCaseMixin, ViewTestCase):
         redirect_url = response._headers['location'][1]
         self.assertEqual(redirect_url, "/my-documents/#_")
 
+        self.assertRedirects(response, "/my-documents/#_")
+
         my_documents_page, _ = RichTextPage.objects.get_or_create(title='My Documents', slug='my-documents')
-        response2 = self.client.get(redirect_url, follow=True)
+        response = self.client.get(redirect_url, follow=True)
 
         # seeing if the redirect was successful and that the page
-        self.assertEqual(response2.status_code, status.HTTP_200_OK)
-        self.assertEqual(response2.context[-1]['_current_page'].id, my_documents_page.id)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.context[-1]['_current_page'].id, my_documents_page.id)
 
     def test_view_create_resource_profile_not_complete_with_referer(self):
         # here we are testing the profile_required decorator
@@ -95,8 +95,8 @@ class TestProfileRequiredViewFunctions(MockIRODSTestCaseMixin, ViewTestCase):
         # and where the user is coming from a specific page
 
         # removing fields from profile
-        self.user.userprofile.last_four_ss=None
-        self.user.userprofile.phone_1=None
+        self.user.userprofile.last_four_ss = None
+        self.user.userprofile.phone_1 = None
         self.user.userprofile.save()
 
         url = reverse('create_resource_select_resource_type')

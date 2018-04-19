@@ -13,13 +13,15 @@ def profile_required(view_func):
     @wraps(view_func, assigned=available_attrs(view_func))
     def _wrapped_view(request, *args, **kwargs):
         profile = request.user.userprofile
-        profile_valid = (profile.middle_name and
-                            profile.state and
-                            profile.zipcode and
-                            profile.country and
-                            profile.date_of_birth and
-                            profile.last_four_ss and
-                            profile.phone_1)
+        profile_valid = (
+            profile.middle_name and
+            profile.state and
+            profile.zipcode and
+            profile.country and
+            profile.date_of_birth and
+            profile.last_four_ss and
+            profile.phone_1
+        )
         if profile_valid:
             return view_func(request, *args, **kwargs)
         else:
