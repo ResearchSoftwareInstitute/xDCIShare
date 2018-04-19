@@ -36,3 +36,6 @@ celerybeat.pid
 #*#
 deploy/.vault-key
 deploy/*.retry
+.c9
+/nginx/cert*
+pg.deploy.sql

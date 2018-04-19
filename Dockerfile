@@ -10,7 +10,9 @@ RUN pip install \
   django-rest-swagger \
   jsonschema \
   nameparser \
-  python-dotenv
+  python-dotenv \
+  probablepeople \
+  geopy
 ### End - HydroShare Development Image Additions ###
 
 # Patch for Mezzanone 4.10 collecttemplates bugfix

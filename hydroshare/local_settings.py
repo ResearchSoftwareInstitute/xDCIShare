@@ -1,7 +1,7 @@
 # DEVELOPMENT - local_settings.py
 #    - This file should be copied to ~/hydroshare/hydroshare/local_settings.py
 #    - The iRODS specific contents of this file contain username and password informaiton
-#      that is used for an MyHPOM proxy user
+#      that is used for a HydroShare proxy user
 
 import redis
 import os
@@ -22,6 +22,11 @@ NEVERCACHE_KEY = os.environ.get('NEVERCACHE_KEY', '7b205669-41dd-40db-9b96-c6f93
 # TODO we should not allow any host by default, as it represents a security
 # risk. See the Django docs: http://devdocs.io/django~1.8/ref/settings#std:setting-ALLOWED_HOSTS
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*')
+
+# for Django/Mezzanine comments and ratings to require user login
+COMMENTS_ACCOUNT_REQUIRED = True
+RATINGS_ACCOUNT_REQUIRED = True
+COMMENTS_USE_RATINGS = True
 
 RABBITMQ_HOST = os.environ.get('RABBITMQ_PORT_5672_TCP_ADDR', 'localhost')
 RABBITMQ_PORT = '5672'
@@ -187,3 +192,7 @@ TIME_ZONE = "America/New_York"
 RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY=os.environ.get('RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY=os.environ.get('RECAPTCHA_SECRET_KEY')
+
+#used by the mailchimp subscription job in hs_core/tasks.py
+MAILCHIMP_ACTIVE_SUBSCRIBERS = "e210a70864"
+MAILCHIMP_SUBSCRIBERS = "f0c27254e3"
