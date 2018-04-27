@@ -14,7 +14,7 @@ class TestFolderDownloadZip(TestCase):
     def setUp(self):
         super(TestFolderDownloadZip, self).setUp()
         self.output_path = "zips/rand/foo.zip"
-        self.group, _ = Group.objects.get_or_create(name='Hydroshare Author')
+        self.group, _ = Group.objects.get_or_create(name='Resource Author')
         self.user = create_account(
             'shauntheta@gmail.com',
             username='shaun',

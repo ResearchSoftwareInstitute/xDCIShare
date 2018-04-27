@@ -46,7 +46,7 @@ class TestDelimiterMigration(TestMigrations):
     migrate_to = '0014_comma_semicolon_delimiter'
 
     def setUpBeforeMigration(self, apps):
-        self.group, _ = Group.objects.get_or_create(name='Hydroshare Author')
+        self.group, _ = Group.objects.get_or_create(name='Resource Author')
         user = hydroshare.create_account(
             'user1@nowhere.com',
             username='user1',

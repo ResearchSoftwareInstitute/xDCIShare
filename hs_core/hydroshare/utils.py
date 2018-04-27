@@ -699,7 +699,8 @@ def validate_user_quota(user, size):
                 if used_percent >= hard_limit or uq.remaining_grace_period == 0:
                     msg_template_str = '{}{}\n\n'.format(qmsg.enforce_content_prepend,
                                                          qmsg.content)
-                    msg_str = msg_template_str.format(used=rounded_used_val,
+                    msg_str = msg_template_str.format(email=user.email,
+                                                      used=rounded_used_val,
                                                       unit=uq.unit,
                                                       allocated=uq.allocated_value,
                                                       zone=uq.zone,
