@@ -148,8 +148,8 @@
                         </tr>
                     </table>
                 </form>
-                </td><td> 
-                <form id="search-order-fields" method="get" action="."> 
+                </td><td>
+                <form id="search-order-fields" method="get" action=".">
                     <h4 class="text-muted">Sort Order</h4>
 
                     <table>
@@ -172,8 +172,8 @@
                             {% endfor %}
                         </tr>
                     </table>
-                </form> 
-                </td></tr></table> 
+                </form>
+                </td></tr></table>
                 <br>
                 <div id="resource-search" class="hidden">
                     <div id="coverages-master-list"></div>
@@ -241,7 +241,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                
+
                     {% if not page_obj.object_list %}
                     <h4 class="text-muted">Sorry, no results match those criteria. Please try broadening your search.</h4>
                     {% endif %}
@@ -257,10 +257,10 @@
                             {% endif %}Next &raquo;{% if page_obj.has_next %}</a>{% endif %}
                     {% endif %}
                     {% if page_obj.has_other_pages %}
-                        {{ page_obj }} ( results {{ page_obj.start_index }} to {{ page_obj.end_index }} )  
+                        {{ page_obj }} ( results {{ page_obj.start_index }} to {{ page_obj.end_index }} )
                     {% endif %}
                     </div>
-                    
+
                     <br>
                     <div class="alert alert-info">
                         <strong>
