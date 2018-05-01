@@ -38,6 +38,8 @@ from theme.utils import get_quota_message
 
 from .forms import SignupForm
 
+from theme.forms import UserProfileForm
+
 
 class UserProfileView(TemplateView):
     template_name='accounts/profile.html'
@@ -75,7 +77,12 @@ class UserProfileView(TemplateView):
                 # for anonymous requesting user show only resources that are either public or discoverable
                 resources = resources.filter(Q(raccess__public=True) | Q(raccess__discoverable=True))
 
+
+        # pass in UserProfileForm.base_fields to the view to use labels
+        profile_form_fields = UserProfileForm.base_fields
+
         return {
+            'profile_form_fields': profile_form_fields,
             'profile_user': u,
             'resources': resources,
             'quota_message': get_quota_message(u),
@@ -145,7 +152,7 @@ def signup(request, template="accounts/account_signup.html", extra_context=None)
                     info(request, _("A verification email has been sent to " + new_user.email +
                                     " with a link that must be clicked prior to your account "
                                     "being activated. If you do not receive this email please "
-                                    "check that you entered your address correctly, or your " 
+                                    "check that you entered your address correctly, or your "
                                     "spam folder as sometimes the email gets flagged as spam. "
                                     "If you entered an incorrect email address, please request "
                                     "an account again."))
@@ -397,6 +404,8 @@ def login(request, template="accounts/account_login.html",
         info(request, _(login_msg))
         auth_login(request, authenticated_user)
         return login_redirect(request)
+
+    request.GET.next = "/#_"
     context = {"form": form, "title": _("Log in")}
     context.update(extra_context or {})
     return TemplateResponse(request, template, context)

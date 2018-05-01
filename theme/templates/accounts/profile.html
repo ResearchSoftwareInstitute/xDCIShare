@@ -339,45 +339,45 @@
 
                                             {#        Address 1       #}
                                             <fieldset>
-                                                <label>Address 1</label>
+                                                <label>{{ profile_form_fields.address_1.label }}</label>
                                                 <input name="address_1" class="form-control" data-address_1="{{ profile.address_1 }}" {%if profile.address_1 %}value="{{ profile.address_1 }}"{% endif %}></input>
                                             </fieldset>
 
                                             {#        Address 2       #}
                                             <fieldset>
-                                                <label>Address 2</label>
+                                                <label>{{ profile_form_fields.address_2.label }}</label>
                                                 <input name="address_2" class="form-control" data-address_2="{{ profile.address_2 }}" {%if profile.address_2 %}value="{{ profile.address_2 }}"{% endif %}></input>
                                             </fieldset>
 
                                             {#        City       #}
                                             <fieldset>
-                                                <label>City</label>
+                                                <label>{{ profile_form_fields.city.label }}</label>
                                                 <input name="city" class="form-control" data-city="{{ profile.city }}" {%if profile.city %}value="{{ profile.city }}"{% endif %}></input>
                                             </fieldset>
 
 
                                             {#        State       #}
                                             <fieldset>
-                                                <label>State/Province *</label>
+                                                <label>{{ profile_form_fields.state.label }} *</label>
                                                 <input name="state" class="form-control form-required" {% if profile.state %}value="{{ profile.state }}"{% else %}value="Unspecified"{% endif %}>
                                             </fieldset>
 
                                             {#        Zip Code       #}
                                             <fieldset>
-                                                <label> Zip Code * <a class="info-link"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" aria-haspopup="true" data-original-title="We ask for your zip code as an additional piece of information to help verify your identity."></span></a></label>
+                                                <label>{{ profile_form_fields.zipcode.label }} * <a class="info-link"><span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" aria-haspopup="true" data-original-title="We ask for your zip code as an additional piece of information to help verify your identity."></span></a></label>
                                                 <input name="zipcode" maxlength="5" class="form-control form-required" data-city="{{ profile.zipcode }}"
                                                     {% if profile.zipcode %}value="{{ profile.zipcode }}"{% endif %}></input>
                                             </fieldset>
 
                                             {#        Country       #}
                                             <fieldset>
-                                                <label>Country *</label>
+                                                <label>{{ profile_form_fields.country.label }} *</label>
                                                 <select name="country" class="form-control form-required input-medium bfh-countries" data-country="{{ profile.country }}"></select>
                                             </fieldset>
 
                                             {#        Gender       #}
                                             <fieldset>
-                                                <label>Gender</label>
+                                                <label>{{ profile_form_fields.gender.label }}</label>
                                                 <select name="gender" class="form-control form-required input-medium" data-gender="{{ profile.gender }}">
                                                     {% for choice in profile.GENDER_CHOICES %}
                                                         <option value="{{ choice.0 }}" {% if profile.gender == choice.0 %}selected{% endif %}>{{ choice.1 }}</option>
@@ -387,13 +387,13 @@
 
                                             {#        Date of Birth       #}
                                             <fieldset>
-                                                <label>Date of Birth  *</label>
+                                                <label>{{ profile_form_fields.date_of_birth.label }}  *</label>
                                                 <input name="date_of_birth" id="id_date_of_birth" class="form-control form-required input-medium" data-date_of_birth="{{ profile.date_of_birth }}" {% if profile.date_of_birth %}value="{{ profile.date_of_birth }}"{% endif %}></input>
                                             </fieldset>
 
                                             {# Last 4 digits of social security number #}
                                             <fieldset>
-                                                <label>Last four digits of social security number *</label>
+                                                <label>{{ profile_form_fields.last_four_ss.label }} *</label>
                                                 <input name="last_four_ss" id="id_last_four_ss" maxlength="4" class="form-control form-required input-medium" data-last_four_ss="{{ profile.last_four_ss }}" {% if profile.last_four_ss %}value="{{ profile.last_four_ss }}"{% endif %}></input>
                                             </fieldset>
 
@@ -468,7 +468,7 @@
                                             {% if profile_user.id == user.id %}
                                             <div class="row" data-page-mode="edit">
                                                 <fieldset>
-                                                    <div class="col-sm-12"><label>Phone 1 *</label></div>
+                                                    <div class="col-sm-12"><label>{{ profile_form_fields.phone_1.label }} *</label></div>
 
                                                     <div class="col-sm-6">
                                                         <select name="phone_1_type" class="form-control">
@@ -489,7 +489,7 @@
                                                 </fieldset>
 
                                                 <fieldset>
-                                                    <div class="col-sm-12"><label>Phone 2</label></div>
+                                                    <div class="col-sm-12"><label>{{ profile_form_fields.phone_1.label }}</label></div>
 
                                                     <div class="col-sm-6">
                                                         <select name="phone_2_type" class="form-control">
@@ -515,31 +515,31 @@
                                                 </fieldset>
 
                                                 <fieldset class="col-sm-12">
-                                                    <label>Emergency contact full name</label>
+                                                    <label>{{ profile_form_fields.emergency_name.label }}</label>
                                                     <input class="form-control" id="id_emergency_name"
                                                           {% if profile.emergency_name %}value="{{ profile.emergency_name }}"{% endif %} name="emergency_name">
                                                 </fieldset>
 
                                                 <fieldset class="col-sm-12">
-                                                    <label>Emergency contact relationship </label>
+                                                    <label>{{ profile_form_fields.emergency_relationship.label }}</label>
                                                     <input class="form-control" id="id_emergency_relationship"
                                                            {% if profile.emergency_relationship %}value="{{ profile.emergency_relationship }}"{% endif %} name="emergency_relationship">
                                                 </fieldset>
 
                                                 <fieldset class="col-sm-12">
-                                                    <label>Emergency phone 1 </label>
+                                                    <label>{{ profile_form_fields.emergency_phone_1.label }}</label>
                                                     <input class="form-control" id="id_emergency_phone_1"
                                                            {% if profile.emergency_phone_1 %}value="{{ profile.emergency_phone_1 }}"{% endif %} name="emergency_phone_1">
                                                 </fieldset>
 
                                                 <fieldset class="col-sm-12">
-                                                    <label>Emergency phone 2 </label>
+                                                    <label>{{ profile_form_fields.emergency_phone_2.label }}</label>
                                                     <input class="form-control" id="id_emergency_phone_2"
                                                            {% if profile.emergency_phone_2 %}value="{{ profile.emergency_phone_2 }}"{% endif %} name="emergency_phone_2">
                                                 </fieldset>
 
                                                 <fieldset class="col-sm-12">
-                                                    <label>Emergency email </label>
+                                                    <label>{{ profile_form_fields.emergency_email.label }}</label>
                                                     <input class="form-control" id="id_emergency_email"
                                                             {% if profile.emergency_email %}value="{{ profile.emergency_email }}"{% endif %} name="emergency_email">
                                                 </fieldset>

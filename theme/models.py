@@ -328,6 +328,7 @@ class UserProfile(models.Model):
                                                                'of your files under this account as well.'
                                                               ).format(s_name=settings.XDCI_SITE_NAME_MIXED))
 
+
 def force_unique_emails(sender, instance, **kwargs):
     if instance:
         email = instance.email

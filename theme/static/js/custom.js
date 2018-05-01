@@ -171,26 +171,42 @@ $(document).ready(function () {
         return false
     });
 
-    $.ajax({
-        url: "/hsapi/userInfo/",
-        // success: function(user) {
-        //     if(!user.organization) {
-        //         // Disable publishing resources
-        //         if ($("#publish").length) {
-        //             $("#publish").toggleClass("disabled", true);
-        //             $("#publish").removeAttr("data-toggle");   // Disable the agreement modal
-        //             $("#publish > [data-toggle='tooltip']").attr("data-original-title",
-        //                 "Your profile information must be complete before you can formally publish resources.");
-        //         }
-        //
-        //         var message = 'Your profile is nearly complete. Please fill in the '
-        //             + '<strong>Organization</strong> field'
-        //             + ' on the <a href="/user/' + user.id + '/">User Profile</a> page';
-        //         showUniversalMessage("warn", message, 10000)();
-        //     }
-        // },
-        error: showUniversalMessage()
-    })
+    if (window.location.hash == '#_') {
+        $.ajax({
+            url: "/hsapi/userInfo/",
+            success: function(user) {
+
+                var missing_fields = [];
+                for (key in user) {
+                    if (!user[key][1]) {
+                        missing_fields.push(user[key][0]);
+                    }
+                }
+
+                if (missing_fields.length != 0) {
+                    var missing_fields_string = missing_fields.join('</strong>, <strong> ');
+                    var message = 'In order to edit or create resources, you must complete your User Profile. '
+                        + 'The following required fields are missing: '
+                        + '<br><strong>'+ missing_fields_string + '</strong>'
+                        + '<br><br>Visit your <a href="/user/' + user['id'][1] + '/">User Profile</a> page.';
+                    showUniversalMessage("warn", message, 10000)();
+                }
+
+                // clearing out the hash from URL
+                history.pushState("", document.title, window.location.pathname);
+            },
+            error: function(e) {
+                var message = 'Cannot connect to your User Profile. '
+                    + 'Please note, in order to edit or create resources, '
+                    + 'you must complete your User Profile. ';
+
+                showUniversalMessage("warn", message, 10000)();
+
+                // clearing out the hash from URL
+                history.pushState("", document.title, window.location.pathname);
+            }
+        })
+    }
 });
 
 function showUniversalMessage(type, message, timeout) {
