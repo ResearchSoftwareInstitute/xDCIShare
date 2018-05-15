@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.html import strip_tags
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator
+from django.contrib.postgres.fields import HStoreField
 
 from mezzanine.core.fields import FileField, RichTextField
 from mezzanine.core.models import Orderable, SiteRelated
@@ -193,13 +194,16 @@ class QuotaMessage(models.Model):
     hard_limit_percent = models.IntegerField(default=125)
     # grace period, default is 7 days
     grace_period = models.IntegerField(default=7)
+    # whether to enforce quota or not. Default is False, which can be changed to true from
+    # admin panel when needed
+    enforce_quota = models.BooleanField(default=False)
 
 
 class UserQuota(models.Model):
     # ForeignKey relationship makes it possible to associate multiple UserQuota models to
     # a User with each UserQuota model defining quota for a set of iRODS zones. By default,
     # the UserQuota model instance defines quota in hydroshareZone and hydroshareuserZone,
-    # categorized as hydroshare_internal in zone field in UserQuota model, however,
+    # categorized as hydroshare in zone field in UserQuota model, however,
     # another UserQuota model instance could be defined in a third-party federated zone as needed.
     user = models.ForeignKey(User,
                              editable=False,
@@ -328,6 +332,13 @@ class UserProfile(models.Model):
                                                                'of your files under this account as well.'
                                                               ).format(s_name=settings.XDCI_SITE_NAME_MIXED))
 
+    # to store one or more external identifier (Google Scholar, ResearchGate, ORCID etc)
+    # each identifier is stored as a key/value pair {name:link}
+    identifiers = HStoreField(default={}, null=True, blank=True)
+
+    email_opt_out = models.BooleanField(default=False)
+
+
 def force_unique_emails(sender, instance, **kwargs):
     if instance:
         email = instance.email
@@ -335,10 +346,11 @@ def force_unique_emails(sender, instance, **kwargs):
 
         if not email:
             raise ValidationError("Email required.")
-        else:
-            if sender.objects.filter(username=username).exclude(pk=instance.id).exists():
-                raise ValidationError("Username already in use.")
+        # check for email use first, it's more helpful to know about than username duplication
         if sender.objects.filter(email=email).exclude(pk=instance.id).count():
+            # this string is being checked in base.html to provide reset password link
             raise ValidationError("Email already in use.")
+        if sender.objects.filter(username=username).exclude(pk=instance.id).exists():
+            raise ValidationError("Username already in use.")
 
 pre_save.connect(force_unique_emails, sender=User)
