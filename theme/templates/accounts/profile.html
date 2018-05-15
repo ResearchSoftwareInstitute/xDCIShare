@@ -242,7 +242,7 @@
                            data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i> OVERVIEW</a></li>
                     <li role="presentation">
                         <a href="#contributions" aria-controls="profile" role="tab" data-toggle="tab">
-                            <i class="glyphicon glyphicon-file"></i> CONTRIBUTIONS</a>
+                            <i class="glyphicon glyphicon-file"></i> DOCUMENTS</a>
                     </li>
                 </ul>
 
@@ -283,7 +283,7 @@
                                                 {% if res.metadata.description %}
                                                     <div class="activity-description col-sm-12">
                                                         <p class="description">
-                                                            <strong>ABSTRACT: </strong>{{ res.metadata.description|linebreaks }}
+                                                            <strong>NOTES: </strong>{{ res.metadata.description|linebreaks }}
                                                         </p>
                                                     </div>
                                                     <div class="show-more-btn btn-default" title="Show abstract">···</div>
@@ -767,7 +767,7 @@
                                             <div class="activity-info col-sm-12">
                                                 <span class="title"><a href="{{ res.get_absolute_url }}">{{ res.metadata.title }}</a></span>
                                                 <h5><span class="text-muted">Created: </span>{{ res.created }}</h5>
-                                                <h5><span class="text-muted">Authors: </span>
+                                                <h5><span class="text-muted">{% pluralize_title 'Author' res.metadata.creators %}: </span>
                                                     {% for creator in res.metadata.creators.all %}
                                                         {% if forloop.counter0 != 0 %}<span> · </span>{% endif %}
                                                         {% if creator.description %}
@@ -782,7 +782,7 @@
                                             {% if res.metadata.description %}
                                                 <div class="activity-description col-sm-12">
                                                     <p>
-                                                        <strong>ABSTRACT: </strong>{{ res.metadata.description|linebreaks }}
+                                                        <strong>NOTES: </strong>{{ res.metadata.description|linebreaks }}
                                                     </p>
                                                 </div>
                                                 <div class="show-more-btn btn-default" title="Show more">···</div>
