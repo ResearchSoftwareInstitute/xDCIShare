@@ -172,7 +172,7 @@ $(document).ready(function () {
     });
 
     $.ajax({
-        url: "/hsapi/userInfo/",
+        url: "/hydroshare/hsapi/userInfo/",
         // success: function(user) {
         //     if(!user.organization) {
         //         // Disable publishing resources
