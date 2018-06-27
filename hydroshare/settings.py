@@ -252,6 +252,7 @@ INPLACE_SAVE_URL = '/hsapi/save_inline/'
 ################
 
 INSTALLED_APPS = (
+    'django_extensions',
     'test_without_migrations',
     "autocomplete_light",
     "django.contrib.admin",
@@ -313,6 +314,7 @@ INSTALLED_APPS = (
     "hs_rest_api",
     "hs_dictionary",
     "security",
+    "myhpom"
 )
 
 COMMENTS_APP = 'django_comments'
