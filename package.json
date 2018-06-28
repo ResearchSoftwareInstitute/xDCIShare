@@ -1,0 +1,21 @@
+{
+  "name": "myhpom",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myhpom/MyHPOM.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/myhpom/MyHPOM/issues"
+  },
+  "homepage": "https://github.com/myhpom/MyHPOM#readme",
+  "dependencies": {
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
+  }
+}

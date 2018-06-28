@@ -1,0 +1,13 @@
+# These are only a subset of all requirements - the base requirements are also
+# defined in the ./hs_docker_base/Dockerfile file.
+
+djangorestframework==3.6.4
+robot_detection==0.4
+django-ipware==2.1.0
+django-test-without-migrations==0.6
+django-rest-swagger==2.2.0
+jsonschema==2.6.0
+nameparser==0.5.6
+python-dotenv==0.8.2
+libsass==0.14.5
+django-sass-processor==0.7

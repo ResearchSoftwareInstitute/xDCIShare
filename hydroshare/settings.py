@@ -232,6 +232,10 @@ STATIC_URL = "/static/"
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 
+STATICFILES_DIRS = (
+    ('myhpom', '/opt/node_modules'),
+)
+
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
@@ -252,7 +256,6 @@ INPLACE_SAVE_URL = '/hsapi/save_inline/'
 ################
 
 INSTALLED_APPS = (
-    'django_extensions',
     'test_without_migrations',
     "autocomplete_light",
     "django.contrib.admin",
@@ -314,8 +317,14 @@ INSTALLED_APPS = (
     "hs_rest_api",
     "hs_dictionary",
     "security",
+    "sass_processor",
     "myhpom"
 )
+
+SASS_PROCESSOR_AUTO_INCLUDE = True
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    '/opt/node_modules/bootstrap',
+]
 
 COMMENTS_APP = 'django_comments'
 COMMENTS_NUM_LATEST = 0

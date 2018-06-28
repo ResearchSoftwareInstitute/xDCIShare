@@ -2,15 +2,11 @@ FROM mjstealey/hs_docker_base:1.9.5
 MAINTAINER Michael J. Stealey <stealey@renci.org>
 
 ### Begin - HydroShare Development Image Additions ###
-RUN pip install --upgrade pip && pip install djangorestframework==3.6.4
-RUN pip install \
-  robot_detection \
-  django-ipware \
-  django-test-without-migrations \
-  django-rest-swagger \
-  jsonschema \
-  nameparser \
-  python-dotenv
+ADD requirements.txt /opt
+ADD package.json /opt
+RUN pip install --upgrade pip
+RUN pip install -r /opt/requirements.txt
+RUN cd /opt && npm install
 ### End - HydroShare Development Image Additions ###
 
 # Patch for Mezzanone 4.10 collecttemplates bugfix
