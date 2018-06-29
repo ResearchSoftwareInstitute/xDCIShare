@@ -23,7 +23,7 @@ class UrlBaseFormHelper(BaseFormHelper):
             Field('value', css_class=field_width)
         )
         kwargs['element_name_label'] = \
-            "App-launching URL Pattern <a href='/terms#AppURLPattern' target='_blank'>" \
+            "App-launching URL Pattern <a href='/hydroshare/terms#AppURLPattern' target='_blank'>" \
             "<font size='3'>Help</font></a>"
 
         super(UrlBaseFormHelper, self).\

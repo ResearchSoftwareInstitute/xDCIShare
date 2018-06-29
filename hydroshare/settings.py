@@ -249,7 +249,7 @@ MEDIA_ROOT = os.path.join(PROJECT_ROOT, *MEDIA_URL.strip("/").split("/"))
 ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
 
 ADAPTOR_INPLACEEDIT_EDIT = 'hs_core.models.HSAdaptorEditInline'
-INPLACE_SAVE_URL = '/hsapi/save_inline/'
+INPLACE_SAVE_URL = '/hydroshare/hsapi/save_inline/'
 
 ################
 # APPLICATIONS #

@@ -98,7 +98,7 @@ class TestShareGroup(ViewTestCase):
         url = reverse('share_group_with_user', kwargs=url_params)
         request = self.factory.post(url, data={})
         request.user = self.mike
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 
@@ -129,7 +129,7 @@ class TestShareGroup(ViewTestCase):
         url = reverse('unshare_group_with_user', kwargs=url_params)
         request = self.factory.post(url, data={})
         request.user = self.john
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 
@@ -160,7 +160,7 @@ class TestShareGroup(ViewTestCase):
         request = self.factory.post(url, data={})
         # let mike try to remove john
         request.user = self.mike
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 
@@ -197,7 +197,7 @@ class TestShareGroup(ViewTestCase):
         request = self.factory.post(url, data={})
         # lisa is not the owner of the group - invitation should fail
         request.user = self.lisa
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 
@@ -239,7 +239,7 @@ class TestShareGroup(ViewTestCase):
         url = reverse('make_group_membership_request', kwargs=url_params)
         request = self.factory.post(url, data={})
         request.user = self.mike
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = make_group_membership_request(request, group_id=self.test_group.id)
@@ -372,7 +372,7 @@ class TestShareGroup(ViewTestCase):
         url = reverse('share_group_with_user', kwargs=url_params)
         request = self.factory.post(url, data={})
         request.user = self.john
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 
@@ -402,7 +402,7 @@ class TestShareGroup(ViewTestCase):
         url = reverse('make_group_membership_request', kwargs=url_params)
         request = self.factory.post(url, data={})
         request.user = user
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 
@@ -426,7 +426,7 @@ class TestShareGroup(ViewTestCase):
         url = reverse('act_on_group_membership_request', kwargs=url_params)
         request = self.factory.post(url, data={})
         request.user = acting_user
-        request.META['HTTP_REFERER'] = '/group/{}'.format(self.test_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(self.test_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
 

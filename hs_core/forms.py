@@ -260,7 +260,7 @@ class PartyValidationForm(forms.Form):
         user_absolute_url = self.cleaned_data['description']
         if user_absolute_url:
             url_parts = user_absolute_url.split('/')
-            return '/user/{user_id}/'.format(user_id=url_parts[4])
+            return '/hydroshare/user/{user_id}/'.format(user_id=url_parts[4])
         return user_absolute_url
 
     def clean(self):

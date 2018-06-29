@@ -11,13 +11,13 @@ from rest_framework.test import APITestCase
 #         self.client = APIClient()
 #
 #     def test_universities_no_query(self):
-#         response = self.client.get('/hsapi/dictionary/universities/', format='json')
+#         response = self.client.get('/hydroshare/hsapi/dictionary/universities/', format='json')
 #         self.assertEqual(response.status_code, status.HTTP_200_OK)
 #         content = json.loads(response.content)
 #         self.assertEqual(len(content), 1)
 #
 #     def test_universities_query(self):
-#         response = self.client.get('/hsapi/dictionary/universities/?term=dubai', format='json')
+#         response = self.client.get('/hydroshare/hsapi/dictionary/universities/?term=dubai', format='json')
 #         self.assertEqual(response.status_code, status.HTTP_200_OK)
 #         content = json.loads(response.content)
 #         self.assertEqual(len(content), 9)

@@ -17,14 +17,14 @@ class TestFolders(HSRESTTestCase):
                   'file': ('cea.tif',
                            open('hs_core/tests/data/cea.tif'),
                            'image/tiff')}
-        url = '/hsapi/resource/'
+        url = '/hydroshare/hsapi/resource/'
         response = self.client.post(url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
         res_id = content['resource_id']
         self.resources_to_delete.append(res_id)
 
-        url2 = str.format('/hsapi/resource/{}/folders/foo/', res_id)
+        url2 = str.format('/hydroshare/hsapi/resource/{}/folders/foo/', res_id)
 
         # should not be able to ls non-existent folder
         response = self.client.get(url2, {})
@@ -70,7 +70,7 @@ class TestFolders(HSRESTTestCase):
                   'file': ('cea.tif',
                            open('hs_core/tests/data/cea.tif'),
                            'image/tiff')}
-        url = '/hsapi/resource/'
+        url = '/hydroshare/hsapi/resource/'
         response = self.client.post(url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
@@ -78,7 +78,7 @@ class TestFolders(HSRESTTestCase):
         self.resources_to_delete.append(res_id)
 
         # create a folder 'foo'
-        url2 = str.format('/hsapi/resource/{}/folders/foo/', res_id)
+        url2 = str.format('/hydroshare/hsapi/resource/{}/folders/foo/', res_id)
         response = self.client.put(url2, {})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -88,7 +88,7 @@ class TestFolders(HSRESTTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         # put a file 'test.txt' into folder 'foo'
-        url4 = str.format('/hsapi/resource/{}/files/foo/', res_id)
+        url4 = str.format('/hydroshare/hsapi/resource/{}/files/foo/', res_id)
         params = {'file': ('test.txt',
                            open('hs_core/tests/data/test.txt'),
                            'text/plain')}
