@@ -9,3 +9,7 @@ def signup(request):
     # NOTE: this can be replaced with an appropriate CBV or whatever
     # as necessary; for now it is a placeholder to render a template.
     return render(request, 'myhpom/accounts/signup.html')
+
+
+def next_steps(request):
+    return render(request, 'myhpom/accounts/next_steps.html')

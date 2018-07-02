@@ -1,0 +1,66 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+<div class="modal show pseudo-modal">
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            <div class="modal-header modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title--centered">
+                    Welcome to MindMyHealth
+                </h1>
+                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+
+            <div class="modal-header modal-header--subtitle pseudo-modal__header">
+                <p class="pseudo-modal__header-caption-text">
+                    {% lorem 24 w %}
+                </p>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h4>
+                            Your next steps to own your own health:
+                        </h4>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-md-6 vertical-fill-box">
+                                <div class="advance-directive-block">
+                                    <h5>
+                                        Download a Template Advance Directive
+                                    </h5>
+                                    <p>
+                                        {% lorem 36 w %}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 vertical-fill-box">
+                                <div class="advance-directive-block">
+                                    <h5>
+                                        Upload Your Advance Directive
+                                    </h5>
+                                    <p>
+                                        {% lorem 36 w %}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
+                    Go To Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}

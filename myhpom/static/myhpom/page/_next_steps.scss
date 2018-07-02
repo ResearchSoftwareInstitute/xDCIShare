@@ -1,0 +1,19 @@
+.advance-directive-block {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+@media (max-width: 768px) {
+    .advance-directive-block {
+        margin-bottom: 1rem;
+    }
+}
+
+/*
+    Helper to ensure that adjacent boxes are able to fill all
+    available vertical space.
+*/
+.vertical-fill-box {
+    display: flex;
+}
