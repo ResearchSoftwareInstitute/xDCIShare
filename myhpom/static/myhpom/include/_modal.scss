@@ -1,3 +1,19 @@
-.close--link {
+html [type="button"].close--link {
     -webkit-appearance: none;
+}
+
+.modal-header--main {
+    border-bottom: none;
+}
+
+.pseudo-modal {
+    display: block;
+}
+
+.pseudo-modal__dialog {
+    margin-top: 4rem;
+
+    @media (min-width: 576px) {
+        max-width: 90vw;
+    }
 }
