@@ -50,7 +50,7 @@ class TestPublicRenameEndpoint(HSRESTTestCase):
         self.client.post(url3, params)
 
     def test_bad_requests(self):
-        unzip_url = "/hsapi/resource/%s/functions/move-or-rename/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/move-or-rename/" % self.pid
         response = self.client.post(unzip_url, {
             "source_path": " ",
             "target_path": "data/contents/foo"
@@ -71,7 +71,7 @@ class TestPublicRenameEndpoint(HSRESTTestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_good_request(self):
-        unzip_url = "/hsapi/resource/%s/functions/move-or-rename/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/move-or-rename/" % self.pid
         response = self.client.post(unzip_url, {
             "source_path": "data/contents/foo",
             "target_path": "data/contents/bar"

@@ -54,7 +54,7 @@ class TestPublicZipEndpoint(HSRESTTestCase):
         self.client.post(url3, params)
 
     def test_zip_folder_bad_requests(self):
-        zip_url = "/hsapi/resource/%s/functions/zip/" % self.pid
+        zip_url = "/hydroshare/hsapi/resource/%s/functions/zip/" % self.pid
 
         response_no_path = self.client.post(zip_url, {
             "output_zip_file_name": "test.zip"
@@ -77,7 +77,7 @@ class TestPublicZipEndpoint(HSRESTTestCase):
         self.assertEqual(response_empty_fname.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_zip_folder(self):
-        zip_url = "/hsapi/resource/%s/functions/zip/" % self.pid
+        zip_url = "/hydroshare/hsapi/resource/%s/functions/zip/" % self.pid
         response = self.client.post(zip_url, {
             "input_coll_path": "data/contents/foo",
             "output_zip_file_name": "test.zip",
@@ -86,7 +86,7 @@ class TestPublicZipEndpoint(HSRESTTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_zip_folder_remove(self):
-        zip_url = "/hsapi/resource/%s/functions/zip/" % self.pid
+        zip_url = "/hydroshare/hsapi/resource/%s/functions/zip/" % self.pid
         response = self.client.post(zip_url, {
             "input_coll_path": "data/contents/foo",
             "output_zip_file_name": "test.zip",

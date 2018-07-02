@@ -19,7 +19,7 @@ class TestCustomScimetaEndpoint(HSRESTTestCase):
         self.resources_to_delete.append(self.pid)
 
     def test_set_custom_metadata_multiple(self):
-        set_metadata = "/hsapi/resource/%s/scimeta/custom/" % self.pid
+        set_metadata = "/hydroshare/hsapi/resource/%s/scimeta/custom/" % self.pid
 
         response = self.client.post(set_metadata, {
             "foo": "bar",
@@ -28,7 +28,7 @@ class TestCustomScimetaEndpoint(HSRESTTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_set_custom_metadata_single(self):
-        set_metadata = "/hsapi/resource/%s/scimeta/custom/" % self.pid
+        set_metadata = "/hydroshare/hsapi/resource/%s/scimeta/custom/" % self.pid
         response = self.client.post(set_metadata, {
             "foo": "bar"
         }, format='json')

@@ -177,5 +177,5 @@ def _get_series_label(series_id, resource):
 
 
 def _get_element_update_form_action(element_name, resource_id, element_id):
-    action = "/hsapi/_internal/{}/{}/{}/update-metadata/"
+    action = "/hydroshare/hsapi/_internal/{}/{}/{}/update-metadata/"
     return action.format(resource_id, element_name, element_id)
