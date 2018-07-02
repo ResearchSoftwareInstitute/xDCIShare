@@ -17,3 +17,11 @@ html [type="button"].close--link {
         max-width: 90vw;
     }
 }
+
+.pseudo-modal__header {
+    text-align: center;
+}
+
+.pseudo-modal__title--centered {
+    flex-grow: 1;
+}

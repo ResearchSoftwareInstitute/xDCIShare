@@ -4,8 +4,8 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header modal-header--main">
-                <h1 class="modal-title">
+            <div class="modal-header modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title--centered">
                     Create Your Account
                 </h1>
                 <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
@@ -13,8 +13,8 @@
                 </a>
             </div>
 
-            <div class="modal-header modal-header--subtitle">
-                <h5>Already have an account? <a href="{% url 'myhpom:home' %}"> Sign in</a>.</h5>
+            <div class="modal-header modal-header--subtitle pseudo-modal__header">
+                <h5 class="pseudo-modal__title--centered">Already have an account? <a href="{% url 'myhpom:home' %}"> Sign in</a>.</h5>
             </div>
 
             <div class="modal-body">
@@ -65,7 +65,7 @@
                             <div class="row">
                                 <div class="col-12 form-group form-group-tos">
                                     <div class="form-group-tos__content">
-                                        <h5 class="text-danger">Terms and conditions</h5>
+                                        <h5>Terms and conditions</h5>
                                         <p class="form-group-tos__text">{% lorem 32 w %}</p>
                                         <p>
                                             <a href="{% url 'myhpom:home' %}">
