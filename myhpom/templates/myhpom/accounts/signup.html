@@ -88,7 +88,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary disabled" id="btn-sign-up">
                     Sign Up
                 </button>
             </div>
@@ -98,3 +98,19 @@
 
 <div class="modal-backdrop show"></div>
 {% endblock main_content %}
+
+{% block extra-js %}
+<script>
+    jQuery(function ($) {
+        var $tosAccept = $('#id_accept_tos');
+        var $signUp = $('#btn-sign-up');
+        $tosAccept.on('change', function (e) {
+            $signUp.toggleClass(
+                'disabled',
+                !$tosAccept.prop('checked')
+            )
+        });
+        $tosAccept.trigger('change');
+    })
+</script>
+{% endblock extra-js %}
