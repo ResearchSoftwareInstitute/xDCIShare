@@ -190,8 +190,8 @@ urlpatterns += patterns('',
 
 hydroshare_urls = urlpatterns
 urlpatterns = [
-    url(r'^$', include('myhpom.urls', namespace='myhpom')),
     url(r'^hydroshare/', include(hydroshare_urls)),
+    url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
 
 # Adds ``STATIC_URL`` to the context of error pages, so that error
