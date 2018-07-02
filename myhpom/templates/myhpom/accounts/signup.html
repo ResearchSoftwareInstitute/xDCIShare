@@ -1,1 +1,73 @@
-{% extends 'base.html' %}
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+<div class="modal-content">
+    <div class="modal-header">
+        <h1 class="modal-title">
+            Create Your Account
+        </h1>
+        <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </a>
+    </div>
+
+    <div class="modal-body">
+        <form action="/">
+            <div class="row">
+                <div class="col-md-6 col-lg-4 form-group">
+                    <label for="id_first_name">First name</label>
+                    <input type="text" class="form-control" name="first_name" id="id_first_name" />
+                </div>
+                <div class="col-md-6 col-lg-4 form-group">
+                    <label for="id_middle_name">Middle name (optional)</label>
+                    <input type="text" class="form-control" name="middle_name" id="id_middle_name" />
+                </div>
+                <div class="col-md-6 col-lg-4 form-group">
+                    <label for="id_last_name">Last name</label>
+                    <input type="text" class="form-control" name="last_name" id="id_last_name" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="id_email_address">Email address</label>
+                            <input type="email" class="form-control" name="email_address" id="id_email_address" />
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="id_state">State resident of</label>
+                            <select name="state" id="id_state" class="form-control">
+                                <option value="NC">North Carolina</option>
+                                <option value="SC">South Carolina</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="id_password">Enter a password</label>
+                            <input type="password" class="form-control" name="password" id="id_password" />
+                        </div>
+
+                        <div class="col-md-6 form-group">
+                            <label for="id_password_confirm">Confirm password</label>
+                            <input type="password" class="form-control" name="password_confirm" id="id_password_confirm" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="row">
+                        <div class="col-12 form-group form-group-tos">
+                            <h5>Terms and conditions</h5>
+                            <p>{% lorem 1 %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary">
+            Sign Up
+        </button>
+    </div>
+</div>
+{% endblock main_content %}
