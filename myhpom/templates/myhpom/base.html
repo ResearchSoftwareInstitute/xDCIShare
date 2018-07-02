@@ -12,7 +12,7 @@
 
         <title>{% block title %}{% endblock title %}</title>
     </head>
-    <body>
+    <body class="myhpom-page--flush-footer">
         <header>
             <div class="container">
                 <nav class="navbar navbar-light navbar-expand-lg no-gutters">
@@ -35,7 +35,7 @@
                 </nav>
             </div>
         </header>
-        <main class="main">
+        <main class="main myhpom-page__main--flush-footer">
             <div class="container">
                 {% block main_content %}{% endblock main_content %}
             </div>
@@ -82,7 +82,7 @@
             <div class="row">
                 <div class="col">
                     <p>
-                        <em>&copy;MIND MY HEALTH</em> 
+                        <em>&copy;MIND MY HEALTH</em>
                         Lorem ipsum dolor sit amet, consectetur adipisicing
                         elit, sed do eiusmod tempor incididunt ut labore et
                     </p>
