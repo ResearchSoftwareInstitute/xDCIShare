@@ -18,7 +18,7 @@ Provisioning
 
 When a new server is created the provisioning script below can be run manually
 to login to the server and ensure that system packages have been set up, users
-have SSH conigured, and that docker is properly configured.
+have SSH configured, and that docker is properly configured.
 
     ansible-playbook -i staging --extra-vars "ansible_become_pass=YOURPASSWORD" provision.yml
 
