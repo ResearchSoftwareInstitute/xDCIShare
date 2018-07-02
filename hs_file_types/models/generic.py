@@ -53,8 +53,8 @@ class GenericFileMetaData(AbstractFileMetaData):
         context_dict = dict()
         temp_cov_form = self.get_temporal_coverage_form()
         spatial_cov_form = self.get_spatial_coverage_form(allow_edit=True)
-        update_action = "/hsapi/_internal/GenericLogicalFile/{0}/{1}/{2}/update-file-metadata/"
-        create_action = "/hsapi/_internal/GenericLogicalFile/{0}/{1}/add-file-metadata/"
+        update_action = "/hydroshare/hsapi/_internal/GenericLogicalFile/{0}/{1}/{2}/update-file-metadata/"
+        create_action = "/hydroshare/hsapi/_internal/GenericLogicalFile/{0}/{1}/add-file-metadata/"
 
         element_name = "coverage"
         if self.temporal_coverage or self.spatial_coverage:

@@ -126,8 +126,8 @@ class NetCDFFileMetaData(NetCDFMetaDataMixin, AbstractFileMetaData):
 
         template = Template(root_div.render())
         temp_cov_form = self.get_temporal_coverage_form()
-        update_action = "/hsapi/_internal/NetCDFLogicalFile/{0}/{1}/{2}/update-file-metadata/"
-        create_action = "/hsapi/_internal/NetCDFLogicalFile/{0}/{1}/add-file-metadata/"
+        update_action = "/hydroshare/hsapi/_internal/NetCDFLogicalFile/{0}/{1}/{2}/update-file-metadata/"
+        create_action = "/hydroshare/hsapi/_internal/NetCDFLogicalFile/{0}/{1}/add-file-metadata/"
         if self.temporal_coverage:
             temp_action = update_action.format(self.logical_file.id, "coverage",
                                                self.temporal_coverage.id)
@@ -163,7 +163,7 @@ class NetCDFFileMetaData(NetCDFMetaDataMixin, AbstractFileMetaData):
         return rendered_html
 
     def get_update_netcdf_file_html_form(self):
-        form_action = "/hsapi/_internal/{}/update-netcdf-file/".format(self.id)
+        form_action = "/hydroshare/hsapi/_internal/{}/update-netcdf-file/".format(self.id)
         style = "display:none;"
         if self.is_dirty:
             style = "margin-bottom:10px"
@@ -193,7 +193,7 @@ class NetCDFFileMetaData(NetCDFMetaDataMixin, AbstractFileMetaData):
 
         for frm in variable_formset.forms:
             if len(frm.initial) > 0:
-                frm.action = "/hsapi/_internal/%s/%s/variable/%s/update-file-metadata/" % (
+                frm.action = "/hydroshare/hsapi/_internal/%s/%s/variable/%s/update-file-metadata/" % (
                     "NetCDFLogicalFile", self.logical_file.id, frm.initial['id'])
                 frm.number = frm.initial['id']
 

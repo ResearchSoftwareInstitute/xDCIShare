@@ -51,7 +51,7 @@ class TestCopyResource(MockIRODSTestCaseMixin, ViewTestCase):
         self.add_session_to_request(request)
         response = copy_resource(request, shortkey=self.gen_res.short_id)
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
-        res_id = response.url.split('/')[2]
+        res_id = response.url.split('/')[3]
         self.assertEqual(BaseResource.objects.filter(short_id=res_id).exists(), True)
         # should have 2 resources now
         self.assertEqual(BaseResource.objects.count(), 2)

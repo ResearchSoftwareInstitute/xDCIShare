@@ -268,7 +268,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
     # TODO: dont track index manually. use enumerate, or zip
 
     for creator_form in creator_formset.forms:
-        creator_form.action = "/hsapi/_internal/%s/creator/%s/update-metadata/" % \
+        creator_form.action = "/hydroshare/hsapi/_internal/%s/creator/%s/update-metadata/" % \
                               (content_model.short_id, creator_form.initial['id'])
         creator_form.number = creator_form.initial['id']
         index += 1
@@ -282,7 +282,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
     index = 0
     # TODO: dont track index manually. use enumerate, or zip
     for contributor_form in contributor_formset.forms:
-        contributor_form.action = "/hsapi/_internal/%s/contributor/%s/update-metadata/" % \
+        contributor_form.action = "/hydroshare/hsapi/_internal/%s/contributor/%s/update-metadata/" % \
                                   (content_model.short_id, contributor_form.initial['id'])
         contributor_form.number = contributor_form.initial['id']
         index += 1
@@ -294,7 +294,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
                                            prefix='relation')
 
     for relation_form in relation_formset.forms:
-        relation_form.action = "/hsapi/_internal/%s/relation/%s/update-metadata/" % \
+        relation_form.action = "/hydroshare/hsapi/_internal/%s/relation/%s/update-metadata/" % \
                                (content_model.short_id, relation_form.initial['id'])
         relation_form.number = relation_form.initial['id']
 
@@ -305,7 +305,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
                                        prefix='source')
 
     for source_form in source_formset.forms:
-        source_form.action = "/hsapi/_internal/%s/source/%s/update-metadata/" % \
+        source_form.action = "/hydroshare/hsapi/_internal/%s/source/%s/update-metadata/" % \
                              (content_model.short_id, source_form.initial['id'])
         source_form.delete_modal_form = MetaDataElementDeleteForm(content_model.short_id,
                                                                   'source',
@@ -318,7 +318,7 @@ def get_page_context(page, user, resource_edit=False, extended_metadata_layout=N
         initial=content_model.metadata.funding_agencies.all().values(), prefix='fundingagency')
 
     for fundingagency_form in fundingagency_formset.forms:
-        action = "/hsapi/_internal/{}/fundingagnecy/{}/update-metadata/"
+        action = "/hydroshare/hsapi/_internal/{}/fundingagnecy/{}/update-metadata/"
         action = action.format(content_model.short_id, fundingagency_form.initial['id'])
         fundingagency_form.action = action
         fundingagency_form.number = fundingagency_form.initial['id']

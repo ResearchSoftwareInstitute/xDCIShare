@@ -49,7 +49,7 @@ class HSRESTTestCase(APITestCase):
            are run with an external web server.
         :return: Django test client response object
         """
-        url = "/hsapi/resource/{res_id}".format(res_id=res_id)
+        url = "/hydroshare/hsapi/resource/{res_id}".format(res_id=res_id)
         return self._get_file_irods(url, exhaust_stream)
 
     def getDownloadTaskStatus(self, task_id):
@@ -73,7 +73,7 @@ class HSRESTTestCase(APITestCase):
            are run with an external web server.
         :return: Django test client response object
         """
-        url = "/hsapi/resource/{res_id}/files/{file_name}".format(res_id=res_id,
+        url = "/hydroshare/hsapi/resource/{res_id}/files/{file_name}".format(res_id=res_id,
                                                                   file_name=file_name)
         return self._get_file_irods(url, exhaust_stream)
 
@@ -97,7 +97,7 @@ class HSRESTTestCase(APITestCase):
            are run with an external web server.
         :return: Django test client response object
         """
-        url = "/hsapi/scimeta/{res_id}/".format(res_id=res_id)
+        url = "/hydroshare/hsapi/scimeta/{res_id}/".format(res_id=res_id)
         response = self._get_file_irods(url, exhaust_stream)
         self.assertEqual(response['Content-Type'], 'application/xml')
         self.assertGreater(int(response['Content-Length']), 0)
@@ -188,7 +188,7 @@ class SciMetaTestCase(HSRESTTestCase):
         params = {'file': (self.RESOURCE_METADATA,
                           open(scimeta_path),
                           'application/xml')}
-        url = "/hsapi/scimeta/{pid}/".format(pid=pk)
+        url = "/hydroshare/hsapi/scimeta/{pid}/".format(pid=pk)
         response = self.client.put(url, params)
         if should_succeed:
             self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED,

@@ -186,7 +186,7 @@ class VariableForm(ModelForm):
         self.number = 0
         self.allow_edit = allow_edit
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/variable/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/variable/add-metadata/" % res_short_id
         else:
             self.action = ""
         self.fields['name'].widget.attrs['readonly'] = True

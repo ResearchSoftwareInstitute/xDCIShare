@@ -27,13 +27,13 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
     def test_get_scimeta(self):
         # Get the resource system metadata
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(res_id=self.pid)
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(res_id=self.pid)
         response = self.client.get(sysmeta_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # content = json.loads(response.content)
 
     def test_put_scimeta_generic_resource(self):
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(res_id=self.pid)
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(res_id=self.pid)
         put_data = {
             "title": "New Title",
             "description": "New Description",
@@ -97,7 +97,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
 
     def test_put_scimeta_generic_resource_double_none(self):
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(res_id=self.pid)
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(res_id=self.pid)
         put_data = {
             "title": "New Title",
             "description": "New Description",
@@ -161,7 +161,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a composite resource
         self._create_resource(resource_type="CompositeResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -210,7 +210,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a composite resource
         self._create_resource(resource_type="CompositeResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -270,7 +270,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a composite resource
         self._create_resource(resource_type="TimeSeriesResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -319,7 +319,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a composite resource
         self._create_resource(resource_type="TimeSeriesResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -382,7 +382,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         netcdf_file = 'hs_core/tests/data/netcdf_valid.nc'
         file_to_upload = open(netcdf_file, "r")
         self._create_resource(resource_type="GenericResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -469,7 +469,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         netcdf_file = 'hs_core/tests/data/netcdf_valid.nc'
         file_to_upload = open(netcdf_file, "r")
         self._create_resource(resource_type="GenericResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "originalcoverage": {
@@ -511,7 +511,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         raster_file = 'hs_core/tests/data/cea.tif'
         file_to_upload = open(raster_file, "r")
         self._create_resource(resource_type="RasterResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -587,7 +587,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         raster_file = 'hs_core/tests/data/cea.tif'
         file_to_upload = open(raster_file, "r")
         self._create_resource(resource_type="RasterResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "bandinformations": [
@@ -615,7 +615,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         some_file = 'hs_core/tests/data/cea.tif'
         file_to_upload = open(some_file, "r")
         self._create_resource(resource_type="ModelProgramResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -690,7 +690,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         some_file = 'hs_core/tests/data/cea.tif'
         file_to_upload = open(some_file, "r")
         self._create_resource(resource_type="ModelProgramResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "mpmetadata": {
@@ -718,7 +718,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         some_file = 'hs_core/tests/data/cea.tif'
         file_to_upload = open(some_file, "r")
         self._create_resource(resource_type="ModelInstanceResource", file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -789,7 +789,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
             title="A model program resource",
             files=(file_to_upload,)
             )
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "modeloutput": {"includes_output": True},
@@ -809,7 +809,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         file_to_upload = open(some_file, "r")
         self._create_resource(resource_type="MODFLOWModelInstanceResource",
                               file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -922,7 +922,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
         file_to_upload = open(some_file, "r")
         self._create_resource(resource_type="MODFLOWModelInstanceResource",
                               file_to_upload=file_to_upload)
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "modeloutput": {"includes_output": False},
@@ -990,7 +990,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a script resource
         self._create_resource(resource_type="ScriptResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -1059,7 +1059,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a script resource
         self._create_resource(resource_type="ScriptResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "scriptspecificmetadata": {
@@ -1081,7 +1081,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a SWAT model resource
         self._create_resource(resource_type="SWATModelInstanceResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -1179,7 +1179,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a SWAT model resource
         self._create_resource(resource_type="SWATModelInstanceResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "modeloutput": {"includes_output": False},
@@ -1230,7 +1230,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a web app resource
         self._create_resource(resource_type="ToolResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "title": "New Title",
@@ -1310,7 +1310,7 @@ class TestResourceScienceMetadata(HSRESTTestCase):
 
         # create a web app resource
         self._create_resource(resource_type="ToolResource")
-        sysmeta_url = "/hsapi/resource/{res_id}/scimeta/elements/".format(
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/scimeta/elements/".format(
             res_id=self.resource.short_id)
         put_data = {
             "requesturlbase": {

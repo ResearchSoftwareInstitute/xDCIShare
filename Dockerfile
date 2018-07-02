@@ -7,6 +7,7 @@ ADD package.json /opt
 RUN pip install --upgrade pip
 RUN pip install -r /opt/requirements.txt
 RUN cd /opt && npm install
+RUN npm install -g astrum
 ### End - HydroShare Development Image Additions ###
 
 # Patch for Mezzanone 4.10 collecttemplates bugfix

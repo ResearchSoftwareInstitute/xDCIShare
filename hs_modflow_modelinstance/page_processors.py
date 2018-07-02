@@ -106,14 +106,14 @@ def landing_page(request, page):
             prefix='modelinput')
         for model_input_form in model_input_formset.forms:
             if len(model_input_form.initial) > 0:
-                model_input_form.action = "/hsapi/_internal/%s/modelinput/%s/update-metadata/" % \
+                model_input_form.action = "/hydroshare/hsapi/_internal/%s/modelinput/%s/update-metadata/" % \
                                           (content_model.short_id, model_input_form.initial['id'])
                 model_input_form.delete_modal_form = MetaDataElementDeleteForm(
                     content_model.short_id, 'modelinput',
                     model_input_form.initial['id'])
                 model_input_form.number = model_input_form.initial['id']
             else:
-                model_input_form.action = "/hsapi/_internal/%s/modelinput/add-metadata/" % \
+                model_input_form.action = "/hydroshare/hsapi/_internal/%s/modelinput/add-metadata/" % \
                                           content_model.short_id
 
         add_modelinput_modal_form = ModelInputForm(allow_edit=False,
