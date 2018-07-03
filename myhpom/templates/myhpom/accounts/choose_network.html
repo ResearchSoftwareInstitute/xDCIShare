@@ -113,6 +113,7 @@
                         <div class="form-group">
                             <label for="id_healthcare_network_full">Complete list of healthcare networks:</label>
                             <select name="healthcare_network" id="id_healthcare_network_full" class="custom-select">
+                                <option value="null" selected>—</option>
                                 {% for i in '0123456789' %}
                                     <option value="network_{{ i }}">{% lorem 3 w %}</option>
                                 {% endfor %}
@@ -140,3 +141,29 @@
 
 <div class="modal-backdrop show"></div>
 {% endblock main_content %}
+
+{% block extra-js %}
+<script>
+    /*
+        Enforce mutual exclusion of radio button selection and
+        use of the `select` element. When either input changes,
+        if a non-null value is chosen, clear the other's value.
+    */
+    jQuery(function ($) {
+        var $radios = $('input[type="radio"]');
+        var $fullSelect = $('#id_healthcare_network_full');
+
+        $radios.on('change', function (e) {
+            if ($(e.target).prop('checked')) {
+                $fullSelect.val('null');
+            }
+        });
+
+        $fullSelect.on('change', function (e) {
+            if ($(e.target).val() !== 'null') {
+                $radios.prop('checked', false);
+            }
+        });
+    });
+</script>
+{% endblock extra-js %}
