@@ -318,7 +318,7 @@ INSTALLED_APPS = (
     "hs_dictionary",
     "security",
     "sass_processor",
-    "myhpom"
+    "myhpom",
 )
 
 SASS_PROCESSOR_AUTO_INCLUDE = True
