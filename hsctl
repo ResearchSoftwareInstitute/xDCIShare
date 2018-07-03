@@ -351,8 +351,7 @@ rebuild_hs() {
     if [ "${USE_NGINX}" = true ]; then
         start_nginx;
     fi
-    # compile the CSS before running compilescss or the included files won't be
-    # found:
+    # Collect CSS before running compilescss or the included files won't be found:
     echo "  - docker exec -u hydro-service hydroshare python manage.py collectstatic -v0 --noinput"
     docker exec -u hydro-service hydroshare python manage.py collectstatic -v0 --noinput
     echo "  - docker exec -u hydro-service hydroshare python manage.py compilescss"
