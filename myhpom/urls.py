@@ -8,6 +8,8 @@ urlpatterns = [
     # The `state` argument in the following URL is mainly useful for testing
     # at the moment and can be removed as necessary further down the road.
     url(r'^accounts/next-steps/(?P<state>\w\w)?$', myhpom_views.next_steps, name='next_steps'),
-    url(r'^styleguide/$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT + '/astrum', 'path': 'index.html'}),
-    url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT + '/astrum'}),
+    url(r'^styleguide/$', 'django.views.static.serve',
+        {'document_root': settings.STATIC_ROOT + '/styleguide', 'path': 'index.html'}),
+    url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve',
+        {'document_root': settings.STATIC_ROOT + '/styleguide'}),
 ]
