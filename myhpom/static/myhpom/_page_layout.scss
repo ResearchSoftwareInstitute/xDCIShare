@@ -1,0 +1,9 @@
+.myhpom-page--flush-footer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.myhpom-page__main--flush-footer {
+    flex-grow: 1;
+}

@@ -1,0 +1,76 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+<div class="modal show pseudo-modal">
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            <div class="modal-header modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title--centered">
+                    Thank you for registering
+                </h1>
+                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+
+            <div class="modal-header modal-header--subtitle pseudo-modal__header">
+                <p class="pseudo-modal__header-caption-text">
+                    {% lorem 24 w %}
+                </p>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Welcome!</h3>
+                        <p>
+                            Currently, Mind My Health serves North Carolina
+                            and South Carolina.
+                            <small>
+                                <a href="{% url 'myhpom:home' %}">
+                                    (Why North and South Carolina?)
+                                </a>
+                            </small>
+                        </p>
+                        <p>
+                            However, we are continuing to grow and invite
+                            you to continue building your account.
+                            We will notify you as we expand into your state.
+                        </p>
+                        <p>
+                            You may still store your documents with us
+                            and retrieve them upon request.
+                        </p>
+                        <form>
+                            <div class="form-group">
+                                <label for="id_healthcare_network">Please share your healthcare network:</label>
+                                <input
+                                    class="form-control"
+                                    aria-describedby="healthcare_network_help"
+                                    type="text"
+                                    name="healthcare_network"
+                                    id="id_healthcare_network"
+                                    placeholder="My healthcare network"
+                                />
+                                <small class="form-text text-muted" id="healthcare_network_help">
+                                    <a href="{% url 'myhpom:home' %}">
+                                        How do I find my healthcare network?
+                                    </a>
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
+                    Submit
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}

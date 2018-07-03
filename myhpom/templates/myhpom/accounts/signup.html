@@ -1,0 +1,118 @@
+{% extends "myhpom/base.html" %}
+
+{% block title %}Create Your Account | My Health Peace Of Mind{% endblock title %}
+
+{% block main_content %}
+<div class="modal show pseudo-modal">
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            <div class="modal-header modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title--centered">
+                    Create Your Account
+                </h1>
+                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+
+            <div class="modal-header modal-header--subtitle pseudo-modal__header">
+                <h5 class="pseudo-modal__title--centered">Already have an account? <a href="{% url 'myhpom:home' %}"> Sign in</a>.</h5>
+            </div>
+
+            <div class="modal-body">
+                <form action="/">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4 form-group">
+                            <label for="id_first_name">First name</label>
+                            <input type="text" class="form-control" name="first_name" id="id_first_name" />
+                        </div>
+                        <div class="col-md-6 col-lg-4 form-group">
+                            <label for="id_middle_name">Middle name (optional)</label>
+                            <input type="text" class="form-control" name="middle_name" id="id_middle_name" />
+                        </div>
+                        <div class="col-md-6 col-lg-4 form-group">
+                            <label for="id_last_name">Last name</label>
+                            <input type="text" class="form-control" name="last_name" id="id_last_name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label for="id_email_address">Email address</label>
+                                    <input type="email" class="form-control is-invalid" name="email_address" id="id_email_address" />
+                                    <div class="invalid-feedback">
+                                        Please enter a valid email address.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="id_state">State of residence</label>
+                                    <select name="state" id="id_state" class="form-control">
+                                        <option value="NC">North Carolina</option>
+                                        <option value="SC">South Carolina</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label for="id_password">Enter a password</label>
+                                    <input type="password" class="form-control" name="password" id="id_password" />
+                                </div>
+
+                                <div class="col-md-6 form-group">
+                                    <label for="id_password_confirm">Confirm password</label>
+                                    <input type="password" class="form-control" name="password_confirm" id="id_password_confirm" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="row">
+                                <div class="col-12 form-group form-group-tos">
+                                    <div class="form-group-tos__content">
+                                        <h5>Terms and conditions</h5>
+                                        <p class="form-group-tos__text">{% lorem 32 w %}</p>
+                                        <p>
+                                            <a href="{% url 'myhpom:home' %}">
+                                                Read complete terms and conditions
+                                            </a>
+                                        </p>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="id_accept_tos" />
+                                            <label for="id_accept_tos" class="form-check-label">
+                                                I agree to the terms and conditions
+                                                of the services provided.
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary disabled" id="btn-sign-up">
+                    Sign Up
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}
+
+{% block extra-js %}
+<script>
+    jQuery(function ($) {
+        var $tosAccept = $('#id_accept_tos');
+        var $signUp = $('#btn-sign-up');
+        $tosAccept.on('change', function (e) {
+            $signUp.toggleClass(
+                'disabled',
+                !$tosAccept.prop('checked')
+            );
+        });
+        $tosAccept.trigger('change');
+    });
+</script>
+{% endblock extra-js %}
