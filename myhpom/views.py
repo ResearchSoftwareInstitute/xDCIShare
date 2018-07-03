@@ -14,6 +14,8 @@ def signup(request):
 
 
 def next_steps(request):
+    # TODO: when the user profile is set up, use the request's associated
+    # user to determine what this should be.
     MOCK_USER_STATE_CHOICE = 'NC'
     try:
         ad_template = models.StateAdvanceDirective.objects.get(
