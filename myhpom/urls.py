@@ -4,6 +4,5 @@ from myhpom import views as myhpom_views
 
 urlpatterns = [
     url(r'^$', myhpom_views.home, name='home'),
-    url(r'^styleguide/$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT + '/astrum', 'path': 'index.html'}),
-    url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT + '/astrum'}),
+    url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT + '/styleguide'}),
 ]
