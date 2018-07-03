@@ -107,6 +107,25 @@
                     </div>
                     {% endfor %}
                 </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6 col-lg-8">
+                        <div class="form-group">
+                            <label for="id_healthcare_network_full">Complete list of healthcare networks:</label>
+                            <select name="healthcare_network" id="id_healthcare_network_full" class="custom-select">
+                                {% for i in '0123456789' %}
+                                    <option value="network_{{ i }}">{% lorem 3 w %}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="id_custom_healthcare_provider">Not listed? Write network below:</label>
+                            <input class="form-control" type="text" name="custom_healthcare_provider" id="id_custom_healthcare_provider" />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="modal-footer">
