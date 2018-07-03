@@ -104,3 +104,22 @@ When a new server is created, MyHPOM requires a few additional packages. The
 following steps have been used to set up docker (for hsctl) and java (for
 jenkins) and add the deploy user to docker group. See the [deployment
 docs](deploy/README.md) for more information.
+
+Code Style Notes
+================
+
+
+BEM
+---
+
+To ensure that the MyHPOM app uses a set of selectors that can be layered
+on top of Bootstrap without conflicts as well as to ensure that style
+rules are legible and follow a maintainable convention, MyHPOM's app-specific
+selectors are written in the [BEM (Block Element Modifier)](getbem.com) style.
+
+When creating new front-end components, please follow the convention of
+creating a new "block" class for your component (e.g. `.pseudo-modal`),
+specifying rules for component-internal elements in un-nested selectors
+following the "element" pattern (e.g. `.pseudo-modal__headline`),
+and specifying rules for variations on either by means of the "modifier"
+convention (e.g. `.pseudo-modal__headline--subtitle`).
