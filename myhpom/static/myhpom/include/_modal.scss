@@ -8,6 +8,7 @@ html [type="button"].close--link {
 
 .pseudo-modal {
     display: block;
+    overflow: scroll;
 }
 
 .pseudo-modal__dialog {
