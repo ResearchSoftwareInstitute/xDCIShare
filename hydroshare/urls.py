@@ -168,7 +168,6 @@ urlpatterns += patterns('',
     # ``mezzanine.urls``, go right ahead and take the parts you want
     # from it, and use them directly below instead of using
     # ``mezzanine.urls``.
-    ("^", include("mezzanine.urls")),
 
     # MOUNTING MEZZANINE UNDER A PREFIX
     # ---------------------------------
@@ -187,6 +186,13 @@ urlpatterns += patterns('',
     # ("^%s/" % settings.SITE_PREFIX, include("mezzanine.urls"))
 
 )
+
+hydroshare_urls = urlpatterns
+urlpatterns = [
+    url(r'^hydroshare/', include(hydroshare_urls)),
+    url(r'', include("mezzanine.urls")),
+    url(r'', include('myhpom.urls', namespace='myhpom')),
+]
 
 # Adds ``STATIC_URL`` to the context of error pages, so that error
 # pages can use JS, CSS and images.

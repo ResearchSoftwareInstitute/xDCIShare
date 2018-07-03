@@ -83,7 +83,7 @@ def verify(request, *args, **kwargs):
         from django.contrib.auth import login
         u.backend = settings.AUTHENTICATION_BACKENDS[0]
         login(request, u)
-        return HttpResponseRedirect('/account/update/')
+        return HttpResponseRedirect('/hydroshare/account/update/')
     else:
         from django.contrib import messages
         messages.error(request, "Your verification token was invalid.")
@@ -557,7 +557,7 @@ def delete_resource(request, shortkey, *args, **kwargs):
     if request.is_ajax():
         return JsonResponse(ajax_response_data)
     else:
-        return HttpResponseRedirect('/my-documents/')
+        return HttpResponseRedirect('/hydroshare/my-documents/')
 
 
 def rep_res_bag_to_irods_user_zone(request, shortkey, *args, **kwargs):
@@ -621,7 +621,7 @@ def copy_resource(request, shortkey, *args, **kwargs):
 @api_view(['POST'])
 def copy_resource_public(request, pk):
     response = copy_resource(request, pk)
-    return HttpResponse(response.url.split('/')[2], status=202)
+    return HttpResponse(response.url.split('/')[3], status=202)
 
 
 def create_new_version_resource(request, shortkey, *args, **kwargs):
@@ -672,7 +672,7 @@ def create_new_version_resource(request, shortkey, *args, **kwargs):
 @api_view(['POST'])
 def create_new_version_resource_public(request, pk):
     redirect = create_new_version_resource(request, pk)
-    return HttpResponse(redirect.url.split('/')[2], status=202)
+    return HttpResponse(redirect.url.split('/')[3], status=202)
 
 
 def publish(request, shortkey, *args, **kwargs):
@@ -834,7 +834,7 @@ def unshare_resource_with_user(request, shortkey, user_id, *args, **kwargs):
         user.uaccess.unshare_resource_with_user(res, user_to_unshare_with)
         if user not in res.raccess.view_users:
             # user has no explict access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-documents/'
+            ajax_response_data['redirect_to'] = '/hydroshare/my-documents/'
 
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
@@ -853,7 +853,7 @@ def unshare_resource_with_group(request, shortkey, group_id, *args, **kwargs):
         user.uaccess.unshare_resource_with_group(res, group_to_unshare_with)
         if user not in res.raccess.view_users:
             # user has no explicit access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-documents/'
+            ajax_response_data['redirect_to'] = '/hydroshare/my-documents/'
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
         ajax_response_data['message'] = exp.message
@@ -882,7 +882,7 @@ def undo_share_resource_with_user(request, shortkey, user_id, *args, **kwargs):
 
         if user not in res.raccess.view_users:
             # user has no explict access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-documents/'
+            ajax_response_data['redirect_to'] = '/hydroshare/my-documents/'
 
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
@@ -909,7 +909,7 @@ def undo_share_resource_with_group(request, shortkey, group_id, *args, **kwargs)
 
         if user not in res.raccess.view_users:
             # user has no explicit access to the resource - redirect to resource listing page
-            ajax_response_data['redirect_to'] = '/my-documents/'
+            ajax_response_data['redirect_to'] = '/hydroshare/my-documents/'
     except PermissionDenied as exp:
         ajax_response_data['status'] = 'error'
         ajax_response_data['message'] = exp.message
@@ -969,7 +969,7 @@ def resend_verification_email(request):
             'Please verify your new MyHPOM account.',
             """
 This is an automated email from MyHPOM.org. If you requested a MyHPOM account, please
-go to http://{domain}/verify/{token}/ and verify your account.
+go to http://{domain}/hydroshare/verify/{token}/ and verify your account.
 """.format(
             domain=Site.objects.get_current().domain,
             token=token
@@ -1384,7 +1384,7 @@ def group_membership(request, uidb36, token, membership_request_id, **kwargs):
 
                 messages.info(request, message)
                 # redirect to group profile page
-                return HttpResponseRedirect('/group/{}/'.format(membership_request.group_to_join.id))
+                return HttpResponseRedirect('/hydroshare/group/{}/'.format(membership_request.group_to_join.id))
             else:
                 messages.error(request, "The link you clicked is no longer valid.")
                 return redirect("/")
@@ -1474,7 +1474,7 @@ def get_user_or_group_data(request, user_or_group_id, is_group, *args, **kwargs)
 
         user_data['name'] = user_name
         user_data['email'] = user.email
-        user_data['url'] = '{domain}/user/{uid}/'.format(domain=utils.current_site_url(), uid=user.pk)
+        user_data['url'] = '{domain}/hydroshare/user/{uid}/'.format(domain=utils.current_site_url(), uid=user.pk)
         if user.userprofile.phone_1:
             user_data['phone'] = user.userprofile.phone_1
         elif user.userprofile.phone_2:
@@ -1497,7 +1497,7 @@ def get_user_or_group_data(request, user_or_group_id, is_group, *args, **kwargs)
     else:
         group = utils.group_from_id(user_or_group_id)
         user_data['organization'] = group.name
-        user_data['url'] = '{domain}/user/{uid}/'.format(domain=utils.current_site_url(),
+        user_data['url'] = '{domain}/hydroshare/user/{uid}/'.format(domain=utils.current_site_url(),
                                                          uid=group.pk)
         user_data['description'] = group.gaccess.description
 

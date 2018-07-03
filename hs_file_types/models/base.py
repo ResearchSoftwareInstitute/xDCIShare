@@ -131,9 +131,9 @@ class AbstractFileMetaData(models.Model):
 
     def get_keywords_html_form(self):
         keywords_div = div(cls="col-sm-12 content-block", id="filetype-keywords")
-        action = "/hsapi/_internal/{0}/{1}/add-file-keyword-metadata/"
+        action = "/hydroshare/hsapi/_internal/{0}/{1}/add-file-keyword-metadata/"
         action = action.format(self.logical_file.__class__.__name__, self.logical_file.id)
-        delete_action = "/hsapi/_internal/{0}/{1}/delete-file-keyword-metadata/"
+        delete_action = "/hydroshare/hsapi/_internal/{0}/{1}/delete-file-keyword-metadata/"
         delete_action = delete_action.format(self.logical_file.__class__.__name__,
                                              self.logical_file.id)
         with keywords_div:
@@ -398,7 +398,7 @@ class AbstractFileMetaData(models.Model):
         raise NotImplementedError
 
     def get_dataset_name_form(self):
-        form_action = "/hsapi/_internal/{0}/{1}/update-filetype-dataset-name/"
+        form_action = "/hydroshare/hsapi/_internal/{0}/{1}/update-filetype-dataset-name/"
         form_action = form_action.format(self.logical_file.__class__.__name__, self.logical_file.id)
         root_div = div(cls="col-xs-12")
         dataset_name = self.logical_file.dataset_name if self.logical_file.dataset_name else ""
@@ -421,7 +421,7 @@ class AbstractFileMetaData(models.Model):
         return root_div
 
     def _get_add_key_value_modal_form(self):
-        form_action = "/hsapi/_internal/{0}/{1}/update-file-keyvalue-metadata/"
+        form_action = "/hydroshare/hsapi/_internal/{0}/{1}/update-file-keyvalue-metadata/"
         form_action = form_action.format(self.logical_file.__class__.__name__, self.logical_file.id)
         modal_div = div(cls="modal fade", id="add-keyvalue-filetype-modal", tabindex="-1",
                         role="dialog", aria_labelledby="add-key-value-metadata",
@@ -464,7 +464,7 @@ class AbstractFileMetaData(models.Model):
 
     def _get_edit_key_value_modal_forms(self):
         # TODO: See if can use one modal dialog to edit any pair of key/value
-        form_action = "/hsapi/_internal/{0}/{1}/update-file-keyvalue-metadata/"
+        form_action = "/hydroshare/hsapi/_internal/{0}/{1}/update-file-keyvalue-metadata/"
         form_action = form_action.format(self.logical_file.__class__.__name__, self.logical_file.id)
         counter = 0
         root_div = div(id="edit-keyvalue-filetype-modals")
@@ -529,7 +529,7 @@ class AbstractFileMetaData(models.Model):
             return root_div
 
     def _get_delete_key_value_modal_forms(self):
-        form_action = "/hsapi/_internal/{0}/{1}/delete-file-keyvalue-metadata/"
+        form_action = "/hydroshare/hsapi/_internal/{0}/{1}/delete-file-keyvalue-metadata/"
         form_action = form_action.format(self.logical_file.__class__.__name__, self.logical_file.id)
         counter = 0
         root_div = div(id="delete-keyvalue-filetype-modals")

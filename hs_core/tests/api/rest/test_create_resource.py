@@ -21,7 +21,7 @@ class TestCreateResource(HSRESTTestCase):
                   'file': ('cea.tif',
                            open('hs_core/tests/data/cea.tif'),
                            'image/tiff')}
-        url = '/hsapi/resource/'
+        url = '/hydroshare/hsapi/resource/'
         response = self.client.post(url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
@@ -30,7 +30,7 @@ class TestCreateResource(HSRESTTestCase):
 
         # Get the resource system metadata to make sure the resource was
         # properly created.
-        sysmeta_url = "/hsapi/sysmeta/{res_id}/".format(res_id=res_id)
+        sysmeta_url = "/hydroshare/hsapi/sysmeta/{res_id}/".format(res_id=res_id)
         response = self.client.get(sysmeta_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
@@ -63,7 +63,7 @@ class TestCreateResource(HSRESTTestCase):
                   'file': ('cea.tif',
                            open('hs_core/tests/data/cea.tif'),
                            'image/tiff')}
-        url = '/hsapi/resource/'
+        url = '/hydroshare/hsapi/resource/'
         response = self.client.post(url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
@@ -72,7 +72,7 @@ class TestCreateResource(HSRESTTestCase):
 
         # Get the resource system metadata to make sure the resource was
         # properly created.
-        sysmeta_url = "/hsapi/resource/{res_id}/sysmeta/".format(res_id=res_id)
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/sysmeta/".format(res_id=res_id)
         response = self.client.get(sysmeta_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
@@ -166,7 +166,7 @@ class TestCreateResource(HSRESTTestCase):
                   'file': ('cea.tif',
                            open('hs_core/tests/data/cea.tif'),
                            'image/tiff')}
-        rest_url = '/hsapi/resource/'
+        rest_url = '/hydroshare/hsapi/resource/'
         response = self.client.post(rest_url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
@@ -269,7 +269,7 @@ class TestCreateResource(HSRESTTestCase):
                   'title': title,
                   'metadata': json.dumps(metadata),
                   }
-        rest_url = '/hsapi/resource/'
+        rest_url = '/hydroshare/hsapi/resource/'
         response = self.client.post(rest_url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
@@ -312,7 +312,7 @@ class TestCreateResource(HSRESTTestCase):
                   'metadata': json.dumps(metadata),
                   'extra_metadata': json.dumps(extra_metadata)}
 
-        rest_url = '/hsapi/resource/'
+        rest_url = '/hydroshare/hsapi/resource/'
         response = self.client.post(rest_url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -343,7 +343,7 @@ class TestCreateResource(HSRESTTestCase):
                   'title': title,
                   'extra_metadata': json.dumps(extra_metadata)}
 
-        rest_url = '/hsapi/resource/'
+        rest_url = '/hydroshare/hsapi/resource/'
         response = self.client.post(rest_url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
@@ -431,7 +431,7 @@ class TestCreateResource(HSRESTTestCase):
         return params
 
     def _test_not_allowed_element(self, params):
-        rest_url = '/hsapi/resource/'
+        rest_url = '/hydroshare/hsapi/resource/'
         response = self.client.post(rest_url, params)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -464,7 +464,7 @@ class TestCreateResource(HSRESTTestCase):
                   'title': title,
                   'metadata': json.dumps(metadata),
                   }
-        rest_url = '/hsapi/resource/'
+        rest_url = '/hydroshare/hsapi/resource/'
         response = self.client.post(rest_url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)

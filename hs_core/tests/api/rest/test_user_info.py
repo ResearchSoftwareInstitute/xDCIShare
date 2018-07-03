@@ -1,6 +1,7 @@
 import json
 
 from django.contrib.auth.models import Group
+from django.core.urlresolvers import reverse
 
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -32,7 +33,7 @@ class TestUserInfo(APITestCase):
         self.client.force_authenticate(user=self.user)
 
     def test_user_info(self):
-        response = self.client.get('/hsapi/userInfo/', format='json')
+        response = self.client.get(reverse('get_logged_in_user_info'), format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['username'], self.username)

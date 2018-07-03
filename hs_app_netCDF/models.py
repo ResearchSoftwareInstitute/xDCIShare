@@ -566,7 +566,7 @@ class NetcdfMetaData(NetCDFMetaDataMixin, CoreMetaData):
             self.save()
 
     def get_update_netcdf_file_html_form(self):
-        form_action = "/hsapi/_internal/netcdf_update/{}/".\
+        form_action = "/hydroshare/hsapi/_internal/netcdf_update/{}/".\
             format(self.resource.short_id)
         style = "display:none;"
         if self.is_dirty:

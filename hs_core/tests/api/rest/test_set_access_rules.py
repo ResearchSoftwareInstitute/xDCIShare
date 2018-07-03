@@ -40,7 +40,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        sysmeta_url = "/hsapi/sysmeta/{res_id}/".format(res_id=res_id)
+        sysmeta_url = "/hydroshare/hsapi/sysmeta/{res_id}/".format(res_id=res_id)
         response = self.client.get(sysmeta_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
@@ -48,7 +48,7 @@ class TestSetAccessRules(HSRESTTestCase):
         self.assertEqual(content['resource_title'], title)
         self.assertFalse(content['public'])
 
-        access_url = "/hsapi/resource/accessRules/{res_id}/".format(res_id=res_id)
+        access_url = "/hydroshare/hsapi/resource/accessRules/{res_id}/".format(res_id=res_id)
         response = self.client.put(access_url, {'public': True})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -70,7 +70,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        sysmeta_url = "/hsapi/resource/{res_id}/sysmeta/".format(res_id=res_id)
+        sysmeta_url = "/hydroshare/hsapi/resource/{res_id}/sysmeta/".format(res_id=res_id)
         response = self.client.get(sysmeta_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
@@ -91,7 +91,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        access_url = "/hsapi/resource/{res_id}/access/".format(res_id=res_id)
+        access_url = "/hydroshare/hsapi/resource/{res_id}/access/".format(res_id=res_id)
         response = self.client.get(access_url)
         self.assertEqual(1, len(response.data['users']))
         self.assertEqual(0, len(response.data['groups']))
@@ -111,7 +111,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        access_url = "/hsapi/resource/{res_id}/access/".format(res_id=res_id)
+        access_url = "/hydroshare/hsapi/resource/{res_id}/access/".format(res_id=res_id)
         put_response = self.client.put(access_url, {
             "privilege": PrivilegeCodes.VIEW,
             "user_id": self.secondUser.id
@@ -141,7 +141,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        access_url = "/hsapi/resource/{res_id}/access/".format(res_id=res_id)
+        access_url = "/hydroshare/hsapi/resource/{res_id}/access/".format(res_id=res_id)
         put_response = self.client.put(access_url, {
             "privilege": PrivilegeCodes.VIEW,
             "group_id": self.testGroup.id
@@ -171,7 +171,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        access_url = "/hsapi/resource/{res_id}/access/".format(res_id=res_id)
+        access_url = "/hydroshare/hsapi/resource/{res_id}/access/".format(res_id=res_id)
 
         put_response = self.client.put(access_url, {
             "privilege": PrivilegeCodes.VIEW,
@@ -192,7 +192,7 @@ class TestSetAccessRules(HSRESTTestCase):
         res_id = new_res.short_id
         self.resources_to_delete.append(res_id)
 
-        access_url = "/hsapi/resource/{res_id}/access/".format(res_id=res_id)
+        access_url = "/hydroshare/hsapi/resource/{res_id}/access/".format(res_id=res_id)
 
         # Empty PUT
         put_response = self.client.put(access_url, {}, format='json')

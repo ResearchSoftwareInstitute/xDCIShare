@@ -206,7 +206,7 @@ class TrackingTests(TestCase):
         client = Client()
         client.login(username=self.user.username, password='password')
 
-        response = client.get('/tracking/reports/profiles/')
+        response = client.get('/hydroshare/tracking/reports/profiles/')
         reader = csv.reader(StringIO(response.content))
         rows = list(reader)
 
@@ -222,7 +222,7 @@ class TrackingTests(TestCase):
         self.user.is_staff = True
         self.user.save()
         client = Client()
-        response = client.get('/tracking/reports/history/')
+        response = client.get('/hydroshare/tracking/reports/history/')
         self.assertEqual(response.status_code, 200)
         reader = csv.reader(StringIO(response.content))
         rows = list(reader)
@@ -237,7 +237,7 @@ class TrackingTests(TestCase):
         variable = self.session.record('testvar', "abcdef")
         self.assertEqual(variable.session.id, self.session.id)
 
-        response = client.get('/tracking/reports/history/')
+        response = client.get('/hydroshare/tracking/reports/history/')
         self.assertEqual(response.status_code, 200)
         reader = csv.DictReader(StringIO(response.content))
         rows = list(reader)

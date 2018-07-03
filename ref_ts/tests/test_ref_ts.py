@@ -29,12 +29,12 @@ class TestRefTS(TestCase):
             groups=[self.group]
         )
 
-        self.url_to_get_his_urls = "/hsapi/_internal/get-his-urls/"
-        self.url_to_search_sites = "/hsapi/_internal/search-sites/"
-        self.url_to_search_variables = "/hsapi/_internal/search-variables/"
-        self.url_to_time_series_from_service = "/hsapi/_internal/time-series-from-service/"
-        self.url_to_create_ref_time_series = "/hsapi/_internal/create-ref-time-series/"
-        self.url_to_download_resource_files = "/hsapi/_internal/{0}/download-refts-bag/"
+        self.url_to_get_his_urls = "/hydroshare/hsapi/_internal/get-his-urls/"
+        self.url_to_search_sites = "/hydroshare/hsapi/_internal/search-sites/"
+        self.url_to_search_variables = "/hydroshare/hsapi/_internal/search-variables/"
+        self.url_to_time_series_from_service = "/hydroshare/hsapi/_internal/time-series-from-service/"
+        self.url_to_create_ref_time_series = "/hydroshare/hsapi/_internal/create-ref-time-series/"
+        self.url_to_download_resource_files = "/hydroshare/hsapi/_internal/{0}/download-refts-bag/"
 
     def test_get_his_central_urls(self):
         self.assertEqual(1, 1)
