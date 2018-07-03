@@ -15,21 +15,10 @@ class NextStepsTestCase(TestCase):
     def test_no_upload_links_with_invalid_state(self):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
-        self.assertNotContains(
-            response,
-            'Welcome to MindMyHealth',
-        )
-        self.assertNotContains(
-            response,
-            'Download a Template Advance Directive',
-        )
-        self.assertContains(
-            response,
-            'Thank you for registering',
-        )
+        self.assertTemplateUsed('myhpom/accounts/next_steps_no_ad_template.html')
 
     def test_upload_links_with_valid_state(self):
-        factories.StateAdvanceDirectiveFactory(
+        ad = factories.StateAdvanceDirectiveFactory(
             state='NC',
         )
         response = self.client.get(
@@ -38,15 +27,8 @@ class NextStepsTestCase(TestCase):
             })
         )
         self.assertEqual(200, response.status_code)
-        self.assertContains(
-            response,
-            'Welcome to MindMyHealth',
-        )
-        self.assertContains(
-            response,
-            'Download a Template Advance Directive',
-        )
-        self.assertNotContains(
-            response,
-            'Thank you for registering',
+        self.assertTemplateUsed('myhpom/accounts/signup.html')
+        self.assertEqual(
+            ad,
+            response.context['ad_template'],
         )
