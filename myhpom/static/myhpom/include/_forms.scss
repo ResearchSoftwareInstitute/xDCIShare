@@ -1,0 +1,20 @@
+.nobutton-radio {
+    display: flex;
+    margin-top: 1rem;
+    padding-left: 0;
+}
+
+.nobutton-radio__label {
+    @extend .btn;
+    @extend .btn-secondary;
+
+    flex-grow: 1;
+
+    &::before {
+        content: none;
+    }
+}
+
+.custom-radio .custom-control-input:checked ~ .custom-control-label.nobutton-radio__label {
+    @extend .btn-primary;
+}

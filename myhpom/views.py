@@ -13,6 +13,13 @@ def signup(request):
     return render(request, 'myhpom/accounts/signup.html')
 
 
+def choose_network(request):
+    context = {
+        'state': 'North Carolina',
+    }
+    return render(request, 'myhpom/accounts/choose_network.html', context)
+
+
 def next_steps(request, state=''):
     if not state:
         # TODO: get user's associated state if state is not passed
