@@ -1,7 +1,7 @@
 {
   "name": "myhpom",
   "version": "0.0.1",
-  "description": "",
+  "description": "MyHPOM is a collaborative website being developed for better management of personal health and healthcare information.",
   "main": "",
   "repository": {
     "type": "git",

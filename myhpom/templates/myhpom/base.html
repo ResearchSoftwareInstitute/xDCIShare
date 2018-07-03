@@ -10,7 +10,7 @@
         <script type="text/javascript" src="{% static "myhpom/bootstrap/dist/js/bootstrap.min.js" %}"></script>
         <link href="{% sass_src 'myhpom/myhpom.scss' %}" rel="stylesheet" type="text/css" />
 
-        <title>{% block title %}{% endblock title %}</title>
+        <title>{% block title %}My Health Peace Of Mind{% endblock title %}</title>
     </head>
     <body class="myhpom-page--flush-footer">
         <header>
@@ -29,7 +29,7 @@
                         </ul>
                         <ul class="navbar-nav">
                             <li class="nav-item"><a class="nav-link" href="{% url "theme.views.login" %}">LOG IN</a></li>
-                            <li class="nav-item"><a class="btn btn-secondary" href="">START NOW</a></li>
+                            <li class="nav-item"><a class="btn btn-secondary" href="{% url 'myhpom:signup' %}">START NOW</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -40,57 +40,56 @@
                 {% block main_content %}{% endblock main_content %}
             </div>
         </main>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <p><h2>MindMyHealth</h2></p>
+                    </div>
+                    <div class="col">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            <a href="">Home</a>
+                            <a href="">Why Plan?</a>
+                            <a href="">How it Works</a>
+                            <a href="">FAQs</a>
+                            <a href="">About</a>
+                            <a href="">Contact Us</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>
+                        Privacy Policy
+                        Legal Disclaimers
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p>
+                            <em>&copy;MIND MY HEALTH</em>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit, sed do eiusmod tempor incididunt ut labore et
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        {% block extra-js %}
+        {% endblock extra-js %}
     </body>
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <p><h2>MindMyHealth</h2></p>
-                </div>
-                <div class="col">
-                    <p></p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p>
-                        <a href="">Home</a>
-                        <a href="">Why Plan?</a>
-                        <a href="">How it Works</a>
-                        <a href="">FAQs</a>
-                        <a href="">About</a>
-                        <a href="">Contact Us</a>
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p>
-                    Privacy Policy
-                    Legal Disclaimers
-                    </p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <p>
-                        <em>&copy;MIND MY HEALTH</em>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incididunt ut labore et
-                    </p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    {% block extra-js %}
-    {% endblock extra-js %}
 </html>

@@ -234,6 +234,7 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, STATIC_URL.strip("/"))
 
 STATICFILES_DIRS = (
     ('myhpom', '/opt/node_modules'),
+    ('styleguide', 'myhpom/static/astrum'),
 )
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
