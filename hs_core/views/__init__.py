@@ -83,7 +83,7 @@ def verify(request, *args, **kwargs):
         from django.contrib.auth import login
         u.backend = settings.AUTHENTICATION_BACKENDS[0]
         login(request, u)
-        return HttpResponseRedirect('/account/update/')
+        return HttpResponseRedirect('/hydroshare/account/update/')
     else:
         from django.contrib import messages
         messages.error(request, "Your verification token was invalid.")
@@ -969,7 +969,7 @@ def resend_verification_email(request):
             'Please verify your new MyHPOM account.',
             """
 This is an automated email from MyHPOM.org. If you requested a MyHPOM account, please
-go to http://{domain}/verify/{token}/ and verify your account.
+go to http://{domain}/hydroshare/verify/{token}/ and verify your account.
 """.format(
             domain=Site.objects.get_current().domain,
             token=token
@@ -1384,7 +1384,7 @@ def group_membership(request, uidb36, token, membership_request_id, **kwargs):
 
                 messages.info(request, message)
                 # redirect to group profile page
-                return HttpResponseRedirect('/group/{}/'.format(membership_request.group_to_join.id))
+                return HttpResponseRedirect('/hydroshare/group/{}/'.format(membership_request.group_to_join.id))
             else:
                 messages.error(request, "The link you clicked is no longer valid.")
                 return redirect("/")
@@ -1474,7 +1474,7 @@ def get_user_or_group_data(request, user_or_group_id, is_group, *args, **kwargs)
 
         user_data['name'] = user_name
         user_data['email'] = user.email
-        user_data['url'] = '{domain}/user/{uid}/'.format(domain=utils.current_site_url(), uid=user.pk)
+        user_data['url'] = '{domain}/hydroshare/user/{uid}/'.format(domain=utils.current_site_url(), uid=user.pk)
         if user.userprofile.phone_1:
             user_data['phone'] = user.userprofile.phone_1
         elif user.userprofile.phone_2:
@@ -1497,7 +1497,7 @@ def get_user_or_group_data(request, user_or_group_id, is_group, *args, **kwargs)
     else:
         group = utils.group_from_id(user_or_group_id)
         user_data['organization'] = group.name
-        user_data['url'] = '{domain}/user/{uid}/'.format(domain=utils.current_site_url(),
+        user_data['url'] = '{domain}/hydroshare/user/{uid}/'.format(domain=utils.current_site_url(),
                                                          uid=group.pk)
         user_data['description'] = group.gaccess.description
 
