@@ -168,7 +168,6 @@ urlpatterns += patterns('',
     # ``mezzanine.urls``, go right ahead and take the parts you want
     # from it, and use them directly below instead of using
     # ``mezzanine.urls``.
-    ("^", include("mezzanine.urls")),
 
     # MOUNTING MEZZANINE UNDER A PREFIX
     # ---------------------------------
@@ -191,6 +190,7 @@ urlpatterns += patterns('',
 hydroshare_urls = urlpatterns
 urlpatterns = [
     url(r'^hydroshare/', include(hydroshare_urls)),
+    url(r'', include("mezzanine.urls")),
     url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
 
