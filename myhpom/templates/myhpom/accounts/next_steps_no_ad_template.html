@@ -1,0 +1,58 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+<div class="modal show pseudo-modal">
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            <div class="modal-header modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title--centered">
+                    Thank you for registering
+                </h1>
+                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+
+            <div class="modal-header modal-header--subtitle pseudo-modal__header">
+                <p class="pseudo-modal__header-caption-text">
+                    {% lorem 24 w %}
+                </p>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3>Welcome!</h3>
+                        <p>
+                            Currently, Mind My Health serves North Carolina
+                            and South Carolina.
+                        </p>
+                        <p>
+                            <a href="{% url 'myhpom:home' %}">
+                                Why North and South Carolina?
+                            </a>
+                        </p>
+                        <p>
+                            However, we are continuing to grow and invite
+                            you to continue building your account.
+                            We will notify you as we expand into your state.
+                        </p>
+                        <p>
+                            You may still store your documents with us
+                            and retrieve them upon request.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
+                    Go To Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}

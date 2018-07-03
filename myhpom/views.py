@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from myhpom import models
+
 
 def home(request):
     return render(request, 'myhpom/home.html')
@@ -12,4 +14,14 @@ def signup(request):
 
 
 def next_steps(request):
-    return render(request, 'myhpom/accounts/next_steps.html')
+    MOCK_USER_STATE_CHOICE = 'NC'
+    try:
+        ad_template = models.StateAdvanceDirective.objects.get(
+            state=MOCK_USER_STATE_CHOICE
+        )
+        context = {
+            'ad_template': ad_template
+        }
+        return render(request, 'myhpom/accounts/next_steps.html', context)
+    except models.StateAdvanceDirective.DoesNotExist:
+        return render(request, 'myhpom/accounts/next_steps_no_ad_template.html')
