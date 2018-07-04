@@ -13,13 +13,14 @@ def signup(request):
     return render(request, 'myhpom/accounts/signup.html')
 
 
-def next_steps(request):
-    # TODO: when the user profile is set up, use the request's associated
-    # user to determine what this should be.
-    MOCK_USER_STATE_CHOICE = 'NC'
+def next_steps(request, state=''):
+    if not state:
+        # TODO: get user's associated state if state is not passed
+        # in via URL
+        state = 'NC'
     try:
         ad_template = models.StateAdvanceDirective.objects.get(
-            state=MOCK_USER_STATE_CHOICE
+            state=state.upper()
         )
         context = {
             'ad_template': ad_template

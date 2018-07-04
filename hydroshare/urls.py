@@ -190,7 +190,7 @@ urlpatterns += patterns('',
 hydroshare_urls = urlpatterns
 urlpatterns = [
     url(r'^hydroshare/', include(hydroshare_urls)),
-    url(r'', include("mezzanine.urls")),
+    url(r'^hydroshare/', include("mezzanine.urls")),
     url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
 

@@ -26,11 +26,11 @@
                         <p>
                             Currently, Mind My Health serves North Carolina
                             and South Carolina.
-                        </p>
-                        <p>
-                            <a href="{% url 'myhpom:home' %}">
-                                Why North and South Carolina?
-                            </a>
+                            <small>
+                                <a href="{% url 'myhpom:home' %}">
+                                    (Why North and South Carolina?)
+                                </a>
+                            </small>
                         </p>
                         <p>
                             However, we are continuing to grow and invite
@@ -41,13 +41,31 @@
                             You may still store your documents with us
                             and retrieve them upon request.
                         </p>
+                        <form>
+                            <div class="form-group">
+                                <label for="id_healthcare_network">Please share your healthcare network:</label>
+                                <input
+                                    class="form-control"
+                                    aria-describedby="healthcare_network_help"
+                                    type="text"
+                                    name="healthcare_network"
+                                    id="id_healthcare_network"
+                                    placeholder="My healthcare network"
+                                />
+                                <small class="form-text text-muted" id="healthcare_network_help">
+                                    <a href="{% url 'myhpom:home' %}">
+                                        How do I find my healthcare network?
+                                    </a>
+                                </small>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
 
             <div class="modal-footer">
                 <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
-                    Go To Dashboard
+                    Submit
                 </a>
             </div>
         </div>
