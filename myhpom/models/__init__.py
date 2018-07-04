@@ -1,4 +1,8 @@
 from django.db import models
+from .state import State
+from .user import User
+from .user_details import UserDetails
+
 
 AD_PACKET_STATES = (
     ('NC', 'North Carolina'),
