@@ -12,6 +12,12 @@ name_validator = RegexValidator(
 # Email: valid email address
 email_validator = EmailValidator()
 
+# Email is not already taken
+def email_not_taken_validator(email):
+    from myhpom.models import User
+    if len(User.objects.filter(email=email)) > 0:
+        raise ValidationError(u'Email already in use.')
+
 # Password: At least 8 chars total, 1 uppercase, lowercase, digit, special char.
 def password_validator(password):
     errors = []

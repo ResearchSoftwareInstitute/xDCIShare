@@ -18,9 +18,7 @@ class SignupForm(forms.Form):
         error_messages={'required': 'Please enter your last name'},
     )
     email = forms.EmailField(
-        label='Email Address',
-        validators=[validators.email_validator],
-        error_messages={'required': 'Please enter a valid email address'},
+        label='Email Address', validators=[validators.email_not_taken_validator]
     )
     password = forms.CharField(
         label='Enter a Password',
