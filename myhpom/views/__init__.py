@@ -1,16 +1,11 @@
 from django.shortcuts import render
 
 from myhpom import models
+from myhpom.views.signup import signup
 
 
 def home(request):
     return render(request, 'myhpom/home.html')
-
-
-def signup(request):
-    # NOTE: this can be replaced with an appropriate CBV or whatever
-    # as necessary; for now it is a placeholder to render a template.
-    return render(request, 'myhpom/accounts/signup.html')
 
 
 def next_steps(request, state=''):
