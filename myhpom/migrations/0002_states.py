@@ -36,10 +36,10 @@ class Migration(migrations.Migration):
                     primary_key=True)),
                 ('name', models.CharField(unique=True, max_length=2)),
                 ('title', models.CharField(max_length=1024)),
-                ('isfirst', models.NullBooleanField()),
+                ('supported', models.NullBooleanField()),
             ],
             options={
-                'ordering': ['isfirst', 'name'],
+                'ordering': ['supported', 'name'],
             },
         ),
         migrations.RunPython(load_fixture_states, reverse_code=unload_fixture_states),
