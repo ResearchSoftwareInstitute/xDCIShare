@@ -6,7 +6,7 @@ from django.core.validators import EmailValidator, RegexValidator
 name_validator = RegexValidator(
     regex=r'\w',
     flags=re.U,
-    message='Enter your name'
+    message='Please enter your name'
 )
 
 # Email: valid email address
@@ -26,5 +26,5 @@ def password_validator(password):
     if re.search(r"[!\@\#\$\%\^\*\(\)\_\+\-\=]", password) is None:
         errors.append(u'1 special character (! @ # $ % ^ * ( ) _ + - =)')
     if len(errors) > 0:
-        raise ValidationError(u'Enter a password with at least ' + u', '.join(errors))
+        raise ValidationError(u'Please enter a password with at least ' + u', '.join(errors))
 
