@@ -8,6 +8,10 @@ def home(request):
     return render(request, 'myhpom/home.html')
 
 
+def choose_network(request):
+    return('Not yet implemented.')
+
+
 def next_steps(request, state=''):
     if not state:
         # TODO: get user's associated state if state is not passed
