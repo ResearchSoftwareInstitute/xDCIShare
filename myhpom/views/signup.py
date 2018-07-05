@@ -8,22 +8,27 @@ from myhpom.models import User, UserDetails, State
 def signup(request):
     """
     TODO:
-    * check to make sure the email isn't already taken
+    * check to make sure the email isn't already taken?
     * send an email to the user after signup
-    * redirect to 'select_network' if the state is one that is supported
     """
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
-            user_keys = ['first_name', 'last_name', 'email']
-            user = User(**{k: v for k, v in form.fields.items() if k in user_keys})
+            user_fields = ['first_name', 'last_name', 'email']
+            user = User(**{k: v for k, v in form.fields.items() if k in user_fields})
             user.set_password(form.fields['password'])
             user.save()
             user_details = UserDetails.create(
-                user=user, state=State.objects.get(name=form.fields['state'])
+                user=user,
+                state=State.objects.get(name=form.fields['state']),
+                accept_tos=form.fields['accept_tos'],
             )
             auth.login(request, user)
-            redirect('next_steps')
+            # **TODO** send email here
+            if user_details.state.supported == True:
+                return redirect('choose_network')
+            else:
+                return redirect('next_steps')
         # else it falls through to re-display the page with errors
     else:
         form = SignupForm()
