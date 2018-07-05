@@ -46,14 +46,15 @@ class SignupTestCase(TestCase):
         User.objects.get(email=self.form_data['email']).delete()
         # test assertions
         self.assertEqual(302, response.status_code)
-        self.assertEqual(reverse('myhpom:choose_network'), response.redirect_chain[0][0])
+        self.assertEqual('http://testserver'+reverse('myhpom:choose_network'), response.url)
 
     def test_post_signup_valid_unsupported(self):
         """valid signup with an unsupported state should redirect to next_steps"""
+        data = self.form_data
         data['state'] = State.objects.filter(supported=None)[0].name
         response = self.client.post(self.url, data=data)
         # reset database state
         User.objects.get(email=self.form_data['email']).delete()
         # test assertions
         self.assertEqual(302, response.status_code)
-        self.assertEqual(reverse('myhpom:next_steps'), response.redirect_chain[0][0])
+        self.assertEqual('http://testserver'+reverse('myhpom:next_steps'), response.url)
