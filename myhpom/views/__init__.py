@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from myhpom import models
 from myhpom.views.signup import signup
@@ -9,7 +9,7 @@ def home(request):
 
 
 def choose_network(request):
-    return('Not yet implemented.')
+    return redirect('myhpom:home')
 
 
 def next_steps(request, state=''):
