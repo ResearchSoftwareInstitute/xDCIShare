@@ -21,6 +21,6 @@ class SignupFormTestCase(TestCase):
 
     def test_minimal_valid_data(self):
         form = SignupForm(self.form_data)
-        self.assertEqual(True, form.isValid())
+        self.assertEqual(True, form.is_valid())
         self.assertEqual({}, form.errors)
 
