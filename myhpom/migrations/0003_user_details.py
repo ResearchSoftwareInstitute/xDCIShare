@@ -20,8 +20,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, 
                     primary_key=True)),
-                ('middle_name', models.CharField(max_length=1024, null=True, blank=True)),
-                ('tos_affirmed', models.NullBooleanField()),
+                ('middle_name', models.CharField(max_length=30, null=True, blank=True)),
+                ('accept_tos', models.NullBooleanField()),
                 ('state', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, 
                     blank=True, to='myhpom.State', null=True)),
                 ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
