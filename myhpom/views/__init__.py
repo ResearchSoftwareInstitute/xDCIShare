@@ -9,10 +9,6 @@ def home(request):
 
 
 def choose_network(request):
-    return redirect('myhpom:home')
-
-
-def choose_network(request):
     context = {
         'state': 'North Carolina',
     }
