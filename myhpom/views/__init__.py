@@ -2,17 +2,11 @@ from django.shortcuts import render, redirect
 
 from myhpom import models
 from myhpom.views.signup import signup
+from myhpom.views.choose_network import choose_network
 
 
 def home(request):
     return render(request, 'myhpom/home.html')
-
-
-def choose_network(request):
-    context = {
-        'state': 'North Carolina',
-    }
-    return render(request, 'myhpom/accounts/choose_network.html', context)
 
 
 def next_steps(request, state=''):
