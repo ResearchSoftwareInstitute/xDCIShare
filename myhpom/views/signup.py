@@ -7,7 +7,6 @@ from myhpom.models import User, UserDetails, State
 def signup(request):
     """
     TODO:
-    * check to make sure the email isn't already taken?
     * send an email to the user after signup
     * auth.login() user
     """
@@ -26,7 +25,7 @@ def signup(request):
             user_details.save()
             # auth.login(request, user)
             # **TODO** send email here
-            if user_details.state.supported == True:
+            if user_details.state.supported is True:
                 return redirect('myhpom:choose_network')
             else:
                 return redirect('myhpom:next_steps')
