@@ -7,6 +7,10 @@ def home(request):
     return render(request, 'myhpom/home.html')
 
 
+def dashboard(request):
+    return render(request, 'myhpom/dashboard.html')
+
+
 def signup(request):
     # NOTE: this can be replaced with an appropriate CBV or whatever
     # as necessary; for now it is a placeholder to render a template.

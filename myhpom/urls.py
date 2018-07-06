@@ -4,6 +4,7 @@ from myhpom import views as myhpom_views
 
 urlpatterns = [
     url(r'^$', myhpom_views.home, name='home'),
+    url(r'^dashboard/$', myhpom_views.dashboard, name='dashboard'),
     url(r'^accounts/signup/$', myhpom_views.signup, name='signup'),
     # The `state` argument in the following URL is mainly useful for testing
     # at the moment and can be removed as necessary further down the road.

@@ -1,15 +1,11 @@
 from django.core.urlresolvers import reverse
-from django.test import (
-    Client,
-    TestCase,
-)
+from django.test import TestCase
 
 from myhpom.tests import factories
 
 
 class NextStepsTestCase(TestCase):
     def setUp(self):
-        self.client = Client()
         self.url = reverse('myhpom:next_steps')
 
     def test_no_upload_links_with_invalid_state(self):
@@ -32,3 +28,13 @@ class NextStepsTestCase(TestCase):
             ad,
             response.context['ad_template'],
         )
+
+
+class DashboardTestCase(TestCase):
+    def setUp(self):
+        self.url = reverse('myhpom:dashboard')
+
+    def test_basic_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/dashboard.html')
