@@ -31,11 +31,12 @@ class SignupTestCase(TestCase):
         self.assertTemplateUsed('myhpom/accounts/signup.html')
 
     def test_post_signup_invalid(self):
-        """invalid signup should redisplay signup page"""
+        """invalid signup should redisplay signup page and result in form errors"""
         data = {}  # empty signup data is certainly invalid!
         response = self.client.post(self.url, data=data)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/accounts/signup.html')
+        self.assertFalse(response.context['form'].is_valid())
 
     def test_post_signup_valid_supported(self):
         """valid signup with a supported state should redirect to choose_network"""
