@@ -1,0 +1,169 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+<div class="modal show pseudo-modal">
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            <div class="modal-header modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title--centered">
+                    Thank you for registering
+                </h1>
+                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="pseudo-modal__header-caption-text">
+                            You will receive an email asking you to confirm your email
+                            address. <small>(What is this?)</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <p class="pseudo-modal__header-caption-text">
+                            To complete your profile, please add your healthcare
+                            network. <small>(Why do you need this information?)</small>
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>
+                            Please select a healthcare network for {{ state }}
+                            <small>(Change Profile)</small>
+                        </h4>
+                        <small>How do I find my healthcare network?</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-control custom-radio nobutton-radio">
+                            <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="id_healthcare_network_0"
+                                name="healthcare_network"
+                            />
+                            <label
+                                class="custom-control-label nobutton-radio__label"
+                                for="id_healthcare_network_0"
+                            >
+                                Cone Healthcare Systems
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-control custom-radio nobutton-radio">
+                            <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="id_healthcare_network_1"
+                                name="healthcare_network"
+                            />
+                            <label
+                                class="custom-control-label nobutton-radio__label"
+                                for="id_healthcare_network_1"
+                            >
+                                Atrium Health
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-control custom-radio nobutton-radio">
+                            <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="id_healthcare_network_2"
+                                name="healthcare_network"
+                            />
+                            <label
+                                class="custom-control-label nobutton-radio__label"
+                                for="id_healthcare_network_2"
+                            >
+                                Duke Health Network
+                            </label>
+                        </div>
+                    </div>
+                    {% for i in '345678' %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-control custom-radio nobutton-radio">
+                            <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="id_healthcare_network_{{ i }}"
+                                name="healthcare_network"
+                            />
+                            <label
+                                class="custom-control-label nobutton-radio__label"
+                                for="id_healthcare_network_{{ i }}"
+                            >
+                                {% lorem 3 w %}
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6 col-lg-8">
+                        <div class="form-group">
+                            <label for="id_healthcare_network_full">Complete list of healthcare networks:</label>
+                            <select name="healthcare_network" id="id_healthcare_network_full" class="custom-select">
+                                <option value="null" selected>—</option>
+                                {% for i in '0123456789' %}
+                                    <option value="network_{{ i }}">{% lorem 3 w %}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <label for="id_custom_healthcare_provider">Not listed? Write network below:</label>
+                            <input class="form-control" type="text" name="custom_healthcare_provider" id="id_custom_healthcare_provider" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <!-- TODO: add real URL -->
+                <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
+                    Go To Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}
+
+{% block extra-js %}
+<script>
+    /*
+        Enforce mutual exclusion of radio button selection and
+        use of the `select` element. When either input changes,
+        if a non-null value is chosen, clear the other's value.
+    */
+    jQuery(function ($) {
+        var $radios = $('input[type="radio"]');
+        var $fullSelect = $('#id_healthcare_network_full');
+
+        $radios.on('change', function (e) {
+            if ($(e.target).prop('checked')) {
+                $fullSelect.val('null');
+            }
+        });
+
+        $fullSelect.on('change', function (e) {
+            if ($(e.target).val() !== 'null') {
+                $radios.prop('checked', false);
+            }
+        });
+    });
+</script>
+{% endblock extra-js %}
