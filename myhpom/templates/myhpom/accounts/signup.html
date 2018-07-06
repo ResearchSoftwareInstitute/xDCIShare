@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="id_state">State of residence</label>
+                                    <label for="id_state">{{form.fields.state.label|upper}}</label>
                                     <select name="state" id="id_state" class="form-control{% if form.errors.state %} is-invalid{% endif %}">
                                         <option value=""></option>
                                         {% for state in us_states %}
