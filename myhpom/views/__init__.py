@@ -9,6 +9,10 @@ def home(request):
     return render(request, 'myhpom/home.html')
 
 
+def dashboard(request):
+    return render(request, 'myhpom/dashboard.html')
+
+
 def next_steps(request, state=''):
     if not state:
         # TODO: get user's associated state if state is not passed
