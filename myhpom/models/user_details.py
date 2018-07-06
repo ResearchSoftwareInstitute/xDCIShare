@@ -18,3 +18,4 @@ class UserDetails(models.Model):
     middle_name = models.CharField(max_length=30, null=True, blank=True)
     accept_tos = models.NullBooleanField()
     health_network = models.ForeignKey(HealthNetwork, on_delete=models.SET_NULL, null=True)
+    custom_provider = models.CharField(max_length=1024, null=True, blank=True)

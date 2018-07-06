@@ -52,6 +52,7 @@ class Migration(migrations.Migration):
             ],
             options={'ordering': ['priority', 'name']},
         ),
+        migrations.RunPython(load_fixture_networks, reverse_code=unload_fixture_networks),
         migrations.AddField(
             model_name='userdetails',
             name='health_network',
@@ -59,5 +60,9 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.SET_NULL, to='myhpom.HealthNetwork', null=True
             ),
         ),
-        migrations.RunPython(load_fixture_networks, reverse_code=unload_fixture_networks),
+        migrations.AddField(
+            model_name='userdetails',
+            name='custom_provider',
+            field=models.CharField(max_length=1024, null=True, blank=True),
+        ),
     ]
