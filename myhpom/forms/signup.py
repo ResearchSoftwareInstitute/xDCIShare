@@ -44,11 +44,12 @@ class SignupForm(forms.Form):
     )
 
     def clean(self):
-        cleaned_data = forms.Form.clean(self)
-        password = cleaned_data.get("password")
-        password_confirm = cleaned_data.get("password_confirm")
-
-        if password != password_confirm:
+        password = self.cleaned_data.get("password")
+        password_confirm = self.cleaned_data.get("password_confirm")
+        if password is not None and password_confirm is not None and password != password_confirm:
             self.add_error('password_confirm', "Please enter exactly the same password again")
 
-        return cleaned_data
+        if self.is_valid():
+            self.cleaned_data = forms.Form.clean(self)
+
+        return self.cleaned_data
