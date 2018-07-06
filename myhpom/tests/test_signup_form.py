@@ -21,6 +21,11 @@ class SignupFormTestCase(TestCase):
 
     def test_minimal_valid_data(self):
         form = SignupForm(self.form_data)
-        self.assertEqual(True, form.is_valid())
+        self.assertTrue(form.is_valid())
         self.assertEqual({}, form.errors)
 
+    def test_passwords_dont_match(self):
+        data = self.form_data
+        data['password_confirm'] += '1' # still valid on its own, but doesn't match
+        form = SignupForm(data)
+        self.assertFalse(form.is_valid())

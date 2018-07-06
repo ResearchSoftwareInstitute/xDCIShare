@@ -31,11 +31,12 @@ class SignupTestCase(TestCase):
         self.assertTemplateUsed('myhpom/accounts/signup.html')
 
     def test_post_signup_invalid(self):
-        """invalid signup should redisplay signup page"""
+        """invalid signup should redisplay signup page and result in form errors"""
         data = {}  # empty signup data is certainly invalid!
         response = self.client.post(self.url, data=data)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/accounts/signup.html')
+        self.assertFalse(response.context['form'].is_valid())
 
     def test_post_signup_valid_supported(self):
         """valid signup with a supported state should redirect to choose_network"""
@@ -45,8 +46,9 @@ class SignupTestCase(TestCase):
         # reset database state
         User.objects.get(email=self.form_data['email']).delete()
         # test assertions
-        self.assertEqual(302, response.status_code)
-        self.assertEqual('http://testserver'+reverse('myhpom:choose_network'), response.url)
+        self.assertRedirects(
+            response, reverse('myhpom:choose_network'), fetch_redirect_response=False
+        )
 
     def test_post_signup_valid_unsupported(self):
         """valid signup with an unsupported state should redirect to next_steps"""
@@ -56,5 +58,6 @@ class SignupTestCase(TestCase):
         # reset database state
         User.objects.get(email=self.form_data['email']).delete()
         # test assertions
-        self.assertEqual(302, response.status_code)
-        self.assertEqual('http://testserver'+reverse('myhpom:next_steps'), response.url)
+        self.assertRedirects(
+            response, reverse('myhpom:next_steps'), fetch_redirect_response=False
+        )

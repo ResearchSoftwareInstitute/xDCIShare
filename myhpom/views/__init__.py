@@ -19,12 +19,8 @@ def next_steps(request, state=''):
         # in via URL
         state = 'NC'
     try:
-        ad_template = models.StateAdvanceDirective.objects.get(
-            state=state.upper()
-        )
-        context = {
-            'ad_template': ad_template
-        }
+        ad_template = models.StateAdvanceDirective.objects.get(state=state.upper())
+        context = {'ad_template': ad_template}
         return render(request, 'myhpom/accounts/next_steps.html', context)
     except models.StateAdvanceDirective.DoesNotExist:
         return render(request, 'myhpom/accounts/next_steps_no_ad_template.html')
