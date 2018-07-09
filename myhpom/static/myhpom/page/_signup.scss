@@ -1,5 +1,10 @@
 $invalid_color: #dc3545;
 
+ul.errorlist {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .form-group-tos {
     font-size: 80%;
     margin-bottom: 0;
