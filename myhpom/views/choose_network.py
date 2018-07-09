@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from myhpom.models.state import State
 from myhpom.models.health_network import HealthNetwork, PRIORITY
 from myhpom.forms.choose_network import ChooseNetworkForm
 import math
 
 
+@login_required
 def choose_network(request):
     """
     Allow the logged in user to choose their health network.
@@ -12,29 +14,29 @@ def choose_network(request):
     GET: display the health networks available for the user's state
     POST: store user's the selected network, if any, and continue to next_steps
     """
-    state_arg = request.GET.get("state") or "NC"  # for now, since we don't have an auth user
-    state = State.objects.get(name=state_arg)
+    user_details = request.user.userdetails
+    state = user_details.state
 
     if request.method == "POST":
         form = ChooseNetworkForm(request.POST)
         custom_provider = (form.data.get("custom_provider") or '').strip()
         health_network_id = form.data.get("health_network")
-        network = None
+        health_network = None
         if custom_provider != '':
             # see if it actually already exists
             networks = HealthNetwork.objects.filter(state=state, name=custom_provider.strip())
             if len(networks) > 0:
                 network = networks[0]
             else:
-                # add UserDetails.custom_provider (need login user to complete)
-                pass
+                user_details.custom_provider = custom_provider
+                user_details.save()
         elif health_network_id is not None:
-            network = HealthNetwork.objects.get(id=health_network_id)
+            health_network = HealthNetwork.objects.get(id=health_network_id)
 
-        if network is not None:
+        if health_network is not None:
             # add a reference to this network to the user's UserDetails
-            # -- need login user before this can be completed
-            pass
+            user_details.health_network = health_network
+            user_details.save()
 
         # go ahead to the dashboard even if the network has not been assigned.
         return redirect("myhpom:next_steps")
