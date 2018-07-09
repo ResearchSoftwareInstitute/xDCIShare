@@ -1,3 +1,4 @@
+from django.contrib import auth
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
@@ -42,27 +43,26 @@ class SignupTestCase(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/accounts/signup.html')
         self.assertFalse(response.context['form'].is_valid())
+        self.assertFalse(auth.get_user(self.client).is_authenticated())
 
     def test_post_signup_valid_supported(self):
         """valid signup with a supported state should redirect to choose_network"""
         data = self.form_data
         data['state'] = State.objects.order_by_ad().first().name
         response = self.client.post(self.url, data=data)
-        # reset database state
-        User.objects.get(email=self.form_data['email']).delete()
         # test assertions
         self.assertRedirects(
             response, reverse('myhpom:choose_network'), fetch_redirect_response=False
         )
+        self.assertTrue(auth.get_user(self.client).is_authenticated())
 
     def test_post_signup_valid_unsupported(self):
         """valid signup with an unsupported state should redirect to next_steps"""
         data = self.form_data
         data['state'] = State.objects.order_by_ad().last().name
         response = self.client.post(self.url, data=data)
-        # reset database state
-        User.objects.get(email=self.form_data['email']).delete()
         # test assertions
         self.assertRedirects(
             response, reverse('myhpom:next_steps'), fetch_redirect_response=False
         )
+        self.assertTrue(auth.get_user(self.client).is_authenticated())
