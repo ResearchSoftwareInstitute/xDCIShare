@@ -1,4 +1,4 @@
-from django.contrib import auth
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
@@ -7,11 +7,6 @@ from myhpom.models import State, UserDetails
 
 
 def signup(request):
-    """
-    TODO:
-    * send an email to the user after signup
-    * auth.login() user
-    """
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -25,8 +20,10 @@ def signup(request):
                 accept_tos=form.data['accept_tos'],
             )
             user_details.save()
-            # auth.login(request, user)
-            # **TODO** send email here
+
+            user = authenticate(username=form.data['email'], password=form.data['password'])
+            login(request, user)
+
             if user_details.state.advance_directive_template:
                 return redirect('myhpom:choose_network')
             else:
