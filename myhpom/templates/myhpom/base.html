@@ -28,7 +28,7 @@
                             <li class="nav-item"><a class="nav-link" href="">About</a></li>
                         </ul>
                         <ul class="navbar-nav">
-                            {% if request.user and request.user.is_authenticated %}
+                            {% if user.is_authenticated %}
                             <li class="nav-item"><a class="nav-link" href="{% url "myhpom:logout" %}">LOG OUT</a></li>
                             {% else %}
                             <li class="nav-item"><a class="nav-link" href="{% url "theme.views.login" %}">LOG IN</a></li>
