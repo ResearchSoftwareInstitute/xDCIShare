@@ -89,8 +89,8 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="row">
-                                <div class="col-12 form-group form-group-tos {% if form.errors.accept_tos %}form-group-tos__div--invalid{% endif %}">
-                                    <div class="form-group-tos__content">
+                                <div class="col-12 form-group form-group-tos">
+                                    <div class="form-group-tos__content{% if form.errors.accept_tos %}--invalid{% endif %}">
                                         <h5 class="{% if form.errors.accept_tos %}form-group-tos__h5--invalid{% endif %}">Terms and conditions</h5>
                                         <p class="form-group-tos__text">{% lorem 32 w %}</p>
                                         <p>
