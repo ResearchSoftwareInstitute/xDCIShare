@@ -23,6 +23,7 @@ class State(models.Model):
         max_length=2, unique=True, help_text='Two-letter state abbreviation')
     title = models.CharField(
         max_length=1024, help_text='The full (common) name of the state (e.g. Rhode Island)')
+    is_territory = models.BooleanField(default=False)
     advance_directive_template = models.FileField(
         upload_to='myhpom',
         blank=True,
