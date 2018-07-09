@@ -13,7 +13,7 @@ class StateQuerySet(models.QuerySet):
                 When(ad_length__gt=0, then=Value(1)),
                 default=Value(0),
                 output_field=IntegerField()))
-            .order_by('-has_ad', 'name'))
+            .order_by('-has_ad', 'is_territory', 'name'))
 
 
 class State(models.Model):

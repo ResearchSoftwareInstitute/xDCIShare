@@ -16,3 +16,6 @@ class StateModelTestCase(TestCase):
 
         first_states = State.objects.order_by_ad()[:3]
         self.assertEqual(list(first_states), [NC.first(), SC.first(), AK.first()])
+
+        last_state = State.objects.order_by_ad().last()
+        self.assertTrue(last_state.is_territory)
