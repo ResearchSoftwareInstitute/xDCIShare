@@ -1,3 +1,10 @@
+$invalid_color: #dc3545;
+
+ul.errorlist {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .form-group-tos {
     font-size: 80%;
     margin-bottom: 0;
@@ -8,4 +15,23 @@
     border-radius: 0.25rem;
     // border: 1px solid var(--danger);
     padding: 1rem;
+}
+
+.form-group-tos__content--invalid {
+    border: 1px solid $invalid_color;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.form-group__label--invalid {
+	color: $invalid_color;
+}
+
+.form-group-tos__h5--invalid {
+	color: $invalid_color;
+}
+
+.modal-body__div--invalid {
+    color: $invalid_color;
+    padding-bottom: 1rem;
 }
