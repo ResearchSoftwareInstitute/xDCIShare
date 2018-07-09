@@ -22,7 +22,6 @@ class UserModelTestCase(TestCase):
         user = User(**self.user_data)
         user.save()
         self.assertEqual(user.email, user.username)
-        user.delete()   # tear-down needed for reuse/keep db
 
     def test_save_invalid_user_fails(self):
         """first_name and last_name are not only required, but they have to be alphanumeric,
