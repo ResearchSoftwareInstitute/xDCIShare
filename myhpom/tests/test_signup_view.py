@@ -43,9 +43,6 @@ class SignupTestCase(TestCase):
         data = self.form_data
         data['state'] = State.objects.filter(supported=True)[0].name
         response = self.client.post(self.url, data=data)
-        # reset database state
-        User.objects.get(email=self.form_data['email']).delete()
-        # test assertions
         self.assertRedirects(
             response, reverse('myhpom:choose_network'), fetch_redirect_response=False
         )
@@ -55,8 +52,6 @@ class SignupTestCase(TestCase):
         data = self.form_data
         data['state'] = State.objects.filter(supported=None)[0].name
         response = self.client.post(self.url, data=data)
-        # reset database state
-        User.objects.get(email=self.form_data['email']).delete()
         # test assertions
         self.assertRedirects(
             response, reverse('myhpom:next_steps'), fetch_redirect_response=False
