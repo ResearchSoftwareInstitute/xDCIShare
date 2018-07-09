@@ -52,6 +52,10 @@ class Migration(migrations.Migration):
             ],
             options={'ordering': ['priority', 'name']},
         ),
+        migrations.AlterUniqueTogether(
+            name='healthnetwork',
+            unique_together=set([('state', 'name')]),
+        ),
         migrations.RunPython(load_fixture_networks, reverse_code=unload_fixture_networks),
         migrations.AddField(
             model_name='userdetails',
