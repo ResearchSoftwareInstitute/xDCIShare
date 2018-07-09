@@ -29,3 +29,5 @@ class SignupFormTestCase(TestCase):
         data['password_confirm'] += '1' # still valid on its own, but doesn't match
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
+        self.assertGreaterEqual(len(form.errors['password_confirm']), 1)
+        self.assertGreaterEqual(len(form.non_field_errors()), 1)

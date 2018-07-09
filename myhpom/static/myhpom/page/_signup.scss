@@ -1,3 +1,10 @@
+$invalid_color: #dc3545;
+
+ul.errorlist {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .form-group-tos {
     font-size: 80%;
     margin-bottom: 0;
@@ -10,15 +17,21 @@
     padding: 1rem;
 }
 
-.form-group__label--invalid {
-	color: #dc3545;
+.form-group-tos__content--invalid {
+    border: 1px solid $invalid_color;
+    border-radius: 0.25rem;
+    padding: 1rem;
 }
 
-.form-group-tos__div--invalid {
-	border: 1px solid #dc3545;
-	border-radius: 0.25rem;
+.form-group__label--invalid {
+	color: $invalid_color;
 }
 
 .form-group-tos__h5--invalid {
-	color: #dc3545;
+	color: $invalid_color;
+}
+
+.modal-body__div--invalid {
+    color: $invalid_color;
+    padding-bottom: 1rem;
 }

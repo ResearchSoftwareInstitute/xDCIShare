@@ -49,7 +49,6 @@ class SignupTestCase(TestCase):
         data = self.form_data
         data['state'] = State.objects.order_by_ad().first().name
         response = self.client.post(self.url, data=data)
-        # test assertions
         self.assertRedirects(
             response, reverse('myhpom:choose_network'), fetch_redirect_response=False
         )
