@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.test import Client, TestCase
+from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from myhpom.models import State, UserDetails
@@ -16,7 +16,6 @@ class SignupTestCase(TestCase):
     """
 
     def setUp(self):
-        self.client = Client()
         self.url = reverse('myhpom:signup')
         self.form_data = {
             'first_name': 'A',
