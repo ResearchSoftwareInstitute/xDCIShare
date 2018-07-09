@@ -35,7 +35,7 @@ class SignupForm(forms.Form):
         label='State of Residence',
         choices=((state.name, state.title) for state in models.State.objects.all()),
         required=True,
-        error_messages={'required': 'Please select your state'},
+        error_messages={'required': 'Please select your state.'},
     )
     accept_tos = forms.BooleanField(
         label="I Agree to the Terms and Conditions of the services provided.",
