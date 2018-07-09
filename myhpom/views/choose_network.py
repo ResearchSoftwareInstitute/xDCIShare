@@ -12,12 +12,13 @@ def choose_network(request):
     GET: display the health networks available for the user's state
     POST: store user's the selected network, if any, and continue to next_steps
     """
-    state = State.objects.get(name="NC")  # for now, since we don't have an auth user
+    state_arg = request.GET.get("state") or "NC"  # for now, since we don't have an auth user
+    state = State.objects.get(name=state_arg)
 
     if request.method == "POST":
         form = ChooseNetworkForm(request.POST)
         custom_provider = (form.data.get("custom_provider") or '').strip()
-        network_id = form.data.get("health_network")
+        health_network_id = form.data.get("health_network")
         network = None
         if custom_provider != '':
             # see if it actually already exists
@@ -27,8 +28,8 @@ def choose_network(request):
             else:
                 # add UserDetails.custom_provider (need login user to complete)
                 pass
-        elif network_id is not None:
-            network = HealthNetwork.objects.get(id=network_id)
+        elif health_network_id is not None:
+            network = HealthNetwork.objects.get(id=health_network_id)
 
         if network is not None:
             # add a reference to this network to the user's UserDetails
@@ -39,6 +40,9 @@ def choose_network(request):
         return redirect("myhpom:next_steps")
 
     # request.method == 'GET'
+    if not state.supported:
+        return redirect("myhpom:next_steps")
+
     state_networks = HealthNetwork.objects.filter(state=state)
     health_networks = {
         n: [network for network in state_networks if network.priority == n] for n in PRIORITY.keys()
@@ -48,7 +52,7 @@ def choose_network(request):
         health_networks[0][(row) * 3 : ((row) * 3) + 3]
         for row in range(int(math.ceil(len(health_networks[0]) / 3.)))
     ]
-    _ = health_networks.pop(0)  # because we're going to iterate the groups with priority 1..N
+    _ = health_networks.pop(0)  # we're going to iterate only the groups with priority 1..N
     context = {
         'state': state,
         'health_networks': health_networks,
