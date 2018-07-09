@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from myhpom import models
+from myhpom.models.state import State
 
 
-class StateAdvanceDirectiveAdmin(admin.ModelAdmin):
-    model = models.StateAdvanceDirective
+class StateAdmin(admin.ModelAdmin):
+    model = State
 
 
-admin.site.register(models.StateAdvanceDirective, StateAdvanceDirectiveAdmin)
+admin.site.register(State, StateAdmin)

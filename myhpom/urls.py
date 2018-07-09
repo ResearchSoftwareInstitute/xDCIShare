@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^accounts/signup/$', myhpom_views.signup, name='signup'),
     # The `state` argument in the following URL is mainly useful for testing
     # at the moment and can be removed as necessary further down the road.
-    url(r'^accounts/next-steps/(?P<state>\w\w)?$', myhpom_views.next_steps, name='next_steps'),
+    url(r'^accounts/next-steps/?$', myhpom_views.next_steps, name='next_steps'),
     url(r'^accounts/choose-network/?$', myhpom_views.choose_network, name='choose_network'),
     url(r'^styleguide/$', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT + '/styleguide', 'path': 'index.html'}),

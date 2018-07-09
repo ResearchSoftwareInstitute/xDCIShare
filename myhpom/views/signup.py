@@ -1,7 +1,9 @@
-from django.shortcuts import render, redirect
 from django.contrib import auth
+from django.contrib.auth.models import User
+from django.shortcuts import redirect, render
+
 from myhpom.forms.signup import SignupForm
-from myhpom.models import User, UserDetails, State
+from myhpom.models import State, UserDetails
 
 
 def signup(request):
@@ -25,7 +27,7 @@ def signup(request):
             user_details.save()
             # auth.login(request, user)
             # **TODO** send email here
-            if user_details.state.supported is True:
+            if user_details.state.advance_directive_template:
                 return redirect('myhpom:choose_network')
             else:
                 return redirect('myhpom:next_steps')
@@ -34,7 +36,7 @@ def signup(request):
         form = SignupForm()
 
     # fall through to re-rendering the form
-    us_states = State.objects.all()
+    us_states = State.objects.all().order_by_ad()
     return render(
         request, 'myhpom/accounts/signup.html', context={'form': form, 'us_states': us_states}
     )

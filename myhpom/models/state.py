@@ -1,16 +1,35 @@
 from django.db import models
+from django.db.models import Case, IntegerField, Value, When
+from django.db.models.functions import Length
+
+
+class StateQuerySet(models.QuerySet):
+    def order_by_ad(self):
+        """ Order so that states with advance_directive_template values are
+        before those without. """
+        return (self
+            .annotate(ad_length=Length('advance_directive_template'))
+            .annotate(has_ad=Case(
+                When(ad_length__gt=0, then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField()))
+            .order_by('-has_ad', 'name'))
 
 
 class State(models.Model):
-    """a list of states to choose from: each MyHPOM user is in a state.
-    * name = the two-letter state abbreviation
-    * title = the full (common) name of the state (e.g., Rhode Island)
-    * supported = if True, means that the state is supported by the app.
-    """
+    """ States in the country, and their support for Advance Directives. """
 
-    name = models.CharField(max_length=2, unique=True)
-    title = models.CharField(max_length=1024)
-    supported = models.NullBooleanField()  # if True, the state is a supported state
+    name = models.CharField(
+        max_length=2, unique=True, help_text='Two-letter state abbreviation')
+    title = models.CharField(
+        max_length=1024, help_text='The full (common) name of the state (e.g. Rhode Island)')
+    advance_directive_template = models.FileField(
+        upload_to='myhpom',
+        blank=True,
+        help_text=('AD instructions associated with this State'),
+    )
 
-    class Meta:
-        ordering = ['supported', 'name']  # puts the first=true fields before the first=null fields.
+    objects = StateQuerySet.as_manager()
+
+    def __unicode__(self):
+        return unicode(self.name)

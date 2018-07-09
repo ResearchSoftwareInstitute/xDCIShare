@@ -1,6 +1,9 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import Client, TestCase
-from myhpom.models import User, UserDetails, State
+from django.core.files.uploadedfile import SimpleUploadedFile
+
+from myhpom.models import State, UserDetails
 
 
 class SignupTestCase(TestCase):
@@ -23,6 +26,8 @@ class SignupTestCase(TestCase):
             'state': 'NC',  # a supported state
             'accept_tos': True,
         }
+        State.objects.filter(name='NC') \
+            .update(advance_directive_template=SimpleUploadedFile('afile.txt', ''))
 
     def test_get_signup(self):
         """GET the signup page should work"""
@@ -41,7 +46,7 @@ class SignupTestCase(TestCase):
     def test_post_signup_valid_supported(self):
         """valid signup with a supported state should redirect to choose_network"""
         data = self.form_data
-        data['state'] = State.objects.filter(supported=True)[0].name
+        data['state'] = State.objects.order_by_ad().first().name
         response = self.client.post(self.url, data=data)
         # reset database state
         User.objects.get(email=self.form_data['email']).delete()
@@ -53,7 +58,7 @@ class SignupTestCase(TestCase):
     def test_post_signup_valid_unsupported(self):
         """valid signup with an unsupported state should redirect to next_steps"""
         data = self.form_data
-        data['state'] = State.objects.filter(supported=None)[0].name
+        data['state'] = State.objects.order_by_ad().last().name
         response = self.client.post(self.url, data=data)
         # reset database state
         User.objects.get(email=self.form_data['email']).delete()
