@@ -28,7 +28,11 @@
                             <li class="nav-item"><a class="nav-link" href="">About</a></li>
                         </ul>
                         <ul class="navbar-nav">
+                            {% if user.is_authenticated %}
+                            <li class="nav-item"><a class="nav-link" href="{% url "myhpom:logout" %}">LOG OUT</a></li>
+                            {% else %}
                             <li class="nav-item"><a class="nav-link" href="{% url "theme.views.login" %}">LOG IN</a></li>
+                            {% endif %}
                             <li class="nav-item"><a class="btn btn-secondary" href="{% url 'myhpom:signup' %}">START NOW</a></li>
                         </ul>
                     </div>

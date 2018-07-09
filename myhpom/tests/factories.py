@@ -1,12 +1,27 @@
+from django.contrib.auth.models import User
 import factory
 import factory.fuzzy
+from myhpom.models import State, UserDetails
 
-from myhpom import models
+
+class UserDetailsFactory(factory.django.DjangoModelFactory):
+
+    class Meta(object):
+        model = UserDetails
+
+    state = factory.fuzzy.FuzzyChoice(State.objects.all())
+    middle_name = factory.fuzzy.FuzzyText(length=8)
+    accept_tos = True
+    user = factory.SubFactory('myhpom.tests.factories.UserFactory')
 
 
-class StateAdvanceDirectiveFactory(factory.DjangoModelFactory):
-    state = factory.fuzzy.FuzzyText(length=2)
-    advance_directive_template = factory.django.FileField()
+class UserFactory(factory.django.DjangoModelFactory):
 
-    class Meta:
-        model = models.StateAdvanceDirective
+    class Meta(object):
+        model = User
+
+    username = factory.fuzzy.FuzzyText(length=8)
+    email = factory.Sequence(lambda n: 'user%d@example.com' % n)
+    first_name = factory.fuzzy.FuzzyText(length=8)
+    last_name = factory.fuzzy.FuzzyText(length=8)
+    user_details = factory.RelatedFactory(UserDetailsFactory, 'user')

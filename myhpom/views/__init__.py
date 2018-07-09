@@ -1,29 +1,18 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_GET
+from django.contrib.auth.decorators import login_required
 
 from myhpom import models
 from myhpom.views.signup import signup
+from myhpom.views.accounts import choose_network, next_steps
+from myhpom.views.auth import logout
 
 
+@require_GET
 def home(request):
     return render(request, 'myhpom/home.html')
 
 
-def choose_network(request):
-    return redirect('myhpom:home')
-
-
+@require_GET
 def dashboard(request):
     return render(request, 'myhpom/dashboard.html')
-
-
-def next_steps(request, state=''):
-    if not state:
-        # TODO: get user's associated state if state is not passed
-        # in via URL
-        state = 'NC'
-    try:
-        ad_template = models.StateAdvanceDirective.objects.get(state=state.upper())
-        context = {'ad_template': ad_template}
-        return render(request, 'myhpom/accounts/next_steps.html', context)
-    except models.StateAdvanceDirective.DoesNotExist:
-        return render(request, 'myhpom/accounts/next_steps_no_ad_template.html')

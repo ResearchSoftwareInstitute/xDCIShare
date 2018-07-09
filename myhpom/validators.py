@@ -1,4 +1,6 @@
 import re
+
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator, RegexValidator
 
@@ -10,8 +12,6 @@ email_validator = EmailValidator()
 
 # Email is not already taken
 def email_not_taken_validator(email):
-    from myhpom.models import User
-
     if len(User.objects.filter(email=email)) > 0:
         raise ValidationError(u'Email already in use.')
 
