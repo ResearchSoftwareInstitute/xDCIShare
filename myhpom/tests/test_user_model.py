@@ -1,7 +1,6 @@
-
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from myhpom.models import User
+from django.contrib.auth.models import User
 
 
 class UserModelTestCase(TestCase):
