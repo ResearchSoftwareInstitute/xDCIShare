@@ -20,9 +20,11 @@
             </div>
 
             <div class="modal-body">
-                <div class="invalid-feedback">
-                    {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+                {% if form.non_field_errors %}
+                <div class="modal-body__div--invalid">
+                    {% for error in form.non_field_errors %}{{ error }}{% endfor %}
                 </div>
+                {% endif %}
                 <form name="signup_form" method="POST">
                     {% csrf_token %}
                     <div class="row">

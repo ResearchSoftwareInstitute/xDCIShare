@@ -25,3 +25,8 @@ $invalid_color: #dc3545;
 .form-group-tos__h5--invalid {
 	color: $invalid_color;
 }
+
+.modal-body__div--invalid {
+    color: $invalid_color;
+    padding-bottom: 1rem;
+}

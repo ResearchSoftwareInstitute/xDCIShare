@@ -55,4 +55,9 @@ class SignupForm(forms.Form):
         ):
             self.add_error('password_confirm', "Please enter exactly the same password again")
 
+        if not self.is_valid():
+            self.errors['__all__'] = [
+                'Please make the indicated corrections to complete your signup.'
+            ]
+
         return cleaned_data
