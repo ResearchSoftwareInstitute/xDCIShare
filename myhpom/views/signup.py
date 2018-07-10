@@ -24,7 +24,7 @@ def signup(request):
             user = authenticate(username=form.data['email'], password=form.data['password'])
             login(request, user)
 
-            if user_details.state.name in ["NC", "SC"]: # FIXME: to work for demo
+            if len(user_details.state.healthnetwork_set.all()) > 0:
                 return redirect('myhpom:choose_network')
             else:
                 return redirect('myhpom:next_steps')
