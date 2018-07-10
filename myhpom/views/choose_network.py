@@ -42,7 +42,7 @@ def choose_network(request):
         return redirect("myhpom:next_steps")
 
     # request.method == 'GET'
-    if not state.supported:
+    if user_details.state.name not in ["NC", "SC"]:
         return redirect("myhpom:next_steps")
 
     state_networks = HealthNetwork.objects.filter(state=state)

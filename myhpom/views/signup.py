@@ -24,7 +24,7 @@ def signup(request):
             user = authenticate(username=form.data['email'], password=form.data['password'])
             login(request, user)
 
-            if user_details.state.advance_directive_template:
+            if user_details.state.name in ["NC", "SC"]: # FIXME: to work for demo
                 return redirect('myhpom:choose_network')
             else:
                 return redirect('myhpom:next_steps')
