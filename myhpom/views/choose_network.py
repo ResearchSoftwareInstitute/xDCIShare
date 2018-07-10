@@ -31,7 +31,7 @@ def choose_network(request):
                 user_details.custom_provider = custom_provider
                 user_details.health_network = None
                 user_details.save()
-        elif health_network_id is not None:
+        elif health_network_id not in [None, '', 'null']:   # template sets "null"
             health_network = HealthNetwork.objects.get(id=health_network_id)
 
         if health_network is not None:
@@ -40,11 +40,10 @@ def choose_network(request):
             user_details.custom_provider = None
             user_details.save()
 
-        # go ahead to the dashboard even if the network has not been assigned.
-        return redirect("myhpom:next_steps")
+            return redirect("myhpom:next_steps")
 
     # request.method == 'GET'
-    if len(user_details.state.healthnetwork_set.all()) == 0:
+    if not user_details.state.healthnetwork_set.exists():
         return redirect("myhpom:next_steps")
 
     state_networks = HealthNetwork.objects.filter(state=state)
