@@ -44,7 +44,7 @@ class ChooseNetworkTestCase(TestCase):
         """POST with custom_provider adds it to the user's UserDetails 
         and redirects to next_steps
         """
-        form_data = {"custom_provider": "My Non-existent Custom Provider", "health_network_id": ""}
+        form_data = {"custom_provider": "My Non-existent Custom Provider", "healthcare_network": ""}
         state = models.State.objects.order_by_ad().first()
         response = self.client.post(self.url, data=form_data)
         self.assertRedirects(response, reverse('myhpom:next_steps'), fetch_redirect_response=False)
@@ -58,7 +58,7 @@ class ChooseNetworkTestCase(TestCase):
         """
         state = self.user.userdetails.state
         health_network = models.HealthNetwork.objects.filter(state=state, priority=0)[0]
-        form_data = {"custom_provider": "", "health_network": health_network.id}
+        form_data = {"custom_provider": "", "healthcare_network": health_network.id}
         response = self.client.post(self.url, data=form_data)
         self.assertRedirects(response, reverse('myhpom:next_steps'), fetch_redirect_response=False)
         userdetails = models.UserDetails.objects.get(id=self.user.userdetails.id)

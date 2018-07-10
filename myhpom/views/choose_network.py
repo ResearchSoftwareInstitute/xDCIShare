@@ -20,7 +20,7 @@ def choose_network(request):
     if request.method == "POST":
         form = ChooseNetworkForm(request.POST)
         custom_provider = (form.data.get("custom_provider") or '').strip()
-        health_network_id = form.data.get("health_network")
+        health_network_id = form.data.get("healthcare_network")
         health_network = None
         if custom_provider != '':
             # see if it actually already exists
@@ -29,7 +29,7 @@ def choose_network(request):
                 network = networks[0]
             else:
                 user_details.custom_provider = custom_provider
-                user_details.health_network_id = None
+                user_details.health_network = None
                 user_details.save()
         elif health_network_id is not None:
             health_network = HealthNetwork.objects.get(id=health_network_id)
