@@ -29,6 +29,7 @@ def choose_network(request):
                 network = networks[0]
             else:
                 user_details.custom_provider = custom_provider
+                user_details.health_network_id = None
                 user_details.save()
         elif health_network_id is not None:
             health_network = HealthNetwork.objects.get(id=health_network_id)
@@ -36,6 +37,7 @@ def choose_network(request):
         if health_network is not None:
             # add a reference to this network to the user's UserDetails
             user_details.health_network = health_network
+            user_details.custom_provider = None
             user_details.save()
 
         # go ahead to the dashboard even if the network has not been assigned.
