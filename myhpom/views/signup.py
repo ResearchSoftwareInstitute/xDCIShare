@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
 
 from myhpom.forms.signup import SignupForm
@@ -7,6 +8,9 @@ from myhpom.models import State, UserDetails
 
 
 def signup(request):
+    if request.user.is_authenticated():
+        return redirect(reverse('myhpom:dashboard'))
+
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
