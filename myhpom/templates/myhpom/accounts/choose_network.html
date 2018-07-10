@@ -95,7 +95,7 @@
 
             <div class="modal-footer">
                 <!-- TODO: add real URL -->
-                <a class="btn btn-primary" href="" onClick="event.preventDefault(); document.health_network_form.submit();">
+                <a id="id_submit_health_network_form" class="btn btn-primary" href="">
                     Submit
                 </a>
                 <a href="/accounts/next-steps">Skip for now</a>
@@ -118,6 +118,7 @@
         var $radios = $('input[type="radio"]');
         var $fullSelect = $('#id_healthcare_network_full');
         var $customProvider = $('#id_custom_provider');
+        var $submitHealthNetworkFormButton = $('#id_submit_health_network_form');
 
         $radios.on('change', function (e) {
             $("#id_healthcare_network").val($(e.target).val());
@@ -138,6 +139,11 @@
         $customProvider.on('keypress', function (e) {
             $fullSelect.val('null');
             $radios.prop('checked', false);
+        });
+
+        $submitHealthNetworkFormButton.on('click', function (e) {
+            event.preventDefault();
+            document.health_network_form.submit();
         });
     });
 </script>
