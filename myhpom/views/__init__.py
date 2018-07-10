@@ -5,7 +5,8 @@ from django.core.urlresolvers import reverse
 
 from myhpom import models
 from myhpom.views.signup import signup
-from myhpom.views.accounts import choose_network, next_steps
+from myhpom.views.choose_network import choose_network
+from myhpom.views.accounts import next_steps
 from myhpom.views.auth import logout
 
 
