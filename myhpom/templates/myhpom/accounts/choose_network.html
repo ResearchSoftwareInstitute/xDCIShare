@@ -96,8 +96,9 @@
             <div class="modal-footer">
                 <!-- TODO: add real URL -->
                 <a class="btn btn-primary" href="" onClick="event.preventDefault(); document.health_network_form.submit();">
-                    Go To Dashboard
+                    Submit
                 </a>
+                <a href="/accounts/next-steps">Skip for now</a>
             </div>
         </div>
     </div>
@@ -116,11 +117,13 @@
     jQuery(function ($) {
         var $radios = $('input[type="radio"]');
         var $fullSelect = $('#id_healthcare_network_full');
+        var $customProvider = $('#id_custom_provider');
 
         $radios.on('change', function (e) {
             $("#id_healthcare_network").val($(e.target).val());
             if ($(e.target).prop('checked')) {
                 $fullSelect.val('null');
+                $customProvider.val('');
             }
         });
 
@@ -128,7 +131,13 @@
             $("#id_healthcare_network").val($(e.target).val());
             if ($(e.target).val() !== 'null') {
                 $radios.prop('checked', false);
+                $customProvider.val('');
             }
+        });
+
+        $customProvider.on('keypress', function (e) {
+            $fullSelect.val('null');
+            $radios.prop('checked', false);
         });
     });
 </script>
