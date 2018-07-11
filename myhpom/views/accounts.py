@@ -4,11 +4,6 @@ from django.contrib.auth.decorators import login_required
 
 
 @require_GET
-def choose_network(request):
-    return redirect('myhpom:home')
-
-
-@require_GET
 @login_required
 def next_steps(request):
     state = request.user.userdetails.state

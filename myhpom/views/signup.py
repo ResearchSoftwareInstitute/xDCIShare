@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect, render
 
 from myhpom.forms.signup import SignupForm
@@ -7,6 +8,9 @@ from myhpom.models import State, UserDetails
 
 
 def signup(request):
+    if request.user.is_authenticated():
+        return redirect(reverse('myhpom:dashboard'))
+
     if request.method == "POST":
         form = SignupForm(request.POST)
         if form.is_valid():
@@ -24,7 +28,7 @@ def signup(request):
             user = authenticate(username=form.data['email'], password=form.data['password'])
             login(request, user)
 
-            if user_details.state.advance_directive_template:
+            if user_details.state.healthnetwork_set.exists():
                 return redirect('myhpom:choose_network')
             else:
                 return redirect('myhpom:next_steps')
