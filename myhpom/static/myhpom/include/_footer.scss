@@ -1,0 +1,21 @@
+.footer-links-list {
+    list-style: none;
+}
+
+.footer-links-list--legal {
+    padding-left: 0;
+}
+
+.footer-links-list__link--legal {
+    @extend .text-muted;
+}
+
+.footer-links-list--account-links {
+    text-transform: uppercase;
+    margin-left: auto;
+}
+
+.footer-links-list__item {
+    display: inline-block;
+    margin-right: 1em;
+}

@@ -21,7 +21,7 @@
     <div class="col-md-8 dashboard-main">
         <hr/>
 
-        <section class="dashboard__section dashboard__section--profile-information">
+        <section class="dashboard__section dashboard-profile-information">
             <div class="float-right">
                 <a href="/" class="small">Edit My Profile</a>
             </div>
@@ -33,11 +33,23 @@
             <p class="small">
                 State resident: <strong>{{ request.user.user_details.state|default:'(Unknown state)' }}</strong>
             </p>
+
+            <div class="bg-light dashboard-profile-information__organ-donor-status-box">
+                <div>
+                    <span class="h5">I am not an organ donor.</span>
+                    <a class="small" href="/">Edit status</a>
+                </div>
+                <div>
+                    <a href="/" class="small">
+                        Learn how you can be a donor.
+                    </a>
+                </div>
+            </div>
         </section>
 
         <hr/>
 
-        <section class="dashboard__section dashboard__section--health-network">
+        <section class="dashboard__section dashboard-health-network">
             <div class="float-right">
                 <a href="/" class="small">Update My Health Network</a>
             </div>
@@ -45,6 +57,13 @@
             <h2 class="h6 dashboard__section-title">
                 Health network
             </h2>
+
+            <div class="bg-light dashboard-health-network__info-box">
+                <div class="h3">{{ request.user.user_details.health_network.name|default:'(Unknown Network)' }}</div>
+                <div class="small">
+                    Last Updated: January 1, 1970
+                </div>
+            </div>
         </section>
     </div>
     <div class="col-md-4">
