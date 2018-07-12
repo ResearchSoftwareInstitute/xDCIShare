@@ -1,3 +1,12 @@
+{% comment %}
+This content is rendered inside a .advance-directive-widget element,
+which is rendered inside the dashboard template to provide an
+anchor for the jQuery code to attach live-loaded HTML to.
+(This could also conceivably be appended to the container,
+but it is clearer what's happening if there is an element
+in the template that represents the entry-point.)
+{% endcomment %}
+
 <ul class="advance-directive-widget__breadcrumbs">
     <li class="advance-directive-widget__breadcrumb-item">
         Select Document
@@ -11,6 +20,9 @@
 </ul>
 
 <div class="advance-directive-widget__body">
+    {% comment %}
+    The content for the various steps in the multi-page form should go here.
+    {% endcomment %}
     <h3 class="h6">
         Requirements for Advance Directive:
     </h3>
