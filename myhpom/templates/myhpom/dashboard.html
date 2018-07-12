@@ -18,7 +18,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8 dashboard-main">
+    <div class="col-md-6 col-lg-7 dashboard-main">
         <hr/>
 
         <section class="dashboard__section dashboard-profile-information">
@@ -71,7 +71,7 @@
             </div>
         </section>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6 col-lg-5">
         <section class="bg-light dashboard-sidebar">
             <h2 class="h6 dashboard__section-title dashboard-sidebar__title">
                 My advance directive
@@ -80,6 +80,16 @@
             <p class="small">
                 {% lorem 6 w %}
             </p>
+
+            <div class="advance-directive-widget small" id="advance-directive-widget">
+                {% comment %}
+                The following include is for demonstration purposes only.
+                This element will be selected via `$('#advance-directive-widget')`
+                and filled in with content from the various AJAX calls that
+                take the user through the steps in the upload process.
+                {% endcomment %}
+                {% include 'myhpom/includes/upload_base.html' %}
+            </div>
         </section>
     </div>
 </div>
