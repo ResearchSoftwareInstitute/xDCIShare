@@ -119,9 +119,10 @@
         var $fullSelect = $('#id_healthcare_network_full');
         var $customProvider = $('#id_custom_provider');
         var $submitHealthNetworkFormButton = $('#id_submit_health_network_form');
+        var $healthcareNetwork = $('#id_healthcare_network');
 
         $radios.on('change', function (e) {
-            $("#id_healthcare_network").val($(e.target).val());
+            $healthcareNetwork.val($(e.target).val());
             if ($(e.target).prop('checked')) {
                 $fullSelect.val('null');
                 $customProvider.val('');
@@ -129,7 +130,7 @@
         });
 
         $fullSelect.on('change', function (e) {
-            $("#id_healthcare_network").val($(e.target).val());
+            $healthcareNetwork.val($(e.target).val());
             if ($(e.target).val() !== 'null') {
                 $radios.prop('checked', false);
                 $customProvider.val('');
@@ -139,7 +140,7 @@
         $customProvider.on('keypress', function (e) {
             $fullSelect.val('null');
             $radios.prop('checked', false);
-            $('#id_healthcare_network').val('');
+            $healthcareNetwork.val('');
         });
 
         $submitHealthNetworkFormButton.on('click', function (e) {
