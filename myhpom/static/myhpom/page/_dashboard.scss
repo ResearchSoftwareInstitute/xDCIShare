@@ -35,6 +35,10 @@
 }
 
 @include media-breakpoint-down(sm) {
+    hr {
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+    }
     .dashboard-profile-information__organ-donor-status-info {
         display: flex;
         flex-direction: column;
@@ -42,6 +46,5 @@
 
     .dashboard-sidebar {
         margin-top: 2em;
-        margin-bottom: 1em;
     }
 }
