@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
 from myhpom import models
+from myhpom.views.directive import upload
 from myhpom.views.signup import signup
 from myhpom.views.choose_network import choose_network
 from myhpom.views.accounts import next_steps

@@ -5,6 +5,8 @@ from myhpom import views as myhpom_views
 urlpatterns = [
     url(r'^$', myhpom_views.home, name='home'),
     url(r'^dashboard/$', myhpom_views.dashboard, name='dashboard'),
+    # url(r'^directive/?$', myhpom_views.dashboard, name='dashboard'),
+    url(r'^directive/upload$', myhpom_views.upload, name='dashboard'),
     url(r'^logout$', myhpom_views.logout, name='logout'),
     url(r'^accounts/signup/$', myhpom_views.signup, name='signup'),
     url(r'^accounts/next-steps/?$', myhpom_views.next_steps, name='next_steps'),
