@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myhpom', '0006_health_networks'),
+        ('myhpom', '0008_territories'),
     ]
 
     operations = [
