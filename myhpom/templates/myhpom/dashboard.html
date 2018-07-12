@@ -31,7 +31,7 @@
             </h2>
 
             <p class="small">
-                State resident: <strong>{{ request.user.user_details.state|default:'(Unknown state)' }}</strong>
+                State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
             </p>
 
             <div class="bg-light dashboard-profile-information__organ-donor-status-box">
@@ -64,7 +64,7 @@
             </h2>
 
             <div class="bg-light dashboard-health-network__info-box">
-                <div class="h3">{{ request.user.user_details.health_network.name|default:'(Unknown Network)' }}</div>
+                <div class="h3">{{ request.user.userdetails.health_network.name|default:'(Unknown Network)' }}</div>
                 <div class="small">
                     Last Updated: January 1, 1970
                 </div>
