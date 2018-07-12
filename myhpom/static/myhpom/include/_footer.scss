@@ -1,3 +1,8 @@
+.footer-title-bar {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
 .footer-links-list {
     list-style: none;
 }
@@ -18,4 +23,22 @@
 .footer-links-list__item {
     display: inline-block;
     margin-right: 1em;
+}
+
+
+@include media-breakpoint-down(sm) {
+    .footer-title-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-links-list {
+        padding-left: 0;
+        font-size: 80%;
+    }
+
+    .footer-links-list--account-links {
+        margin-left: 0;
+    }
 }
