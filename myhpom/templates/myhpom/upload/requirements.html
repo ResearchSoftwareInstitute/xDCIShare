@@ -1,4 +1,10 @@
 {% extends "myhpom/dashboard.html" %}
+{% load sass_tags static %}
+
+{% block extra-head %}
+<script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
+<script type="text/javascript" src="{% static "myhpom/combodate-1.0.7/combodate.js" %}"></script>
+{% endblock %}
 
 {% block upload_widget_content %}
 <ul class="advance-directive-widget__breadcrumbs">
@@ -38,7 +44,8 @@
 		<div class="upload-requirements__div">
 			<h4 class="upload-requirements__h4">My file is valid starting:
 				<a class="upload-requirements__a--right" href="" onClick="event.preventDefault();">What is this?</a>
-			</label>
+			</h4>
+			<input id="id_doc_date" name="doc_date" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}"/> 
 		</div>
 
 		<div class="upload-requirements__div">
@@ -84,6 +91,12 @@
         	}
         });
         $requirements.trigger('change');
+
+	    $("#id_doc_date").combodate({
+		    smartDays: true,
+		    format: "YYYY-MM-DD",
+		    template: "MMMM D YYYY"
+		});
     });
 </script>
 {% endblock extra-js %}

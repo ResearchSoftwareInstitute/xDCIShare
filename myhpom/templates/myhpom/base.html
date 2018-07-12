@@ -12,6 +12,7 @@
         <link href="{% static 'myhpom/open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet" />
 
         <title>{% block title %}My Health Peace Of Mind{% endblock title %}</title>
+        {% block extra-head %}{% endblock %}
     </head>
     <body class="myhpom-page--flush-footer">
         {% include 'myhpom/includes/header.html' %}
