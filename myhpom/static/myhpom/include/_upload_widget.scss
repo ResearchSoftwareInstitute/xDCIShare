@@ -11,23 +11,12 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-
-    @include media-breakpoint-down(md) {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    @include media-breakpoint-down(sm) {
-        flex-direction: row;
-        align-items: center;
-    }
 }
 
 .advance-directive-widget__breadcrumb-item {
     display: inline-flex;
     flex-wrap: nowrap;
     align-items: center;
-    font-size: 80%;
 
     &:not(:first-child)::before {
         font-family: 'Icons';
@@ -36,14 +25,6 @@
         content:'\e036';
         display: inline-block;
         margin: 0 0.35rem;
-    }
-
-    @include media-breakpoint-down(md) {
-        font-size: 100%;
-    }
-
-    @include media-breakpoint-up(xl) {
-        font-size: 100%;
     }
 }
 
