@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group">
-                            <form name="health_network_form" method="POST">
+                            <form id="id_health_network_form" method="POST">
                                 {% csrf_token %}
                                 <!-- store the selected healthcare_network id in the hidden input -->
                                 <input type="hidden" name="healthcare_network" id="id_healthcare_network" />
@@ -139,11 +139,12 @@
         $customProvider.on('keypress', function (e) {
             $fullSelect.val('null');
             $radios.prop('checked', false);
+            $('#id_healthcare_network').val('');
         });
 
         $submitHealthNetworkFormButton.on('click', function (e) {
-            event.preventDefault();
-            document.health_network_form.submit();
+            e.preventDefault();
+            $("#id_health_network_form").submit();
         });
     });
 </script>
