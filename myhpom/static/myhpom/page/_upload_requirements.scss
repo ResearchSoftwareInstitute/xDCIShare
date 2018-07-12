@@ -2,11 +2,44 @@
     styles for /upload/requirements.html
 */
 
+.upload-requirements__div {
+	margin: 0 0 2rem 0;
+}
+
 .upload-requirements__ol {
     list-style-type: none;
     padding: 0;
 }
 
+.upload-requirements__li {
+	padding: 0 0 0 1.25rem;
+	line-height: 1.25;
+	margin-bottom: 0.75rem;
+}
+
+.upload-requirements__checkbox {
+	clear: left;
+	float: left;
+	margin-left: -1.25rem;
+}
+
+.upload-requirements__label {
+	margin: 0;
+	padding: 0;
+}
+
+.upload-requirements__h4 {
+	font-weight: bold;
+	font-size: 1em;
+}
+
 .upload-requirements-link__ol {
     list-style-type: none;
+    padding: 0;
+}
+
+.upload-requirements__a--right {
+	float: right;
+	display: block;
+	font-weight: normal;
 }

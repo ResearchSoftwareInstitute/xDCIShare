@@ -1,44 +1,89 @@
-<form id="id_requirements__form" class="upload-requirements__form" method="POST">
-	{% csrf_token %}
-	<div class="upload-requirements__div">
-		<h1>ADVANCE DIRECTIVE DOCUMENT REQUIREMENTS FOR {{ user.userdetails.state.title|upper }}</h1>
-		<ol class="upload-requirements__ol">
-			{% for requirement in requirements %}
-			<li class="upload-requirements__li">
-				<input class="upload-requirements__checkbox" type="checkbox" id="id_requirement_{{ requirement.id }}"/>
-				<label for="id_requirement_{{ requirement.id }}">{{ requirement.text }}</label>
-				<ol class="upload-requirements-link__ol">
-					{% for link in requirement.staterequirementlink_set.all %}
-					<li class="upload-requirements-link__li">
-						<a href="{{ link.href }}">{{ link.text }}</a>
-					</li>
-					{% endfor %}
-				</ol>
-			</li>
-			{% endfor %}
-		</ol>
-	</div>
-	<div class="upload-requirements__div">
-		<h2>My file is valid starting:
-			<a href="">What is this?</a>
-		</h2>
-	</div>
+{% extends "myhpom/dashboard.html" %}
 
-	<div class="upload-requirements__div">
-		<input type="checkbox" id="id_approval_checkbox"/>
-		<label for="id_approval_checkbox">I approve this file for storage</label>
-		<a href="">Review Terms and Conditions</a>
-	</div>
+{% block upload_widget_content %}
+<ul class="advance-directive-widget__breadcrumbs">
+    <li class="advance-directive-widget__breadcrumb-item">
+        Select Document
+    </li>
+    <li class="advance-directive-widget__breadcrumb-item">
+        Submit
+    </li>
+    <li class="advance-directive-widget__breadcrumb-item">
+        Confirmation
+    </li>
+</ul>
 
-	<div class="upload-requirements__div">
-			<button type="button" class="btn btn-primary" id="id_button_select_file" disabled="disabled">
-				SELECT FILE
+<div class="advance-directive-widget__body">
+	<form id="id_requirements__form" class="upload-requirements__form" method="POST">
+		{% csrf_token %}
+		<div class="upload-requirements__div">
+			<h3 class="h6">ADVANCE DIRECTIVE DOCUMENT REQUIREMENTS FOR {{ user.userdetails.state.title|upper }}</h3>
+			<ol class="upload-requirements__ol">
+				{% for requirement in requirements %}
+				<li class="upload-requirements__li">
+					<input class="upload-requirements__checkbox" type="checkbox" id="id_requirement_{{ requirement.id }}" class="upload-requirements__checkbox"/>
+					<label class="upload-requirements__label" for="id_requirement_{{ requirement.id }}">{{ requirement.text }}</label>
+					<ol class="upload-requirements-link__ol">
+						{% for link in requirement.staterequirementlink_set.all %}
+						<li class="upload-requirements-link__li">
+							<a href="{{ link.href }}" onClick="event.preventDefault();">{{ link.text }}</a>
+						</li>
+						{% endfor %}
+					</ol>
+				</li>
+				{% endfor %}
+			</ol>
+		</div>
+
+		<div class="upload-requirements__div">
+			<h4 class="upload-requirements__h4">My file is valid starting:
+				<a class="upload-requirements__a--right" href="" onClick="event.preventDefault();">What is this?</a>
+			</label>
+		</div>
+
+		<div class="upload-requirements__div">
+			<ol class="upload-requirements__ol">
+				<li class="upload-requirements__li">
+					<input type="checkbox" id="id_approval_checkbox" class="upload-requirements__checkbox"/>
+					<label class="upload-requirements__label" for="id_approval_checkbox">I approve this file for storage</label>
+					<ol class="upload-requirements-link__ol">
+						<li class="upload-requirements-link__li">
+							<a href="" onClick="event.preventDefault();">Review Terms and Conditions</a>
+						</li>
+					</ol>
+				</li>
+			</ol>
+		</div>
+
+		<div class="upload-requirements__div">
+				<button type="button" class="btn btn-primary" id="id_button_select_file">
+					SELECT FILE
+				</button>
+				<input type="file" id="id_upload_requirements_file" hidden="hidden"/>
 			</button>
-			<input type="file" id="id_upload_requirements_file" hidden="hidden"/>
-		</button>
-	</div>
+		</div>
 
-	<div class="upload-requirements__div">
-		<a href="/dashboard">CANCEL</a>
-	</div>
-</form>
+		<div class="upload-requirements__div">
+			<a href="/dashboard">CANCEL</a>
+		</div>
+	</form>
+</div>
+{% endblock %}
+
+{% block extra-js %}
+<script>
+    jQuery(function ($) {
+        var $requirements = $('.upload-requirements__checkbox');
+        var $selectFileButton = $('#id_button_select_file');
+        $requirements.on('change', function (event) {
+        	console.log($('.upload-requirements__checkbox:checked').length + " : " + $('.upload-requirements__checkbox').length);
+        	if ($('.upload-requirements__checkbox:checked').length == $requirements.length) {
+        		$selectFileButton.prop('disabled', null);
+        	} else {
+        		$selectFileButton.prop('disabled', 'disabled');
+        	}
+        });
+        $requirements.trigger('change');
+    });
+</script>
+{% endblock extra-js %}
