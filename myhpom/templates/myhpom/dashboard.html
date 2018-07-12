@@ -1,11 +1,54 @@
 {% extends "myhpom/base.html" %}
 
 {% block main_content %}
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Dashboard</h1>
-        <p>Real Dashboard Coming Soon!</p>
-    </div>
-</section>
-{% endblock main_content %}
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="h6 dashboard__title">
+            My dashboard
+        </h1>
 
+        <section class="dashboard-user-info">
+            <div class="h1 dashboard-user-info__text">
+                {{ request.user.get_full_name }}
+            </div>
+            <div class="h5 dashboard-user-info__text">
+                {{ request.user.email }}
+            </div>
+        </section>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 dashboard-main">
+        <hr/>
+
+        <section class="dashboard__section dashboard__section--profile-information">
+            <h2 class="h6 dashboard__section-title">
+                Profile information
+            </h2>
+
+            <p><small>
+                State resident: <strong>{{ request.user.user_details.state|default:'(Unknown state)' }}</strong>
+            </small></p>
+        </section>
+
+        <hr/>
+
+        <section class="dashboard__section dashboard__section--health-network">
+            <h2 class="h6 dashboard__section-title">
+                Health network
+            </h2>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section class="bg-light dashboard-sidebar">
+            <h2 class="h6 dashboard__section-title dashboard-sidebar__title">
+                My advance directive
+            </h2>
+
+            <p><small>
+                {% lorem 6 w %}
+            </small></p>
+        </section>
+    </div>
+</div>
+{% endblock main_content %}
