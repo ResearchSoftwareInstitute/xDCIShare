@@ -1,8 +1,10 @@
 @import "hydroshare/static/myhpom/bootstrap/scss/bootstrap.scss";
 
 @import "myhpom/static/myhpom/page_layout";
+@import "myhpom/static/myhpom/include/footer";
 @import "myhpom/static/myhpom/include/forms";
 @import "myhpom/static/myhpom/include/modal";
 
+@import "myhpom/static/myhpom/page/dashboard";
 @import "myhpom/static/myhpom/page/signup";
 @import "myhpom/static/myhpom/page/next_steps";
