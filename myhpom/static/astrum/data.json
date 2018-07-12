@@ -31,7 +31,8 @@
     },
     "assets": {
         "css": [
-            "/static/myhpom/myhpom.css"
+            "/static/myhpom/myhpom.css",
+            "/static/myhpom/open-iconic/font/css/open-iconic-bootstrap.css"
         ],
         "js": [
             "/static/myhpom/jquery/dist/jquery.min.js",
@@ -70,6 +71,18 @@
                     "group": "buttons",
                     "name": "cta-header",
                     "title": "Call to Action button in header",
+                    "width": "half"
+                }
+            ]
+        },
+        {
+            "name": "uploadWidget",
+            "title": "Upload Widget",
+            "components": [
+                {
+                    "group": "uploadWidget",
+                    "name": "base",
+                    "title": "Base upload widget template",
                     "width": "half"
                 }
             ]

@@ -1,0 +1,33 @@
+.advance-directive-widget {
+    background-color: white;
+    border: 1px solid black;
+}
+
+.advance-directive-widget__breadcrumbs {
+    border-bottom: 1px solid black;
+    margin-bottom: 0;
+    padding: 1rem;
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.advance-directive-widget__breadcrumb-item {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    &:not(:first-child)::before {
+        font-family: 'Icons';
+        font-size: 80%;
+        line-height: 75%;
+        content:'\e036';
+        display: inline-block;
+        margin: 0 0.35rem;
+    }
+}
+
+.advance-directive-widget__body {
+    padding: 2rem;
+}
