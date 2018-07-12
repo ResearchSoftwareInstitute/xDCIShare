@@ -11,7 +11,7 @@
             <div class="h1 dashboard-user-info__text">
                 {{ request.user.get_full_name }}
             </div>
-            <div class="h5 dashboard-user-info__text">
+            <div class="h6 dashboard-user-info__text">
                 {{ request.user.email }}
             </div>
         </section>
@@ -22,18 +22,26 @@
         <hr/>
 
         <section class="dashboard__section dashboard__section--profile-information">
+            <div class="float-right">
+                <a href="/" class="small">Edit My Profile</a>
+            </div>
+
             <h2 class="h6 dashboard__section-title">
                 Profile information
             </h2>
 
-            <p><small>
+            <p class="small">
                 State resident: <strong>{{ request.user.user_details.state|default:'(Unknown state)' }}</strong>
-            </small></p>
+            </p>
         </section>
 
         <hr/>
 
         <section class="dashboard__section dashboard__section--health-network">
+            <div class="float-right">
+                <a href="/" class="small">Update My Health Network</a>
+            </div>
+
             <h2 class="h6 dashboard__section-title">
                 Health network
             </h2>
@@ -45,10 +53,38 @@
                 My advance directive
             </h2>
 
-            <p><small>
+            <p class="small">
                 {% lorem 6 w %}
-            </small></p>
+            </p>
         </section>
     </div>
 </div>
+
+<hr/>
+
+<sidebar class="row dashboard-faq">
+    <div class="col-sm-12">
+        <h2 class="h6 dashboard-faq__title">
+            Common questions
+        </h2>
+    </div>
+    <div class="col-md-4 small">
+        <strong>{% lorem 5 w %}?</strong>
+        <p>
+            {% lorem 24 w %}
+        </p>
+    </div>
+    <div class="col-md-4 small">
+        <strong>{% lorem 5 w %}?</strong>
+        <p>
+            {% lorem 24 w %}
+        </p>
+    </div>
+    <div class="col-md-4 small">
+        <strong>{% lorem 5 w %}?</strong>
+        <p>
+            {% lorem 24 w %}
+        </p>
+    </div>
+</sidebar>
 {% endblock main_content %}
