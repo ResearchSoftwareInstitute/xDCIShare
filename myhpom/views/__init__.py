@@ -8,6 +8,7 @@ from myhpom.views.signup import signup
 from myhpom.views.choose_network import choose_network
 from myhpom.views.accounts import next_steps
 from myhpom.views.auth import logout
+from myhpom.views.upload_requirements import upload_requirements
 
 
 @require_GET

@@ -1,0 +1,44 @@
+<form id="id_requirements__form" class="upload-requirements__form" method="POST">
+	{% csrf_token %}
+	<div class="upload-requirements__div">
+		<h1>ADVANCE DIRECTIVE DOCUMENT REQUIREMENTS FOR {{ user.userdetails.state.title|upper }}</h1>
+		<ol class="upload-requirements__ol">
+			{% for requirement in requirements %}
+			<li class="upload-requirements__li">
+				<input class="upload-requirements__checkbox" type="checkbox" id="id_requirement_{{ requirement.id }}"/>
+				<label for="id_requirement_{{ requirement.id }}">{{ requirement.text }}</label>
+				<ol class="upload-requirements-link__ol">
+					{% for link in requirement.staterequirementlink_set.all %}
+					<li class="upload-requirements-link__li">
+						<a href="{{ link.href }}">{{ link.text }}</a>
+					</li>
+					{% endfor %}
+				</ol>
+			</li>
+			{% endfor %}
+		</ol>
+	</div>
+	<div class="upload-requirements__div">
+		<h2>My file is valid starting:
+			<a href="">What is this?</a>
+		</h2>
+	</div>
+
+	<div class="upload-requirements__div">
+		<input type="checkbox" id="id_approval_checkbox"/>
+		<label for="id_approval_checkbox">I approve this file for storage</label>
+		<a href="">Review Terms and Conditions</a>
+	</div>
+
+	<div class="upload-requirements__div">
+			<button type="button" class="btn btn-primary" id="id_button_select_file" disabled="disabled">
+				SELECT FILE
+			</button>
+			<input type="file" id="id_upload_requirements_file" hidden="hidden"/>
+		</button>
+	</div>
+
+	<div class="upload-requirements__div">
+		<a href="/dashboard">CANCEL</a>
+	</div>
+</form>

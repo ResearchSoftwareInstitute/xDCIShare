@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^accounts/signup/$', myhpom_views.signup, name='signup'),
     url(r'^accounts/next-steps/?$', myhpom_views.next_steps, name='next_steps'),
     url(r'^accounts/choose-network/?$', myhpom_views.choose_network, name='choose_network'),
+    url(r'^upload/requirements/?$', myhpom_views.upload_requirements, name='upload_requirements'),
     url(r'^styleguide/$', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT + '/styleguide', 'path': 'index.html'}),
     url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve',
