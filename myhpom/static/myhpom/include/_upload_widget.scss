@@ -47,6 +47,20 @@
     padding: 2rem;
 }
 
+.advance-directive-widget__cta--primary {
+    @extend .h3;
+
+    background-color: lightgray;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    width: 100%;
+
+    &:any-link {
+        color: white;
+        text-decoration: none !important;
+    }
+}
+
 .advance-directive-widget__definition {
     display: flex;
     flex-wrap: nowrap;
@@ -61,4 +75,3 @@
 .advance-directive-widget__definition__value {
     @extend .advance-directive-widget__breadcrumb-status-value;
 }
-
