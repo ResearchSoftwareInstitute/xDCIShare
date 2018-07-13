@@ -33,7 +33,7 @@ def unload_state_requirements_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [('myhpom', '0009_state_requirements')]
+    dependencies = [('myhpom', '0010_state_requirements')]
 
     operations = [
         migrations.RunPython(

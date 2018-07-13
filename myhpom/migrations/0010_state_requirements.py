@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myhpom', '0008_territories'),
+        ('myhpom', '0009_advancedirective'),
     ]
 
     operations = [

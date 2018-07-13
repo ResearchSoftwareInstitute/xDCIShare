@@ -1,13 +1,7 @@
-{% extends "myhpom/dashboard.html" %}
+{% extends 'myhpom/includes/upload_base.html' %}
 {% load sass_tags static %}
 
-{% block extra-head %}
-<script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
-<script type="text/javascript" src="{% static "myhpom/combodate-1.0.7/combodate.js" %}"></script>
-{% endblock %}
-
-{% block upload_widget_content %}
-<ul class="advance-directive-widget__breadcrumbs">
+{% block widget_breadcrumb_items %}
     <li class="advance-directive-widget__breadcrumb-item breadcrumb-item--selected">
         Select Document
     </li>
@@ -17,9 +11,9 @@
     <li class="advance-directive-widget__breadcrumb-item">
         Confirmation
     </li>
-</ul>
+{% endblock widget_breadcrumb_items %}
 
-<div class="advance-directive-widget__body">
+{% block widget_body %}
 	<form id="id_requirements__form" class="upload-requirements__form" method="POST">
 		{% csrf_token %}
 		<div class="upload-requirements__div">
@@ -66,7 +60,6 @@
 				<button type="button" class="btn btn-primary" id="id_button_select_file">
 					SELECT FILE
 				</button>
-				<input type="file" id="id_upload_requirements_file" hidden="hidden"/>
 			</button>
 		</div>
 
@@ -75,9 +68,9 @@
 		</div>
 	</form>
 </div>
-{% endblock %}
 
-{% block extra-js %}
+<script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
+<script type="text/javascript" src="{% static "myhpom/combodate-1.0.7/combodate.js" %}"></script>
 <script>
     jQuery(function ($) {
         var $requirements = $('.upload-requirements__checkbox');
@@ -111,4 +104,4 @@
 		});
     });
 </script>
-{% endblock extra-js %}
+{% endblock widget_body %}

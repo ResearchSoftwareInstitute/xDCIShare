@@ -1,0 +1,20 @@
+{% extends 'myhpom/includes/upload_base.html' %}
+
+{% block widget_body %}
+<h3 class="h6">You have selected:</h3>
+<p><a href="{% url "myhpom:upload_requirements" %}">change file</a></p>
+
+<hr/>
+
+<h3 class="h6">Sharing this document:</h3>
+
+<form action="{% url "myhpom:upload_submit" %}">
+    <div class="form-group form-check">
+        <input class="form-check-input" type="checkbox" id="approveSharing">
+        <label class="form-check-label" for="approveSharing">
+            I approve sharing this document with my healthcare system
+        </label>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+{% endblock widget_body %}
