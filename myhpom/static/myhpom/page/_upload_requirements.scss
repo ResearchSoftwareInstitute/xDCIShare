@@ -2,6 +2,8 @@
     styles for /upload/requirements.html
 */
 
+$invalid_color: #dc3545;
+
 .upload-requirements__div {
 	margin: 0 0 1rem 0;
 }
@@ -26,6 +28,14 @@
 .upload-requirements__label {
 	margin: 0;
 	padding: 0;
+}
+
+.upload-requirements__div-errors {
+	color: $invalid_color;
+}
+
+.upload-requirement__select--invalid {
+	border: 1px solid $invalid_color;
 }
 
 .upload-requirements__h4 {
