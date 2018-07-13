@@ -15,7 +15,9 @@ urlpatterns = [
     url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
 
-# HMMM....? Shouldn't these be served by nginx for debug False?
+# These should be served by nginx for deployed environments,
+# presumably this is here to allow for running without DEBUG
+# on in local dev environments.
 if settings.DEBUG is False:   # if DEBUG is True it will be served automatically
     urlpatterns += [
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
