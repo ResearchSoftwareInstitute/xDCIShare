@@ -1,0 +1,12 @@
+{% extends 'myhpom/includes/upload_base.html' %}
+
+{% block widget_body %}
+<div class="row">
+    <div class="col">
+        <form action="{% url "myhpom:upload_sharing" %}">
+            <input type="file" class="form-control-file">
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock widget_body %}
