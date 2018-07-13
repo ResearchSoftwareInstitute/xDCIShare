@@ -28,6 +28,37 @@
     }
 }
 
+.advance-directive-widget__breadcrumb-status {
+    display: inline-flex;
+    flex-wrap: nowrap;
+
+    text-transform: uppercase;
+}
+
+.advance-directive-widget__breadcrumb-status-value {
+    display: inline-flex;
+    flex-wrap: nowrap;
+
+    padding-left: 0.35rem;
+    font-weight: bold;
+}
+
 .advance-directive-widget__body {
     padding: 2rem;
 }
+
+.advance-directive-widget__definition {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.advance-directive-widget__definition__key {
+    @extend .advance-directive-widget__breadcrumb-status;
+
+    font-weight: normal;
+}
+
+.advance-directive-widget__definition__value {
+    @extend .advance-directive-widget__breadcrumb-status-value;
+}
+

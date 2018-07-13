@@ -8,10 +8,11 @@
 
 <h3 class="h6">Sharing this document:</h3>
 
-<form action="{% url "myhpom:upload_submit" %}">
+<form action="{% url "myhpom:upload_submit" %}" method="POST">
+    {% csrf_token %}
     <div class="form-group form-check">
-        <input class="form-check-input" type="checkbox" id="approveSharing">
-        <label class="form-check-label" for="approveSharing">
+        <input class="form-check-input" type="checkbox" id="{{ form.share_with_ehs.id_for_label }}">
+        <label class="form-check-label" for="{{ form.share_with_ehs.id_for_label }}">
             I approve sharing this document with my healthcare system
         </label>
     </div>
