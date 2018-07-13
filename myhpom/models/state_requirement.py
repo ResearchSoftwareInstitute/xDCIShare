@@ -1,5 +1,10 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+import sys
 from django.db import models
+from django.core.exceptions import ValidationError
 from .state import State
+from myhpom.validators import validate_not_blank
 
 
 class StateRequirement(models.Model):
@@ -25,3 +30,23 @@ class StateRequirement(models.Model):
         return the ordered list of requirements for this state, includes global then specific:
         """
         return Class.objects.filter(models.Q(state=None) | models.Q(state=state))
+
+
+def state_requirement_pre_save_receiver(sender, instance, **kwargs):
+    """
+    * Ensure that the StateRequirement fields are valid before saving:
+        * position: not blank
+        * text: not blank
+    """
+    errors = []
+    for key in ['position', 'text']:
+        try:
+            validate_not_blank(instance.__dict__.get(key))
+        except ValidationError:
+            errors.append(key + ': ' + ' '.join(sys.exc_info()[1]))
+
+    if len(errors) > 0:
+        raise ValidationError(errors)
+
+
+models.signals.pre_save.connect(state_requirement_pre_save_receiver, sender=StateRequirement)

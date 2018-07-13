@@ -37,3 +37,12 @@ def password_validator(password):
 def validate_date_in_past(value):
     if value > date.today():
         raise ValidationError("Please select a valid date on or before today.")
+
+
+def validate_not_blank(value):
+    if (
+        value is None
+        or (isinstance(value, unicode) and unicode(value.strip()) == u'')
+        or (isinstance(value, str) and str(value.strip()) == '')
+    ):
+        raise ValidationError("A blank value is not allowed.")
