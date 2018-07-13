@@ -36,4 +36,4 @@ def password_validator(password):
 
 def validate_date_in_past(value):
     if value > date.today():
-        raise ValidationError("Please select a past date or today as the valid date.")
+        raise ValidationError("Please select a valid date on or before today.")

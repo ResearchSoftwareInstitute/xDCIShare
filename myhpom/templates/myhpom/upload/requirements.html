@@ -112,7 +112,7 @@
 				var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
 				if ($directiveDate > NOW) {
 					$("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
-					$("#id_valid_date_errors").html("Please enter a valid date in the past.");	
+					$("#id_valid_date_errors").html("Please enter a valid date on or before today.");	
 				} else {
 					$("#id_valid_date_div select").removeClass("upload-requirement__select--invalid");
 					$("#id_valid_date_errors").html("");
