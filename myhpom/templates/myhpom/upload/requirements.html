@@ -82,20 +82,32 @@
     jQuery(function ($) {
         var $requirements = $('.upload-requirements__checkbox');
         var $selectFileButton = $('#id_button_select_file');
+        var $docDate = $('#id_doc_date');
+
+		function selectFileEnableDisable () {
+			if ($('.upload-requirements__checkbox:checked').length == $requirements.length
+				&& $docDate.combodate('getValue') != ''
+			) {
+	    		$selectFileButton.prop('disabled', null);
+	    	} else {
+	    		$selectFileButton.prop('disabled', 'disabled');
+	    	}
+		}
+
         $requirements.on('change', function (event) {
-        	console.log($('.upload-requirements__checkbox:checked').length + " : " + $('.upload-requirements__checkbox').length);
-        	if ($('.upload-requirements__checkbox:checked').length == $requirements.length) {
-        		$selectFileButton.prop('disabled', null);
-        	} else {
-        		$selectFileButton.prop('disabled', 'disabled');
-        	}
+        	selectFileEnableDisable();
         });
+
         $requirements.trigger('change');
 
-	    $("#id_doc_date").combodate({
+	    $docDate.combodate({
 		    smartDays: true,
 		    format: "YYYY-MM-DD",
 		    template: "MMMM D YYYY"
+		});
+
+		$docDate.on('change', function (event) {
+			selectFileEnableDisable();
 		});
     });
 </script>
