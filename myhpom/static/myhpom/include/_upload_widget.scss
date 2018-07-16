@@ -57,7 +57,7 @@
     @extend .h6;
 
     border: 1px solid black;
-    color: lightgray;
+    color: darkgray;
     display: inline-block;
     margin: 0.5rem 0;
     padding: 2rem;
@@ -65,7 +65,8 @@
     width: 100%;
 
     &:any-link {
-        color: lightgray;
+        color: darkgray;
+        cursor: pointer;
         text-decoration: none !important;
     }
 }
