@@ -16,28 +16,15 @@ def choose_network(request):
     """
     user_details = request.user.userdetails
     state = user_details.state
-    form = ChooseNetworkForm()
+    form = ChooseNetworkForm(instance=request.user.userdetails)
 
     if request.POST:
-        form = ChooseNetworkForm(request.POST)
+        form = ChooseNetworkForm(
+            request.POST,
+            instance=request.user.userdetails,
+        )
         if form.is_valid():
-            custom_provider = (form.data.get("custom_provider") or '').strip()
-            health_network_id = form.data.get("health_network")
-            if custom_provider != '':
-                # see if it actually already exists
-                networks = HealthNetwork.objects.filter(state=state, name=custom_provider.strip())
-                if len(networks) > 0:
-                    user_details.health_network = networks[0]
-                else:
-                    user_details.custom_provider = custom_provider
-                    user_details.health_network = None
-                user_details.save()
-            elif health_network_id not in [None, '', 'null']:   # template sets "null"
-                try:
-                    user_details.health_network = HealthNetwork.objects.get(id=health_network_id)
-                    user_details.save()
-                except HealthNetwork.DoesNotExist:
-                    pass
+            form.save()
 
             return redirect("myhpom:next_steps")
 

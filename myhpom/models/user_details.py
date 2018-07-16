@@ -15,7 +15,7 @@ class UserDetails(models.Model):
 
     user = models.OneToOneField(User)
     state = models.ForeignKey(State, on_delete=models.SET_NULL, null=True, blank=True)
-    middle_name = models.CharField(max_length=30, null=True, blank=True)
+    middle_name = models.CharField(max_length=30, blank=True)
     accept_tos = models.NullBooleanField()
     health_network = models.ForeignKey(HealthNetwork, on_delete=models.SET_NULL, null=True)
-    custom_provider = models.CharField(max_length=1024, null=True, blank=True)
+    custom_provider = models.CharField(max_length=1024, blank=True)

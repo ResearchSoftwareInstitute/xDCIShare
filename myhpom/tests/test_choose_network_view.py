@@ -98,4 +98,4 @@ class ChooseNetworkTestCase(TestCase):
         self.assertRedirects(response, reverse('myhpom:next_steps'), fetch_redirect_response=False)
         userdetails = models.UserDetails.objects.get(id=self.user.userdetails.id)
         self.assertIsNotNone(userdetails.health_network)
-        self.assertIsNone(userdetails.custom_provider)
+        self.assertEqual('', userdetails.custom_provider)
