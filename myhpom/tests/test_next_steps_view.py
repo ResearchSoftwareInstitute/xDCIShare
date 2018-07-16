@@ -25,6 +25,25 @@ class NextStepsTestCase(TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/accounts/next_steps_no_ad_template.html')
 
+    def test_can_post_data_with_invalid_state(self):
+        """
+        When you're on the "state not supported" version of the form,
+        you can use a POST request to set a custom provider.
+        """
+        self.client.login(username=self.user.username, password='password')
+        response = self.client.get(self.url)
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/accounts/next_steps_no_ad_template.html')
+
+        custom_provider = 'Foo Bar Baz'
+        form_data = {'custom_provider': custom_provider}
+        response = self.client.post(self.url, data=form_data)
+        self.assertEqual(302, response.status_code)
+        self.assertTemplateUsed('myhpom/dashboard.html')
+
+        updated_user = User.objects.get(id=self.user.id)
+        self.assertEqual(custom_provider, updated_user.userdetails.custom_provider)
+
     def test_upload_links_with_valid_state(self):
         self.user.userdetails.state = State.objects.get(name='NC')
         self.user.userdetails.save()
