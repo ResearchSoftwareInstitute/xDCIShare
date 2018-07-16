@@ -47,11 +47,13 @@
     padding: 2rem;
 }
 
-.advance-directive-widget__cta--primary {
+.advance-directive-widget__button--primary {
     @extend .h6;
 
     border: 1px solid black;
+    color: lightgray;
     display: inline-block;
+    margin: 0.5rem 0;
     padding: 2rem;
     width: 100%;
 
@@ -61,8 +63,8 @@
     }
 }
 
-.advance-directive-widget__cta--secondary {
-    @extend .advance-directive-widget__cta--primary;
+.advance-directive-widget__button--secondary {
+    @extend .advance-directive-widget__button--primary;
 }
 
 .advance-directive-widget__definition {
