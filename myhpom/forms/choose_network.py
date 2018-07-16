@@ -10,7 +10,7 @@ class ChooseNetworkForm(forms.Form):
         custom_provider = cleaned_data.get('custom_provider')
         health_network = cleaned_data.get('health_network')
 
-        if (not custom_provider) and (not health_network) or (custom_provider and health_network):
+        if ((not custom_provider) and (not health_network)) or (custom_provider and health_network):
             raise forms.ValidationError(
                 'Please either choose a network or enter a custom network.'
             )
