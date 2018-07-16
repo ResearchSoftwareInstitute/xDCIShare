@@ -1,0 +1,24 @@
+{% extends 'myhpom/includes/upload_base.html' %}
+
+{% block widget_breadcrumb_items %}
+<li class="advance-directive-widget__breadcrumb-item--active">
+    Select Document
+</li>
+<li class="advance-directive-widget__breadcrumb-item">
+    Submit
+</li>
+<li class="advance-directive-widget__breadcrumb-item">
+    Confirmation
+</li>
+{% endblock widget_breadcrumb_items %}
+
+{% block widget_body %}
+<div class="row">
+    <div class="col">
+        <form action="{% url "myhpom:upload_sharing" %}">
+            <input type="file" class="form-control-file">
+            <button class="advance-directive-widget__button--primary" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock widget_body %}

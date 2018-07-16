@@ -1,0 +1,27 @@
+{% extends 'myhpom/includes/upload_base.html' %}
+
+{% block widget_body %}
+<h3 class="h6">
+    Requirements for Advance Directive:
+</h3>
+
+<p>
+    {% lorem 8 w %}
+</p>
+<p>
+    {% lorem 12 w %}
+</p>
+<p>
+    {% lorem 6 w %}
+</p>
+
+<p>
+    <a class="advance-directive-widget__button--primary" href="{% url "myhpom:upload_requirements" %}">Upload Your File</a>
+</p>
+
+<p>
+    <a class="advance-directive-widget__button--secondary" href="">Download a Template</a>
+</p>
+
+{% endblock widget_body %}
+
