@@ -48,17 +48,21 @@
 }
 
 .advance-directive-widget__cta--primary {
-    @extend .h3;
+    @extend .h6;
 
-    background-color: lightgray;
-    margin-bottom: 2rem;
+    border: 1px solid black;
+    display: inline-block;
     padding: 2rem;
     width: 100%;
 
     &:any-link {
-        color: white;
+        color: lightgray;
         text-decoration: none !important;
     }
+}
+
+.advance-directive-widget__cta--secondary {
+    @extend .advance-directive-widget__cta--primary;
 }
 
 .advance-directive-widget__definition {
