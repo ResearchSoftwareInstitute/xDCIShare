@@ -20,8 +20,8 @@ class UserFactory(factory.django.DjangoModelFactory):
     class Meta(object):
         model = User
 
-    username = factory.fuzzy.FuzzyText(length=8)
     email = factory.Sequence(lambda n: 'user%d@example.com' % n)
+    username = factory.LazyAttribute(lambda u: u.email)
     first_name = factory.fuzzy.FuzzyText(length=8)
     last_name = factory.fuzzy.FuzzyText(length=8)
     user_details = factory.RelatedFactory(UserDetailsFactory, 'user')

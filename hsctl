@@ -260,12 +260,8 @@ loaddb_hs() {
 
 migrate_hs() {
     echo "MIGRATE:"
-    echo "  - docker exec -u hydro-service hydroshare python manage.py migrate sites -v0 --noinput"
-    docker exec -u hydro-service hydroshare python manage.py migrate sites -v0 --noinput
     echo "  - docker exec -u hydro-service hydroshare python manage.py migrate -v0 --fake-initial --noinput"
     docker exec -u hydro-service hydroshare python manage.py migrate -v0 --fake-initial --noinput
-    echo "  - docker exec -u hydro-service hydroshare python manage.py fix_permissions"
-    docker exec -u hydro-service hydroshare python manage.py fix_permissions
 }
 
 manage_py_hs() {
