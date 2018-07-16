@@ -84,6 +84,18 @@
                     "name": "base",
                     "title": "Base upload widget template",
                     "width": "half"
+                },
+                {
+                    "group": "uploadWidget",
+                    "name": "primaryButton",
+                    "title": "Primary button",
+                    "width": "half"
+                },
+                {
+                    "group": "uploadWidget",
+                    "name": "secondaryButton",
+                    "title": "Secondary button",
+                    "width": "half"
                 }
             ]
         }

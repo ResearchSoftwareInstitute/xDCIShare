@@ -1,9 +1,19 @@
 {% extends 'myhpom/includes/upload_base.html' %}
 
 {% block widget_breadcrumb_items %}
-<h3>current status: Stored</h3>
+<li class="advance-directive-widget__breadcrumb-status">
+    current status:
+</li>
+<li class="advance-directive-widget__breadcrumb-status-value">
+    Stored
+</li>
 {% endblock widget_breadcrumb_items %}
 
 {% block widget_body %}
-<h3 class="h6">active date: </h3>
+<dl class="advance-directive-widget__definition">
+    <di>
+        <dt class="advance-directive-widget__definition__key">active date:</dt>
+        <dd class="advance-directive-widget__definition__value">{{ advancedirective.valid_date|date:"SHORT_DATE_FORMAT" }}</dd>
+    </di>
+</dl>
 {% endblock widget_body %}

@@ -41,16 +41,51 @@ class ChooseNetworkTestCase(TestCase):
         self.assertRedirects(response, reverse('myhpom:next_steps'), fetch_redirect_response=False)
 
     def test_POST_custom_provider(self):
-        """POST with custom_provider adds it to the user's UserDetails 
+        """POST with custom_provider adds it to the user's UserDetails
         and redirects to next_steps
         """
-        form_data = {"custom_provider": "My Non-existent Custom Provider", "healthcare_network": ""}
-        state = models.State.objects.order_by_ad().first()
+        form_data = {"custom_provider": "My Non-existent Custom Provider", "health_network": ""}
         response = self.client.post(self.url, data=form_data)
         self.assertRedirects(response, reverse('myhpom:next_steps'), fetch_redirect_response=False)
         userdetails = models.UserDetails.objects.get(id=self.user.userdetails.id)
         self.assertEquals(userdetails.custom_provider, form_data['custom_provider'])
         self.assertIsNone(userdetails.health_network)
+
+    def test_POST_both_provider_types_fails(self):
+        """
+        POST with both types of health network data will be rejected.
+        """
+        state = self.user.userdetails.state
+        health_network = models.HealthNetwork.objects.filter(state=state, priority=0)[0]
+        form_data = {
+            "custom_provider": "Foo Bar Baz",
+            "health_network": health_network.id
+        }
+        response = self.client.post(self.url, data=form_data)
+        form = response.context['form']
+        self.assertIsNotNone(form.errors)
+        self.assertIsNotNone(form.non_field_errors())
+        self.assertIn(
+            'Please either choose a network or enter a custom network.',
+            form.non_field_errors(),
+        )
+
+    def test_POST_neither_provider_type_fails(self):
+        """
+        POST without either type of health network data will be rejected.
+        """
+        form_data = {
+            "custom_provider": '',
+            "health_network": None,
+        }
+        response = self.client.post(self.url, data=form_data)
+        form = response.context['form']
+        self.assertIsNotNone(form.errors)
+        self.assertIsNotNone(form.non_field_errors())
+        self.assertIn(
+            'Please either choose a network or enter a custom network.',
+            form.non_field_errors(),
+        )
 
     def test_POST_health_network(self):
         """POST with health_network_id adds that health_network to the user's UserDetails
@@ -58,9 +93,9 @@ class ChooseNetworkTestCase(TestCase):
         """
         state = self.user.userdetails.state
         health_network = models.HealthNetwork.objects.filter(state=state, priority=0)[0]
-        form_data = {"custom_provider": "", "healthcare_network": health_network.id}
+        form_data = {"custom_provider": "", "health_network": health_network.id}
         response = self.client.post(self.url, data=form_data)
         self.assertRedirects(response, reverse('myhpom:next_steps'), fetch_redirect_response=False)
         userdetails = models.UserDetails.objects.get(id=self.user.userdetails.id)
         self.assertIsNotNone(userdetails.health_network)
-        self.assertIsNone(userdetails.custom_provider)
+        self.assertEqual('', userdetails.custom_provider)

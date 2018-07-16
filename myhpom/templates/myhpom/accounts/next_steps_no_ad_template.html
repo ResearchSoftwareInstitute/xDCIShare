@@ -41,32 +41,31 @@
                             You may still store your documents with us
                             and retrieve them upon request.
                         </p>
-                        <form>
+                        <form method="post" action="{% url 'myhpom:next_steps' %}">
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label for="id_healthcare_network">Please share your healthcare network:</label>
+                                <label for="id_custom_provider">Please share your healthcare network:</label>
                                 <input
                                     class="form-control"
-                                    aria-describedby="healthcare_network_help"
+                                    aria-describedby="custom_provider_help"
                                     type="text"
-                                    name="healthcare_network"
-                                    id="id_healthcare_network"
+                                    name="custom_provider"
+                                    id="id_custom_provider"
                                     placeholder="My healthcare network"
                                 />
-                                <small class="form-text text-muted" id="healthcare_network_help">
+                                <div class="invalid-feedback">
+                                    {% if form.errors.custom_provider %}{{ form.errors.custom_provider }}{% endif %}
+                                </div>
+                                <small class="form-text text-muted" id="custom_provider_help">
                                     <a href="{% url 'myhpom:home' %}">
                                         How do I find my healthcare network?
                                     </a>
                                 </small>
+                                <input type="submit" class="btn btn-primary float-right" value="Submit" />
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
-                    Submit
-                </a>
             </div>
         </div>
     </div>
