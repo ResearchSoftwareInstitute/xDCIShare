@@ -41,7 +41,7 @@
                             You may still store your documents with us
                             and retrieve them upon request.
                         </p>
-                        <form method='post'>
+                        <form method="post" action="{% url 'myhpom:next_steps' %}">
                             {% csrf_token %}
                             <div class="form-group">
                                 <label for="id_custom_provider">Please share your healthcare network:</label>
@@ -61,16 +61,11 @@
                                         How do I find my healthcare network?
                                     </a>
                                 </small>
+                                <input type="submit" class="btn btn-primary float-right" value="Submit" />
                             </div>
                         </form>
                     </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{% url 'myhpom:home' %}">
-                    Submit
-                </a>
             </div>
         </div>
     </div>

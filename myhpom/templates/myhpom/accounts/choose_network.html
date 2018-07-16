@@ -92,7 +92,7 @@
                     </div>
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group">
-                            <form id="id_health_network_form" method="POST">
+                            <form id="id_health_network_form" method="post" action="{% url 'myhpom:choose_network' %}">
                                 {% csrf_token %}
                                 <!-- store the selected health_network id in the hidden input -->
                                 <input type="hidden" name="health_network" id="id_health_network" />
