@@ -28,6 +28,12 @@
     }
 }
 
+.advance-directive-widget__breadcrumb-item--active {
+    @extend .advance-directive-widget__breadcrumb-item;
+
+    font-weight: bold;
+}
+
 .advance-directive-widget__breadcrumb-status {
     display: inline-flex;
     flex-wrap: nowrap;

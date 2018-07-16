@@ -1,7 +1,18 @@
 {% extends 'myhpom/includes/upload_base.html' %}
 
-{% block widget_body %}
+{% block widget_breadcrumb_items %}
+<li class="advance-directive-widget__breadcrumb-item">
+    Select Document
+</li>
+<li class="advance-directive-widget__breadcrumb-item--active">
+    Submit
+</li>
+<li class="advance-directive-widget__breadcrumb-item">
+    Confirmation
+</li>
+{% endblock widget_breadcrumb_items %}
 
+{% block widget_body %}
 <p class="float-right"><a href="{% url "myhpom:upload_requirements" %}">change file</a></p>
 <h3 class="h6">You have selected:</h3>
 
