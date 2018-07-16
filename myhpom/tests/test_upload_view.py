@@ -1,6 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.utils.timezone import now
 
+from myhpom.models import AdvanceDirective
 from myhpom.tests.factories import UserFactory
 
 
@@ -43,9 +45,19 @@ class UploadSharingTestCase(GETMixin, TestCase):
         self.url = reverse('myhpom:upload_sharing')
 
 
-class UploadCurrentAdTestCase(GETMixin, TestCase):
+class UploadCurrentAdTestCase(UploadMixin, TestCase):
     def setUp(self):
         self.url = reverse('myhpom:upload_current_ad')
+
+    def test_get(self):
+        # Users that don't yet have an AD are sent to the upload_index
+        user = self._setup_user_and_login()
+        response = self.client.get(self.url)
+        self.assertRedirects(response, reverse('myhpom:upload_index'))
+
+        # When the user does have an advancedirective, they can visit the page.
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
 
 
 class UploadSubmitTestCase(UploadMixin, TestCase):
