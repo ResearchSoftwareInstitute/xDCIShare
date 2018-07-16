@@ -61,12 +61,12 @@
     display: inline-block;
     margin: 0.5rem 0;
     padding: 2rem;
+    cursor: pointer;
     text-align: center;
     width: 100%;
 
     &:any-link {
         color: darkgray;
-        cursor: pointer;
         text-decoration: none !important;
     }
 }
