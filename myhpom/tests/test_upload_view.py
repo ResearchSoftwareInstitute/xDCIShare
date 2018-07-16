@@ -40,11 +40,6 @@ class UploadRequirementsTestCase(GETMixin, TestCase):
         self.url = reverse('myhpom:upload_requirements')
 
 
-class UploadSharingTestCase(GETMixin, TestCase):
-    def setUp(self):
-        self.url = reverse('myhpom:upload_sharing')
-
-
 class UploadCurrentAdTestCase(UploadMixin, TestCase):
     def setUp(self):
         self.url = reverse('myhpom:upload_current_ad')
@@ -60,15 +55,32 @@ class UploadCurrentAdTestCase(UploadMixin, TestCase):
         advancedirective.save()
 
 
-class UploadSubmitTestCase(UploadMixin, TestCase):
+class UploadSharingTestCase(UploadMixin, TestCase):
     def setUp(self):
-        self.url = reverse('myhpom:upload_submit')
+        self.url = reverse('myhpom:upload_sharing')
 
     def test_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertEqual(405, response.status_code)
+        self.assertEqual(302, response.status_code)
 
-    def test_get_fails(self):
+    def test_get(self):
+        # When GETting, see the sharing template.
         self._setup_user_and_login()
         response = self.client.get(self.url)
-        self.assertEqual(405, response.status_code)
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/upload/sharing.html')
+
+    def test_post(self):
+        # When POSTing - even no data is sufficient to succeed and redirect
+        user = self._setup_user_and_login()
+        response = self.client.post(self.url)
+        self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
+        self.assertFalse(user.advancedirective.share_with_ehs)
+
+        # Checking the share box saves the result.
+        response = self.client.post(self.url, {
+            'share_with_ehs': True
+        })
+        self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
+        user.advancedirective.refresh_from_db()
+        self.assertTrue(user.advancedirective.share_with_ehs)

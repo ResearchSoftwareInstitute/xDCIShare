@@ -25,14 +25,6 @@ def upload_requirements(request):
 
 @require_GET
 @login_required
-def upload_sharing(request):
-    return render(request, 'myhpom/dashboard.html', {
-        'widget_template': 'myhpom/upload/sharing.html'
-    })
-
-
-@require_GET
-@login_required
 def upload_current_ad(request):
     if not hasattr(request.user, 'advancedirective'):
         return HttpResponseRedirect(reverse('myhpom:upload_index'))
@@ -45,13 +37,7 @@ def upload_current_ad(request):
 
 @require_http_methods(['GET', 'POST'])
 @login_required
-def upload_submit(request):
-    if request.method == 'POST':
-        form = SharingForm(request.POST, instance=request.user.advancedirective)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
-
+def upload_sharing(request):
     if not hasattr(request.user, 'advancedirective'):
         # TODO this check should be changed in MH-102 - it is assumed at
         # this point that a user has an advancedirective (if it doesn't
@@ -60,6 +46,13 @@ def upload_submit(request):
         advancedirective.save()
     else:
         advancedirective = request.user.advancedirective
+
+    if request.method == 'POST':
+        form = SharingForm(request.POST, instance=advancedirective)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
+
     form = SharingForm(instance=advancedirective)
     return render(request, 'myhpom/dashboard.html', {
         'form': form,

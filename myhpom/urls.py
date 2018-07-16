@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^upload/current_ad/?$', myhpom_views.upload_current_ad, name='upload_current_ad'),
     url(r'^upload/requirements/?$', myhpom_views.upload_requirements, name='upload_requirements'),
     url(r'^upload/sharing/?$', myhpom_views.upload_sharing, name='upload_sharing'),
-    url(r'^upload/submit/?$', myhpom_views.upload_submit, name='upload_submit'),
     url(r'^logout/?$', myhpom_views.logout, name='logout'),
     url(r'^accounts/signup/?$', myhpom_views.signup, name='signup'),
     url(r'^accounts/next-steps/?$', myhpom_views.next_steps, name='next_steps'),
