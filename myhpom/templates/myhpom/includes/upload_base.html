@@ -8,6 +8,7 @@ in the template that represents the entry-point.)
 {% endcomment %}
 
 <ul class="advance-directive-widget__breadcrumbs">
+    {% block widget_breadcrumb_items %}
     <li class="advance-directive-widget__breadcrumb-item">
         Select Document
     </li>
@@ -17,23 +18,9 @@ in the template that represents the entry-point.)
     <li class="advance-directive-widget__breadcrumb-item">
         Confirmation
     </li>
+    {% endblock widget_breadcrumb_items %}
 </ul>
 
 <div class="advance-directive-widget__body">
-    {% comment %}
-    The content for the various steps in the multi-page form should go here.
-    {% endcomment %}
-    <h3 class="h6">
-        Requirements for Advance Directive:
-    </h3>
-
-    <p>
-        {% lorem 8 w %}
-    </p>
-    <p>
-        {% lorem 12 w %}
-    </p>
-    <p>
-        {% lorem 6 w %}
-    </p>
+    {% block widget_body %}{% endblock widget_body %}
 </div>

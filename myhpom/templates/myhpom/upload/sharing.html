@@ -1,0 +1,32 @@
+{% extends 'myhpom/includes/upload_base.html' %}
+
+{% block widget_breadcrumb_items %}
+<li class="advance-directive-widget__breadcrumb-item">
+    Select Document
+</li>
+<li class="advance-directive-widget__breadcrumb-item--active">
+    Submit
+</li>
+<li class="advance-directive-widget__breadcrumb-item">
+    Confirmation
+</li>
+{% endblock widget_breadcrumb_items %}
+
+{% block widget_body %}
+<p class="float-right"><a href="{% url "myhpom:upload_requirements" %}">change file</a></p>
+<h3 class="h6">You have selected:</h3>
+
+<hr/>
+
+<h3 class="h6">Sharing this document:</h3>
+<form action="{% url "myhpom:upload_sharing" %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group form-check">
+        <input class="form-check-input" type="checkbox" id="share_with_ehs">
+        <label class="form-check-label" for="{{ form.share_with_ehs.id_for_label }}">
+            I approve sharing this document with my healthcare system
+        </label>
+    </div>
+    <button class="advance-directive-widget__button--primary" type="submit">Submit</button>
+</form>
+{% endblock widget_body %}

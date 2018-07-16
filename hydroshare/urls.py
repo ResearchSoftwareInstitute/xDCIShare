@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.conf import settings
 from django.conf.urls import include, url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
@@ -18,7 +19,9 @@ urlpatterns = [
 # These should be served by nginx for deployed environments,
 # presumably this is here to allow for running without DEBUG
 # on in local dev environments.
-if settings.DEBUG is False:   # if DEBUG is True it will be served automatically
+if not settings.DEBUG:   # if DEBUG is True it will be served automatically
     urlpatterns += [
         url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.STATIC_ROOT}),
-]
+    ]
+else:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
