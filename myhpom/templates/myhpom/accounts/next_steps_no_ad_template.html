@@ -41,18 +41,22 @@
                             You may still store your documents with us
                             and retrieve them upon request.
                         </p>
-                        <form>
+                        <form method='post'>
+                            {% csrf_token %}
                             <div class="form-group">
-                                <label for="id_health_network">Please share your healthcare network:</label>
+                                <label for="id_custom_provider">Please share your healthcare network:</label>
                                 <input
                                     class="form-control"
-                                    aria-describedby="health_network_help"
+                                    aria-describedby="custom_provider_help"
                                     type="text"
-                                    name="health_network"
-                                    id="id_health_network"
+                                    name="custom_provider"
+                                    id="id_custom_provider"
                                     placeholder="My healthcare network"
                                 />
-                                <small class="form-text text-muted" id="health_network_help">
+                                <div class="invalid-feedback">
+                                    {% if form.errors.custom_provider %}{{ form.errors.custom_provider }}{% endif %}
+                                </div>
+                                <small class="form-text text-muted" id="custom_provider_help">
                                     <a href="{% url 'myhpom:home' %}">
                                         How do I find my healthcare network?
                                     </a>

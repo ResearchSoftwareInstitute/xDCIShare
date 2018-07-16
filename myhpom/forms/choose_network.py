@@ -5,6 +5,16 @@ from myhpom.models import (
 )
 
 
+class ChooseNetworkNoADTemplateForm(forms.ModelForm):
+    custom_provider = forms.CharField(max_length=1024)
+
+    class Meta:
+        model = UserDetails
+        fields = [
+            'custom_provider',
+        ]
+
+
 class ChooseNetworkForm(forms.ModelForm):
     custom_provider = forms.CharField(max_length=1024, required=False)
     health_network = forms.IntegerField(required=False)
