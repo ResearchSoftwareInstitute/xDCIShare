@@ -19,13 +19,19 @@ class UploadMixin:
         response = self.client.get(self.url)
         self.assertEqual(302, response.status_code)
 
+    def test_non_ajax_get(self):
+        # Renders the proper template on GET:
+        self._setup_user_and_login()
+        response = self.client.get(self.url)
+        self.assertEqual(403, response.status_code)
+
 
 class GETMixin(UploadMixin):
 
     def test_get(self):
         # Renders the proper template on GET:
         self._setup_user_and_login()
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
 
@@ -47,8 +53,8 @@ class UploadCurrentAdTestCase(UploadMixin, TestCase):
     def test_get(self):
         # Users that don't yet have an AD are sent to the upload_index
         user = self._setup_user_and_login()
-        response = self.client.get(self.url)
-        self.assertRedirects(response, reverse('myhpom:upload_index'))
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(response, reverse('myhpom:upload_index'), fetch_redirect_response=False)
 
         # When the user does have an advancedirective, they can visit the page.
         advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
@@ -66,21 +72,23 @@ class UploadSharingTestCase(UploadMixin, TestCase):
     def test_get(self):
         # When GETting, see the sharing template.
         self._setup_user_and_login()
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/sharing.html')
 
     def test_post(self):
-        # When POSTing - even no data is sufficient to succeed and redirect
+        # When POSTEDing - even no data is sufficient to succeed and redirect
         user = self._setup_user_and_login()
-        response = self.client.post(self.url)
-        self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
+        response = self.client.post(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
         self.assertFalse(user.advancedirective.share_with_ehs)
 
         # Checking the share box saves the result.
         response = self.client.post(self.url, {
             'share_with_ehs': True
-        })
-        self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
         user.advancedirective.refresh_from_db()
         self.assertTrue(user.advancedirective.share_with_ehs)
