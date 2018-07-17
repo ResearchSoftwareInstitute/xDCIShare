@@ -5,7 +5,8 @@
 $invalid_color: #dc3545;
 
 .upload-requirements__title {
-	@extend .h6
+	@extend .h6;
+	text-transform: uppercase;
 }
 
 .upload-requirements__list {
@@ -54,3 +55,9 @@ $invalid_color: #dc3545;
     padding: 0;
 }
 
+.combodate > .year,
+.combodate > .month,
+.combodate > .day {
+  @extend .form-control;
+  display: inline-block;
+}
