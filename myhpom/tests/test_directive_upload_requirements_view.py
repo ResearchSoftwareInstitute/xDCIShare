@@ -34,7 +34,7 @@ class DirectiveUploadRequirementsTestCase(TestCase):
         form_data = {'valid_date': '2018-01-01'}  # in the past
         response = self.client.post(self.url, data=form_data)
         self.assertRedirects(
-            response, reverse('myhpom:upload_submit'), fetch_redirect_response=False
+            response, reverse('myhpom:upload_sharing'), fetch_redirect_response=False
         )
 
     def test__POST_invalid_date(self):
