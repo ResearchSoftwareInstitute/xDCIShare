@@ -37,13 +37,12 @@ def upload_requirements(request):
     """
     MIN_YEAR = 1950
     if request.method == "POST":
-        form = UploadRequirementsForm(request.POST)
+        if hasattr(request.user, 'advancedirective'):
+            directive = request.user.advancedirective
+        else:
+            directive = AdvanceDirective(user=request.user, share_with_ehs=False)
+        form = UploadRequirementsForm(request.POST, instance=directive)
         if form.is_valid():
-            if hasattr(request.user, 'advancedirective'):
-                directive = request.user.advancedirective
-            else:
-                directive = AdvanceDirective(user=request.user, share_with_ehs=False)
-            directive.valid_date = form.cleaned_data['valid_date']
             directive.save()
             return redirect(reverse("myhpom:upload_sharing"))
     else:
