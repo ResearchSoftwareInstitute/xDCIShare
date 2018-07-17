@@ -4,7 +4,9 @@ from myhpom import models
 from myhpom.models.user import User
 
 import logging
+
 LOG = logging.getLogger(__name__)
+
 
 class DirectiveUploadRequirementsTestCase(TestCase):
     """
@@ -35,6 +37,9 @@ class DirectiveUploadRequirementsTestCase(TestCase):
         response = self.client.post(self.url, data=form_data)
         self.assertRedirects(
             response, reverse('myhpom:upload_sharing'), fetch_redirect_response=False
+        )
+        self.assertEqual(
+            form_data['valid_date'], self.user.advancedirective.valid_date.strftime('%Y-%m-%d')
         )
 
     def test__POST_invalid_date(self):
