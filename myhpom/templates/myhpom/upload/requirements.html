@@ -86,11 +86,13 @@ jQuery(function ($) {
     var $submitButton = $('#id_button_submit');
     var $directiveDateInput = $('#id_valid_date');
     var $inputSelectFile = $("#id_input_select_file");
+	var NOW = new Date();
 
 	function submitButtonEnableDisable () {
-		console.log('file = ' + $inputSelectFile.val());
+		var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
 		if ($('.upload-requirements__checkbox:checked').length == $requirements.length
 			&& $directiveDateInput.combodate('getValue') != ''
+			&& $directiveDate <= NOW
 			&& $inputSelectFile.val().trim() != ''
 		) {
     		$submitButton.prop('disabled', null).css('cursor', 'pointer');
@@ -111,7 +113,6 @@ jQuery(function ($) {
 	    template: "MMMM D YYYY"
 	});
 
-    var NOW = new Date();
     var WAS_VALID = false;
 	$directiveDateInput.on('change', function (event) {
 		if ($directiveDateInput.combodate('getValue')=='') {
@@ -120,7 +121,6 @@ jQuery(function ($) {
 				$("#id_valid_date_errors").html("Please enter the valid date of your document.");
 			}
 		} else {
-			var NOW = new Date();
 			var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
 			if ($directiveDate > NOW) {
 				$("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
