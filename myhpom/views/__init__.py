@@ -23,6 +23,4 @@ def home(request):
 @require_GET
 @login_required
 def dashboard(request):
-    return render(request, 'myhpom/dashboard.html', {
-        'widget_template': 'myhpom/upload/index.html'
-    })
+    return render(request, 'myhpom/dashboard.html')

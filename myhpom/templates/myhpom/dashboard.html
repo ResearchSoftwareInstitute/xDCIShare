@@ -82,13 +82,6 @@
             </p>
 
             <div class="advance-directive-widget small" id="advance-directive-widget">
-                {% comment %}
-                The following include is for demonstration purposes only.
-                This element will be selected via `$('#advance-directive-widget')`
-                and filled in with content from the various AJAX calls that
-                take the user through the steps in the upload process.
-                {% endcomment %}
-                {% include widget_template %}
             </div>
         </section>
     </div>
@@ -122,3 +115,19 @@
     </div>
 </sidebar>
 {% endblock main_content %}
+
+{% block extra-js %}
+<script>
+jQuery(function ($) {
+    var $advanceDirectiveWidgetDiv = $('#advance-directive-widget');
+    $.ajax({
+        url: "{% url "myhpom:upload_index" %}"
+    }).done(function (data) {
+        $advanceDirectiveWidgetDiv.html(data);
+    }).fail(function() {
+        // TODO provide some kind of error template when things don't work?
+    });
+    // TODO check the session to determine which page we should be on.
+});
+</script>
+{% endblock extra-js %}

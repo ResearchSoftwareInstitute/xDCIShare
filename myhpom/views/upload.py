@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_http_methods
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseNotAllowed, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
@@ -12,6 +12,9 @@ from myhpom.models import AdvanceDirective
 @require_GET
 @login_required
 def upload_index(request):
+    # TODO make a decorator
+    if not request.is_ajax():
+        return HttpResponseNotAllowed(['GET'])
     return render(request, 'myhpom/upload/index.html')
 
 
