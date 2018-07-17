@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 from myhpom.models import State
+from myhpom.models.user import User
 from myhpom.tests.factories import UserFactory
 
 
