@@ -16,9 +16,16 @@ class StateRequirement(models.Model):
     * UNIQUE(state, text) -- protect against multiple items with the same text
     """
 
-    state = models.ForeignKey(State, on_delete=models.CASCADE, null=True, blank=True)
-    position = models.PositiveSmallIntegerField()
-    text = models.CharField(max_length=1024)
+    state = models.ForeignKey(
+        State, on_delete=models.CASCADE, null=True, blank=True,
+        help_text="The state in which this requirement applies. If null, global to all states.",
+    )
+    position = models.PositiveSmallIntegerField(
+        help_text="The sorting position of this requirement."
+    )
+    text = models.CharField(
+        max_length=1024, 
+        help_text="The displayed text of the requirement.")
 
     class Meta:
         unique_together = (('state', 'position'), ('state', 'text'))
