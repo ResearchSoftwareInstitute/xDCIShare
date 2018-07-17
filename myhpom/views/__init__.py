@@ -10,6 +10,7 @@ from myhpom.views.choose_network import choose_network
 from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,
     upload_sharing)
 from myhpom.views.signup import signup
+from myhpom.views.download_template import download_template
 
 
 @require_GET
@@ -23,6 +24,14 @@ def home(request):
 @require_GET
 @login_required
 def dashboard(request):
+    state = request.user.userdetails.state
+    if (not hasattr(state, 'advance_directive_template') 
+        or not hasattr(state.advance_directive_template, 'path')
+    ):
+        advance_directive_template = None
+    else:
+        advance_directive_template = state.advance_directive_template
     return render(request, 'myhpom/dashboard.html', {
-        'widget_template': 'myhpom/upload/index.html'
+        'widget_template': 'myhpom/upload/index.html',
+        'advance_directive_template': advance_directive_template,
     })

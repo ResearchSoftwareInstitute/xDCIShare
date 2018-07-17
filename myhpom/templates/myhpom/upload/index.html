@@ -19,9 +19,11 @@
     <a class="advance-directive-widget__button--primary" href="{% url "myhpom:upload_requirements" %}">Upload Your File</a>
 </p>
 
+{% if advance_directive_template %}
 <p>
-    <a class="advance-directive-widget__button--secondary" href="">Download a Template</a>
+    <a class="advance-directive-widget__button--secondary" href="{% url "myhpom:download_template" %}" target="_blank">Download a Template</a>
 </p>
+{% endif %}
 
 {% endblock widget_body %}
 
