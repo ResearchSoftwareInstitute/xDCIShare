@@ -1,19 +1,20 @@
 {% extends 'myhpom/includes/upload_base.html' %}
 
 {% block widget_breadcrumb_items %}
-    <li class="advance-directive-widget__breadcrumb-item breadcrumb-item--selected">
-        Select Document
-    </li>
-    <li class="advance-directive-widget__breadcrumb-item">
-        Submit
-    </li>
-    <li class="advance-directive-widget__breadcrumb-item">
-        Confirmation
-    </li>
+<li class="advance-directive-widget__breadcrumb-item--active">
+    Select Document
+</li>
+<li class="advance-directive-widget__breadcrumb-item">
+    Submit
+</li>
+<li class="advance-directive-widget__breadcrumb-item">
+    Confirmation
+</li>
 {% endblock widget_breadcrumb_items %}
 
 {% block widget_body %}
-	<div class="upload-requirements__div">
+<div class="row">
+	<div class="col">
 		<h3 class="h6">ADVANCE DIRECTIVE DOCUMENT REQUIREMENTS FOR {{ user.userdetails.state.title|upper }}</h3>
 		<ol class="upload-requirements__ol">
 			{% for requirement in requirements %}
@@ -29,10 +30,12 @@
 				</ol>
 			</li>
 			{% endfor %}
-		</ol>
+		</ol>		
 	</div>
+</div>
 
-	<div class="upload-requirements__div">
+<div class="row">
+	<div class="col">
 		<h4 class="upload-requirements__h4">My file is valid starting:
 			<a class="upload-requirements__a--right" href="" onClick="event.preventDefault();">What is this?</a>
 		</h4>
@@ -46,8 +49,10 @@
 			</div>
 		</form>
 	</div>
+</div>
 
-	<div class="upload-requirements__div">
+<div class="row">
+	<div class="col">
 		<ol class="upload-requirements__ol">
 			<li class="upload-requirements__li">
 				<input type="checkbox" id="id_approval_checkbox" class="upload-requirements__checkbox"/>
@@ -60,71 +65,79 @@
 			</li>
 		</ol>
 	</div>
+</div>
 
-	<div class="upload-requirements__div">
-		<button type="button" class="btn btn-primary" id="id_button_select_file">
-			SELECT FILE
-		</button>
-	</div>
+<div class="row">
+    <div class="col">
+        <form action="{% url "myhpom:upload_sharing" %}">
+            <input type="file" class="form-control-file">
+            <button class="advance-directive-widget__button--primary" type="submit">
+            	SELECT FILE
+            </button>
+        </form>
+    </div>
+</div>
 
-	<div class="upload-requirements__div">
+<div class="row">
+	<div class="col">
 		<a href="{% url 'myhpom:dashboard' %}">CANCEL</a>
 	</div>
+</div>
 
 <script>
-    jQuery(function ($) {
-        var $requirements = $('.upload-requirements__checkbox');
-        var $selectFileButton = $('#id_button_select_file');
-        var $directiveDateInput = $('#id_valid_date');
+jQuery(function ($) {
+    var $requirements = $('.upload-requirements__checkbox');
+    var $selectFileButton = $('#id_button_select_file');
+    var $directiveDateInput = $('#id_valid_date');
 
-		function selectFileEnableDisable () {
-			if ($('.upload-requirements__checkbox:checked').length == $requirements.length
-				&& $directiveDateInput.combodate('getValue') != ''
-			) {
-	    		$selectFileButton.prop('disabled', null);
-	    	} else {
-	    		$selectFileButton.prop('disabled', 'disabled');
-	    	}
-		}
+	function selectFileEnableDisable () {
+		if ($('.upload-requirements__checkbox:checked').length == $requirements.length
+			&& $directiveDateInput.combodate('getValue') != ''
+		) {
+    		$selectFileButton.prop('disabled', null);
+    	} else {
+    		$selectFileButton.prop('disabled', 'disabled');
+    	}
+	}
 
-        $requirements.on('change', function (event) {
-        	selectFileEnableDisable();
-        });
-
-        $requirements.trigger('change');
-
-	    $directiveDateInput.combodate({
-		    smartDays: true,
-		    format: "YYYY-MM-DD",
-		    template: "MMMM D YYYY"
-		});
-
-	    var NOW = new Date();
-	    var WAS_VALID = false;
-		$directiveDateInput.on('change', function (event) {
-			if ($directiveDateInput.combodate('getValue')=='') {
-				$("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
-				if (WAS_VALID==true) {
-					$("#id_valid_date_errors").html("Please enter the valid date of your document.");
-				}
-			} else {
-				var NOW = new Date();
-				var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
-				if ($directiveDate > NOW) {
-					$("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
-					$("#id_valid_date_errors").html("Please enter a valid date on or before today.");	
-				} else {
-					$("#id_valid_date_div select").removeClass("upload-requirement__select--invalid");
-					$("#id_valid_date_errors").html("");
-					WAS_VALID = true;
-				}
-			}
-			selectFileEnableDisable();
-		});
-
-		$selectFileButton.on('click', function (event) {
-			$('#id_requirements__form').submit();
-		});
+    $requirements.on('change', function (event) {
+    	selectFileEnableDisable();
     });
+
+    $requirements.trigger('change');
+
+    $directiveDateInput.combodate({
+	    smartDays: true,
+	    format: "YYYY-MM-DD",
+	    template: "MMMM D YYYY"
+	});
+
+    var NOW = new Date();
+    var WAS_VALID = false;
+	$directiveDateInput.on('change', function (event) {
+		if ($directiveDateInput.combodate('getValue')=='') {
+			$("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
+			if (WAS_VALID==true) {
+				$("#id_valid_date_errors").html("Please enter the valid date of your document.");
+			}
+		} else {
+			var NOW = new Date();
+			var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
+			if ($directiveDate > NOW) {
+				$("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
+				$("#id_valid_date_errors").html("Please enter a valid date on or before today.");	
+			} else {
+				$("#id_valid_date_div select").removeClass("upload-requirement__select--invalid");
+				$("#id_valid_date_errors").html("");
+				WAS_VALID = true;
+			}
+		}
+		selectFileEnableDisable();
+	});
+
+	$selectFileButton.on('click', function (event) {
+		$('#id_requirements__form').submit();
+	});
+});
 </script>
 {% endblock widget_body %}

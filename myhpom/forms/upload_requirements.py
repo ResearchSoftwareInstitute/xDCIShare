@@ -1,7 +1,18 @@
-
 from django import forms
-from django.core.exceptions import ValidationError
-from myhpom.validators import validate_date_in_past
+from myhpom.models import AdvanceDirective
 
-class UploadRequirementsForm(forms.Form):
-    valid_date = forms.DateField(validators=[validate_date_in_past])
+
+class UploadRequirementsForm(forms.ModelForm):
+    """ Capture the valid_date for the user's AD """
+
+    class Meta:
+        model = AdvanceDirective
+        fields = ['valid_date']
+
+
+class SharingForm(forms.ModelForm):
+    """ Update the sharing settings for the user's AD """
+
+    class Meta:
+        model = AdvanceDirective
+        fields = ['share_with_ehs']
