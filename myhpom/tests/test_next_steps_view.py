@@ -1,6 +1,7 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.test import TestCase
 
 from myhpom.models import State
 from myhpom.tests.factories import UserFactory
