@@ -1,11 +1,9 @@
 from django.test import Client, TestCase
 from django.core.urlresolvers import reverse
+
 from myhpom import models
 from myhpom.models.user import User
-
-import logging
-
-LOG = logging.getLogger(__name__)
+from myhpom.tests.factories import UserFactory
 
 
 class DirectiveUploadRequirementsTestCase(TestCase):
@@ -17,15 +15,13 @@ class DirectiveUploadRequirementsTestCase(TestCase):
 
     def setUp(self):
         # create + login user who belongs to North Carolina
-        user_data = dict(email="Ab@example.com", password="Abbbbb1@", first_name='A', last_name='b')
-        self.user = User(**user_data)
-        self.user.set_password(user_data['password'])
+        self.user = UserFactory()
+        self.user.set_password('password')
         self.user.save()
-        self.client = Client()
-        self.client.login(username=user_data['email'], password=user_data['password'])
+        self.client.login(username=self.user.username, password='password')
         self.url = reverse('myhpom:upload_requirements')
-        state = models.State.objects.get(name="NC")
-        userdetails = models.UserDetails.objects.create(user=self.user, state=state)
+        self.user.userdetails.state = models.State.objects.get(name="NC")
+        self.user.userdetails.save()
 
     def test__GET(self):
         response = self.client.get(self.url)
