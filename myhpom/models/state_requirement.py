@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import sys
-from django.db import models
+from django.db import models, IntegrityError
 from django.core.exceptions import ValidationError
 from .state import State
 from myhpom.validators import validate_not_blank
@@ -37,6 +37,7 @@ def state_requirement_pre_save_receiver(sender, instance, **kwargs):
     * Ensure that the StateRequirement fields are valid before saving:
         * position: not blank
         * text: not blank
+        * null state: (state, position) and (state, text) not exists.
     """
     errors = []
     for key in ['position', 'text']:
@@ -47,6 +48,12 @@ def state_requirement_pre_save_receiver(sender, instance, **kwargs):
 
     if len(errors) > 0:
         raise ValidationError(errors)
+
+    if instance.state is None:
+        if StateRequirement.objects.filter(state=None, position=instance.position).exists():
+            raise IntegrityError('(state, position) not unique: (None, %s)' % (instance.position,))
+        if StateRequirement.objects.filter(state=None, text=instance.text).exists():
+            raise IntegrityError('(state, text) not unique: (None, %s)' % (instance.text,))
 
 
 models.signals.pre_save.connect(state_requirement_pre_save_receiver, sender=StateRequirement)

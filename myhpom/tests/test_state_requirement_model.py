@@ -41,18 +41,16 @@ class StateRequirementModelTestCase(TestCase):
                 'position': len(self.state_reqs),
                 'text': self.state_reqs[0].text,  # violate uniqueness for state, text
             },
-            # global -- WON'T WORK WITHOUT DATABASE TRIGGER
-            # -- (state=null, position) and (state=null, text) can be non-unique
-            # {
-            #     'state': None,
-            #     'position': self.global_reqs[0].position,  # violate uniqueness for state, position
-            #     'text': 'a non-existent global requirement',
-            # },
-            # {
-            #     'state': None,
-            #     'position': len(self.global_reqs),
-            #     'text': self.global_reqs[0].text,  # violate uniqueness for state, text
-            # },
+            {
+                'state': None,
+                'position': self.global_reqs[0].position,  # violate uniqueness for state, position
+                'text': 'a non-existent global requirement',
+            },
+            {
+                'state': None,
+                'position': len(self.global_reqs),
+                'text': self.global_reqs[0].text,  # violate uniqueness for state, text
+            },
         ]
         for data in invalid_data:
             with transaction.atomic():
