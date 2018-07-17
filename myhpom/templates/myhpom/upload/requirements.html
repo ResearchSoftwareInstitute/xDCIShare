@@ -30,7 +30,7 @@
                 </ol>
             </li>
             {% endfor %}
-        </ol>        
+        </ol>
     </div>
 </div>
 
@@ -101,9 +101,7 @@ jQuery(function ($) {
         }
     }
 
-    $requirements.on('change', function (event) {
-        submitButtonEnableDisable();
-    });
+    $requirements.on('change', submitButtonEnableDisable);
 
     $requirements.trigger('change');
 
@@ -124,7 +122,7 @@ jQuery(function ($) {
             var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
             if ($directiveDate > NOW) {
                 $("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
-                $("#id_valid_date_errors").html("Please enter a valid date on or before today.");    
+                $("#id_valid_date_errors").html("Please enter a valid date on or before today.");
             } else {
                 $("#id_valid_date_div select").removeClass("upload-requirement__select--invalid");
                 $("#id_valid_date_errors").html("");
@@ -134,9 +132,7 @@ jQuery(function ($) {
         submitButtonEnableDisable();
     });
 
-    $inputSelectFile.on('change', function (event) {
-        submitButtonEnableDisable();
-    });
+    $inputSelectFile.on('change', submitButtonEnableDisable);
 
     $submitButton.on('click', function (event) {
         $('#id_requirements_form').submit();
