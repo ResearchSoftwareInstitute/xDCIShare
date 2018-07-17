@@ -41,7 +41,7 @@ $invalid_color: #dc3545;
 }
 
 .upload-requirement__select--invalid {
-	border: 1px solid $invalid_color;
+	border: 1px solid $invalid_color!important;
 }
 
 .upload-requirements__help--right {
