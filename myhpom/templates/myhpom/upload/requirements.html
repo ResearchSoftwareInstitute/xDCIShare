@@ -39,7 +39,7 @@
 		<h4 class="upload-requirements__h4">My file is valid starting:
 			<a class="upload-requirements__a--right" href="" onClick="event.preventDefault();">What is this?</a>
 		</h4>
-		<form id="id_requirements__form" class="upload-requirements__form" method="POST">
+		<form id="id_requirements_form" class="upload-requirements__form" method="POST" action="{% url 'myhpom:upload_requirements' %}">
 			{% csrf_token %}
 			<div id="id_valid_date_div" class="upload-requirements__input-div{% if form.errors.valid_date %}--invalid{% endif %}">
 				<input id="id_valid_date" name="valid_date" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}"{% if form.errors.valid_date %} class="upload-requirement__input--invalid"{% endif %}/>
@@ -69,12 +69,8 @@
 
 <div class="row">
     <div class="col">
-        <form action="{% url "myhpom:upload_sharing" %}">
-            <input type="file" class="form-control-file">
-            <button class="advance-directive-widget__button--primary" type="submit">
-            	SELECT FILE
-            </button>
-        </form>
+        <input id="id_input_select_file" type="file" class="form-control-file"">
+        <button id="id_button_submit" class="advance-directive-widget__button--primary" type="submit">Submit</button>
     </div>
 </div>
 
@@ -87,21 +83,24 @@
 <script>
 jQuery(function ($) {
     var $requirements = $('.upload-requirements__checkbox');
-    var $selectFileButton = $('#id_button_select_file');
+    var $submitButton = $('#id_button_submit');
     var $directiveDateInput = $('#id_valid_date');
+    var $inputSelectFile = $("#id_input_select_file");
 
-	function selectFileEnableDisable () {
+	function submitButtonEnableDisable () {
+		console.log('file = ' + $inputSelectFile.val());
 		if ($('.upload-requirements__checkbox:checked').length == $requirements.length
 			&& $directiveDateInput.combodate('getValue') != ''
+			&& $inputSelectFile.val().trim() != ''
 		) {
-    		$selectFileButton.prop('disabled', null);
+    		$submitButton.prop('disabled', null).css('cursor', 'pointer');
     	} else {
-    		$selectFileButton.prop('disabled', 'disabled');
+    		$submitButton.prop('disabled', 'disabled').css('cursor', 'not-allowed');
     	}
 	}
 
     $requirements.on('change', function (event) {
-    	selectFileEnableDisable();
+    	submitButtonEnableDisable();
     });
 
     $requirements.trigger('change');
@@ -132,11 +131,15 @@ jQuery(function ($) {
 				WAS_VALID = true;
 			}
 		}
-		selectFileEnableDisable();
+		submitButtonEnableDisable();
 	});
 
-	$selectFileButton.on('click', function (event) {
-		$('#id_requirements__form').submit();
+	$inputSelectFile.on('change', function (event) {
+		submitButtonEnableDisable();
+	});
+
+	$submitButton.on('click', function (event) {
+		$('#id_requirements_form').submit();
 	});
 });
 </script>
