@@ -15,15 +15,15 @@
 {% block widget_body %}
 <div class="row">
 	<div class="col">
-		<h3 class="h6">ADVANCE DIRECTIVE DOCUMENT REQUIREMENTS FOR {{ user.userdetails.state.title|upper }}</h3>
-		<ol class="upload-requirements__ol">
+		<h3 class="upload-requirements__title">ADVANCE DIRECTIVE DOCUMENT REQUIREMENTS FOR {{ user.userdetails.state.title|upper }}</h3>
+		<ol class="upload-requirements__list">
 			{% for requirement in requirements %}
-			<li class="upload-requirements__li">
+			<li class="upload-requirements__item">
 				<input class="upload-requirements__checkbox" type="checkbox" id="id_requirement_{{ requirement.id }}" class="upload-requirements__checkbox"/>
 				<label class="upload-requirements__label" for="id_requirement_{{ requirement.id }}">{{ requirement.text }}</label>
-				<ol class="upload-requirements-link__ol">
+				<ol class="upload-requirements-link__list">
 					{% for link in requirement.staterequirementlink_set.all %}
-					<li class="upload-requirements-link__li">
+					<li class="upload-requirements-link__item">
 						<a href="{{ link.href }}" onClick="event.preventDefault();">{{ link.text }}</a>
 					</li>
 					{% endfor %}
@@ -36,15 +36,15 @@
 
 <div class="row">
 	<div class="col">
-		<h4 class="upload-requirements__h4">My file is valid starting:
-			<a class="upload-requirements__a--right" href="" onClick="event.preventDefault();">What is this?</a>
+		<h4 class="upload-requirements__item-head">My file is valid starting:
+			<a class="upload-requirements__help--right" href="" onClick="event.preventDefault();">What is this?</a>
 		</h4>
 		<form id="id_requirements_form" class="upload-requirements__form" method="POST" action="{% url 'myhpom:upload_requirements' %}">
 			{% csrf_token %}
-			<div id="id_valid_date_div" class="upload-requirements__input-div{% if form.errors.valid_date %}--invalid{% endif %}">
-				<input id="id_valid_date" name="valid_date" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}"{% if form.errors.valid_date %} class="upload-requirement__input--invalid"{% endif %}/>
+			<div id="id_valid_date_div">
+				<input id="id_valid_date" name="valid_date" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}"/>
 			</div>
-			<div id="id_valid_date_errors" class="upload-requirements__div-errors">
+			<div id="id_valid_date_errors" class="upload-requirements__item-errors">
 				{{ form.errors.valid_date }}
 			</div>
 		</form>
@@ -53,12 +53,12 @@
 
 <div class="row">
 	<div class="col">
-		<ol class="upload-requirements__ol">
-			<li class="upload-requirements__li">
+		<ol class="upload-requirements__list">
+			<li class="upload-requirements__item">
 				<input type="checkbox" id="id_approval_checkbox" class="upload-requirements__checkbox"/>
 				<label class="upload-requirements__label" for="id_approval_checkbox">I approve this file for storage</label>
-				<ol class="upload-requirements-link__ol">
-					<li class="upload-requirements-link__li">
+				<ol class="upload-requirements-link__list">
+					<li class="upload-requirements-link__item">
 						<a href="" onClick="event.preventDefault();">Review Terms and Conditions</a>
 					</li>
 				</ol>
