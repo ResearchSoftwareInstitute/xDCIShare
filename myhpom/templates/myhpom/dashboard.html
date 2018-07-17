@@ -82,6 +82,13 @@
             </p>
 
             <div class="advance-directive-widget small" id="advance-directive-widget">
+                {% comment %}
+                The following include is for demonstration purposes only.
+                This element will be selected via `$('#advance-directive-widget')`
+                and filled in with content from the various AJAX calls that
+                take the user through the steps in the upload process.
+                {% endcomment %}
+                {% include widget_template %}
             </div>
         </section>
     </div>
@@ -119,15 +126,42 @@
 {% block extra-js %}
 <script>
 jQuery(function ($) {
-    var $advanceDirectiveWidgetDiv = $('#advance-directive-widget');
-    $.ajax({
-        url: "{% url "myhpom:upload_index" %}"
-    }).done(function (data) {
-        $advanceDirectiveWidgetDiv.html(data);
-    }).fail(function() {
-        // TODO provide some kind of error template when things don't work?
-    });
-    // TODO check the session to determine which page we should be on.
+    var ADVANCED_DIRECTIVE_WIDGET_ID = '#advance-directive-widget';
+
+    function handleAjax($ajax) {
+        $ajax.done(function (data) {
+            // TODO maybe I need to un-wire any existing DOM (or keep it in hand?)
+            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
+            wireInterceptLinks();
+        }).fail(function() {
+            console.log("|FAILED to load URL");
+            // TODO provide some kind of error template when things don't work?
+        });
+    }
+
+    function handleFormSubmit() {
+        handleAjax($.ajax({
+            url: event.target.action
+        }));
+        event.preventDefault();
+    }
+
+    function handleAnchorClick() {
+        handleAjax($.ajax({
+            url: this.href
+        }));
+        return false;
+    }
+
+    function wireInterceptLinks() {
+        // When the contents of ADVANCED_DIRECTIVE_WIDGET_ID have been loaded
+        // search for any links that will go to another ajax friendly endpoint. When
+        // found, intercept them and treat them as ajax calls.
+        $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
+        $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
+    }
+
+    wireInterceptLinks();
 });
 </script>
 {% endblock extra-js %}

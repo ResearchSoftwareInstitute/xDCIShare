@@ -1,45 +1,44 @@
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_http_methods
 from django.shortcuts import render
-from django.http import HttpResponseNotAllowed, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
+from myhpom.decorators import require_ajax
 from myhpom.forms.upload_requirements import SharingForm
 from myhpom.models import AdvanceDirective
 
 
 @require_GET
 @login_required
+@require_ajax
 def upload_index(request):
-    # TODO make a decorator
-    if not request.is_ajax():
-        return HttpResponseNotAllowed(['GET'])
     return render(request, 'myhpom/upload/index.html')
 
 
 @require_http_methods(['GET', 'POST'])
 @login_required
+@require_ajax
 def upload_requirements(request):
-    return render(request, 'myhpom/dashboard.html', {
-        'widget_template': 'myhpom/upload/requirements.html'
-    })
+    return render(request, 'myhpom/upload/requirements.html')
 
 
 @require_GET
 @login_required
+@require_ajax
 def upload_current_ad(request):
     if not hasattr(request.user, 'advancedirective'):
         return HttpResponseRedirect(reverse('myhpom:upload_index'))
 
-    return render(request, 'myhpom/dashboard.html', {
+    return render(request, 'myhpom/upload/current_ad.html', {
         'advancedirective': request.user.advancedirective,
-        'widget_template': 'myhpom/upload/current_ad.html',
     })
 
 
 @require_http_methods(['GET', 'POST'])
 @login_required
+@require_ajax
 def upload_sharing(request):
     if not hasattr(request.user, 'advancedirective'):
         # TODO this check should be changed in MH-102 - it is assumed at
@@ -57,7 +56,6 @@ def upload_sharing(request):
             return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
 
     form = SharingForm(instance=advancedirective)
-    return render(request, 'myhpom/dashboard.html', {
+    return render(request, 'myhpom/upload/sharing.html', {
         'form': form,
-        'widget_template': 'myhpom/upload/sharing.html'
     })

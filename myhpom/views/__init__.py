@@ -23,4 +23,10 @@ def home(request):
 @require_GET
 @login_required
 def dashboard(request):
-    return render(request, 'myhpom/dashboard.html')
+    template = 'myhpom/upload/index.html'
+    if hasattr(request.user, 'advancedirective'):
+        template = 'myhpom/upload/current_ad.html'
+
+    return render(request, 'myhpom/dashboard.html', {
+        'widget_template': template
+    })
