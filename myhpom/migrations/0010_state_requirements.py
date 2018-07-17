@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, 
                     primary_key=True)),
-                ('text', models.CharField(max_length=1024)),
+                ('text', models.CharField(max_length=64)),
                 ('href', models.CharField(max_length=1024)),
                 ('requirement', models.ForeignKey(to='myhpom.StateRequirement')),
             ],

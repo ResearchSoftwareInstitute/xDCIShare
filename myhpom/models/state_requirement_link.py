@@ -13,7 +13,7 @@ class StateRequirementLink(models.Model):
     """
 
     requirement = models.ForeignKey(StateRequirement, on_delete=models.CASCADE)
-    text = models.CharField(max_length=1024)
+    text = models.CharField(max_length=64)
     href = models.CharField(max_length=1024)
 
 
