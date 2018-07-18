@@ -24,9 +24,12 @@ def home(request):
 @login_required
 def dashboard(request):
     template = 'myhpom/upload/index.html'
+    advancedirective = None
     if hasattr(request.user, 'advancedirective'):
         template = 'myhpom/upload/current_ad.html'
+        advancedirective = request.user.advancedirective
 
     return render(request, 'myhpom/dashboard.html', {
-        'widget_template': template
+        'widget_template': template,
+        'advancedirective': advancedirective,
     })
