@@ -4,6 +4,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
 
 from myhpom.models import State
+from myhpom.models.user import User
 from myhpom.tests.factories import UserFactory
 
 

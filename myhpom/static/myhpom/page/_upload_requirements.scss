@@ -1,0 +1,72 @@
+/*
+    styles for /upload/requirements.html
+*/
+
+$invalid_color: #dc3545;
+
+.upload-requirements__title {
+    @extend .h6;
+    text-transform: uppercase;
+}
+
+.upload-requirements__list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.upload-requirements__item {
+    padding: 0 0 0 1.25rem;
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+}
+
+.upload-requirements__item-head {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.upload-requirements__item-errors {
+    color: $invalid_color;
+}
+
+.upload-requirements__label {
+    margin: 0;
+    padding: 0;
+}
+
+.upload-requirements__checkbox {
+    clear: left;
+    float: left;
+    margin-left: -1.25rem;
+}
+
+.upload-requirement__select--invalid {
+    border: 1px solid $invalid_color!important;
+}
+
+.upload-requirements__submit {
+    cursor: pointer;
+}
+
+.upload-requirements__submit--disabled {
+    cursor: not-allowed;
+    /*pointer-events: none;*/
+}
+
+.upload-requirements__help--right {
+    float: right;
+    display: block;
+    font-weight: normal;
+}
+
+.upload-requirements-link__list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.combodate > .year,
+.combodate > .month,
+.combodate > .day {
+  @extend .form-control;
+  display: inline-block;
+}

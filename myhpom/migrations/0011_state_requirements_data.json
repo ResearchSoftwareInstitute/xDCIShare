@@ -1,0 +1,18 @@
+[
+	{"state": null, "position": 0, "text": "My file is an Advance Directive.", "links": [
+    {"text": "What is an Advance Directive?", "href": ""}
+  ]},
+  {"state": null, "position": 1, "text": "My file is about me.", "links": [
+    {"text": "Why is this important?", "href": ""}
+  ]},
+  {"state": "NC", "position": 0, "text": "My file has 2 witness signatures.", "links": [
+    {"text": "Why do I need signatures?", "href": ""}
+  ]},
+  {"state": "NC", "position": 1, "text": "My file has been notarized.", "links": [
+    {"text": "What is a notary?", "href": ""},
+    {"text": "Why must this be notarized?", "href": ""}
+  ]},
+  {"state": "SC", "position": 0, "text": "My file has 1 witness signature.", "links": [
+    {"text": "Why do I need signatures?", "href": ""}
+  ]}
+]
