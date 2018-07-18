@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_http_methods
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
@@ -22,8 +22,7 @@ def upload_index(request):
 @require_ajax
 def upload_current_ad(request):
     if not hasattr(request.user, 'advancedirective'):
-        # TODO change this to an error response
-        return HttpResponseRedirect(reverse('myhpom:upload_index'))
+        return HttpResponseForbidden()
 
     return render(request, 'myhpom/upload/current_ad.html', {
         'advancedirective': request.user.advancedirective,
@@ -66,8 +65,7 @@ def upload_requirements(request):
 @require_ajax
 def upload_sharing(request):
     if not hasattr(request.user, 'advancedirective'):
-        # TODO change this to an error response
-        return HttpResponseRedirect(reverse('myhpom:upload_index'))
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
         form = SharingForm(request.POST, instance=request.user.advancedirective)
