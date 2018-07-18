@@ -68,6 +68,6 @@ $invalid_color: #dc3545;
 .combodate > .year,
 .combodate > .month,
 .combodate > .day {
-  @extend .form-control;
-  display: inline-block;
+    @extend .form-control;
+    display: inline-block;
 }
