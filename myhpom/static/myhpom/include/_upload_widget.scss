@@ -89,3 +89,7 @@
 .advance-directive-widget__definition__value {
     @extend .advance-directive-widget__breadcrumb-status-value;
 }
+
+.advance-directive-widget__filename {
+    word-break: break-word;
+}

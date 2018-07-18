@@ -47,13 +47,13 @@ def upload_sharing(request):
     else:
         advancedirective = request.user.advancedirective
 
+    form = SharingForm(instance=advancedirective)
+
     if request.method == 'POST':
-        form = SharingForm(request.POST, instance=advancedirective)
+        form = SharingForm(request.POST, request.FILES, instance=advancedirective)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
 
-    form = SharingForm(instance=advancedirective)
     return render(request, 'myhpom/dashboard.html', {
         'form': form,
         'widget_template': 'myhpom/upload/sharing.html'

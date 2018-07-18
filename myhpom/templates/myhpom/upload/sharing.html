@@ -14,7 +14,10 @@
 
 {% block widget_body %}
 <p class="float-right"><a href="{% url "myhpom:upload_requirements" %}">change file</a></p>
-<h3 class="h6">You have selected:</h3>
+<div>
+    <span class="h6">You have selected:</span>
+    <span class="advance-directive-widget__filename">{{ request.user.advancedirective.filename }}</span>
+</div>
 
 <hr/>
 

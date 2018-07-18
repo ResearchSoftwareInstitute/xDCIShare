@@ -1,3 +1,5 @@
+import os
+
 from .user import User
 from django.db import models
 
@@ -17,3 +19,7 @@ class AdvanceDirective(models.Model):
     share_with_ehs = models.BooleanField(
         help_text=('True when user this document can be shared with the user\'s healthcare system.')
     )
+
+    @property
+    def filename(self):
+        return os.path.basename(self.document.name)

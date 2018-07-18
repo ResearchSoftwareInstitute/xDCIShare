@@ -7,4 +7,8 @@ class SharingForm(forms.ModelForm):
     """ Update the sharing settings for the user's AD """
     class Meta:
         model = AdvanceDirective
-        fields = ['share_with_ehs']
+        fields = [
+            'user',
+            'document',
+            'share_with_ehs',
+        ]

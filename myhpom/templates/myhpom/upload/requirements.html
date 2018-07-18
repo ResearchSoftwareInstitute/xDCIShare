@@ -15,8 +15,10 @@
 {% block widget_body %}
 <div class="row">
     <div class="col">
-        <form action="{% url "myhpom:upload_sharing" %}">
-            <input type="file" class="form-control-file">
+        <form enctype="multipart/form-data" action="{% url "myhpom:upload_sharing" %}" method="post">
+            {% csrf_token %}
+            <input type="file" name="document" class="form-control-file" />
+            <input name="user" type="hidden" value="{{ request.user.id }}" />
             <button class="advance-directive-widget__button--primary" type="submit">Submit</button>
         </form>
     </div>
