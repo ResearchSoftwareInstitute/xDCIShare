@@ -1,4 +1,5 @@
 import re
+from datetime import date
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -31,3 +32,17 @@ def password_validator(password):
             + u"1\u00a0uppercase, 1\u00a0number, and 1\u00a0special character "
             + u"\u00a0".join(u"( @ # $ % ^ * ( ) _ + - = )".split())
         )
+
+
+def validate_date_in_past(value):
+    if value > date.today():
+        raise ValidationError("Please select a valid date on or before today.")
+
+
+def validate_not_blank(value):
+    if (
+        value is None
+        or (isinstance(value, unicode) and unicode(value.strip()) == u'')
+        or (isinstance(value, str) and str(value.strip()) == '')
+    ):
+        raise ValidationError("A blank value is not allowed.")

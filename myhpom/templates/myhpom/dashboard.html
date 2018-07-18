@@ -1,4 +1,10 @@
 {% extends "myhpom/base.html" %}
+{% load sass_tags static %}
+
+{% block extra-head %}
+<script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
+<script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
+{% endblock %}
 
 {% block main_content %}
 <div class="row">

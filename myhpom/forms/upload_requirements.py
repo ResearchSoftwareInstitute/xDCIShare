@@ -4,7 +4,7 @@ from django.utils.timezone import now
 from myhpom.models import AdvanceDirective
 
 
-class UploadADForm(forms.ModelForm):
+class UploadRequirementsForm(forms.ModelForm):
     valid_date = forms.DateField(required=False)
     share_with_ehs = forms.BooleanField(required=False)
 
@@ -26,6 +26,7 @@ class UploadADForm(forms.ModelForm):
 
 class SharingForm(forms.ModelForm):
     """ Update the sharing settings for the user's AD """
+
     class Meta:
         model = AdvanceDirective
         fields = [
