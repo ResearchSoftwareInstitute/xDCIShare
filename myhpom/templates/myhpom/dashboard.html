@@ -148,8 +148,7 @@ jQuery(function ($) {
 
     function handleAjax($ajax) {
         $ajax.done(function (data) {
-            // $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
-            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
+            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
         }).fail(function() {
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         });
@@ -183,7 +182,6 @@ jQuery(function ($) {
         return false;
     }
 
-    // TODO only set up the click if it isn't inside a form
     $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
     $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
 });
