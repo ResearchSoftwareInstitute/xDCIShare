@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
-from myhpom.forms.upload_requirements import SharingForm
+from myhpom.forms.upload_requirements import SharingForm, UploadADForm
 from myhpom.models import AdvanceDirective
 
 
@@ -18,6 +18,19 @@ def upload_index(request):
 @require_http_methods(['GET', 'POST'])
 @login_required
 def upload_requirements(request):
+    if request.method == 'POST':
+        if hasattr(request.user, 'advancedirective'):
+            form = UploadADForm(
+                request.POST,
+                request.FILES,
+                instance=request.user.advancedirective
+            )
+        else:
+            form = UploadADForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('myhpom:upload_sharing'))
+
     return render(request, 'myhpom/dashboard.html', {
         'widget_template': 'myhpom/upload/requirements.html'
     })
@@ -39,6 +52,7 @@ def upload_current_ad(request):
 @login_required
 def upload_sharing(request):
     if not hasattr(request.user, 'advancedirective'):
+        return HttpResponseRedirect(reverse('myhpom:upload_requirements'))
         # TODO this check should be changed in MH-102 - it is assumed at
         # this point that a user has an advancedirective (if it doesn't
         # exist, go to upload_index).
@@ -49,10 +63,11 @@ def upload_sharing(request):
 
     form = SharingForm(instance=advancedirective)
 
-    if request.method == 'POST':
-        form = SharingForm(request.POST, request.FILES, instance=advancedirective)
+    if request.POST:
+        form = SharingForm(request.POST, instance=advancedirective)
         if form.is_valid():
             form.save()
+            return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
 
     return render(request, 'myhpom/dashboard.html', {
         'form': form,

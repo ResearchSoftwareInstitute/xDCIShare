@@ -15,7 +15,7 @@
 {% block widget_body %}
 <div class="row">
     <div class="col">
-        <form enctype="multipart/form-data" action="{% url "myhpom:upload_sharing" %}" method="post">
+        <form enctype="multipart/form-data" action="{% url "myhpom:upload_requirements" %}" method="post">
             {% csrf_token %}
             <input type="file" name="document" class="form-control-file" />
             <input name="user" type="hidden" value="{{ request.user.id }}" />
