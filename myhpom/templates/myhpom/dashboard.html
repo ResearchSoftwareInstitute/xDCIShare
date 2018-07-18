@@ -153,7 +153,7 @@ jQuery(function ($) {
         });
         $(event.target).find('input:file').each(function (idx, input) {
             $(input.files).each(function (idx, file) {
-                formData.append('file', file);
+                formData.append('document', file);
             });
         });
         handleAjax($.ajax({
@@ -172,6 +172,7 @@ jQuery(function ($) {
         return false;
     }
 
+    // TODO only set up the click if it isn't inside a form
     $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
     $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
 });

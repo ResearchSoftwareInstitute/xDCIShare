@@ -34,20 +34,22 @@
     </div>
 </div>
 
+<form id="id_requirements_form" class="upload-requirements__form" method="POST" action="{% url 'myhpom:upload_requirements' %}">
+{% csrf_token %}
+
 <div class="row">
     <div class="col">
         <h4 class="upload-requirements__item-head">My file is valid starting:
             <a class="upload-requirements__help--right" href="" onClick="event.preventDefault();">What is this?</a>
         </h4>
-        <form id="id_requirements_form" class="upload-requirements__form" method="POST" action="{% url 'myhpom:upload_requirements' %}">
-            {% csrf_token %}
+        <p>
             <div id="id_valid_date_div">
                 <input id="id_valid_date" name="valid_date" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}"/>
             </div>
-            <div id="id_valid_date_errors" class="upload-requirements__item-errors">
-                {{ form.errors.valid_date }}
-            </div>
-        </form>
+        </p>
+        <div id="id_valid_date_errors" class="upload-requirements__item-errors">
+            {{ form.errors.valid_date }}
+        </div>
     </div>
 </div>
 
@@ -69,10 +71,15 @@
 
 <div class="row">
     <div class="col">
-        <input id="id_input_select_file" type="file" class="form-control-file"">
+        <input id="id_document" name="document" type="file" class="form-control-file"">
+        <div class="upload-requirements__item-errors">
+            {{ form.errors.document }}
+        </div>
         <button id="id_button_submit" class="advance-directive-widget__button--primary" type="submit">Submit</button>
     </div>
 </div>
+
+</form>
 
 <div class="row">
     <div class="col">
@@ -85,7 +92,7 @@ jQuery(function ($) {
     var $requirements = $('.upload-requirements__checkbox');
     var $submitButton = $('#id_button_submit');
     var $directiveDateInput = $('#id_valid_date');
-    var $inputSelectFile = $("#id_input_select_file");
+    var $inputSelectFile = $("#id_document");
     var NOW = new Date();
 
     function submitButtonEnableDisable () {
@@ -133,10 +140,6 @@ jQuery(function ($) {
     });
 
     $inputSelectFile.on('change', submitButtonEnableDisable);
-
-    $submitButton.on('click', function (event) {
-        $('#id_requirements_form').submit();
-    });
 });
 </script>
 {% endblock widget_body %}
