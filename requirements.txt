@@ -1,6 +1,4 @@
-# These are only a subset of all requirements - the base requirements are also
-# defined in the ./hs_docker_base/Dockerfile file.
-
+# Dependencies from the hydroshare project:
 Django==1.8.14
 arrow==0.7.0
 autoflake==0.6.6
