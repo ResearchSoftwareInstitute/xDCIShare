@@ -16,4 +16,10 @@
         <dd class="advance-directive-widget__definition__value">{{ advancedirective.valid_date|date:"SHORT_DATE_FORMAT" }}</dd>
     </di>
 </dl>
+
+<div class="row">
+    <div class="col">
+        <a class="advance-directive-widget__button--primary" href="{{ request.user.advancedirective.document.url }}" target="_blank" rel="noopener noreferrer">Download</a>
+    </div>
+</div>
 {% endblock widget_body %}
