@@ -1,11 +1,9 @@
-from tempfile import mkstemp
-
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
 from django.utils.timezone import now
 
-from myhpom.models import AdvanceDirective, State
+from myhpom.models import AdvanceDirective
 from myhpom.tests.factories import UserFactory
 
 
