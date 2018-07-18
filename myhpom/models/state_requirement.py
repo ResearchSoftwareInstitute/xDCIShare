@@ -47,11 +47,10 @@ class StateRequirement(models.Model):
         if self.id:
             # Replace "myapp" with the name of the app containing
             # your Certificate model:
-            admin_url = reverse(
-                'admin:myhpom_staterequirement_change', args=(self.id,)
-            )
+            admin_url = reverse('admin:myhpom_staterequirement_change', args=(self.id,))
             return u'<a href="%s" target="_blank">Edit Links</a>' % admin_url
         return u''
+
     admin_link.allow_tags = True
     admin_link.short_description = 'Links'
 
@@ -74,10 +73,28 @@ def state_requirement_pre_save_receiver(sender, instance, **kwargs):
         raise ValidationError(errors)
 
     if instance.state is None:
-        if StateRequirement.objects.filter(state=None, position=instance.position).exists():
-            raise IntegrityError('(state, position) not unique: (None, %s)' % (instance.position,))
-        if StateRequirement.objects.filter(state=None, text=instance.text).exists():
-            raise IntegrityError('(state, text) not unique: (None, %s)' % (instance.text,))
+        # PostgreSQL doesn't raise IntegrityError on null state, so we have to.
+        if instance.id is None:
+            # creating a new instance
+            if StateRequirement.objects.filter(state=None, position=instance.position).exists():
+                raise IntegrityError(
+                    '(state, position) not unique: (None, %s)' % (instance.position,)
+                )
+            if StateRequirement.objects.filter(state=None, text=instance.text).exists():
+                raise IntegrityError('(state, text) not unique: (None, %s)' % (instance.text,))
+        else:
+            # saving an existing instance
+            qid = ~models.Q(id=instance.id)
+            if (
+                StateRequirement.objects.filter(qid)
+                .filter(state=None, position=instance.position)
+                .exists()
+            ):
+                raise IntegrityError(
+                    '(state, position) not unique: (None, %s)' % (instance.position,)
+                )
+            if StateRequirement.objects.filter(qid).filter(state=None, text=instance.text).exists():
+                raise IntegrityError('(state, text) not unique: (None, %s)' % (instance.text,))
 
 
 models.signals.pre_save.connect(state_requirement_pre_save_receiver, sender=StateRequirement)

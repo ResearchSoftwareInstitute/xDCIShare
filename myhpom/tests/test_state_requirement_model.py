@@ -73,3 +73,12 @@ class StateRequirementModelTestCase(TestCase):
         for req in requirements[len(self.global_reqs) :]:  # state-specific ordering
             self.assertGreater(req.position, prev_pos)
             prev_pos = req.position
+
+    def test__save_null_state(self):
+        """
+        If state is null, it should allow saving an existing instance
+        """
+        data = {'state': None, 'position': 9999, 'text': 'A non-existent global requirement'}
+        req = StateRequirement.objects.create(**data)
+        req.text = 'An edited non-existent global requirement.'
+        req.save()
