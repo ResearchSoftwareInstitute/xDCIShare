@@ -132,7 +132,6 @@ jQuery(function ($) {
         $ajax.done(function (data) {
             // TODO maybe I need to un-wire any existing DOM (or keep it in hand?)
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
-            wireInterceptLinks();
         }).fail(function() {
             console.log("|FAILED to load URL");
             // TODO provide some kind of error template when things don't work?
@@ -140,10 +139,24 @@ jQuery(function ($) {
     }
 
     function handleFormSubmit() {
-        handleAjax($.ajax({
-            url: event.target.action
-        }));
         event.preventDefault();
+
+        var formData = new FormData();
+        $($(event.target).serializeArray()).each(function (idx, item) {
+            formData.append(item.name, item.value);
+        });
+        $(event.target).find('input:file').each(function (idx, input) {
+            $(input.files).each(function (idx, file) {
+                formData.append('file', file);
+            });
+        });
+        handleAjax($.ajax({
+            url: event.target.action,
+            data: formData,
+            contentType: false,
+            processData: false,
+            method: event.target.method
+        }));
     }
 
     function handleAnchorClick() {
@@ -153,15 +166,8 @@ jQuery(function ($) {
         return false;
     }
 
-    function wireInterceptLinks() {
-        // When the contents of ADVANCED_DIRECTIVE_WIDGET_ID have been loaded
-        // search for any links that will go to another ajax friendly endpoint. When
-        // found, intercept them and treat them as ajax calls.
-        $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
-        $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
-    }
-
-    wireInterceptLinks();
+    $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
+    $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
 });
 </script>
 {% endblock extra-js %}
