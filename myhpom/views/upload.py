@@ -19,15 +19,13 @@ def upload_index(request):
 @login_required
 def upload_requirements(request):
     if request.method == 'POST':
-        if hasattr(request.user, 'advancedirective'):
-            form = UploadADForm(
-                request.POST,
-                request.FILES,
-                instance=request.user.advancedirective
-            )
-        else:
-            form = UploadADForm(request.POST, request.FILES)
+        form = UploadADForm(
+            request.POST,
+            request.FILES,
+        )
         if form.is_valid():
+            if hasattr(request.user, 'advancedirective'):
+                request.user.advancedirective.delete()
             form.save()
             return HttpResponseRedirect(reverse('myhpom:upload_sharing'))
 
@@ -73,3 +71,12 @@ def upload_sharing(request):
         'form': form,
         'widget_template': 'myhpom/upload/sharing.html'
     })
+
+
+@require_http_methods(['POST'])
+@login_required
+def delete_ad(request):
+    if hasattr(request.user, 'advancedirective'):
+        request.user.advancedirective.delete()
+
+    return HttpResponseRedirect(reverse('myhpom:dashboard'))

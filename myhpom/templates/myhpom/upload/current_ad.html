@@ -54,12 +54,15 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Cancel
-                </button>
-                <button type="button" class="btn btn-danger">
-                    Delete
-                </button>
+                <form action="{% url 'myhpom:delete_ad' %}" method='post'>
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
             </div>
         </div>
     </div>
