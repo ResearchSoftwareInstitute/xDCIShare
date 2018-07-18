@@ -13,7 +13,7 @@
 <dl class="advance-directive-widget__definition">
     <di>
         <dt class="advance-directive-widget__definition__key">active date:</dt>
-        <dd class="advance-directive-widget__definition__value">{{ advancedirective.valid_date|date:"SHORT_DATE_FORMAT" }}</dd>
+        <dd class="advance-directive-widget__definition__value">{{ request.user.advancedirective.valid_date|date:"SHORT_DATE_FORMAT" }}</dd>
     </di>
 </dl>
 

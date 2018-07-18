@@ -41,7 +41,6 @@ def upload_current_ad(request):
         return HttpResponseRedirect(reverse('myhpom:upload_index'))
 
     return render(request, 'myhpom/dashboard.html', {
-        'advancedirective': request.user.advancedirective,
         'widget_template': 'myhpom/upload/current_ad.html',
     })
 
