@@ -127,20 +127,31 @@
         </p>
     </div>
 </sidebar>
+
+<div id="advance-directive-widget-ajax-failure" class="hidden advance-directive-widget__body" hidden>
+    <h3 class="h6">
+        Error
+    </h3>
+
+    <p>
+        Oops! We've encountered an error while uploading your document. Please
+        refresh your page and try again.
+    </p>
+</div>
 {% endblock main_content %}
 
 {% block extra-js %}
 <script>
 jQuery(function ($) {
     var ADVANCED_DIRECTIVE_WIDGET_ID = '#advance-directive-widget';
+    var AJAX_FAILURE_CONTENT = $('#advance-directive-widget-ajax-failure').clone().prop('hidden', false);
 
     function handleAjax($ajax) {
         $ajax.done(function (data) {
-            // TODO maybe I need to un-wire any existing DOM (or keep it in hand?)
-            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
+            // $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
+            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         }).fail(function() {
-            console.log("|FAILED to load URL");
-            // TODO provide some kind of error template when things don't work?
+            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         });
     }
 
