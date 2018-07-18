@@ -74,7 +74,7 @@ def upload_sharing(request):
 
 @require_http_methods(['POST'])
 @login_required
-def delete_ad(request):
+def upload_delete_ad(request):
     if hasattr(request.user, 'advancedirective'):
         request.user.advancedirective.delete()
 

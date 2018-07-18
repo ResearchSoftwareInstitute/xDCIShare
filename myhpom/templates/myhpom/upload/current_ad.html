@@ -54,7 +54,7 @@
             </div>
 
             <div class="modal-footer">
-                <form action="{% url 'myhpom:delete_ad' %}" method='post'>
+                <form action="{% url 'myhpom:upload_delete_ad' %}" method='post'>
                     {% csrf_token %}
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Cancel

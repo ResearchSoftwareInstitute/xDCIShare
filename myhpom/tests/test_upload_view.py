@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.timezone import now
@@ -65,7 +66,12 @@ class UploadSharingTestCase(UploadMixin, TestCase):
 
     def test_get(self):
         # When GETting, see the sharing template.
-        self._setup_user_and_login()
+        user = self._setup_user_and_login()
+        response = self.client.get(self.url)
+        self.assertEqual(302, response.status_code)
+
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/sharing.html')
@@ -73,14 +79,56 @@ class UploadSharingTestCase(UploadMixin, TestCase):
     def test_post(self):
         # When POSTing - even no data is sufficient to succeed and redirect
         user = self._setup_user_and_login()
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
+
+        # no submitted data == invalid form
         response = self.client.post(self.url)
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/upload/sharing.html')
+
+        response = self.client.post(self.url, {
+            'share_with_ehs': False,
+        })
         self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
         self.assertFalse(user.advancedirective.share_with_ehs)
 
         # Checking the share box saves the result.
         response = self.client.post(self.url, {
-            'share_with_ehs': True
+            'share_with_ehs': True,
         })
         self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
         user.advancedirective.refresh_from_db()
         self.assertTrue(user.advancedirective.share_with_ehs)
+
+
+class UploadDeleteTestCase(UploadMixin, TestCase):
+    url = reverse('myhpom:upload_delete_ad')
+
+    def test_not_logged_in(self):
+        # A user must be logged in to see their dashboard:
+        response = self.client.post(self.url)
+        self.assertEqual(302, response.status_code)
+
+    def test_get_rejected(self):
+        self._setup_user_and_login()
+        response = self.client.get(self.url)
+        self.assertEqual(405, response.status_code)
+
+    def test_deletes_ad(self):
+        user = self._setup_user_and_login()
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
+        self.assertTrue(hasattr(user, 'advancedirective'))
+        self.assertEqual(advancedirective, user.advancedirective)
+
+        response = self.client.post(self.url)
+        user = User.objects.get(id=user.id)
+        self.assertFalse(hasattr(user, 'advancedirective'))
+        self.assertRedirects(response, reverse('myhpom:dashboard'))
+
+        # doing this twice should be fine
+        response = self.client.post(self.url)
+        user = User.objects.get(id=user.id)
+        self.assertFalse(hasattr(user, 'advancedirective'))
+        self.assertRedirects(response, reverse('myhpom:dashboard'))
