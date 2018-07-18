@@ -23,13 +23,11 @@ def home(request):
 @require_GET
 @login_required
 def dashboard(request):
-    user_has_valid_ad = (
-        hasattr(request.user, 'advancedirective')
-        and request.user.advancedirective.share_with_ehs
-    )
+    user_has_ad = hasattr(request.user, 'advancedirective')
+
     return render(request, 'myhpom/dashboard.html', {
         'widget_template': (
-            'myhpom/upload/current_ad.html' if user_has_valid_ad
+            'myhpom/upload/current_ad.html' if user_has_ad
             else 'myhpom/upload/index.html'
         ),
     })
