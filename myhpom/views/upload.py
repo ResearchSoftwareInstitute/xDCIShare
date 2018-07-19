@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -42,10 +42,11 @@ def upload_requirements(request):
     else:
         directive = AdvanceDirective(user=request.user, share_with_ehs=False)
     MIN_YEAR = 1950
+
     if request.method == "POST":
         form = UploadRequirementsForm(request.POST, request.FILES, instance=directive)
         if form.is_valid():
-            directive.save()
+            form.save()
             return redirect(reverse("myhpom:upload_sharing"))
     else:
         form = UploadRequirementsForm(instance=directive)
@@ -77,3 +78,14 @@ def upload_sharing(request):
     return render(request, 'myhpom/upload/sharing.html', {
         'form': form,
     })
+
+
+@require_POST
+@login_required
+@require_ajax
+def upload_delete_ad(request):
+    if hasattr(request.user, 'advancedirective'):
+        request.user.advancedirective.delete()
+        return HttpResponseRedirect(reverse('myhpom:upload_index'))
+    else:
+        return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))

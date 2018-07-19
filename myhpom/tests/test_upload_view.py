@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.test import TestCase, override_settings
@@ -153,3 +154,42 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         response = self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
+
+
+class UploadDeleteTestCase(UploadMixin, TestCase):
+    url = reverse('myhpom:upload_delete_ad')
+
+    def test_not_logged_in(self):
+        # A user must be logged in to see their dashboard:
+        response = self.client.post(self.url)
+        self.assertEqual(302, response.status_code)
+
+    def test_non_ajax_get(self):
+        self._setup_user_and_login()
+        response = self.client.get(self.url)
+        self.assertEqual(405, response.status_code)
+
+    def test_not_ajax_post_rejected(self):
+        user = self._setup_user_and_login()
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
+        response = self.client.post(self.url)
+        self.assertEqual(403, response.status_code)
+
+    def test_deletes_ad(self):
+        user = self._setup_user_and_login()
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
+        self.assertTrue(hasattr(user, 'advancedirective'))
+        self.assertEqual(advancedirective, user.advancedirective)
+
+        response = self.client.post(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        user = User.objects.get(id=user.id)
+        self.assertEqual(302, response.status_code)
+        self.assertFalse(hasattr(user, 'advancedirective'))
+
+        # doing this twice should be fine
+        response = self.client.post(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        user = User.objects.get(id=user.id)
+        self.assertEqual(302, response.status_code)
+        self.assertFalse(hasattr(user, 'advancedirective'))

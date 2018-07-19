@@ -157,25 +157,43 @@ jQuery(function ($) {
     function handleFormSubmit(event) {
         event.preventDefault();
 
-        var formData = new FormData();
-        $($(event.target).serializeArray()).each(function (idx, item) {
-            formData.append(item.name, item.value);
-        });
-        $(event.target).find('input:file').each(function (idx, input) {
-            $(input.files).each(function (idx, file) {
-                formData.append('document', file);
+        function doAjaxSubmission () {
+            var formData = new FormData();
+            $($(event.target).serializeArray()).each(function (idx, item) {
+                formData.append(item.name, item.value);
             });
-        });
-        handleAjax($.ajax({
-            url: event.target.action,
-            data: formData,
-            contentType: false,
-            processData: false,
-            method: event.target.method
-        }));
+            $(event.target).find('input:file').each(function (idx, input) {
+                $(input.files).each(function (idx, file) {
+                    formData.append('document', file);
+                });
+            });
+            handleAjax($.ajax({
+                url: event.target.action,
+                data: formData,
+                contentType: false,
+                processData: false,
+                method: event.target.method
+            }));
+        }
+
+        /*
+            Prevent the AJAX submission from taking place and
+            eradicating the relevant form before it has finished
+            hiding.
+        */
+        if ($(event.target).is('.modal form')) {
+            var $modal = $(event.target).closest('.modal');
+            $modal.on('hidden.bs.modal', doAjaxSubmission)
+            $modal.modal('hide');
+        } else {
+            doAjaxSubmission();
+        }
     }
 
     function handleAnchorClick() {
+        if ($(this).is('[data-toggle="modal"], .modal a')) {
+            return;
+        }
         handleAjax($.ajax({
             url: this.href
         }));

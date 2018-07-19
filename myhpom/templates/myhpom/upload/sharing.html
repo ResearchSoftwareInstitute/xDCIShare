@@ -14,7 +14,10 @@
 
 {% block widget_body %}
 <p class="float-right"><a href="{% url "myhpom:upload_requirements" %}">change file</a></p>
-<h3 class="h6">You have selected:</h3>
+<div>
+    <span class="h6">You have selected:</span>
+    <span class="advance-directive-widget__filename">{{ request.user.advancedirective.filename }}</span>
+</div>
 
 <hr/>
 
@@ -22,7 +25,7 @@
 <form action="{% url "myhpom:upload_sharing" %}" method="POST">
     {% csrf_token %}
     <div class="form-group form-check">
-        <input class="form-check-input" type="checkbox" id="id_share_with_ehs" name="share_with_ehs">
+        <input class="form-check-input" name="share_with_ehs" type="checkbox" id="id_share_with_ehs">
         <label class="form-check-label" for="{{ form.share_with_ehs.id_for_label }}">
             I approve sharing this document with my healthcare system
         </label>
