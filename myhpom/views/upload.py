@@ -43,8 +43,6 @@ def upload_requirements(request):
         directive = AdvanceDirective(user=request.user, share_with_ehs=False)
     MIN_YEAR = 1950
 
-    form = UploadRequirementsForm()
-
     if request.method == "POST":
         form = UploadRequirementsForm(request.POST, request.FILES, instance=directive)
         if form.is_valid():
@@ -84,6 +82,7 @@ def upload_sharing(request):
 
 @require_http_methods(['POST'])
 @login_required
+@require_ajax
 def upload_delete_ad(request):
     if hasattr(request.user, 'advancedirective'):
         request.user.advancedirective.delete()
