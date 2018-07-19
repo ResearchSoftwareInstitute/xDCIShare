@@ -127,4 +127,63 @@
         </p>
     </div>
 </sidebar>
+
+<div id="advance-directive-widget-ajax-failure" class="hidden advance-directive-widget__body" hidden>
+    <h3 class="h6">
+        Error
+    </h3>
+
+    <p>
+        Oops! We've encountered an error while uploading your document. Please
+        refresh your page and try again.
+    </p>
+</div>
 {% endblock main_content %}
+
+{% block extra-js %}
+<script>
+jQuery(function ($) {
+    var ADVANCED_DIRECTIVE_WIDGET_ID = '#advance-directive-widget';
+    var AJAX_FAILURE_CONTENT = $('#advance-directive-widget-ajax-failure').clone().prop('hidden', false);
+
+    function handleAjax($ajax) {
+        $ajax.done(function (data) {
+            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
+        }).fail(function() {
+            $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
+        });
+    }
+
+    function handleFormSubmit(event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        $($(event.target).serializeArray()).each(function (idx, item) {
+            formData.append(item.name, item.value);
+        });
+        $(event.target).find('input:file').each(function (idx, input) {
+            $(input.files).each(function (idx, file) {
+                formData.append('document', file);
+            });
+        });
+        handleAjax($.ajax({
+            url: event.target.action,
+            data: formData,
+            contentType: false,
+            processData: false,
+            method: event.target.method
+        }));
+    }
+
+    function handleAnchorClick() {
+        handleAjax($.ajax({
+            url: this.href
+        }));
+        return false;
+    }
+
+    $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
+    $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
+});
+</script>
+{% endblock extra-js %}

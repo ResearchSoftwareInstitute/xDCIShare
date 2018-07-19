@@ -23,11 +23,13 @@ def home(request):
 @require_GET
 @login_required
 def dashboard(request):
-    user_has_ad = hasattr(request.user, 'advancedirective')
+    template = 'myhpom/upload/index.html'
+    advancedirective = None
+    if hasattr(request.user, 'advancedirective'):
+        template = 'myhpom/upload/current_ad.html'
+        advancedirective = request.user.advancedirective
 
     return render(request, 'myhpom/dashboard.html', {
-        'widget_template': (
-            'myhpom/upload/current_ad.html' if user_has_ad
-            else 'myhpom/upload/index.html'
-        ),
+        'widget_template': template,
+        'advancedirective': advancedirective,
     })

@@ -1,6 +1,6 @@
-from django.contrib.auth.models import User
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils.timezone import now
 
 from myhpom.models import AdvanceDirective
@@ -20,13 +20,19 @@ class UploadMixin:
         response = self.client.get(self.url)
         self.assertEqual(302, response.status_code)
 
+    def test_non_ajax_get(self):
+        # Renders the proper template on GET:
+        self._setup_user_and_login()
+        response = self.client.get(self.url)
+        self.assertEqual(403, response.status_code)
+
 
 class GETMixin(UploadMixin):
 
     def test_get(self):
         # Renders the proper template on GET:
         self._setup_user_and_login()
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
 
@@ -46,10 +52,10 @@ class UploadCurrentAdTestCase(UploadMixin, TestCase):
         self.url = reverse('myhpom:upload_current_ad')
 
     def test_get(self):
-        # Users that don't yet have an AD are sent to the upload_index
+        # Users that don't yet have an AD are not allowed
         user = self._setup_user_and_login()
-        response = self.client.get(self.url)
-        self.assertRedirects(response, reverse('myhpom:upload_index'))
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(403, response.status_code)
 
         # When the user does have an advancedirective, they can visit the page.
         advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
@@ -65,70 +71,85 @@ class UploadSharingTestCase(UploadMixin, TestCase):
         self.assertEqual(302, response.status_code)
 
     def test_get(self):
-        # When GETting, see the sharing template.
+        # When GETting, and the user has no advancedirective are forbidden
         user = self._setup_user_and_login()
-        response = self.client.get(self.url)
-        self.assertEqual(302, response.status_code)
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(403, response.status_code)
 
-        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
-        advancedirective.save()
-        response = self.client.get(self.url)
+        # When the user has an advancedirective, show the sharing prefs:
+        directive = AdvanceDirective(user=user, share_with_ehs=False, valid_date=now())
+        directive.save()
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/sharing.html')
 
     def test_post(self):
-        # When POSTing - even no data is sufficient to succeed and redirect
+        # When POSTEDing - even no data is sufficient to succeed and redirect
         user = self._setup_user_and_login()
-        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
-        advancedirective.save()
-
-        # no submitted data == invalid form
-        response = self.client.post(self.url)
-        self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed('myhpom/upload/sharing.html')
-
-        response = self.client.post(self.url, {
-            'share_with_ehs': False,
-        })
-        self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
+        directive = AdvanceDirective(user=user, share_with_ehs=False, valid_date=now())
+        directive.save()
+        response = self.client.post(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
         self.assertFalse(user.advancedirective.share_with_ehs)
 
         # Checking the share box saves the result.
         response = self.client.post(self.url, {
-            'share_with_ehs': True,
-        })
-        self.assertRedirects(response, reverse('myhpom:upload_current_ad'))
+            'share_with_ehs': True
+        }, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
         user.advancedirective.refresh_from_db()
         self.assertTrue(user.advancedirective.share_with_ehs)
 
 
-class UploadDeleteTestCase(UploadMixin, TestCase):
-    url = reverse('myhpom:upload_delete_ad')
+class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
 
-    def test_not_logged_in(self):
-        # A user must be logged in to see their dashboard:
-        response = self.client.post(self.url)
-        self.assertEqual(302, response.status_code)
+    def setUp(self):
+        self.url = reverse('myhpom:upload_requirements')
 
-    def test_get_rejected(self):
-        self._setup_user_and_login()
-        response = self.client.get(self.url)
-        self.assertEqual(405, response.status_code)
-
-    def test_deletes_ad(self):
+    def test_POST_valid_date(self):
         user = self._setup_user_and_login()
-        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
-        advancedirective.save()
-        self.assertTrue(hasattr(user, 'advancedirective'))
-        self.assertEqual(advancedirective, user.advancedirective)
+        form_data = {
+            'valid_date': '2018-01-01',
+            'document': SimpleUploadedFile('afile.pdf', 'binary_contents'),
+        }
+        response = self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_sharing'), fetch_redirect_response=False
+        )
+        self.assertEqual(
+            form_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
+        )
+        self.assertIsNotNone(user.advancedirective.document)
 
-        response = self.client.post(self.url)
-        user = User.objects.get(id=user.id)
-        self.assertFalse(hasattr(user, 'advancedirective'))
-        self.assertRedirects(response, reverse('myhpom:dashboard'))
+    def test_POST_invalid_date(self):
+        self._setup_user_and_login()
+        form_data = {
+            'valid_date': '',
+            'document': SimpleUploadedFile('afile.pdf', 'binary_contents'),
+        }
+        response = self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/upload/requirements.html')
 
-        # doing this twice should be fine
-        response = self.client.post(self.url)
-        user = User.objects.get(id=user.id)
-        self.assertFalse(hasattr(user, 'advancedirective'))
-        self.assertRedirects(response, reverse('myhpom:dashboard'))
+    def test__POST_invalid_filename(self):
+        self._setup_user_and_login()
+        form_data = {
+            'valid_date': '2018-01-01',
+            'document': SimpleUploadedFile('afile.txt', 'binary_contents'),
+        }
+        response = self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/upload/requirements.html')
+
+    @override_settings(MAX_AD_SIZE=10)
+    def test_POST_invalid_filesize(self):
+        self._setup_user_and_login()
+        form_data = {
+            'valid_date': '2018-01-01',
+            'document': SimpleUploadedFile('afile.pdf', 'binary_contents'),
+        }
+        response = self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/upload/requirements.html')

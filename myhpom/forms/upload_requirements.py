@@ -1,27 +1,31 @@
 from django import forms
-from django.utils.timezone import now
-
+from django.conf import settings
 from myhpom.models import AdvanceDirective
 
 
 class UploadRequirementsForm(forms.ModelForm):
-    valid_date = forms.DateField(required=False)
-    share_with_ehs = forms.BooleanField(required=False)
-
-    def clean_valid_date(self):
-        data = self.cleaned_data['valid_date']
-        if not data:
-            return now()
-        return data
+    """ Capture the valid_date for the user's AD """
 
     class Meta:
         model = AdvanceDirective
-        fields = [
-            'user',
-            'document',
-            'valid_date',
-            'share_with_ehs',
-        ]
+        fields = ['valid_date', 'document']
+
+    def clean_document(self):
+        document = self.cleaned_data['document']
+        if document is None:
+            return None
+
+        errors = []
+        if not document.name.lower().endswith('.pdf'):
+            errors.append(forms.ValidationError('File can only be PDF format'))
+        if document.size > settings.MAX_AD_SIZE:
+            errors.append(forms.ValidationError(
+                'File must be smaller than %d megabytes' % (settings.MAX_AD_SIZE / 1024 / 1024)))
+
+        if len(errors) > 0:
+            raise forms.ValidationError(errors)
+
+        return document
 
 
 class SharingForm(forms.ModelForm):
@@ -29,6 +33,4 @@ class SharingForm(forms.ModelForm):
 
     class Meta:
         model = AdvanceDirective
-        fields = [
-            'share_with_ehs',
-        ]
+        fields = ['share_with_ehs']

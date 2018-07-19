@@ -25,7 +25,7 @@
 <form action="{% url "myhpom:upload_sharing" %}" method="POST">
     {% csrf_token %}
     <div class="form-group form-check">
-        <input class="form-check-input" name="share_with_ehs" type="checkbox" id="{{ form.share_with_ehs.id_for_label }}">
+        <input class="form-check-input" name="share_with_ehs" type="checkbox" id="id_share_with_ehs">
         <label class="form-check-label" for="{{ form.share_with_ehs.id_for_label }}">
             I approve sharing this document with my healthcare system
         </label>
