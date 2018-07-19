@@ -108,7 +108,7 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
     def setUp(self):
         self.url = reverse('myhpom:upload_requirements')
 
-    def test__POST_valid_date(self):
+    def test_POST_valid_date(self):
         user = self._setup_user_and_login()
         form_data = {
             'valid_date': '2018-01-01',
@@ -123,7 +123,7 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         )
         self.assertIsNotNone(user.advancedirective.document)
 
-    def test__POST_invalid_date(self):
+    def test_POST_invalid_date(self):
         self._setup_user_and_login()
         form_data = {
             'valid_date': '',
@@ -144,7 +144,7 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertTemplateUsed('myhpom/upload/requirements.html')
 
     @override_settings(MAX_AD_SIZE=10)
-    def test__POST_invalid_filesize(self):
+    def test_POST_invalid_filesize(self):
         self._setup_user_and_login()
         form_data = {
             'valid_date': '2018-01-01',
