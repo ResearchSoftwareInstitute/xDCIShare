@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -80,7 +80,7 @@ def upload_sharing(request):
     })
 
 
-@require_http_methods(['POST'])
+@require_POST
 @login_required
 @require_ajax
 def upload_delete_ad(request):
