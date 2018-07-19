@@ -87,5 +87,6 @@ def upload_sharing(request):
 def upload_delete_ad(request):
     if hasattr(request.user, 'advancedirective'):
         request.user.advancedirective.delete()
-
-    return HttpResponseRedirect(reverse('myhpom:dashboard'))
+        return HttpResponseRedirect(reverse('myhpom:upload_index'))
+    else:
+        return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))

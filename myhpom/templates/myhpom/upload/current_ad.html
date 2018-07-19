@@ -68,3 +68,19 @@
     </div>
 </div>
 {% endblock widget_body %}
+
+{% block widget-js %}
+<script>
+jQuery(function ($) {
+    /*
+        Unfortunately, when grabbed via AJAX, the modal trigger
+        will not be initialized automatically. We can pretend
+        this is taking place by assigning a click handler.
+    */
+    $('[data-toggle="modal"]').on('click', function (e) {
+        e.preventDefault();
+        $($(this).attr('data-target')).modal();
+    });
+});
+</script>
+{% endblock %}
