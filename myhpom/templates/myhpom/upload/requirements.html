@@ -24,7 +24,7 @@
                 <ol class="upload-requirements-link__list">
                     {% for link in requirement.staterequirementlink_set.all %}
                     <li class="upload-requirements-link__item">
-                        <a href="{{ link.href }}" onClick="event.preventDefault();">{{ link.text }}</a>
+                        <a href="{{ link.href }}">{{ link.text }}</a>
                     </li>
                     {% endfor %}
                 </ol>
@@ -40,7 +40,7 @@
 <div class="row">
     <div class="col">
         <h4 class="upload-requirements__item-head">My file is valid starting:
-            <a class="upload-requirements__help--right" href="" onClick="event.preventDefault();">What is this?</a>
+            <a class="upload-requirements__help--right" href="">What is this?</a>
         </h4>
         <p>
             <div id="id_valid_date_div">
@@ -61,7 +61,7 @@
                 <label class="upload-requirements__label" for="id_approval_checkbox">I approve this file for storage</label>
                 <ol class="upload-requirements-link__list">
                     <li class="upload-requirements-link__item">
-                        <a href="" onClick="event.preventDefault();">Review Terms and Conditions</a>
+                        <a href="">Review Terms and Conditions</a>
                     </li>
                 </ol>
             </li>
