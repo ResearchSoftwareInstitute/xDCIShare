@@ -71,6 +71,7 @@
 
 <div class="row">
     <div class="col">
+        <label class="upload-requirements__label" for="{{ form.document.id_for_label }}">Please upload a single PDF smaller than {{ MAX_AD_SIZE|filesizeformat }}</label>
         <input id="id_document" name="document" type="file" class="form-control-file" accept="application/pdf">
         <div id="id_document_errors" class="upload-requirements__item-errors">
             {{ form.errors.document }}
