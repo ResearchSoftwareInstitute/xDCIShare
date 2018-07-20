@@ -149,7 +149,13 @@ jQuery(function ($) {
     function handleAjax($ajax) {
         $ajax.done(function (data) {
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(data);
-        }).fail(function() {
+        }).fail(function(xhr, status) {
+            // If the user needs to login, direct there without any 'next' GET parameter set.
+            if (xhr.status === 401) {
+                return window.location.replace("{% url "login" %}");
+            }
+            
+            // Otherwise this is a 5xx or something else we don't know how to handle:
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         });
     }

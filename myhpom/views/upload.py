@@ -1,26 +1,23 @@
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
-from myhpom.decorators import require_ajax
+from myhpom.decorators import require_ajax_login
 from myhpom.forms.upload_requirements import SharingForm, UploadRequirementsForm
 from myhpom.models import AdvanceDirective, StateRequirement
 
 
 @require_GET
-@login_required
-@require_ajax
+@require_ajax_login
 def upload_index(request):
     return render(request, 'myhpom/upload/index.html')
 
 
 @require_GET
-@login_required
-@require_ajax
+@require_ajax_login
 def upload_current_ad(request):
     if not hasattr(request.user, 'advancedirective'):
         return HttpResponseForbidden()
@@ -31,8 +28,7 @@ def upload_current_ad(request):
 
 
 @require_http_methods(['GET', 'POST'])
-@login_required
-@require_ajax
+@require_ajax_login
 def upload_requirements(request):
     """
     GET: show the upload/state_requirements form for the current user/state
@@ -64,8 +60,7 @@ def upload_requirements(request):
 
 
 @require_http_methods(['GET', 'POST'])
-@login_required
-@require_ajax
+@require_ajax_login
 def upload_sharing(request):
     if not hasattr(request.user, 'advancedirective'):
         return HttpResponseForbidden()
@@ -83,8 +78,7 @@ def upload_sharing(request):
 
 
 @require_POST
-@login_required
-@require_ajax
+@require_ajax_login
 def upload_delete_ad(request):
     if hasattr(request.user, 'advancedirective'):
         request.user.advancedirective.delete()
