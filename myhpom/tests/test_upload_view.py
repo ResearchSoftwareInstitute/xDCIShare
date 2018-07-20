@@ -18,8 +18,8 @@ class UploadMixin:
 
     def test_not_logged_in(self):
         # A user must be logged in to see their dashboard:
-        response = self.client.get(self.url)
-        self.assertEqual(302, response.status_code)
+        response = self.client.get(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertEqual(401, response.status_code)
 
     def test_non_ajax_get(self):
         # Renders the proper template on GET:
@@ -69,7 +69,7 @@ class UploadSharingTestCase(UploadMixin, TestCase):
 
     def test_not_logged_in(self):
         response = self.client.get(self.url)
-        self.assertEqual(302, response.status_code)
+        self.assertEqual(403, response.status_code)
 
     def test_get(self):
         # When GETting, and the user has no advancedirective are forbidden
@@ -162,7 +162,7 @@ class UploadDeleteTestCase(UploadMixin, TestCase):
     def test_not_logged_in(self):
         # A user must be logged in to see their dashboard:
         response = self.client.post(self.url)
-        self.assertEqual(302, response.status_code)
+        self.assertEqual(403, response.status_code)
 
     def test_non_ajax_get(self):
         self._setup_user_and_login()
