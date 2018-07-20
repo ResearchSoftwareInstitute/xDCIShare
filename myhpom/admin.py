@@ -16,7 +16,7 @@ class StateRequirementAdmin(admin.ModelAdmin):
 
 class StateRequirementInlineAdmin(admin.TabularInline):
     model = StateRequirement
-    fields = ('position', 'text', 'admin_link')
+    fields = ('text', 'admin_link')
     readonly_fields = ('admin_link',)
 
 
