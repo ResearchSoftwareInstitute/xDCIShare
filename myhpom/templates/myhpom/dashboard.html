@@ -191,7 +191,7 @@ jQuery(function ($) {
     }
 
     function handleAnchorClick() {
-        if ($(this).data('no-ajax')) {
+        if ($(this).is('[target="_blank"]') || $(this).data('no-ajax')) {
             return;
         }
         handleAjax($.ajax({
