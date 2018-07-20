@@ -8,7 +8,7 @@ from myhpom.views.accounts import next_steps
 from myhpom.views.auth import logout
 from myhpom.views.choose_network import choose_network
 from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,
-    upload_sharing)
+    upload_sharing, upload_delete_ad)
 from myhpom.views.signup import signup
 
 
@@ -23,6 +23,13 @@ def home(request):
 @require_GET
 @login_required
 def dashboard(request):
+    template = 'myhpom/upload/index.html'
+    advancedirective = None
+    if hasattr(request.user, 'advancedirective'):
+        template = 'myhpom/upload/current_ad.html'
+        advancedirective = request.user.advancedirective
+
     return render(request, 'myhpom/dashboard.html', {
-        'widget_template': 'myhpom/upload/index.html'
+        'widget_template': template,
+        'advancedirective': advancedirective,
     })

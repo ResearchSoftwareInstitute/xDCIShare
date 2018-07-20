@@ -56,22 +56,3 @@ class NextStepsTestCase(TestCase):
             self.user.userdetails.state.advance_directive_template,
             response.context['ad_template'],
         )
-
-
-class DashboardTestCase(TestCase):
-    def setUp(self):
-        self.url = reverse('myhpom:dashboard')
-
-    def test_not_logged_in(self):
-        # A user must be logged in to see their dashboard:
-        response = self.client.get(self.url)
-        self.assertEqual(302, response.status_code)
-
-    def test_basic_get(self):
-        user = UserFactory()
-        user.set_password('password')
-        user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
-        response = self.client.get(self.url)
-        self.assertEqual(200, response.status_code)
-        self.assertTemplateUsed('myhpom/dashboard.html')

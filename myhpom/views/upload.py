@@ -1,83 +1,91 @@
-from datetime import datetime
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
+from myhpom.decorators import require_ajax
 from myhpom.forms.upload_requirements import SharingForm, UploadRequirementsForm
 from myhpom.models import AdvanceDirective, StateRequirement
 
 
 @require_GET
 @login_required
+@require_ajax
 def upload_index(request):
     return render(request, 'myhpom/upload/index.html')
 
 
 @require_GET
 @login_required
+@require_ajax
 def upload_current_ad(request):
     if not hasattr(request.user, 'advancedirective'):
-        return HttpResponseRedirect(reverse('myhpom:upload_index'))
+        return HttpResponseForbidden()
 
-    return render(request, 'myhpom/dashboard.html', {
+    return render(request, 'myhpom/upload/current_ad.html', {
         'advancedirective': request.user.advancedirective,
-        'widget_template': 'myhpom/upload/current_ad.html',
     })
 
 
 @require_http_methods(['GET', 'POST'])
 @login_required
+@require_ajax
 def upload_requirements(request):
     """
     GET: show the upload/state_requirements form for the current user/state
     POST: store the advance directive date, redirect to the upload/submit view.
     """
+    if hasattr(request.user, 'advancedirective'):
+        directive = request.user.advancedirective
+    else:
+        directive = AdvanceDirective(user=request.user, share_with_ehs=False)
     MIN_YEAR = 1950
+
     if request.method == "POST":
-        if hasattr(request.user, 'advancedirective'):
-            directive = request.user.advancedirective
-        else:
-            directive = AdvanceDirective(user=request.user, share_with_ehs=False)
-        form = UploadRequirementsForm(request.POST, instance=directive)
+        form = UploadRequirementsForm(request.POST, request.FILES, instance=directive)
         if form.is_valid():
-            directive.save()
+            form.save()
             return redirect(reverse("myhpom:upload_sharing"))
     else:
-        form = UploadRequirementsForm()
+        form = UploadRequirementsForm(instance=directive)
+
     context = {
         'user': request.user,
         'form': form,
         'requirements': StateRequirement.for_state(request.user.userdetails.state),
         'MIN_YEAR': MIN_YEAR,
-        'MAX_YEAR': datetime.now().year,
-        'widget_template': 'myhpom/upload/requirements.html'
+        'MAX_YEAR': now().year
     }
-    return render(request, "myhpom/dashboard.html", context=context)
+    return render(request, "myhpom/upload/requirements.html", context=context)
 
 
 @require_http_methods(['GET', 'POST'])
 @login_required
+@require_ajax
 def upload_sharing(request):
     if not hasattr(request.user, 'advancedirective'):
-        # TODO this check should be changed in MH-102 - it is assumed at
-        # this point that a user has an advancedirective (if it doesn't
-        # exist, go to upload_index).
-        advancedirective = AdvanceDirective(user=request.user, valid_date=now(), share_with_ehs=False)
-        advancedirective.save()
-    else:
-        advancedirective = request.user.advancedirective
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
-        form = SharingForm(request.POST, instance=advancedirective)
+        form = SharingForm(request.POST, instance=request.user.advancedirective)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
 
-    form = SharingForm(instance=advancedirective)
-    return render(request, 'myhpom/dashboard.html', {
+    form = SharingForm(instance=request.user.advancedirective)
+    return render(request, 'myhpom/upload/sharing.html', {
         'form': form,
-        'widget_template': 'myhpom/upload/sharing.html'
     })
+
+
+@require_POST
+@login_required
+@require_ajax
+def upload_delete_ad(request):
+    if hasattr(request.user, 'advancedirective'):
+        request.user.advancedirective.delete()
+        return HttpResponseRedirect(reverse('myhpom:upload_index'))
+    else:
+        return HttpResponseRedirect(reverse('myhpom:upload_current_ad'))
