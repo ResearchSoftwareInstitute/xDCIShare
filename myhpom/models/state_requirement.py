@@ -30,7 +30,7 @@ class StateRequirement(models.Model):
         ordering = ['-state', 'id']  # state=None (global requirements) first
 
     def __unicode__(self):
-        return unicode("%s %d: %s" % (str(self.state or '--'), self.text))
+        return unicode("%s: %s" % (str(self.state or '--'), self.text))
 
     @classmethod
     def for_state(Class, state):
