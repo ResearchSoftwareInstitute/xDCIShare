@@ -155,6 +155,37 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
 
+    def test_POST_duplicate_filenames(self):
+        """
+        Confirm that files are (as expected, not necessarily as desired)
+        renamed to avoid name collisions on the filesystem but are available by
+        their original names via the `filename` property.
+        """
+        og_name = 'afile.pdf'
+        user = self._setup_user_and_login()
+        form_data = {
+            'valid_date': '2018-01-01',
+            'document': SimpleUploadedFile(og_name, 'binary_contents'),
+        }
+        self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertIsNotNone(user.advancedirective.document)
+        self.assertEqual('afile.pdf', user.advancedirective.filename)
+        old_name = user.advancedirective.document.name
+
+        user.advancedirective.delete()
+
+        # We should be able to repeat this operation after clearing the
+        # old AD and still see the correct filename value
+        form_data = {
+            'valid_date': '2018-01-01',
+            'document': SimpleUploadedFile(og_name, 'binary_contents'),
+        }
+        self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        user = User.objects.get(pk=user.pk)
+        self.assertIsNotNone(user.advancedirective.document)
+        self.assertNotEqual(old_name, user.advancedirective.document.name)
+        self.assertEqual(og_name, user.advancedirective.filename)
+
 
 class UploadDeleteTestCase(UploadMixin, TestCase):
     url = reverse('myhpom:upload_delete_ad')

@@ -14,6 +14,10 @@ class AdvanceDirective(models.Model):
         upload_to='myhpom/advance_directives',
         help_text='The document representing this user\'s Advance Directive.',
     )
+    original_filename = models.CharField(
+        max_length=512,
+        blank=True,
+    )
     valid_date = models.DateField(
         help_text='Date that this document is legally valid.',
         validators=[validate_date_in_past],
@@ -24,4 +28,4 @@ class AdvanceDirective(models.Model):
 
     @property
     def filename(self):
-        return os.path.basename(self.document.name)
+        return self.original_filename or os.path.basename(self.document.name)
