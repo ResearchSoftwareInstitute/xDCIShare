@@ -43,11 +43,6 @@ class UploadIndexTestCase(GETMixin, TestCase):
         self.url = reverse('myhpom:upload_index')
 
 
-class UploadRequirementsTestCase(GETMixin, TestCase):
-    def setUp(self):
-        self.url = reverse('myhpom:upload_requirements')
-
-
 class UploadCurrentAdTestCase(UploadMixin, TestCase):
     def setUp(self):
         self.url = reverse('myhpom:upload_current_ad')
@@ -109,8 +104,25 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
     def setUp(self):
         self.url = reverse('myhpom:upload_requirements')
 
-    def test_POST_valid_date(self):
+    def test_POST_valid_date_for_unsupported_state(self):
         user = self._setup_user_and_login()
+        form_data = {
+            'valid_date': '2018-01-01',
+            'document': SimpleUploadedFile('afile.pdf', 'binary_contents'),
+        }
+        response = self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False
+        )
+        self.assertEqual(
+            form_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
+        )
+        self.assertIsNotNone(user.advancedirective.document)
+
+    def test_POST_valid_date_for_supported_state(self):
+        user = self._setup_user_and_login()
+        user.userdetails.state.advance_directive_template = SimpleUploadedFile('ad.pdf', '')
+        user.userdetails.state.save()
         form_data = {
             'valid_date': '2018-01-01',
             'document': SimpleUploadedFile('afile.pdf', 'binary_contents'),
