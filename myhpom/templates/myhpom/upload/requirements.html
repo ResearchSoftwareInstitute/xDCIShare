@@ -24,7 +24,7 @@
                 <ol class="upload-requirements-link__list">
                     {% for link in requirement.staterequirementlink_set.all %}
                     <li class="upload-requirements-link__item">
-                        <a href="{{ link.href }}" onClick="event.preventDefault();">{{ link.text }}</a>
+                        <a href="{{ link.href }}" data-no-ajax="true">{{ link.text }}</a>
                     </li>
                     {% endfor %}
                 </ol>
@@ -40,7 +40,7 @@
 <div class="row">
     <div class="col">
         <h4 class="upload-requirements__item-head">My file is valid starting:
-            <a class="upload-requirements__help--right" href="" onClick="event.preventDefault();">What is this?</a>
+            <a class="upload-requirements__help--right" href="" data-no-ajax="true">What is this?</a>
         </h4>
         <p>
             <div id="id_valid_date_div">
@@ -61,7 +61,7 @@
                 <label class="upload-requirements__label" for="id_approval_checkbox">I approve this file for storage</label>
                 <ol class="upload-requirements-link__list">
                     <li class="upload-requirements-link__item">
-                        <a href="" onClick="event.preventDefault();">Review Terms and Conditions</a>
+                        <a href="" data-no-ajax="true">Review Terms and Conditions</a>
                     </li>
                 </ol>
             </li>
@@ -71,8 +71,9 @@
 
 <div class="row">
     <div class="col">
+        <label class="upload-requirements__label" for="{{ form.document.id_for_label }}">Please upload a single PDF smaller than {{ MAX_AD_SIZE|filesizeformat }}</label>
         <input id="id_document" name="document" type="file" class="form-control-file" accept="application/pdf">
-        <div class="upload-requirements__item-errors">
+        <div id="id_document_errors" class="upload-requirements__item-errors">
             {{ form.errors.document }}
         </div>
         <button id="id_button_submit" class="advance-directive-widget__button--primary" type="submit">Submit</button>
@@ -83,7 +84,7 @@
 
 <div class="row">
     <div class="col">
-        <a href="{% url 'myhpom:dashboard' %}">CANCEL</a>
+        <a href="{% url 'myhpom:upload_index' %}">CANCEL</a>
     </div>
 </div>
 
@@ -95,12 +96,17 @@ jQuery(function ($) {
     var $inputSelectFile = $("#id_document");
     var NOW = new Date();
 
+    // Currently the help links on this page aren't intended to do anything (until behavior is defined):
+    $(".upload-requirements__help--right").click(function (event) { event.preventDefault(); });
+    $(".upload-requirements-link__item a").click(function (event) { event.preventDefault(); });
+
     function submitButtonEnableDisable () {
         var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
         if ($('.upload-requirements__checkbox:checked').length === $requirements.length
             && $directiveDateInput.combodate('getValue').trim() !== ''
             && $directiveDate <= NOW
             && $inputSelectFile.val().trim() !== ''
+            && $inputSelectFile[0].files[0].size < {{ MAX_AD_SIZE }}
         ) {
             $submitButton.addClass('upload-requirements__submit').removeClass('upload-requirements__submit--disabled').prop('disabled', null);
         } else {
@@ -139,7 +145,16 @@ jQuery(function ($) {
         submitButtonEnableDisable();
     });
 
-    $inputSelectFile.on('change', submitButtonEnableDisable);
+    $inputSelectFile.on('change', function (event) {
+        // Check the file size - if it is over the max value, prevent an upload:
+        var max_size_mb = {{  MAX_AD_SIZE  }} / 1024 / 1024;
+        if ($inputSelectFile[0].files.length > 0 && $inputSelectFile[0].files[0].size > {{ MAX_AD_SIZE }}) {
+            $("#id_document_errors").html("File must be smaller than "+ parseInt(max_size_mb, 10) +" megabytes");
+        } else {
+            $("#id_document_errors").html("");
+        }
+        submitButtonEnableDisable();
+    });
 });
 </script>
 {% endblock widget_body %}

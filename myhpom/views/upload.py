@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden, HttpResponseRedirect
@@ -51,6 +52,7 @@ def upload_requirements(request):
         'user': request.user,
         'form': form,
         'requirements': StateRequirement.for_state(request.user.userdetails.state),
+        'MAX_AD_SIZE': settings.MAX_AD_SIZE,
         'MIN_YEAR': MIN_YEAR,
         'MAX_YEAR': now().year
     }

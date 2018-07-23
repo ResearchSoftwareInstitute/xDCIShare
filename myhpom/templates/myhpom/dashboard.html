@@ -161,6 +161,8 @@ jQuery(function ($) {
     }
 
     function handleFormSubmit(event) {
+        // Prevent double submissions, and normal submit behavior:
+        $(this).find(":submit").prop("disabled", true);
         event.preventDefault();
 
         function doAjaxSubmission () {
