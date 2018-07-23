@@ -10,6 +10,8 @@ from kombu.common import Broadcast
 
 DEBUG = os.environ.get('DEBUG') == 'true'
 
+ADMINS = [('MMH Team', 'mmh-team@caktusgroup.com')]
+
 # These secret keys are used by the pg.myhpomdevelopment.sql development dump,
 # if you change these, you will not be able to login with users setup in the
 # dump:
