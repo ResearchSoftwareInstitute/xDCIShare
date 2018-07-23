@@ -8,7 +8,7 @@ class UploadRequirementsForm(forms.ModelForm):
 
     class Meta:
         model = AdvanceDirective
-        fields = ['valid_date', 'document']
+        fields = ['valid_date', 'document', 'original_filename']
 
     def clean_document(self):
         document = self.cleaned_data['document']
@@ -26,6 +26,13 @@ class UploadRequirementsForm(forms.ModelForm):
             raise forms.ValidationError(errors)
 
         return document
+
+    def clean(self):
+        data = self.cleaned_data
+        if 'document' in data:
+            data['original_filename'] = data['document'].name
+
+        return data
 
 
 class SharingForm(forms.ModelForm):
