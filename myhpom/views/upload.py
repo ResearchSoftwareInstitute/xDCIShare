@@ -44,7 +44,9 @@ def upload_requirements(request):
         form = UploadRequirementsForm(request.POST, request.FILES, instance=directive)
         if form.is_valid():
             form.save()
-            return redirect(reverse("myhpom:upload_sharing"))
+            if request.user.userdetails.state.advance_directive_template:
+                return redirect(reverse("myhpom:upload_sharing"))
+            return redirect(reverse("myhpom:upload_current_ad"))
     else:
         form = UploadRequirementsForm(instance=directive)
 
