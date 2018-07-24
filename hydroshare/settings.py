@@ -87,6 +87,8 @@ FILE_UPLOAD_PERMISSIONS = 0o644
 # Alternative tmp folder
 FILE_UPLOAD_TEMP_DIR = "/hs_tmp"
 
+DEFAULT_FILE_STORAGE = "myhpom.storage.MyhpomStorage"
+
 # Sitemap for robots
 ROBOTS_SITEMAP_URLS = [
     'http://localhost:8000/sitemap/',

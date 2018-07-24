@@ -18,4 +18,5 @@ urlpatterns = [
         {'document_root': settings.STATIC_ROOT + '/styleguide', 'path': 'index.html'}),
     url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT + '/styleguide'}),
+    url(r'^download/(?P<path>.*)$', myhpom_views.irods_download, name='irods_download'),
 ]
