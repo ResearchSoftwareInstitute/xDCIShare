@@ -1,8 +1,7 @@
-/*
-    Bootstrap theme overrides.
-*/
+@import "myhpom/static/myhpom/typography";
 @import "myhpom/static/myhpom/colors";
 
+@import "myhpom/static/myhpom/bootstrap_theme";
 @import "hydroshare/static/myhpom/bootstrap/scss/bootstrap.scss";
 
 @import "myhpom/static/myhpom/page_layout";
