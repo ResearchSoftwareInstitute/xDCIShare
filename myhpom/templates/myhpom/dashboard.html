@@ -17,7 +17,7 @@
             <div class="h1 dashboard-user-info__text">
                 {{ request.user.get_full_name }}
             </div>
-            <div class="h6 dashboard-user-info__text">
+            <div class="h6 text-muted dashboard-user-info__text">
                 {{ request.user.email }}
             </div>
         </section>
@@ -154,7 +154,7 @@ jQuery(function ($) {
             if (xhr.status === 401) {
                 return window.location.replace("{% url "login" %}");
             }
-            
+
             // Otherwise this is a 5xx or something else we don't know how to handle:
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         });
