@@ -9,3 +9,9 @@ $font-family-sans-serif: "Glenn Sans", -apple-system, BlinkMacSystemFont, "Segoe
 $btn-border-radius: 0;
 $btn-border-radius-lg: $btn-border-radius;
 $btn-border-radius-sm: $btn-border-radius;
+
+// Navbar
+$navbar-dark-toggler-border-color: $brand-blue-dark;
+$navbar-dark-color: white;
+$navbar-dark-hover-color: white;
+$navbar-dark-toggler-icon-bg: none;
