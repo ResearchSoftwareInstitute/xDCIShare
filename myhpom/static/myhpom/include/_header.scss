@@ -1,3 +1,6 @@
+/*
+    General header styles
+*/
 .myhpom-header {
     background-color: $brand-blue;
 }
@@ -16,6 +19,11 @@
     }
 }
 
+
+/*
+    Logo / brand styles
+*/
+
 .myhpom-header__navbar-brand {
     @include media-breakpoint-down(md) {
         margin-left: 1rem;
@@ -28,12 +36,20 @@
     max-width: 12rem;
 }
 
+
+/*
+    Mobile menu toggle button styles
+
+    NOTE: many of the changes and tweaks here relate to our
+    desire to get the button to fill the available vertical
+    space.
+*/
+
 .myhpom-header__navbar-toggler {
     @include media-breakpoint-down(md) {
-        padding-right: 1rem;
-        padding-left: 1rem;
         border: none;
         height: 60px;
+        width: 60px;
 
         border-color: $brand-blue-dark !important;
         border-left-width: 1px;
@@ -80,12 +96,10 @@
     font-size: 150%;
 }
 
-.myhpom-header__nav-link {
-    color: white;
-    font-weight: 600;
-}
 
 /*
+    Collapsing menu styles
+
     These style definitions accomplish two things:
 
     1. Causing the #navbarSupportedContent box to stretch over its
@@ -139,8 +153,19 @@
     }
 }
 
+
+/*
+    Mobile menu contents (links, divider)
+*/
+
+
+.myhpom-header__nav-link {
+    color: white;
+    font-weight: 600;
+}
+
 .myhpom-header__menu-small-divider {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
 }
