@@ -1,0 +1,89 @@
+.myhpom-header {
+    background-color: $brand-blue;
+}
+
+.myhpom-header__navbar.container {
+    @include media-breakpoint-down(md) {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.myhpom-header__navbar-brand {
+    @include media-breakpoint-down(md) {
+
+    }
+}
+
+.myhpom-header__logo {
+    max-width: 12rem;
+}
+
+.myhpom-header__nav-link {
+    color: white;
+    font-weight: 600;
+}
+
+/*
+    These style definitions accomplish two things:
+
+    1. Causing the #navbarSupportedContent box to stretch over its
+        container so that it fills the entire area beneath the main top
+        bar.
+    2. Orchestrating the transition between collapse states in such a
+        way that this special whitespace is respected while also not
+        gumming up the transitions with weird abrupt jumps.
+
+    In particular, to accomplish #2, it's necessary to transition
+    between padding states in a graceful way that touches on
+    each of three states:
+
+    1. In the "opening" state, indicated by the .collapsing
+        class on the box.
+    2. In the "open" state, indicated by the .show class.
+    3. In the "closing" state, indicated *very tenuously*
+        by having the .collapsing class but also being adjacent
+        to a the trigger button in the .collapsed state.
+*/
+.myhpom-header__navbar-collapse {
+    @include media-breakpoint-down(md) {
+        background-color: $brand-orange;
+        margin-left: -1rem;
+        margin-right: -1rem;
+        margin-bottom: -0.5rem;
+        margin-top: 0.5rem;
+        padding-left: 1rem;
+
+        transition:
+            padding-top 0.35s ease,
+            padding-bottom 0.35s ease,
+            height 0.35s ease;
+
+        &.collapsing {
+            padding-right: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+
+        &.show {
+            padding-right: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+        }
+    }
+}
+
+.collapsed ~ .myhpom-header__navbar-collapse.collapsing {
+    @include media-breakpoint-down(md) {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.myhpom-header__navbar-collapse.show {
+    @include media-breakpoint-down(md) {
+        // background-color: $brand-orange;
+    }
+}
