@@ -2,6 +2,13 @@
     background-color: $brand-blue;
 }
 
+.myhpom-header__navbar {
+    @include media-breakpoint-down(md) {
+        padding: 0;
+        align-items: stretch;
+    }
+}
+
 .myhpom-header__navbar.container {
     @include media-breakpoint-down(md) {
         width: 100%;
@@ -11,12 +18,66 @@
 
 .myhpom-header__navbar-brand {
     @include media-breakpoint-down(md) {
-
+        margin-left: 1rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem !important;
     }
 }
 
 .myhpom-header__logo {
     max-width: 12rem;
+}
+
+.myhpom-header__navbar-toggler {
+    @include media-breakpoint-down(md) {
+        padding-right: 1rem;
+        padding-left: 1rem;
+        border: none;
+        height: 60px;
+
+        border-color: $brand-blue-dark !important;
+        border-left-width: 1px;
+        border-left-style: solid;
+    }
+
+    &:not(.collapsed) > .myhpom-header__toggler-icon--closed {
+        display: none;
+    }
+
+    &.collapsed > .myhpom-header__toggler-icon--open {
+        display: none;
+    }
+
+    &:not(.collapsed) > .myhpom-header__toggler-icon--open {
+        display: inline-block;
+    }
+}
+
+.myhpom-header__navbar-toggler--menu:not(.collapsed) {
+    @include media-breakpoint-down(md) {
+        background-color: $brand-orange;
+    }
+}
+
+.myhpom-header__navbar-toggle--profile {
+    @include media-breakpoint-down(md) {
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 175%;
+        text-align: center;
+    }
+}
+
+.myhpom-header__toggler-icon {
+    width: 2rem;
+}
+
+.myhpom-header__toggler-icon--open {
+    background-image: none !important;
+    margin-top: 0.75rem;
+    font-size: 150%;
 }
 
 .myhpom-header__nav-link {
@@ -47,12 +108,12 @@
 */
 .myhpom-header__navbar-collapse {
     @include media-breakpoint-down(md) {
+        font-size: 150%;
         background-color: $brand-orange;
-        margin-left: -1rem;
-        margin-right: -1rem;
-        margin-bottom: -0.5rem;
-        margin-top: 0.5rem;
-        padding-left: 1rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+        padding-top: 0;
+        padding-bottom: 0;
 
         transition:
             padding-top 0.35s ease,
@@ -60,17 +121,13 @@
             height 0.35s ease;
 
         &.collapsing {
-            padding-right: 1rem;
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
-            padding: 0.5rem 1rem;
         }
 
         &.show {
-            padding-right: 1rem;
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
-            padding: 0.5rem 1rem;
         }
     }
 }
@@ -86,4 +143,10 @@
     @include media-breakpoint-down(md) {
         // background-color: $brand-orange;
     }
+}
+
+.myhpom-header__menu-small-divider {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
 }
