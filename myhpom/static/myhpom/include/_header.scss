@@ -139,12 +139,6 @@
     }
 }
 
-.myhpom-header__navbar-collapse.show {
-    @include media-breakpoint-down(md) {
-        // background-color: $brand-orange;
-    }
-}
-
 .myhpom-header__menu-small-divider {
   margin-top: 1rem;
   margin-bottom: 1rem;
