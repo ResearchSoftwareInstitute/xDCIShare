@@ -16,16 +16,19 @@ def signup(request):
         if form.is_valid():
             user_keys = ['first_name', 'last_name', 'email']
             user = User(**{key: val for key, val in form.data.items() if key in user_keys})
-            user.set_password(form.data['password'])
+            user.set_password(form.cleaned_data['password'])
             user.save()
             user_details = UserDetails(
                 user=user,
-                state=State.objects.get(name=form.data['state']),
-                accept_tos=form.data['accept_tos'],
+                state=State.objects.get(name=form.cleaned_data['state']),
+                middle_name=form.cleaned_data['middle_name'],
+                accept_tos=form.cleaned_data['accept_tos'],
             )
             user_details.save()
 
-            user = authenticate(username=form.data['email'], password=form.data['password'])
+            user = authenticate(
+                username=form.cleaned_data['email'], password=form.cleaned_data['password']
+            )
             login(request, user)
 
             if user_details.state.healthnetwork_set.exists():

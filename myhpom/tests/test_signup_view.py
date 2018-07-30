@@ -19,8 +19,9 @@ class SignupTestCase(TestCase):
         self.url = reverse('myhpom:signup')
         self.form_data = {
             'first_name': 'A',
-            'last_name': 'B',
-            'email': 'ab@example.com',
+            'middle_name': 'B',
+            'last_name': 'C',
+            'email': 'abc@example.com',
             'password': 'Abbbbbbb1@',
             'password_confirm': 'Abbbbbbb1@',
             'state': 'NC',  # a supported state
@@ -64,3 +65,18 @@ class SignupTestCase(TestCase):
             response, reverse('myhpom:next_steps'), fetch_redirect_response=False
         )
         self.assertTrue(auth.get_user(self.client).is_authenticated())
+
+    def test_post_signup_all_user_data(self):
+        """valid signup should result in all user data being saved. (bug MH-100)"""
+        data = self.form_data
+        response = self.client.post(self.url, data=data)
+        user = User.objects.get(email=data['email'])
+        state = State.objects.get(name=data['state'])
+        # User
+        for key in ['first_name', 'last_name', 'email']:
+            self.assertEqual(user.__getattribute__(key), data[key])
+        self.assertTrue(user.check_password(data['password']))
+        # UserDetails
+        for key in ['middle_name', 'accept_tos']:
+            self.assertEqual(user.userdetails.__getattribute__(key), data[key])
+        self.assertEqual(user.userdetails.state, state)
