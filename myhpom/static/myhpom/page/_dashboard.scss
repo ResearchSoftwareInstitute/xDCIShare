@@ -8,6 +8,10 @@
     text-transform: uppercase;
 }
 
+.dashboard-faq__title {
+    color: $brand-blue-dark;
+}
+
 .dashboard__title {
     @extend .tabbed;
     background-color: $brand-blue-dark;
@@ -17,7 +21,6 @@
         background-color: $brand-blue-dark;
     }
 }
-
 
 .dashboard__section-content {
     padding-left: 1rem;

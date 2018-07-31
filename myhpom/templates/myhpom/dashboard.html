@@ -26,7 +26,7 @@
 
         <hr/>
 
-        <section class="dashboard__section dashboard-profile-information">
+        <section class="mb-5 dashboard__section dashboard-profile-information">
             <div class="h6 float-right">
                 <a href="/" class="small"><span class="oi oi-pencil"></span> Edit</a>
             </div>
@@ -40,7 +40,7 @@
                     State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
                 </p>
 
-                <div class="bg-light dashboard-profile-information__organ-donor-status-box">
+                <div class="dashboard-profile-information__organ-donor-status-box">
                     <div class="big-asterisk">
                         *
                     </div>
@@ -61,7 +61,7 @@
 
         <hr/>
 
-        <section class="dashboard__section dashboard-health-network">
+        <section class="mb-5 dashboard__section dashboard-health-network">
             <div class="h6 float-right">
                 <a href="/" class="small"><span class="oi oi-pencil"></span> Edit</a>
             </div>
@@ -71,7 +71,7 @@
             </h2>
 
             <div class="dashboard__section-content">
-                <div class="bg-light dashboard-health-network__info-box">
+                <div class="dashboard-health-network__info-box">
                     <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
                     <div class="small">
                         Last Updated: January 1, 1970
@@ -85,23 +85,17 @@
         <sidebar class="row dashboard-faq">
             <div class="col-sm-12">
                 <h2 class="h6 dashboard-faq__title">
-                    Common questions
+                    Frequently asked questions
                 </h2>
             </div>
-            <div class="col-md-4 small">
-                <strong>{% lorem 5 w %}?</strong>
+            <div class="col-md-6 small">
+                <strong class="h6">{% lorem 5 w %}?</strong>
                 <p>
                     {% lorem 24 w %}
                 </p>
             </div>
-            <div class="col-md-4 small">
-                <strong>{% lorem 5 w %}?</strong>
-                <p>
-                    {% lorem 24 w %}
-                </p>
-            </div>
-            <div class="col-md-4 small">
-                <strong>{% lorem 5 w %}?</strong>
+            <div class="col-md-6 small">
+                <strong class="h6">{% lorem 5 w %}?</strong>
                 <p>
                     {% lorem 24 w %}
                 </p>
