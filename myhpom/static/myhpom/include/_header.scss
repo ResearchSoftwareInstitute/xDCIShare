@@ -1,0 +1,189 @@
+/*
+    General header styles
+*/
+.myhpom-header {
+    background-color: $brand-blue;
+}
+
+.myhpom-header__navbar {
+    @include media-breakpoint-down(md) {
+        padding: 0;
+        align-items: stretch;
+    }
+}
+
+.myhpom-header__navbar.container {
+    @include media-breakpoint-down(md) {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+.myhpom-header__navbar-nav {
+    @include media-breakpoint-up(lg) {
+        align-items: center;
+    }
+}
+
+
+/*
+    Logo / brand styles
+*/
+
+.myhpom-header__navbar-brand {
+    @include media-breakpoint-down(md) {
+        margin-left: 1rem;
+        margin-top: $navbar-padding-y;
+        margin-bottom: $navbar-padding-y !important;
+    }
+}
+
+.myhpom-header__logo {
+    max-width: 12rem;
+}
+
+
+/*
+    Mobile menu toggle button styles
+
+    NOTE: many of the changes and tweaks here relate to our
+    desire to get the button to fill the available vertical
+    space.
+*/
+
+.myhpom-header__navbar-toggler {
+    @include media-breakpoint-down(md) {
+        border: none;
+        height: 60px;
+        width: 60px;
+
+        border-left-width: 1px;
+        border-left-style: solid;
+    }
+
+    &:not(.collapsed) > .myhpom-header__toggler-icon--closed {
+        display: none;
+    }
+
+    &.collapsed > .myhpom-header__toggler-icon--open {
+        display: none;
+    }
+
+    &:not(.collapsed) > .myhpom-header__toggler-icon--open {
+        display: inline-block;
+    }
+}
+
+.myhpom-header__navbar-toggler--menu:not(.collapsed) {
+    @include media-breakpoint-down(md) {
+        background-color: $brand-orange;
+    }
+}
+
+.myhpom-header__navbar-toggle--profile {
+    @include media-breakpoint-down(md) {
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 175%;
+        text-align: center;
+    }
+}
+
+.myhpom-header__toggler-icon {
+    width: ($navbar-padding-x * 2);
+}
+
+.myhpom-header__toggler-icon--closed {
+    margin-top: $navbar-padding-y;
+}
+
+.myhpom-header__toggler-icon--open {
+    margin-top: ($navbar-padding-y * 1.5);
+    font-size: 150%;
+}
+
+
+/*
+    Collapsing menu styles
+
+    These style definitions accomplish two things:
+
+    1. Causing the #navbarSupportedContent box to stretch over its
+        container so that it fills the entire area beneath the main top
+        bar.
+    2. Orchestrating the transition between collapse states in such a
+        way that this special whitespace is respected while also not
+        gumming up the transitions with weird abrupt jumps.
+
+    In particular, to accomplish #2, it's necessary to transition
+    between padding states in a graceful way that touches on
+    each of three states:
+
+    1. In the "opening" state, indicated by the .collapsing
+        class on the box.
+    2. In the "open" state, indicated by the .show class.
+    3. In the "closing" state, indicated *very tenuously*
+        by having the .collapsing class but also being adjacent
+        to a the trigger button in the .collapsed state.
+*/
+.myhpom-header__navbar-collapse {
+    @include media-breakpoint-down(md) {
+        font-size: 150%;
+        background-color: $brand-orange;
+        padding-left: ($navbar-padding-x * 1.25);
+        padding-right: ($navbar-padding-x * 1.25);
+        padding-top: 0;
+        padding-bottom: 0;
+
+        transition:
+            padding-top 0.35s ease,
+            padding-bottom 0.35s ease,
+            height 0.35s ease;
+
+        &.collapsing {
+            padding-top: $navbar-padding-y;
+            padding-bottom: $navbar-padding-y;
+        }
+
+        &.show {
+            padding-top: $navbar-padding-y;
+            padding-bottom: $navbar-padding-y;
+        }
+    }
+}
+
+.collapsed ~ .myhpom-header__navbar-collapse.collapsing {
+    @include media-breakpoint-down(md) {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+}
+
+
+/*
+    Mobile menu contents (links, divider)
+*/
+
+
+.myhpom-header__nav-link {
+    font-weight: 600;
+    padding: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: ($navbar-padding-x / 2);
+    margin-right: ($navbar-padding-x / 2);
+    box-sizing: border-box;
+
+    &:hover {
+        border-bottom: 2px solid white;
+        margin-bottom: -2px; // to compensate for added height from border
+    }
+}
+
+.myhpom-header__menu-small-divider {
+    margin-top: ($navbar-padding-y * 2);
+    margin-bottom: ($navbar-padding-y * 2);
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+}
