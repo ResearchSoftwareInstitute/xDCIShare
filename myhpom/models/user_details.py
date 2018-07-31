@@ -53,3 +53,7 @@ class UserDetails(models.Model):
     gender = models.CharField(max_length=32, null=True, blank=True, choices=GENDER_CHOICES, 
         help_text="The user's gender self-identification."
     )
+    # organ donor status
+    is_organ_donor = models.BooleanField(default=False, 
+        help_text="Whether the user is registered as an organ donor."
+    )

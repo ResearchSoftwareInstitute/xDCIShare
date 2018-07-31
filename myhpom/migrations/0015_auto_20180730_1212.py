@@ -32,6 +32,11 @@ class Migration(migrations.Migration):
             name='zip_code',
             field=models.CharField(help_text="The zip code for the user's health care address.", max_length=10, null=True, blank=True),
         ),
+        migrations.AddField(
+            model_name='userdetails',
+            name='is_organ_donor',
+            field=models.BooleanField(default=False, help_text=b'Whether the user is registered as an organ donor.'),
+        ),
         migrations.AlterField(
             model_name='userdetails',
             name='accept_tos',
