@@ -36,7 +36,7 @@
             </h2>
 
             <div class="dashboard__section-content">
-                <p class="small">
+                <p>
                     State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
                 </p>
 
@@ -47,10 +47,9 @@
                     <div class="div">
                         <div class="dashboard-profile-information__organ-donor-status-info">
                             <span class="h5">I am not an organ donor.</span>
-                            <a class="small" href="/">Edit status</a>
                         </div>
                         <div>
-                            <a href="/" class="small">
+                            <a href="/">
                                 Learn how you can be a donor.
                             </a>
                         </div>
@@ -73,7 +72,7 @@
             <div class="dashboard__section-content">
                 <div class="dashboard-health-network__info-box">
                     <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
-                    <div class="small">
+                    <div>
                         Last Updated: January 1, 1970
                     </div>
                 </div>
