@@ -71,6 +71,16 @@
     color: $brand-orange;
 }
 
+.dashboard-profile-information__organ-donor-edit-link {
+    align-self: flex-start;
+    justify-self: flex-end;
+    margin-left: auto;
+
+    :any-link {
+      color: $brand-orange;
+    }
+}
+
 .big-asterisk {
     font-size: 128px;
     height: 56px;
