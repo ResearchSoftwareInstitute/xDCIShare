@@ -44,8 +44,9 @@
     Sidebar
 */
 .dashboard-sidebar {
-    margin-top: 1em;
     padding: 1em;
+    background-color: $brand-blue-fade-7;
+    flex-grow: 1;
 }
 
 .dashboard-sidebar__title {
