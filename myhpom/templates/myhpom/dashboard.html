@@ -6,9 +6,11 @@
 <script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
 {% endblock %}
 
+{% block main_class %} dashboard__main{% endblock main_class %}
+
 {% block main_content %}
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-6 col-lg-7 dashboard-main">
         <h1 class="h6 dashboard__title">
             My dashboard
         </h1>
@@ -21,10 +23,7 @@
                 {{ request.user.email }}
             </div>
         </section>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 col-lg-7 dashboard-main">
+
         <hr/>
 
         <section class="dashboard__section dashboard-profile-information">
@@ -36,23 +35,25 @@
                 Profile information
             </h2>
 
-            <p class="small">
-                State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
-            </p>
+            <div class="dashboard__section-content">
+                <p class="small">
+                    State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
+                </p>
 
-            <div class="bg-light dashboard-profile-information__organ-donor-status-box">
-                <div class="big-asterisk">
-                    *
-                </div>
-                <div class="div">
-                    <div class="dashboard-profile-information__organ-donor-status-info">
-                        <span class="h5">I am not an organ donor.</span>
-                        <a class="small" href="/">Edit status</a>
+                <div class="bg-light dashboard-profile-information__organ-donor-status-box">
+                    <div class="big-asterisk">
+                        *
                     </div>
-                    <div>
-                        <a href="/" class="small">
-                            Learn how you can be a donor.
-                        </a>
+                    <div class="div">
+                        <div class="dashboard-profile-information__organ-donor-status-info">
+                            <span class="h5">I am not an organ donor.</span>
+                            <a class="small" href="/">Edit status</a>
+                        </div>
+                        <div>
+                            <a href="/" class="small">
+                                Learn how you can be a donor.
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,10 +70,12 @@
                 Health network
             </h2>
 
-            <div class="bg-light dashboard-health-network__info-box">
-                <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
-                <div class="small">
-                    Last Updated: January 1, 1970
+            <div class="dashboard__section-content">
+                <div class="bg-light dashboard-health-network__info-box">
+                    <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
+                    <div class="small">
+                        Last Updated: January 1, 1970
+                    </div>
                 </div>
             </div>
         </section>

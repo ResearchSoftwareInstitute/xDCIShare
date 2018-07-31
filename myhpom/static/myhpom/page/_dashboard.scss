@@ -1,7 +1,25 @@
+.dashboard__main {
+  border-top: 4px solid $brand-blue;
+}
+
 .dashboard__title,
 .dashboard__section-title,
 .dashboard-faq__title {
     text-transform: uppercase;
+}
+
+.dashboard__title {
+    @extend .tabbed;
+    background-color: $brand-blue;
+    color: white;
+
+    &::after {
+        background-color: $brand-blue;
+    }
+}
+
+.dashboard__section-content {
+    padding-left: 1rem;
 }
 
 .dashboard-profile-information__organ-donor-status-box,
