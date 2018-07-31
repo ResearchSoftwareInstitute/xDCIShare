@@ -18,6 +18,7 @@
     }
 }
 
+
 .dashboard__section-content {
     padding-left: 1rem;
 }
@@ -44,13 +45,23 @@
     Sidebar
 */
 .dashboard-sidebar {
-    padding: 1em;
+    padding: 0 1em 1em 1em;
     background-color: $brand-blue-fade-7;
     flex-grow: 1;
+    align-items: flex-start;
 }
 
 .dashboard-sidebar__title {
+    @extend .tabbed;
     margin-top: 0;
+    background-color: $brand-blue-medium-fade-70;
+    color: white;
+    z-index: 1;
+    margin-left: -1em;
+
+    &::after {
+        background-color: $brand-blue-medium-fade-70;
+    }
 }
 
 @include media-breakpoint-down(sm) {
