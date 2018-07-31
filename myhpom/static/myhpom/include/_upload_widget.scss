@@ -60,13 +60,18 @@
 .advance-directive-widget__buttons-container {
     flex-grow: 1;
     justify-content: flex-end;
+
+    @include media-breakpoint-down(sm) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
 }
 
 .advance-directive-widget__button {
     @extend .btn;
     margin-top: 1em;
     padding: 1em 2em;
-    font-size: 150%;
+    font-size: 125%;
     width: 100%;
 }
 

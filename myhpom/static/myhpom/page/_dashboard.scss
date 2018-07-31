@@ -20,10 +20,26 @@
     &::after {
         background-color: $brand-blue-dark;
     }
+
+    @include media-breakpoint-down(sm) {
+        margin-left: -16px;
+    }
+}
+
+.dashboard__section {
+    @include media-breakpoint-down(sm) {
+        margin-bottom: 0 !important;
+    }
 }
 
 .dashboard__section-content {
-    padding-left: 1rem;
+    @include media-breakpoint-up(md) {
+        padding-left: 1rem;
+    }
+}
+
+.dashboard-user-info__text--title {
+    font-size: 2rem !important;
 }
 
 .dashboard-profile-information__organ-donor-status-box,
@@ -67,6 +83,8 @@
 */
 .dashboard-sidebar {
     padding: 0 1em 1em 1em;
+    margin-left: -15px;
+    margin-right: -15px;
     background-color: $brand-blue-fade-7;
     border-top: 4px solid $brand-blue-medium-fade-70;
     flex-grow: 1;
@@ -84,12 +102,16 @@
     &::after {
         background-color: $brand-blue-medium-fade-70;
     }
+
+    @include media-breakpoint-down(sm) {
+        margin-left: -16px;
+    }
 }
 
 @include media-breakpoint-down(sm) {
     hr {
-        margin-bottom: 2rem;
-        margin-top: 2rem;
+        margin-bottom: 0.5rem;
+        margin-top: 1.5rem;
     }
     .dashboard-profile-information__organ-donor-status-info {
         display: flex;
