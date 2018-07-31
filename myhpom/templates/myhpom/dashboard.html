@@ -29,7 +29,7 @@
 
         <section class="dashboard__section dashboard-profile-information">
             <div class="h6 float-right">
-                <a href="/" class="small">Edit My Profile</a>
+                <a href="{% url 'myhpom:edit_profile' %}" class="small">Edit My Profile</a>
             </div>
 
             <h2 class="h6 dashboard__section-title">
@@ -154,7 +154,7 @@ jQuery(function ($) {
             if (xhr.status === 401) {
                 return window.location.replace("{% url "login" %}");
             }
-            
+
             // Otherwise this is a 5xx or something else we don't know how to handle:
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         });
