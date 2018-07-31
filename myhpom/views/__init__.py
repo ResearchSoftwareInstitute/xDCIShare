@@ -10,7 +10,7 @@ from myhpom.views.choose_network import choose_network
 from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,
     upload_sharing, upload_delete_ad)
 from myhpom.views.signup import signup
-
+from myhpom.views.profile import (edit_profile, view_profile)
 
 @require_GET
 def home(request):

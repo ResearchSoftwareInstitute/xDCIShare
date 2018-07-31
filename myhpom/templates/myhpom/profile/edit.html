@@ -1,0 +1,142 @@
+{% extends "myhpom/profile/view.html" %}
+{% load sass_tags static %}
+
+{% block extra-head %}
+<script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
+<script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
+{% endblock %}
+
+{% block profile_action %}<a id="save_profile_link" href="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'myhpom:dashboard' %}{% endif %}">Save Profile</a>{% endblock %}
+
+{% block profile_start %}
+<form method="POST" action="{% url 'myhpom:edit_profile' %}">
+{% endblock profile_start %}
+
+{% block profile_name %}
+        <div class="float-left profile__input-block">
+            <label class="profile__input-label">
+                {{user_form.fields.first_name.label}}{% if user_form.fields.first_name.required %}*{% endif %}
+            </label>
+            {{user_form.first_name}}
+            {% if user_form.errors.first_name %}
+            <div class="profile__input--invalid">
+                {% for err in user_form.errors.first_name %}{{ user_form.errors.first_name }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="float-left profile__input-block">
+            <label class="profile__input-label">
+                {{user_details_form.fields.middle_name.label}}{% if user_details_form.fields.middle_name.required %}*{% endif %}
+            </label>
+            {{user_details_form.middle_name}}
+            {% if user_details_form.errors.middle_name %}
+            <div class="profile__input--invalid">
+                {% for err in user_details_form.errors.middle_name %}{{ user_details_form.errors.middle_name }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="float-left profile__input-block">
+            <label class="profile__input-label">
+                {{user_form.fields.last_name.label}}{% if user_form.fields.last_name.required %}*{% endif %}
+            </label>
+            {{user_form.last_name}}
+            {% if user_form.errors.last_name %}
+            <div class="profile__input--invalid">
+                {% for err in user_form.errors.last_name %}{{ user_form.errors.last_name }}{% endfor %}
+            </div>
+            {% endif %}
+        </div>
+{% endblock profile_name %}
+
+{% block profile_contact_info %}
+        <section class="profile__section">
+            <h2 class="h6 profile__section-title">
+                Contact Information
+                <span class="small profile__note">(fields marked * are required)</span>
+            </h2>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.state.label}}{% if user_details_form.fields.state.required %}*{% endif %}
+                </label>
+                {{user_details_form.state}}
+                {% if user_details_form.errors.state %}
+                <div class="profile__input--invalid">
+                    {% for err in user_details_form.errors.state %}{{ user_details_form.errors.state }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.zip_code.label}}{% if user_details_form.fields.zip_code.required %}*{% endif %}
+                </label>
+                {{user_details_form.zip_code}}
+                {% if user_details_form.errors.zip_code %}
+                <div class="profile__input--invalid">
+                    {% for err in user_details_form.errors.zip_code %}{{ user_details_form.errors.zip_code }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.phone.label}}{% if user_details_form.fields.phone.required %}*{% endif %}
+                </label>
+                {{user_details_form.phone}}
+                {% if user_details_form.errors.phone %}
+                <div class="profile__input--invalid">
+                    {% for err in user_details_form.errors.phone %}{{ user_details_form.errors.phone }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </section>
+{% endblock profile_contact_info %}
+
+{% block profile_additional_info %}
+        <section class="profile__section--border">
+            <h2 class="h6 profile__section-title">
+                Additional Information
+                <span class="small profile__note">(fields marked * are required)</span>
+            </h2>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.birthdate.label}}{% if user_details_form.fields.birthdate.required %}*{% endif %}
+                </label>
+                {{user_details_form.birthdate}}
+                {% if user_details_form.errors.birthdate %}
+                <div class="profile__input--invalid">
+                    {% for err in user_details_form.errors.birthdate %}{{ user_details_form.errors.birthdate }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.gender.label}}{% if user_details_form.fields.gender.required %}*{% endif %}
+                </label>
+                {{user_details_form.gender}}
+                {% if user_details_form.errors.gender %}
+                <div class="profile__input--invalid">
+                    {% for err in user_details_form.errors.gender %}{{ user_details_form.errors.gender }}{% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </section>
+{% endblock profile_additional_info %}
+
+{% block profile_organ_donor %}
+        <section class="profile__section--border">
+            <h2 class="h6 profile__section-title">
+                Organ Donation
+            </h2>
+            <div class="bg-light profile__info-box">
+                <h5>Are you an organ donor?</h5>
+                <p>
+                    <input type="radio" name="is_organ_donor" value="true"/> Yes! I am an organ donor.
+                    <br/>
+                    <input type="radio" name="is_organ_donor" value="false"/> I am not an organ donor.
+                </p>
+            </div>
+        </section>
+{% endblock profile_organ_donor %}
+
+{% block profile_end %}
+</form>
+{% endblock profile_end %}
