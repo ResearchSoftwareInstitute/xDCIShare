@@ -14,6 +14,11 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='userdetails',
+            name='health_network_updated',
+            field=models.DateTimeField(help_text="When the user's health network selection was last updated.", auto_now_add=True, null=True),
+        ),
+        migrations.AddField(
+            model_name='userdetails',
             name='birthdate',
             field=models.DateField(help_text="The user's date of birth.", null=True, blank=True),
         ),

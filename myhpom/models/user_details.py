@@ -35,6 +35,9 @@ class UserDetails(models.Model):
         max_length=1024, null=True, blank=True,
         help_text="The name of the user's health care provider, if not in our database."
     )
+    health_network_updated = models.DateTimeField(auto_now_add=True, null=True,
+        help_text="When the user's health network selection was last updated."
+    )
     # zip + 4 = 10 characters
     zip_code = models.CharField(
         max_length=10, null=True, blank=True,
