@@ -25,11 +25,15 @@
 }
 
 .footer-links-list__link {
-    color: white;
+    @extend .myhpom-header__nav-link;
 }
 
 .footer-links-list__link--legal {
     color: white;
+
+    &:hover {
+        color: white;
+    }
 }
 
 .footer-links-list--account-links {
