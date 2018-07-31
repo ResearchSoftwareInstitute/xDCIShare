@@ -1,8 +1,14 @@
+@import "myhpom/static/myhpom/typography";
+@import "myhpom/static/myhpom/colors";
+
+@import "myhpom/static/myhpom/bootstrap_theme";
 @import "hydroshare/static/myhpom/bootstrap/scss/bootstrap.scss";
+@import "myhpom/static/myhpom/bootstrap_overrides";
 
 @import "myhpom/static/myhpom/page_layout";
 @import "myhpom/static/myhpom/include/footer";
 @import "myhpom/static/myhpom/include/forms";
+@import "myhpom/static/myhpom/include/header";
 @import "myhpom/static/myhpom/include/modal";
 @import "myhpom/static/myhpom/include/upload_widget";
 

@@ -1,23 +1,39 @@
+{% load static %}
+
 <header class="shadow-sm mb-5 myhpom-header">
-    <nav class="navbar navbar-light navbar-expand-lg container">
-        <a class="navbar-brand mb-0 h1" href="">Mind My Health</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-dark navbar-expand-lg container myhpom-header__navbar">
+        <a class="navbar-brand mb-0 h1 myhpom-header__navbar-brand" href="">
+            <img class="myhpom-header__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-color-rev@3x.png' %}" alt="Mind My Health">
+        </a>
+        {% if user.is_authenticated %}
+        <div class="myhpom-header__navbar-toggler myhpom-header__navbar-toggle--profile ml-auto d-md-none d-lg-none d-xl-none">
+            <!-- TODO: add profile link here. -->
+            <span class="oi oi-person myhpom-header__toggler-icon"></span>
+        </div>
+        {% endif %}
+        <button class="navbar-toggler myhpom-header__navbar-toggler myhpom-header__navbar-toggler--menu collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon myhpom-header__toggler-icon myhpom-header__toggler-icon--closed oi oi-menu"></span>
+            <span class="navbar-toggler-icon myhpom-header__toggler-icon myhpom-header__toggler-icon--open oi oi-x"></span>
         </button>
-        <div id="navbarSupportedContent" class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="">Why Plan?</a></li>
-                <li class="nav-item"><a class="nav-link" href="">How It Works</a></li>
-                <li class="nav-item"><a class="nav-link" href="">FAQs</a></li>
-                <li class="nav-item"><a class="nav-link" href="">About</a></li>
-            </ul>
-            <ul class="navbar-nav">
+        <div id="navbarSupportedContent" class="collapse navbar-collapse myhpom-header__navbar-collapse">
+            <ul class="navbar-nav mr-auto myhpom-header__navbar-nav">
                 {% if user.is_authenticated %}
-                <li class="nav-item"><a class="nav-link" href="{% url "myhpom:logout" %}">LOG OUT</a></li>
-                {% else %}
-                <li class="nav-item"><a class="nav-link" href="{% url "login" %}">LOG IN</a></li>
+                <li class="nav-item d-block d-sm-block d-md-none d-lg-none d-xl-none"><a class="nav-link myhpom-header__nav-link" href="{% url 'myhpom:dashboard' %}">Dashboard</a></li>
                 {% endif %}
-                <li class="nav-item"><a class="btn btn-secondary" href="{% url 'myhpom:signup' %}">START NOW</a></li>
+                <li class="nav-item"><a class="nav-link myhpom-header__nav-link" href="">How It Works</a></li>
+                <li class="nav-item"><a class="nav-link myhpom-header__nav-link" href="">FAQs</a></li>
+            </ul>
+            <hr class="myhpom-header__menu-small-divider d-block d-sm-block d-md-none d-lg-none d-xl-none" />
+            <ul class="navbar-nav myhpom-header__navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link myhpom-header__nav-link" href="{% url "myhpom:logout" %}">Log Out</a></li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link myhpom-header__nav-link" href="{% url "login" %}">Log In</a></li>
+                {% endif %}
+                <li class="nav-item">
+                    <a href="" class="nav-link myhpom-header__nav-link d-block d-sm-block d-md-none d-lg-none d-xl-none" href="{% url 'myhpom:signup' %}">Start Now</a>
+                    <a class="btn btn-secondary d-none d-lg-block" href="{% url 'myhpom:signup' %}">Start Now</a>
+                </li>
             </ul>
         </div>
     </nav>
