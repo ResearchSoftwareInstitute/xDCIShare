@@ -2,12 +2,10 @@ from django import forms
 from myhpom import validators
 from myhpom.models import UserDetails, State
 from myhpom.models.user import User
+from .merged import MergedModelForm
 
 
-class EditUserProfileForm(forms.ModelForm):
-    """This form combines data from the User and the UserDetails models into a single form.
-    see EditUserDetailsForm, below, for the fields that are handled by the UserDetails model.
-    """
+class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
@@ -25,31 +23,6 @@ class EditUserProfileForm(forms.ModelForm):
         error_messages={'required': 'Please enter your last name.'},
     )
     email = forms.EmailField(label='Email Address', validators=[validators.email_validator])
-
-    def __init__(self, data=None, instance=None):
-        super(forms.ModelForm, self).__init__(data=data, instance=instance)
-        if instance is not None:
-            self.UserDetailsForm = EditUserDetailsForm(data=data, instance=instance.userdetails)
-        else:
-            self.UserDetailsForm = None
-
-    def is_valid(self):
-        return (
-            super(forms.ModelForm, self).is_valid()
-            and self.UserDetailsForm is not None
-            and self.UserDetailsForm.is_valid()
-        )
-
-    @property
-    def errors(self):
-        errs = super(forms.ModelForm, self).errors
-        errs.update(**self.UserDetailsForm.errors)
-        return errs
-
-    def save(self, commit=True):
-        instance = super(forms.ModelForm, self).save(commit=commit)
-        instance.userdetails = self.UserDetailsForm.save(commit=commit)
-        return instance
 
 
 class EditUserDetailsForm(forms.ModelForm):
@@ -73,3 +46,8 @@ class EditUserDetailsForm(forms.ModelForm):
         if commit == True:
             instance.save()
         return instance
+
+
+class EditProfileForm(MergedModelForm):
+    class Meta:
+        forms = [EditUserForm, EditUserDetailsForm]
