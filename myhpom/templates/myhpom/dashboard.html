@@ -46,10 +46,10 @@
                     </div>
                     <div class="div">
                         <div class="dashboard-profile-information__organ-donor-status-info">
-                            <span class="h5">I am not an organ donor.</span>
+                            <span class="h5 dashboard-profile-information__status">I am not an organ donor.</span>
                         </div>
                         <div>
-                            <a href="/">
+                            <a href="/" class="dashboard-profile-information__organ-donor-link">
                                 Learn how you can be a donor.
                             </a>
                         </div>
@@ -71,7 +71,7 @@
 
             <div class="dashboard__section-content">
                 <div class="dashboard-health-network__info-box">
-                    <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
+                    <div class="h3 dashboard-health-network__network-name">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
                     <div>
                         Last Updated: January 1, 1970
                     </div>

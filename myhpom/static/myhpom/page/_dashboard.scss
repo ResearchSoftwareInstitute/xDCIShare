@@ -31,10 +31,23 @@
     padding: 1em;
 }
 
+.dashboard-health-network__network-name {
+    color: $brand-blue-dark;
+}
+
 .dashboard-profile-information__organ-donor-status-box {
+    border: 2px solid $brand-orange;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
+}
+
+.dashboard-profile-information__status {
+    color: $brand-blue-dark;
+}
+
+.dashboard-profile-information__organ-donor-link {
+    color: $brand-orange;
 }
 
 .big-asterisk {
@@ -50,6 +63,7 @@
 .dashboard-sidebar {
     padding: 0 1em 1em 1em;
     background-color: $brand-blue-fade-7;
+    border-top: 4px solid $brand-blue-medium-fade-70;
     flex-grow: 1;
     align-items: flex-start;
 }
