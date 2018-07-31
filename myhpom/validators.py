@@ -13,7 +13,7 @@ email_validator = EmailValidator()
 
 # Email is not already taken
 def email_not_taken_validator(email):
-    if len(User.objects.filter(email=email)) > 0:
+    if User.objects.filter(email=email).exists():
         raise ValidationError(u'Email already in use.')
 
 
