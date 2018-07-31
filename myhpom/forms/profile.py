@@ -6,6 +6,7 @@ from .merged import MergedModelForm
 
 
 class EditUserForm(forms.ModelForm):
+    """subform for EditProfileForm (below) to handle the User portion."""
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
@@ -26,6 +27,7 @@ class EditUserForm(forms.ModelForm):
 
 
 class EditUserDetailsForm(forms.ModelForm):
+    """subform for EditProfileForm (below) to handle the UserDetails portion."""
     class Meta:
         model = UserDetails
         fields = ['middle_name', 'zip_code', 'birthdate', 'gender', 'is_organ_donor']
@@ -49,5 +51,6 @@ class EditUserDetailsForm(forms.ModelForm):
 
 
 class EditProfileForm(MergedModelForm):
+    """form for the edit_profile view."""
     class Meta:
         forms = [EditUserForm, EditUserDetailsForm]
