@@ -2,7 +2,6 @@ from django import forms
 from myhpom import validators
 from myhpom.models import UserDetails, State
 from myhpom.models.user import User
-from .merged import MergedModelForm
 
 
 class EditUserForm(forms.ModelForm):
@@ -30,7 +29,7 @@ class EditUserDetailsForm(forms.ModelForm):
     """subform for EditProfileForm (below) to handle the UserDetails portion."""
     class Meta:
         model = UserDetails
-        fields = ['middle_name', 'zip_code', 'birthdate', 'gender', 'is_organ_donor']
+        fields = ['middle_name', 'state', 'zip_code', 'birthdate', 'gender', 'is_organ_donor']
 
     state = forms.ChoiceField(
         label='State of Residence',
@@ -49,8 +48,3 @@ class EditUserDetailsForm(forms.ModelForm):
             instance.save()
         return instance
 
-
-class EditProfileForm(MergedModelForm):
-    """form for the edit_profile view."""
-    class Meta:
-        forms = [EditUserForm, EditUserDetailsForm]
