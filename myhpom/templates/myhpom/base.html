@@ -29,7 +29,7 @@
         <title>{% block title %}My Health Peace Of Mind{% endblock title %}</title>
         {% block extra-head %}{% endblock %}
     </head>
-    <body class="myhpom-page--flush-footer">
+    <body class="myhpom-page--flush-footer"{% block body_on_load %}{% endblock %}>
         {% include 'myhpom/includes/header.html' %}
 
         <main class="main myhpom-page__main--flush-footer{% block main_class %}{% endblock main_class %}">
