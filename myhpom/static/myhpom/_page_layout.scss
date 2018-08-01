@@ -7,3 +7,8 @@
 .myhpom-page__main--flush-footer {
     flex-grow: 1;
 }
+
+.vertical-flex {
+    display: flex;
+    flex-direction: column;
+}

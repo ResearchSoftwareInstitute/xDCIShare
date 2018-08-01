@@ -168,6 +168,7 @@
 
 
 .myhpom-header__nav-link {
+    color: white;
     font-weight: 600;
     padding: 0 !important;
     padding-left: 0 !important;
@@ -177,7 +178,7 @@
     box-sizing: border-box;
 
     &:hover {
-        border-bottom: 2px solid white;
+        color: white;
         margin-bottom: -2px; // to compensate for added height from border
     }
 }

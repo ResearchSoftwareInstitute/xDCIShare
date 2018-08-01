@@ -1,12 +1,11 @@
 .advance-directive-widget {
-    background-color: white;
-    border: 1px solid black;
+    flex-grow: 1;
 }
 
 .advance-directive-widget__breadcrumbs {
-    border-bottom: 1px solid black;
     margin-bottom: 0;
-    padding: 1rem;
+    padding-left: 0;
+    padding-top: 1rem;
     list-style: none;
     display: flex;
     flex-wrap: nowrap;
@@ -14,6 +13,7 @@
 }
 
 .advance-directive-widget__breadcrumb-item {
+    color: $brand-blue;
     display: inline-flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -49,30 +49,40 @@
     font-weight: bold;
 }
 
-.advance-directive-widget__body {
-    padding: 2rem;
+.advance-directive-widget__divider {
+  width: 100%;
 }
 
-.advance-directive-widget__button--primary {
-    @extend .h6;
+.advance-directive-widget__body {
+    flex-grow: 1;
+}
 
-    border: 1px solid black;
-    color: darkgray;
-    display: inline-block;
-    margin: 0.5rem 0;
-    padding: 2rem;
-    cursor: pointer;
-    text-align: center;
-    width: 100%;
+.advance-directive-widget__buttons-container {
+    flex-grow: 1;
+    justify-content: flex-end;
 
-    &:any-link {
-        color: darkgray;
-        text-decoration: none !important;
+    @include media-breakpoint-down(sm) {
+      padding-left: 2rem;
+      padding-right: 2rem;
     }
 }
 
+.advance-directive-widget__button {
+    @extend .btn;
+    margin-top: 1em;
+    padding: 1em 2em;
+    font-size: 125%;
+    width: 100%;
+}
+
+.advance-directive-widget__button--primary {
+    @extend .advance-directive-widget__button;
+    @extend .btn-secondary;
+}
+
 .advance-directive-widget__button--secondary {
-    @extend .advance-directive-widget__button--primary;
+    @extend .advance-directive-widget__button;
+    @extend .btn-primary;
 }
 
 .advance-directive-widget__definition {
