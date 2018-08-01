@@ -6,11 +6,16 @@
 <script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
 {% endblock %}
 
-{% block profile_action %}<a id="id_save_profile" href="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'myhpom:dashboard' %}{% endif %}">Save Profile</a>{% endblock %}
+{% block profile_action %}<a id="id_save_profile" href="">Save Profile</a>{% endblock %}
 
 {% block profile_start %}
-<form name="edit_profile_form" method="POST" action="{% url 'myhpom:edit_profile' %}">
+<div>
+{{user_form.non_field_errors}}
+{{user_details_form.non_field_errors}}
+</div>
+<form id="id_edit_profile_form" name="edit_profile_form" method="POST" action="{% url 'myhpom:edit_profile' %}">
     {% csrf_token %}
+    <input type="hidden" name="return" value="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'myhpom:dashboard' %}{% endif %}"/>
 {% endblock profile_start %}
 
 {% block profile_name %}
@@ -57,6 +62,17 @@
             </h2>
             <div class="profile__input-block">
                 <label class="profile__input-label">
+                    {{user_form.fields.email.label}}{% if user_form.fields.email.required %}*{% endif %}
+                </label>
+                <input class="form-control" id="email" name="email" value="{{user_form.cleaned_data.email}}" maxlength="30"/>
+                <div class="profile__input--invalid">
+                    {% for err in user_form.errors.email %}
+                    {{ user_form.errors.email }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
                     {{user_details_form.fields.state.label}}{% if user_details_form.fields.state.required %}*{% endif %}
                 </label>
                 <select name="state" id="id_state" class="form-control{% if form.errors.state %} is-invalid{% endif %}">
@@ -74,18 +90,18 @@
                 <label class="profile__input-label">
                     {{user_details_form.fields.zip_code.label}}{% if user_details_form.fields.zip_code.required %}*{% endif %}
                 </label>
-                <input class="form-control" id="id_zip_code" name="zip_code" value="{{user_form.cleaned_data.zip_code}}"{% if user_details_form.fields.zip_code.max_length %} maxlength="{{user_details_form.fields.zip_code.max_length}}"{% endif %}/>
-            <div class="profile__input--invalid">
-                {% for err in user_details_form.errors.zip_code %}
-                {{ user_details_form.errors.zip_code }}
-                {% endfor %}
-            </div>
+                <input class="form-control" id="id_zip_code" name="zip_code" value="{{user_details_form.cleaned_data.zip_code}}"{% if user_details_form.fields.zip_code.max_length %} maxlength="{{user_details_form.fields.zip_code.max_length}}"{% endif %}/>
+                <div class="profile__input--invalid">
+                    {% for err in user_details_form.errors.zip_code %}
+                    {{ user_details_form.errors.zip_code }}
+                    {% endfor %}
+                </div>
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.phone.label}}{% if user_details_form.fields.phone.required %}*{% endif %}
                 </label>
-                <input class="form-control" id="id_phone" name="phone" value="{{user_form.cleaned_data.phone}}"{% if user_details_form.fields.phone.max_length %} maxlength="{{user_details_form.fields.phone.max_length}}"{% endif %}/>
+                <input class="form-control" id="id_phone" name="phone" value="{{user_details_form.cleaned_data.phone}}"{% if user_details_form.fields.phone.max_length %} maxlength="{{user_details_form.fields.phone.max_length}}"{% endif %}/>
                 <div class="profile__input--invalid">
                     {% for err in user_details_form.errors.phone %}
                     {{ user_details_form.errors.phone }}
@@ -154,6 +170,7 @@
 jQuery(function ($) {
     $birthdateInput = $('#id_birthdate');
     $saveProfileLink = $('#id_save_profile');
+    $editProfileForm = $('#id_edit_profile_form');
 
     $birthdateInput.combodate({
         smartDays: true,
@@ -162,8 +179,8 @@ jQuery(function ($) {
     });
 
     $saveProfileLink.on('click', function (event) {
-        // submit the form
         event.preventDefault();
+        $editProfileForm.submit();
     });
 });
 </script>
