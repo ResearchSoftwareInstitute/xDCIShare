@@ -31,7 +31,9 @@ def edit_profile(request):
             for key in EditUserDetailsForm().fields.keys()
         }
         user_form = EditUserForm(data=user_data, instance=user)
+        user_form.is_valid()
         user_details_form = EditUserDetailsForm(data=user_details_data, instance=user.userdetails)
+        user_details_form.is_valid()
 
     return render(
         request,
