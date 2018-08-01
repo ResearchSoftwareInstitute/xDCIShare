@@ -9,7 +9,11 @@
 }
 
 .dashboard-faq__title {
-    color: $brand-blue-dark;
+    color: $text-gray;
+}
+
+.dashboard-faq__heading {
+    color: $brand-blue;
 }
 
 .dashboard__title {
@@ -38,8 +42,13 @@
     }
 }
 
+.dashboard-user-info__text {
+    font-weight: normal;
+}
+
 .dashboard-user-info__text--title {
     font-size: 2rem !important;
+    font-weight: 700;
 }
 
 .dashboard-profile-information__organ-donor-status-box,
@@ -53,7 +62,7 @@
 }
 
 .dashboard-health-network__network-name {
-    color: $brand-blue-dark;
+    color: $text-gray;
 }
 
 .dashboard-profile-information__organ-donor-status-box {
@@ -71,11 +80,13 @@
 }
 
 .dashboard-profile-information__status {
-    color: $brand-blue-dark;
+    color: $text-gray;
 }
 
 .dashboard-profile-information__organ-donor-link {
     color: $brand-orange;
+    font-weight: 700;
+    text-decoration: underline;
 }
 
 .dashboard-profile-information__organ-donor-edit-link {
