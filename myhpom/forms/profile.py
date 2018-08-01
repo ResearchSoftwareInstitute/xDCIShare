@@ -6,6 +6,7 @@ from myhpom.models.user import User
 
 class EditUserForm(forms.ModelForm):
     """subform for EditProfileForm (below) to handle the User portion."""
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
@@ -27,9 +28,10 @@ class EditUserForm(forms.ModelForm):
 
 class EditUserDetailsForm(forms.ModelForm):
     """subform for EditProfileForm (below) to handle the UserDetails portion."""
+
     class Meta:
         model = UserDetails
-        fields = ['middle_name', 'state', 'zip_code', 'birthdate', 'gender', 'is_organ_donor']
+        fields = ['middle_name', 'birthdate', 'gender', 'zip_code', 'phone', 'is_organ_donor']
 
     state = forms.ChoiceField(
         label='State of Residence',
@@ -37,6 +39,11 @@ class EditUserDetailsForm(forms.ModelForm):
         required=True,
         error_messages={'required': 'Please select your state.'},
     )
+
+    def __init__(self, data=None, instance=None):
+        if data is not None and data.get('state') is not None and isinstance(data['state'], State):
+            data['state'] = data['state'].name
+        return super(forms.ModelForm, self).__init__(data=data, instance=instance)
 
     def save(self, commit=True):
         instance = super(forms.ModelForm, self).save(commit=False)
@@ -47,4 +54,3 @@ class EditUserDetailsForm(forms.ModelForm):
         if commit == True:
             instance.save()
         return instance
-
