@@ -3,6 +3,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from myhpom.forms.profile import EditUserForm, EditUserDetailsForm
 from myhpom.models.user import User
+from datetime import datetime
 
 
 @require_http_methods(['GET'])
@@ -23,18 +24,22 @@ def edit_profile(request):
             user_details_form.save()
             return redirect('myhpom:view_profile')
     else:
-        user_fields = EditUserForm().fields.keys()
-        user_form = EditUserForm(instance=user)
-        user_details_fields = EditUserDetailsForm().fields.keys()
-        user_details_form = EditUserDetailsForm(instance=user.userdetails)
+        # populate the forms with values from the User profile
+        user_data = {key: user.__getattribute__(key) for key in EditUserForm().fields.keys()}
+        user_details_data = {
+            key: user.userdetails.__getattribute__(key)
+            for key in EditUserDetailsForm().fields.keys()
+        }
+        user_form = EditUserForm(data=user_data, instance=user)
+        user_details_form = EditUserDetailsForm(data=user_details_data, instance=user.userdetails)
 
     return render(
         request,
         'myhpom/profile/edit.html',
         {
-            'user_dict': user.__dict__,
             'user_form': user_form,
             'user_details_form': user_details_form,
-            'return_url': request.META.get('HTTP_REFERER'),
+            'MIN_YEAR': datetime.now().year - 120,  # seems old enough...
+            'MAX_YEAR': datetime.now().year,
         },
     )

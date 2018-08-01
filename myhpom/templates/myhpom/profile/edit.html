@@ -9,7 +9,8 @@
 {% block profile_action %}<a id="save_profile_link" href="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'myhpom:dashboard' %}{% endif %}">Save Profile</a>{% endblock %}
 
 {% block profile_start %}
-<form method="POST" action="{% url 'myhpom:edit_profile' %}">
+<form name="edit_profile_form" method="POST" action="{% url 'myhpom:edit_profile' %}">
+    {% csrf_token %}
 {% endblock profile_start %}
 
 {% block profile_name %}
@@ -17,34 +18,34 @@
             <label class="profile__input-label">
                 {{user_form.fields.first_name.label}}{% if user_form.fields.first_name.required %}*{% endif %}
             </label>
-            {{user_form.first_name}}
-            {% if user_form.errors.first_name %}
+            <input class="form-control" id="id_first_name" name="first_name" value="{{user_form.data.first_name}}" maxlength="30"/>
             <div class="profile__input--invalid">
-                {% for err in user_form.errors.first_name %}{{ user_form.errors.first_name }}{% endfor %}
+                {% for err in user_form.errors.first_name %}
+                {{ user_form.errors.first_name }}
+                {% endfor %}
             </div>
-            {% endif %}
         </div>
         <div class="float-left profile__input-block">
             <label class="profile__input-label">
                 {{user_details_form.fields.middle_name.label}}{% if user_details_form.fields.middle_name.required %}*{% endif %}
             </label>
-            {{user_details_form.middle_name}}
-            {% if user_details_form.errors.middle_name %}
+            <input class="form-control" id="id_middle_name" name="middle_name" value="{{user_details_form.data.middle_name}}" maxlength="30"/>
             <div class="profile__input--invalid">
-                {% for err in user_details_form.errors.middle_name %}{{ user_details_form.errors.middle_name }}{% endfor %}
+                {% for err in user_details_form.errors.middle_name %}
+                {{ user_details_form.errors.middle_name }}
+                {% endfor %}
             </div>
-            {% endif %}
         </div>
         <div class="float-left profile__input-block">
             <label class="profile__input-label">
                 {{user_form.fields.last_name.label}}{% if user_form.fields.last_name.required %}*{% endif %}
             </label>
-            {{user_form.last_name}}
-            {% if user_form.errors.last_name %}
+            <input class="form-control" id="id_last_name" name="last_name" value="{{user_form.data.last_name}}" maxlength="30"/>
             <div class="profile__input--invalid">
-                {% for err in user_form.errors.last_name %}{{ user_form.errors.last_name }}{% endfor %}
+                {% for err in user_form.errors.last_name %}
+                {{ user_form.errors.last_name }}
+                {% endfor %}
             </div>
-            {% endif %}
         </div>
 {% endblock profile_name %}
 
@@ -58,34 +59,38 @@
                 <label class="profile__input-label">
                     {{user_details_form.fields.state.label}}{% if user_details_form.fields.state.required %}*{% endif %}
                 </label>
-                {{user_details_form.state}}
-                {% if user_details_form.errors.state %}
+                <select name="state" id="id_state" class="form-control{% if form.errors.state %} is-invalid{% endif %}">
+                    {% for state_choice in user_details_form.fields.state.choices %}
+                    <option value="{{state_choice.0}}"{% if user_details_form.data.state == state_choice.0 %} selected="selected"{% endif %} >{{state_choice.1}}</option>
+                    {% endfor %}
+                </select>
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.state %}{{ user_details_form.errors.state }}{% endfor %}
+                    {% for err in user_details_form.errors.state %}
+                    {{ user_details_form.errors.state }}
+                    {% endfor %}
                 </div>
-                {% endif %}
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.zip_code.label}}{% if user_details_form.fields.zip_code.required %}*{% endif %}
                 </label>
-                {{user_details_form.zip_code}}
-                {% if user_details_form.errors.zip_code %}
-                <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.zip_code %}{{ user_details_form.errors.zip_code }}{% endfor %}
-                </div>
-                {% endif %}
+                <input class="form-control" id="id_zip_code" name="zip_code" value="{{user_form.data.zip_code}}"{% if user_details_form.fields.zip_code.max_length %} maxlength="{{user_details_form.fields.zip_code.max_length}}"{% endif %}/>
+            <div class="profile__input--invalid">
+                {% for err in user_details_form.errors.zip_code %}
+                {{ user_details_form.errors.zip_code }}
+                {% endfor %}
+            </div>
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.phone.label}}{% if user_details_form.fields.phone.required %}*{% endif %}
                 </label>
-                {{user_details_form.phone}}
-                {% if user_details_form.errors.phone %}
+                <input class="form-control" id="id_phone" name="phone" value="{{user_form.data.phone}}"{% if user_details_form.fields.phone.max_length %} maxlength="{{user_details_form.fields.phone.max_length}}"{% endif %}/>
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.phone %}{{ user_details_form.errors.phone }}{% endfor %}
+                    {% for err in user_details_form.errors.phone %}
+                    {{ user_details_form.errors.phone }}
+                    {% endfor %}
                 </div>
-                {% endif %}
             </div>
         </section>
 {% endblock profile_contact_info %}
@@ -101,23 +106,27 @@
                 <label class="profile__input-label">
                     {{user_details_form.fields.birthdate.label}}{% if user_details_form.fields.birthdate.required %}*{% endif %}
                 </label>
-                {{user_details_form.birthdate}}
-                {% if user_details_form.errors.birthdate %}
+                <input id="id_birthdate" name="birthdate" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}" value="{{ user.userdetails.birthdate|date:'Y-m-d' }}"/>
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.birthdate %}{{ user_details_form.errors.birthdate }}{% endfor %}
+                    {% for err in user_details_form.errors.birthdate %}
+                    {{ user_details_form.errors.birthdate }}
+                    {% endfor %}
                 </div>
-                {% endif %}
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.gender.label}}{% if user_details_form.fields.gender.required %}*{% endif %}
                 </label>
-                {{user_details_form.gender}}
-                {% if user_details_form.errors.gender %}
+                <select id="id_gender" name="gender" class="form-control">
+                    {% for choice in user_details_form.fields.gender.choices %}
+                    <option value="{{choice.0}}"{% if user_details_form.data.gender == choice.0 %} selected="selected"{% endif %}>{{choice.1}}</option>
+                    {% endfor %}
+                </select>
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.gender %}{{ user_details_form.errors.gender }}{% endfor %}
+                    {% for err in user_details_form.errors.gender %}
+                    {{ user_details_form.errors.gender }}
+                    {% endfor %}
                 </div>
-                {% endif %}
             </div>
         </section>
 {% endblock profile_additional_info %}
@@ -131,9 +140,9 @@
             <div class="bg-light profile__info-box">
                 <h5>Are you an organ donor?</h5>
                 <p>
-                    <input type="radio" name="is_organ_donor" value="true"/> Yes! I am an organ donor.
+                    <input type="radio" name="is_organ_donor" value="true"{% if user_details_form.data.is_organ_donor == True %} checked="checked"{% endif %}/> Yes! I am an organ donor.
                     <br/>
-                    <input type="radio" name="is_organ_donor" value="false"/> I am not an organ donor.
+                    <input type="radio" name="is_organ_donor" value="false"{% if user_details_form.data.is_organ_donor != True %} checked="checked"{% endif %}/> I am not an organ donor.
                 </p>
             </div>
         </section>
@@ -141,4 +150,15 @@
 
 {% block profile_end %}
 </form>
+<script>
+jQuery(function ($) {
+    $birthdateInput = $('#id_birthdate');
+    $birthdateInput.hide();
+    $birthdateInput.combodate({
+        smartDays: true,
+        format: "YYYY-MM-DD",
+        template: "MMMM D YYYY"
+    });
+});
+</script>
 {% endblock profile_end %}
