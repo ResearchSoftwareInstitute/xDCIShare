@@ -323,3 +323,11 @@
         url('./fonts/glenn-slab/woff2/BwGlennSlab-HairlineItalic.woff2') format('woff2'),
         url('./fonts/glenn-slab/woff/BwGlennSlab-HairlineItalic.woff') format('woff'),
 }
+
+@mixin orange-link {
+    color: $brand-orange;
+
+    &:hover {
+        color: darken($brand-orange, 15%);
+    }
+}

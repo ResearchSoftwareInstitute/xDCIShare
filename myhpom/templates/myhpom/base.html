@@ -32,7 +32,7 @@
     <body class="myhpom-page--flush-footer">
         {% include 'myhpom/includes/header.html' %}
 
-        <main class="main myhpom-page__main--flush-footer">
+        <main class="main myhpom-page__main--flush-footer{% block main_class %}{% endblock main_class %}">
             <div class="container">
                 {% block main_content %}{% endblock main_content %}
             </div>

@@ -9,19 +9,21 @@ in the template that represents the entry-point.)
 
 <ul class="advance-directive-widget__breadcrumbs">
     {% block widget_breadcrumb_items %}
-    <li class="advance-directive-widget__breadcrumb-item">
-        Select Document
+    <li class="advance-directive-widget__breadcrumb-item--active">
+        Select
     </li>
     <li class="advance-directive-widget__breadcrumb-item">
         Submit
     </li>
     <li class="advance-directive-widget__breadcrumb-item">
-        Confirmation
+        Confirm
     </li>
     {% endblock widget_breadcrumb_items %}
 </ul>
 
-<div class="advance-directive-widget__body">
+<hr class="advance-directive-widget__divider" />
+
+<div class="advance-directive-widget__body vertical-flex">
     {% block widget_body %}{% endblock widget_body %}
 </div>
 

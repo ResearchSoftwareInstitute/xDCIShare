@@ -1,8 +1,8 @@
 {% load static %}
 
-<header class="shadow-sm mb-5 myhpom-header">
+<header class="shadow-sm myhpom-header">
     <nav class="navbar navbar-dark navbar-expand-lg container myhpom-header__navbar">
-        <a class="navbar-brand mb-0 h1 myhpom-header__navbar-brand" href="">
+        <a class="navbar-brand mb-0 h1 img-link myhpom-header__navbar-brand" href="">
             <img class="myhpom-header__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-color-rev@3x.png' %}" alt="Mind My Health">
         </a>
         {% if user.is_authenticated %}
