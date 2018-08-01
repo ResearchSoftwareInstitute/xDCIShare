@@ -84,9 +84,10 @@
 }
 
 .dashboard-profile-information__organ-donor-link {
-    color: $brand-orange;
     font-weight: 700;
     text-decoration: underline;
+
+    @include orange-link;
 }
 
 .dashboard-profile-information__organ-donor-edit-link {
@@ -95,7 +96,7 @@
     margin-left: auto;
 
     :any-link {
-      color: $brand-orange;
+        @include orange-link;
     }
 }
 
