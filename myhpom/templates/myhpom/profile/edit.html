@@ -11,10 +11,6 @@
 {% block profile_action %}<a id="id_save_profile" href="">Save Profile</a>{% endblock %}
 
 {% block profile_start %}
-<div>
-{{user_form.non_field_errors}}
-{{user_details_form.non_field_errors}}
-</div>
 <form id="id_edit_profile_form" name="edit_profile_form" method="POST" action="{% url 'myhpom:edit_profile' %}">
     {% csrf_token %}
     <input type="hidden" name="return" value="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'myhpom:dashboard' %}{% endif %}"/>
@@ -26,33 +22,27 @@
             <label class="profile__input-label">
                 {{user_form.fields.first_name.label}}{% if user_form.fields.first_name.required %}*{% endif %}
             </label>
-            <input class="form-control" id="id_first_name" name="first_name" value="{{user_form.cleaned_data.first_name}}" maxlength="30"/>
+            {{user_form.first_name}}
             <div class="profile__input--invalid">
-                {% for err in user_form.errors.first_name %}
                 {{ user_form.errors.first_name }}
-                {% endfor %}
             </div>
         </div>
         <div class="float-left profile__input-block">
             <label class="profile__input-label">
                 {{user_details_form.fields.middle_name.label}}{% if user_details_form.fields.middle_name.required %}*{% endif %}
             </label>
-            <input class="form-control" id="id_middle_name" name="middle_name" value="{{user_details_form.cleaned_data.middle_name}}" maxlength="30"/>
+            {{user_details_form.middle_name}}
             <div class="profile__input--invalid">
-                {% for err in user_details_form.errors.middle_name %}
                 {{ user_details_form.errors.middle_name }}
-                {% endfor %}
             </div>
         </div>
         <div class="float-left profile__input-block">
             <label class="profile__input-label">
                 {{user_form.fields.last_name.label}}{% if user_form.fields.last_name.required %}*{% endif %}
             </label>
-            <input class="form-control" id="id_last_name" name="last_name" value="{{user_form.cleaned_data.last_name}}" maxlength="30"/>
+            {{user_form.last_name}}
             <div class="profile__input--invalid">
-                {% for err in user_form.errors.last_name %}
                 {{ user_form.errors.last_name }}
-                {% endfor %}
             </div>
         </div>
 {% endblock profile_name %}
@@ -67,48 +57,36 @@
                 <label class="profile__input-label">
                     {{user_form.fields.email.label}}{% if user_form.fields.email.required %}*{% endif %}
                 </label>
-                <input class="form-control" id="email" name="email" value="{{user_form.cleaned_data.email}}" maxlength="30"/>
+                {{user_form.email}}
                 <div class="profile__input--invalid">
-                    {% for err in user_form.errors.email %}
                     {{ user_form.errors.email }}
-                    {% endfor %}
                 </div>
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.state.label}}{% if user_details_form.fields.state.required %}*{% endif %}
                 </label>
-                <select name="state" id="id_state" class="form-control{% if form.errors.state %} is-invalid{% endif %}">
-                    {% for state_choice in user_details_form.fields.state.choices %}
-                    <option value="{{state_choice.0}}"{% if user_details_form.cleaned_data.state == state_choice.0 %} selected="selected"{% endif %} >{{state_choice.1}}</option>
-                    {% endfor %}
-                </select>
+                {{user_details_form.state}}
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.state %}
                     {{ user_details_form.errors.state }}
-                    {% endfor %}
                 </div>
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.zip_code.label}}{% if user_details_form.fields.zip_code.required %}*{% endif %}
                 </label>
-                <input class="form-control" id="id_zip_code" name="zip_code" value="{{user_details_form.cleaned_data.zip_code}}"{% if user_details_form.fields.zip_code.max_length %} maxlength="{{user_details_form.fields.zip_code.max_length}}"{% endif %}/>
+                {{user_details_form.zip_code}}
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.zip_code %}
                     {{ user_details_form.errors.zip_code }}
-                    {% endfor %}
                 </div>
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.phone.label}}{% if user_details_form.fields.phone.required %}*{% endif %}
                 </label>
-                <input class="form-control" id="id_phone" name="phone" value="{{user_details_form.cleaned_data.phone}}"{% if user_details_form.fields.phone.max_length %} maxlength="{{user_details_form.fields.phone.max_length}}"{% endif %}/>
+                {{user_details_form.phone}}
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.phone %}
                     {{ user_details_form.errors.phone }}
-                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -125,26 +103,18 @@
                 <label class="profile__input-label">
                     {{user_details_form.fields.birthdate.label}}{% if user_details_form.fields.birthdate.required %}*{% endif %}
                 </label>
-                <input id="id_birthdate" name="birthdate" data-min-year="{{ MIN_YEAR }}" data-max-year="{{ MAX_YEAR }}" value="{{ user.userdetails.birthdate|date:'Y-m-d' }}"/>
+                {{user_details_form.birthdate}}
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.birthdate %}
                     {{ user_details_form.errors.birthdate }}
-                    {% endfor %}
                 </div>
             </div>
             <div class="profile__input-block">
                 <label class="profile__input-label">
                     {{user_details_form.fields.gender.label}}{% if user_details_form.fields.gender.required %}*{% endif %}
                 </label>
-                <select id="id_gender" name="gender" class="form-control">
-                    {% for choice in user_details_form.fields.gender.choices %}
-                    <option value="{{choice.0}}"{% if user_details_form.cleaned_data.gender == choice.0 %} selected="selected"{% endif %}>{{choice.1}}</option>
-                    {% endfor %}
-                </select>
+                {{user_details_form.gender}}
                 <div class="profile__input--invalid">
-                    {% for err in user_details_form.errors.gender %}
                     {{ user_details_form.errors.gender }}
-                    {% endfor %}
                 </div>
             </div>
         </section>
@@ -171,6 +141,8 @@
 </form>
 <script>
 jQuery(function ($) {
+    $('input:not([type="radio"]), select').addClass('form-control');
+
     $birthdateInput = $('#id_birthdate');
     $saveProfileLink = $('#id_save_profile');
     $editProfileForm = $('#id_edit_profile_form');
