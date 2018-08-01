@@ -72,11 +72,9 @@
             </h2>
             <div class="bg-light profile__info-box">
                 <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
-                {% if request.user.userdetails.health_network_updated %}
                 <div class="small">
-                    Last Updated: {{ request.user.userdetails.health_network_updated|date:"F j, Y" }}
+                    Last Updated: {% firstof request.user.userdetails.health_network_updated|date:"F j, Y" request.user.date_joined|date:"F j, Y" %}
                 </div>
-                {% endif %}
             </div>
         </section>
 {% endblock profile_health_network %}

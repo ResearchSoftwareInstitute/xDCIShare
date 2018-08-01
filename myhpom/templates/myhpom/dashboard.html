@@ -76,7 +76,7 @@
                 <div class="dashboard-health-network__info-box">
                     <div class="h3 dashboard-health-network__network-name">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
                     <div>
-                        Last Updated: January 1, 1970
+                        Last Updated: {% firstof request.user.userdetails.health_network_updated|date:"F j, Y" request.user.date_joined|date:"F j, Y" %}
                     </div>
                 </div>
             </div>
