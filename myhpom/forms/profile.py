@@ -33,7 +33,7 @@ class EditUserDetailsForm(forms.ModelForm):
 
     state = forms.ChoiceField(
         label='State of Residence',
-        choices=((state.name, state.title) for state in State.objects.all()),
+        choices=((state.name, state.title) for state in State.objects.order_by_ad()),
         required=True,
         error_messages={'required': 'Please select your state.'},
     )
