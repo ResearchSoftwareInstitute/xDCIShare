@@ -15,6 +15,18 @@
             My dashboard
         </h1>
 
+        {% if messages %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% for message in messages %}
+                    <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         <section class="dashboard-user-info">
             <div class="h1 dashboard-user-info__text dashboard-user-info__text--title">
                 {{ request.user.get_full_name }}

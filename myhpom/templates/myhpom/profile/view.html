@@ -14,18 +14,6 @@
     </div>
 </div>
 
-{% if messages %}
-<div class="row">
-    <div class="col-sm-12">
-        {% for message in messages %}
-            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-
 {% block profile_start %}
 {% endblock profile_start %}
 
