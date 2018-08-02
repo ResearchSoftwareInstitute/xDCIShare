@@ -13,8 +13,7 @@
 {% block profile_start %}
 <form id="id_edit_profile_form" name="edit_profile_form" method="POST" action="{% url 'myhpom:edit_profile' %}">
     {% csrf_token %}
-    <input type="hidden" name="return" value="{% if request.META.HTTP_REFERER %}{{ request.META.HTTP_REFERER }}{% else %}{% url 'myhpom:dashboard' %}{% endif %}"/>
-    <input type="submit" name="submit" style="display:none;"/>
+    <input id="id_edit_profile_submit" type="submit" name="submit" style="display:none;"/>
 {% endblock profile_start %}
 
 {% block profile_name %}
@@ -155,7 +154,7 @@ jQuery(function ($) {
 
     $saveProfileLink.on('click', function (event) {
         event.preventDefault();
-        $editProfileForm.submit();
+        $('#id_edit_profile_submit').click();
     });
 });
 </script>
