@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userdetails',
             name='gender',
-            field=models.CharField(blank=True, max_length=32, null=True, help_text="The user's gender self-identification.", choices=[(b'Male', b'Male'), (b'Female', b'Female'), (b'Non-Binary / Fluid', b'Non-Binary / Fluid'), (b'Non-Gender-Conforming', b'Non-Gender-Conforming')]),
+            field=models.CharField(blank=True, max_length=21, null=True, help_text="The user's gender self-identification.", choices=[(b'Male', b'Male'), (b'Female', b'Female'), (b'Non-Binary / Fluid', b'Non-Binary / Fluid'), (b'Non-Gender-Conforming', b'Non-Gender-Conforming')]),
         ),
         migrations.AddField(
             model_name='userdetails',

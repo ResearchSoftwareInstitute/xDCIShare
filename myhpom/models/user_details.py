@@ -50,7 +50,7 @@ class UserDetails(models.Model):
     birthdate = models.DateField(null=True, blank=True, help_text="The user's date of birth.")
     # gender according to the GENDER_CHOICES above
     gender = models.CharField(
-        max_length=32,
+        max_length=max([len(choice[0]) for choice in GENDER_CHOICES]),
         null=True,
         blank=True,
         choices=GENDER_CHOICES,
