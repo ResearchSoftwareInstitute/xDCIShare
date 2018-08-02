@@ -25,7 +25,7 @@ def edit_profile(request):
         if user_details_form.is_valid():
             user_details_form.save()
         if user_form.is_valid() and user_details_form.is_valid():
-            return redirect(request.POST.get('return') or reverse('myhpom:dashboard'))
+            return redirect(reverse('myhpom:dashboard'))
     else:
         # populate the forms with values from the User profile
         user_data = {key: user.__getattribute__(key) for key in EditUserForm().fields.keys()}
