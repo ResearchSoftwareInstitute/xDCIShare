@@ -41,7 +41,7 @@ class EditUserDetailsForm(forms.ModelForm):
     )
 
     def __init__(self, data=None, instance=None):
-        if data is not None and data.get('state') is not None and isinstance(data['state'], State):
+        if data and 'state' in data and isinstance(data['state'], State):
             data['state'] = data['state'].name
         return super(forms.ModelForm, self).__init__(data=data, instance=instance)
 
@@ -51,6 +51,6 @@ class EditUserDetailsForm(forms.ModelForm):
         if state is None:
             raise ValueError("State not found: %s" % self.cleaned_data['state'])
         instance.state = state
-        if commit == True:
+        if commit:
             instance.save()
         return instance

@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
@@ -25,7 +26,8 @@ def edit_profile(request):
         if user_details_form.is_valid():
             user_details_form.save()
         if user_form.is_valid() and user_details_form.is_valid():
-            return redirect(reverse('myhpom:dashboard'))
+            messages.success(request, 'Your profile has been successfully changed.')
+            return redirect(reverse('myhpom:view_profile'))
     else:
         # populate the forms with values from the User profile
         user_data = {key: user.__getattribute__(key) for key in EditUserForm().fields.keys()}

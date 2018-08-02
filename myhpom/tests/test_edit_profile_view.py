@@ -54,7 +54,7 @@ class EditProfileViewTestCase(TestCase):
         )
         # default redirect to dashboard
         response = self.client.post(self.url, data=valid_post_data)
-        self.assertRedirects(response, reverse('myhpom:dashboard'), fetch_redirect_response=False)
+        self.assertRedirects(response, reverse('myhpom:view_profile'), fetch_redirect_response=False)
         # invalid POST redisplays page
         invalid_post_data = dict(
             birthdate='today',  # not a date
