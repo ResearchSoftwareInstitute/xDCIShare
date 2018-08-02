@@ -41,10 +41,5 @@ def edit_profile(request):
     return render(
         request,
         'myhpom/profile/edit.html',
-        {
-            'user_form': user_form,
-            'user_details_form': user_details_form,
-            'MIN_YEAR': datetime.now().year - 120,  # seems old enough...
-            'MAX_YEAR': datetime.now().year,
-        },
+        {'user_form': user_form, 'user_details_form': user_details_form},
     )

@@ -148,7 +148,8 @@ jQuery(function ($) {
         smartDays: true,
         format: "YYYY-MM-DD",
         template: "MMMM D YYYY",
-        minYear: 1900
+        minYear: 1900,
+        maxYear: moment().format('YYYY')
     });
 
     $saveProfileLink.on('click', function (event) {
