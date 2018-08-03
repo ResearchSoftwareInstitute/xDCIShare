@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.db.models.deletion
+import myhpom.validators
 
 
 class Migration(migrations.Migration):
@@ -30,12 +31,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userdetails',
             name='phone',
-            field=models.CharField(help_text='Phone number at which the user can be contacted.', max_length=32, null=True, blank=True),
+            field=models.CharField(help_text='Phone number at which the user can be contacted.', max_length=32, null=True, blank=True, validators=[myhpom.validators.phone_number_validator]),
         ),
         migrations.AddField(
             model_name='userdetails',
             name='zip_code',
-            field=models.CharField(help_text="The zip code for the user's health care address.", max_length=10, null=True, blank=True),
+            field=models.CharField(help_text="The zip code for the user's health care address.", max_length=10, null=True, blank=True, validators=[myhpom.validators.zip_code_validator]),
         ),
         migrations.AddField(
             model_name='userdetails',
