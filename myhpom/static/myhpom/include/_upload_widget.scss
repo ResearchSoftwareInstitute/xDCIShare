@@ -78,6 +78,10 @@
 .advance-directive-widget__button--primary {
     @extend .advance-directive-widget__button;
     @extend .btn-secondary;
+
+    &:disabled {
+        color: rgba(255, 255, 255, 0.9);
+    }
 }
 
 .advance-directive-widget__button--secondary {
