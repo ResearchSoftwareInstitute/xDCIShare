@@ -1,0 +1,59 @@
+
+.profile__link {
+    text-transform: uppercase;
+}
+
+.profile__section {
+    margin-bottom: 0.5rem;
+}
+
+.profile__section--border {
+    @extend .profile__section;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 1rem;
+}
+
+.profile__section-title {
+    @extend .dashboard__section-title;
+    margin-top: 0.5rem;
+}
+
+.profile__info-box {
+    padding: 1rem;
+}
+
+.profile__info--right {
+    text-align: right;
+}
+
+.profile__link-list {
+    list-style-type: none;
+    line-height: 1.75;
+    padding: 0;
+    margin: 0;
+}
+
+.profile__input-block {
+    margin: 0.5rem 0.5rem 0.5rem 0;
+}
+
+.profile__input-label {
+    @extend .small;
+    color: $text-gray-medium;
+    display: block;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.profile__input input {
+    display: block;
+}
+
+.profile__input--invalid {
+    color: $danger;
+}
+
+.profile__note {
+    color: $text-gray-medium;
+    text-transform: none;
+}

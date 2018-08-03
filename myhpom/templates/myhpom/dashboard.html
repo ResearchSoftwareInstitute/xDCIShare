@@ -15,6 +15,18 @@
             My dashboard
         </h1>
 
+        {% if messages %}
+        <div class="row">
+            <div class="col-sm-12">
+                {% for message in messages %}
+                    <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         <section class="dashboard-user-info">
             <div class="h1 dashboard-user-info__text dashboard-user-info__text--title">
                 {{ request.user.get_full_name }}
@@ -28,7 +40,7 @@
 
         <section class="mb-5 dashboard__section dashboard-profile-information">
             <div class="h6 float-right">
-                <a href="/" class="small"><span class="oi oi-pencil"></span> Edit</a>
+                <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
             </div>
 
             <h2 class="h6 dashboard__section-title">
@@ -55,7 +67,7 @@
                         </div>
                     </div>
                     <div class="h6 dashboard-profile-information__organ-donor-edit-link">
-                        <a href="/" class="small"><span class="oi oi-pencil"></span> Edit</a>
+                        <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
                     </div>
                 </div>
             </div>
@@ -76,7 +88,7 @@
                 <div class="dashboard-health-network__info-box">
                     <div class="h3 dashboard-health-network__network-name">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
                     <div>
-                        Last Updated: January 1, 1970
+                        Last Updated: {% firstof request.user.userdetails.health_network_updated|date:"F j, Y" request.user.date_joined|date:"F j, Y" %}
                     </div>
                 </div>
             </div>

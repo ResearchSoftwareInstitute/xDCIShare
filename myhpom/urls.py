@@ -18,4 +18,6 @@ urlpatterns = [
         {'document_root': settings.STATIC_ROOT + '/styleguide', 'path': 'index.html'}),
     url(r'^styleguide/(?P<path>.*)', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT + '/styleguide'}),
+    url(r'^profile/?$', myhpom_views.view_profile, name='view_profile'),
+    url(r'^profile/edit/?$', myhpom_views.edit_profile, name='edit_profile'),
 ]

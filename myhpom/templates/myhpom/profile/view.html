@@ -1,0 +1,92 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_container_class %} mt-4 mb-4{% endblock main_container_class %}
+
+{% block main_content %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="float-right profile__link small">
+            {% block profile_action %}<a href="{% url 'myhpom:edit_profile' %}">Edit Profile</a>{% endblock %}
+        </div>
+        <h1 class="h6 profile__link">
+            <a href="{% url 'myhpom:dashboard' %}">Return to Dashboard</a>
+        </h1>
+    </div>
+</div>
+
+{% block profile_start %}
+{% endblock profile_start %}
+
+<div class="row">
+    <div class="col-sm-12">
+{% block profile_name %}
+{% endblock profile_name %}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 col-lg-8">
+{% block profile_contact_info %}
+{% endblock profile_contact_info %}
+
+{% block profile_additional_info %}
+{% endblock profile_additional_info %}
+    </div>
+
+    <div class="col-md-5 col-lg-4">
+{% block profile_status %}
+        <div class="profile__info--right"><strong>User since:</strong> {{ request.user.date_joined|date:"F j, Y" }}</div>
+{% endblock profile_status %}
+
+{% block profile_account_management %}
+        <hr/>
+        <section class="profile__section">
+            <h2 class="h6 profile__section-title">
+                Account Management
+            </h2>
+            <ul class="profile__link-list">
+                <li class="profile__link small"><a href="">Change Password</a></li>
+                <li class="profile__link small"><a href="">Deactivate Account</a></li>
+                <li class="profile__link small"><a href="">Delete Account</a></li>
+            </ul>
+        </section>
+{% endblock profile_account_management %}
+
+{% block profile_organ_donor %}
+        <hr/>
+        <section class="profile__section">
+            <div class="float-right profile__link small">
+                <a href="">Update</a>
+            </div>
+            <h2 class="h6 profile__section-title">
+                Organ Donation
+            </h2>
+            <div class="bg-light profile__info-box">
+            </div>
+        </section>
+{% endblock profile_organ_donor %}
+
+{% block profile_health_network %}
+        <hr/>
+        <section class="profile__section">
+            <div class="float-right profile__link small">
+                <a href="">Update</a>
+            </div>
+            <h2 class="h6 profile__section-title">
+                Health network
+            </h2>
+            <div class="bg-light profile__info-box">
+                <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
+                <div class="small">
+                    Last Updated: {% firstof request.user.userdetails.health_network_updated|date:"F j, Y" request.user.date_joined|date:"F j, Y" %}
+                </div>
+            </div>
+        </section>
+{% endblock profile_health_network %}
+    </div>
+</div>
+
+{% block profile_end %}
+{% endblock profile_end %}
+
+{% endblock main_content %}

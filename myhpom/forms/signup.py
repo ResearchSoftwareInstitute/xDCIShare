@@ -33,7 +33,7 @@ class SignupForm(forms.Form):
     )
     state = forms.ChoiceField(
         label='State of Residence',
-        choices=((state.name, state.title) for state in models.State.objects.all()),
+        choices=((state.name, state.title) for state in models.State.objects.order_by_ad()),
         required=True,
         error_messages={'required': 'Please select your state.'},
     )

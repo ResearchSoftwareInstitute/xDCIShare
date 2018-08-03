@@ -1,0 +1,161 @@
+{% extends "myhpom/profile/view.html" %}
+{% load sass_tags static %}
+
+{% block extra-head %}
+<script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
+<script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
+{% endblock %}
+
+{% block body_on_load %} onLoad="document.getElementById('id_first_name').select();"{% endblock %}
+
+{% block profile_action %}<a id="id_save_profile" href="">Save Profile</a>{% endblock %}
+
+{% block profile_start %}
+<form id="id_edit_profile_form" name="edit_profile_form" method="POST" action="{% url 'myhpom:edit_profile' %}">
+    {% csrf_token %}
+    <input id="id_edit_profile_submit" type="submit" name="submit" style="display:none;"/>
+{% endblock profile_start %}
+
+{% block profile_name %}
+        <div class="float-left profile__input-block">
+            <label class="profile__input-label">
+                {{user_form.fields.first_name.label}}{% if user_form.fields.first_name.required %}*{% endif %}
+            </label>
+            {{user_form.first_name}}
+            <div class="profile__input--invalid">
+                {{ user_form.errors.first_name }}
+            </div>
+        </div>
+        <div class="float-left profile__input-block">
+            <label class="profile__input-label">
+                {{user_details_form.fields.middle_name.label}}{% if user_details_form.fields.middle_name.required %}*{% endif %}
+            </label>
+            {{user_details_form.middle_name}}
+            <div class="profile__input--invalid">
+                {{ user_details_form.errors.middle_name }}
+            </div>
+        </div>
+        <div class="float-left profile__input-block">
+            <label class="profile__input-label">
+                {{user_form.fields.last_name.label}}{% if user_form.fields.last_name.required %}*{% endif %}
+            </label>
+            {{user_form.last_name}}
+            <div class="profile__input--invalid">
+                {{ user_form.errors.last_name }}
+            </div>
+        </div>
+{% endblock profile_name %}
+
+{% block profile_contact_info %}
+        <section class="profile__section">
+            <h2 class="h6 profile__section-title">
+                Contact Information
+                <span class="small profile__note">(fields marked * are required)</span>
+            </h2>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_form.fields.email.label}}{% if user_form.fields.email.required %}*{% endif %}
+                </label>
+                {{user_form.email}}
+                <div class="profile__input--invalid">
+                    {{ user_form.errors.email }}
+                </div>
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.state.label}}{% if user_details_form.fields.state.required %}*{% endif %}
+                </label>
+                {{user_details_form.state}}
+                <div class="profile__input--invalid">
+                    {{ user_details_form.errors.state }}
+                </div>
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.zip_code.label}}{% if user_details_form.fields.zip_code.required %}*{% endif %}
+                </label>
+                {{user_details_form.zip_code}}
+                <div class="profile__input--invalid">
+                    {{ user_details_form.errors.zip_code }}
+                </div>
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.phone.label}}{% if user_details_form.fields.phone.required %}*{% endif %}
+                </label>
+                {{user_details_form.phone}}
+                <div class="profile__input--invalid">
+                    {{ user_details_form.errors.phone }}
+                </div>
+            </div>
+        </section>
+{% endblock profile_contact_info %}
+
+{% block profile_additional_info %}
+        <hr/>
+        <section class="profile__section">
+            <h2 class="h6 profile__section-title">
+                Additional Information
+                <span class="small profile__note">(fields marked * are required)</span>
+            </h2>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.birthdate.label}}{% if user_details_form.fields.birthdate.required %}*{% endif %}
+                </label>
+                {{user_details_form.birthdate}}
+                <div class="profile__input--invalid">
+                    {{ user_details_form.errors.birthdate }}
+                </div>
+            </div>
+            <div class="profile__input-block">
+                <label class="profile__input-label">
+                    {{user_details_form.fields.gender.label}}{% if user_details_form.fields.gender.required %}*{% endif %}
+                </label>
+                {{user_details_form.gender}}
+                <div class="profile__input--invalid">
+                    {{ user_details_form.errors.gender }}
+                </div>
+            </div>
+        </section>
+{% endblock profile_additional_info %}
+
+{% block profile_organ_donor %}
+        <hr/>
+        <section class="profile__section">
+            <h2 class="h6 profile__section-title">
+                Organ Donation
+            </h2>
+            <div class="bg-light profile__info-box">
+                <h5>Are you an organ donor?</h5>
+                <p>
+                    <label for="id_is_organ_donor_true"><input type="radio" name="is_organ_donor" id="id_is_organ_donor_true" value="true"{% if user_details_form.cleaned_data.is_organ_donor == True %} checked="checked"{% endif %}/> Yes! I am an organ donor.</label>
+                    <br/>
+                    <label for="id_is_organ_donor_false"><input type="radio" name="is_organ_donor" id="id_is_organ_donor_false" value="false"{% if user_details_form.cleaned_data.is_organ_donor != True %} checked="checked"{% endif %}/> I am not an organ donor.</label>
+                </p>
+            </div>
+        </section>
+{% endblock profile_organ_donor %}
+
+{% block profile_end %}
+</form>
+<script>
+jQuery(function ($) {
+    $birthdateInput = $('#id_birthdate');
+    $saveProfileLink = $('#id_save_profile');
+    $editProfileForm = $('#id_edit_profile_form');
+
+    $birthdateInput.combodate({
+        smartDays: true,
+        format: "YYYY-MM-DD",
+        template: "MMMM D YYYY",
+        minYear: 1900,
+        maxYear: moment().format('YYYY')
+    });
+
+    $saveProfileLink.on('click', function (event) {
+        event.preventDefault();
+        $('#id_edit_profile_submit').click();
+    });
+});
+</script>
+{% endblock profile_end %}
