@@ -11,7 +11,7 @@ from datetime import datetime
 @require_http_methods(['GET'])
 @login_required
 def view_profile(request):
-    return render(request, 'myhpom/profile/view.html', {'user': request.user})
+    return render(request, 'myhpom/profile/view.html', {})
 
 
 @require_http_methods(['GET', 'POST'])
