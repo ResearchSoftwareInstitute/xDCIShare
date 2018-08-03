@@ -49,6 +49,10 @@
     display: block;
 }
 
+.profile__input--invalid {
+    color: $danger;
+}
+
 .profile__note {
     color: $text-gray-medium;
     text-transform: none;

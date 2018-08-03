@@ -94,17 +94,17 @@ jQuery(function ($) {
     var $submitButton = $('#id_button_submit');
     var $directiveDateInput = $('#id_valid_date');
     var $inputSelectFile = $("#id_document");
-    var NOW = new Date();
+    var NOW = moment();
 
     // Currently the help links on this page aren't intended to do anything (until behavior is defined):
     $(".upload-requirements__help--right").click(function (event) { event.preventDefault(); });
     $(".upload-requirements-link__item a").click(function (event) { event.preventDefault(); });
 
     function submitButtonEnableDisable () {
-        var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
+        var directiveDate = moment($directiveDateInput.val());
         if ($('.upload-requirements__checkbox:checked').length === $requirements.length
             && $directiveDateInput.combodate('getValue').trim() !== ''
-            && $directiveDate <= NOW
+            && directiveDate.isSameOrBefore(NOW)
             && $inputSelectFile.val().trim() !== ''
             && $inputSelectFile[0].files[0].size < {{ MAX_AD_SIZE }}
         ) {
@@ -132,8 +132,8 @@ jQuery(function ($) {
                 $("#id_valid_date_errors").html("Please enter the valid date of your document.");
             }
         } else {
-            var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
-            if ($directiveDate > NOW) {
+            var directiveDate = moment($directiveDateInput.val());
+            if (directiveDate.isAfter(NOW)) {
                 $("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
                 $("#id_valid_date_errors").html("Please enter a valid date on or before today.");
             } else {

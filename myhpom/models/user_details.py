@@ -1,7 +1,9 @@
 from django.db import models
+import re
 from .user import User
 from .state import State
 from .health_network import HealthNetwork
+from myhpom.validators import zip_code_validator, phone_number_validator
 
 
 GENDER_CHOICES = [(k, k) for k in ['Male', 'Female', 'Non-Binary / Fluid', 'Non-Gender-Conforming']]
@@ -50,7 +52,7 @@ class UserDetails(models.Model):
     birthdate = models.DateField(null=True, blank=True, help_text="The user's date of birth.")
     # gender according to the GENDER_CHOICES above
     gender = models.CharField(
-        max_length=32,
+        max_length=max([len(choice[0]) for choice in GENDER_CHOICES]),
         null=True,
         blank=True,
         choices=GENDER_CHOICES,
@@ -61,6 +63,7 @@ class UserDetails(models.Model):
         max_length=10,
         null=True,
         blank=True,
+        validators=[zip_code_validator],
         help_text="The zip code for the user's health care address.",
     )
     # free form phone number, long enough to include ext. etc.
@@ -68,6 +71,7 @@ class UserDetails(models.Model):
         max_length=32,
         null=True,
         blank=True,
+        validators=[phone_number_validator],
         help_text="Phone number at which the user can be contacted.",
     )
     # organ donor status

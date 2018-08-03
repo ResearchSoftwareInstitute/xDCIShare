@@ -11,7 +11,7 @@ from datetime import datetime
 @require_http_methods(['GET'])
 @login_required
 def view_profile(request):
-    return render(request, 'myhpom/profile/view.html', {'user': request.user})
+    return render(request, 'myhpom/profile/view.html', {})
 
 
 @require_http_methods(['GET', 'POST'])
@@ -27,7 +27,7 @@ def edit_profile(request):
             user_details_form.save()
         if user_form.is_valid() and user_details_form.is_valid():
             messages.success(request, 'Your profile has been successfully changed.')
-            return redirect(reverse('myhpom:view_profile'))
+            return redirect(reverse('myhpom:dashboard'))
     else:
         # populate the forms with values from the User profile
         user_data = {key: user.__getattribute__(key) for key in EditUserForm().fields.keys()}
@@ -41,10 +41,5 @@ def edit_profile(request):
     return render(
         request,
         'myhpom/profile/edit.html',
-        {
-            'user_form': user_form,
-            'user_details_form': user_details_form,
-            'MIN_YEAR': datetime.now().year - 120,  # seems old enough...
-            'MAX_YEAR': datetime.now().year,
-        },
+        {'user_form': user_form, 'user_details_form': user_details_form},
     )

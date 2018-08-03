@@ -5,39 +5,43 @@ from myhpom.models.user import User
 
 
 class EditUserForm(forms.ModelForm):
-    """subform for EditProfileForm (below) to handle the User portion."""
+    """subform to handle the User portion."""
 
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
-    first_name = forms.CharField(
-        label='First Name',
-        max_length=30,
-        validators=[validators.name_validator],
-        error_messages={'required': 'Please enter your first name.'},
+    email = forms.EmailField(
+        label='Email Address',
+        validators=[validators.email_validator],
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
-    last_name = forms.CharField(
-        label='Last Name',
-        max_length=30,
-        validators=[validators.name_validator],
-        error_messages={'required': 'Please enter your last name.'},
-    )
-    email = forms.EmailField(label='Email Address', validators=[validators.email_validator])
 
 
 class EditUserDetailsForm(forms.ModelForm):
-    """subform for EditProfileForm (below) to handle the UserDetails portion."""
+    """subform to handle the UserDetails portion."""
 
     class Meta:
         model = UserDetails
         fields = ['middle_name', 'birthdate', 'gender', 'zip_code', 'phone', 'is_organ_donor']
+        widgets = {
+            'middle_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'birthdate': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+            'zip_code': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control'}),
+        }
 
     state = forms.ChoiceField(
         label='State of Residence',
         choices=((state.name, state.title) for state in State.objects.order_by_ad()),
         required=True,
         error_messages={'required': 'Please select your state.'},
+        widget=forms.Select(attrs={'class': 'form-control'}),
     )
 
     def __init__(self, data=None, instance=None):

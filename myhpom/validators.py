@@ -46,3 +46,15 @@ def validate_not_blank(value):
         or (isinstance(value, str) and str(value.strip()) == '')
     ):
         raise ValidationError("A blank value is not allowed.")
+
+
+def zip_code_validator(zip_code):
+    if not re.match(r"^[\d\-]*$", zip_code.strip()):
+        raise ValidationError('Zip code must be digits + hyphens')
+
+
+def phone_number_validator(phone):
+    if not re.match(r"^[\d\-\.\(\)\s]*$", phone.strip()):
+        raise ValidationError(
+            'Phone number must be digits + periods + parentheses + hyphens + spaces'
+        )

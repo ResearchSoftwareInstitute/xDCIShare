@@ -140,8 +140,6 @@
 </form>
 <script>
 jQuery(function ($) {
-    $('input:not([type="radio"]), select').addClass('form-control');
-
     $birthdateInput = $('#id_birthdate');
     $saveProfileLink = $('#id_save_profile');
     $editProfileForm = $('#id_edit_profile_form');
@@ -150,7 +148,8 @@ jQuery(function ($) {
         smartDays: true,
         format: "YYYY-MM-DD",
         template: "MMMM D YYYY",
-        minYear: 1900
+        minYear: 1900,
+        maxYear: moment().format('YYYY')
     });
 
     $saveProfileLink.on('click', function (event) {
