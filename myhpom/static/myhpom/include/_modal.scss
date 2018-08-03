@@ -19,12 +19,35 @@ html [type="button"].close--link {
     }
 }
 
-.pseudo-modal__content {
+.pseudo-modal__pre-header {
+    background-color: transparent !important;
     padding: 1rem;
+    text-align: center;
+}
+
+.pseudo-modal__logo {
+    max-width: 20rem;
+}
+
+.pseudo-modal__content {
+    padding: 4px;
+    border-radius: 2rem;
+    background-color: $brand-blue;
+
+    > * {
+        background-color: white;
+
+        &:last-child {
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+        }
+    }
 }
 
 .pseudo-modal__header {
     text-align: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 .pseudo-modal__title--centered {

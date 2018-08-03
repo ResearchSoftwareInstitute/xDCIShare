@@ -1,18 +1,21 @@
 {% extends "myhpom/base.html" %}
 
+{% load staticfiles %}
+
 {% block title %}Create Your Account | My Health Peace Of Mind{% endblock title %}
 
 {% block main_content %}
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
+            <div class="pseudo-modal__pre-header">
+                <img class="pseudo-modal__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-color-rev@3x.png' %}" alt="">
+            </div>
+
             <div class="modal-header modal-header--main pseudo-modal__header">
                 <h1 class="modal-title pseudo-modal__title--centered">
                     Create Your Account
                 </h1>
-                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
             </div>
 
             <div class="modal-header modal-header--subtitle pseudo-modal__header">
@@ -72,7 +75,7 @@
                                         {% if form.errors.state %}{{ form.errors.state }}{% endif %}
                                     </div>
                                 </div>
-                                <div class="col-md-6 form-group">  
+                                <div class="col-md-6 form-group">
                                     <label class="{% if form.errors.password %}form-group__label--invalid{% endif %}" for="id_password">{{form.fields.password.label|upper}}</label>
                                     <input type="password" class="form-control{% if form.errors.password %} is-invalid{% endif %}" name="password" id="id_password" value="{% if form.data.password %}{{form.data.password}}{% endif %}" />
                                     <div class="invalid-feedback">
@@ -104,7 +107,7 @@
                                             <input type="checkbox" class="form-check-input{% if form.errors.accept_tos %} is-invalid{% endif %}" id="id_accept_tos" name="accept_tos"{% if form.data.accept_tos %} checked="checked"{% endif %} />
                                             <label for="id_accept_tos" class="form-check-label">
                                                 I agree to the terms and conditions
-                                                of the services provided. 
+                                                of the services provided.
                                             </label>
                                         </div>
                                     </div>
