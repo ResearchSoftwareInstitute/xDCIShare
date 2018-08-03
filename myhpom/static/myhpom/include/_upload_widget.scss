@@ -114,3 +114,13 @@
     text-align: center;
     width: 100%;
 }
+
+.advance-directive-widget__selection-box {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.advance-directive-widget__change-file {
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
