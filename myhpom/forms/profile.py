@@ -31,7 +31,7 @@ class EditUserDetailsForm(forms.ModelForm):
         widgets = {
             'middle_name': forms.TextInput(attrs={'class': 'form-control'}),
             'birthdate': forms.TextInput(attrs={'class': 'form-control'}),
-            'gender': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
             'zip_code': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
         }
