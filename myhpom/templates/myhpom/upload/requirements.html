@@ -14,7 +14,7 @@
 
 {% block widget_body %}
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12">
         <h3 class="upload-requirements__title">Advance Directive Document Requirements for {{ user.userdetails.state.title }}</h3>
         <ol class="upload-requirements__list">
             {% for requirement in requirements %}
@@ -38,7 +38,7 @@
 {% csrf_token %}
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12">
         <h4 class="upload-requirements__item-head">My file is valid starting:
             <a class="upload-requirements__help--right" href="" data-no-ajax="true">What is this?</a>
         </h4>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12">
         <ol class="upload-requirements__list">
             <li class="upload-requirements__item">
                 <input type="checkbox" id="id_approval_checkbox" class="upload-requirements__checkbox"/>
@@ -70,23 +70,21 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12">
         <label class="upload-requirements__label" for="{{ form.document.id_for_label }}">Please upload a single PDF smaller than {{ MAX_AD_SIZE|filesizeformat }}</label>
         <input id="id_document" name="document" type="file" class="form-control-file" accept="application/pdf">
         <div id="id_document_errors" class="upload-requirements__item-errors">
             {{ form.errors.document }}
         </div>
         <button id="id_button_submit" class="advance-directive-widget__button--primary" type="submit">Submit</button>
+
+        <div class="mt-2 upload-requirements__cancel-link-container">
+            <a class="upload-requirements__cancel-link" href="{% url 'myhpom:upload_index' %}">CANCEL</a>
+        </div>
     </div>
 </div>
 
 </form>
-
-<div class="row">
-    <div class="col-sm-12">
-        <a class="mt-2 upload-requirements__cancel-link" href="{% url 'myhpom:upload_index' %}">CANCEL</a>
-    </div>
-</div>
 
 <script>
 jQuery(function ($) {
