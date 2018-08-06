@@ -68,7 +68,7 @@
 }
 
 .footer__logo {
-    max-width: 100%;
+    width: 100%;
 
     @include media-breakpoint-down(sm) {
         display: none;

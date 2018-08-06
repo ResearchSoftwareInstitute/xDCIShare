@@ -17,17 +17,9 @@
     </di>
 </dl>
 
-<div class="row">
-    <div class="col">
-        <a class="advance-directive-widget__button--primary" href="{{ request.user.advancedirective.document.url }}" target="_blank" rel="noopener noreferrer">Download</a>
-    </div>
-</div>
+<a class="advance-directive-widget__button--primary" href="{{ request.user.advancedirective.document.url }}" target="_blank" rel="noopener noreferrer">Download</a>
 
-<div class="row">
-    <div class="col">
-        <a class="advance-directive-widget__delete-link" href="#delete-modal" data-no-ajax="true" data-toggle="modal" data-target="#delete-modal">Delete document</a>
-    </div>
-</div>
+<a class="mt-2 advance-directive-widget__delete-link" href="#delete-modal" data-no-ajax="true" data-toggle="modal" data-target="#delete-modal">Delete document</a>
 
 <div class="modal fade" id="delete-modal" aria-labelledby="delete-modal-title" aria-hidden="true" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

@@ -13,10 +13,12 @@
 {% endblock widget_breadcrumb_items %}
 
 {% block widget_body %}
-<p class="float-right"><a href="{% url "myhpom:upload_requirements" %}">change file</a></p>
-<div>
-    <span class="h6">You have selected:</span>
-    <span class="advance-directive-widget__filename">{{ request.user.advancedirective.filename }}</span>
+<div class="advance-directive-widget__selection-box">
+    <div>
+        <span class="h6">You have selected:</span>
+        <span class="advance-directive-widget__filename">{{ request.user.advancedirective.filename }}</span>
+    </div>
+    <a class="advance-directive-widget__change-file" href="{% url "myhpom:upload_requirements" %}">change file</a>
 </div>
 
 <hr/>
