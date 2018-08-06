@@ -2,19 +2,19 @@
 
 {% block widget_breadcrumb_items %}
 <li class="advance-directive-widget__breadcrumb-item--active">
-    Select Document
+    Select
 </li>
 <li class="advance-directive-widget__breadcrumb-item">
     Submit
 </li>
 <li class="advance-directive-widget__breadcrumb-item">
-    Confirmation
+    Confirm
 </li>
 {% endblock widget_breadcrumb_items %}
 
 {% block widget_body %}
 <div class="row">
-    <div class="col">
+    <div class="col-12">
         <h3 class="upload-requirements__title">Advance Directive Document Requirements for {{ user.userdetails.state.title }}</h3>
         <ol class="upload-requirements__list">
             {% for requirement in requirements %}
@@ -38,7 +38,7 @@
 {% csrf_token %}
 
 <div class="row">
-    <div class="col">
+    <div class="col-12">
         <h4 class="upload-requirements__item-head">My file is valid starting:
             <a class="upload-requirements__help--right" href="" data-no-ajax="true">What is this?</a>
         </h4>
@@ -54,7 +54,7 @@
 </div>
 
 <div class="row">
-    <div class="col">
+    <div class="col-12">
         <ol class="upload-requirements__list">
             <li class="upload-requirements__item">
                 <input type="checkbox" id="id_approval_checkbox" class="upload-requirements__checkbox"/>
@@ -70,23 +70,21 @@
 </div>
 
 <div class="row">
-    <div class="col">
+    <div class="col-12">
         <label class="upload-requirements__label" for="{{ form.document.id_for_label }}">Please upload a single PDF smaller than {{ MAX_AD_SIZE|filesizeformat }}</label>
         <input id="id_document" name="document" type="file" class="form-control-file" accept="application/pdf">
         <div id="id_document_errors" class="upload-requirements__item-errors">
             {{ form.errors.document }}
         </div>
         <button id="id_button_submit" class="advance-directive-widget__button--primary" type="submit">Submit</button>
+
+        <div class="mt-2 upload-requirements__cancel-link-container">
+            <a class="upload-requirements__cancel-link" href="{% url 'myhpom:upload_index' %}">CANCEL</a>
+        </div>
     </div>
 </div>
 
 </form>
-
-<div class="row">
-    <div class="col">
-        <a href="{% url 'myhpom:upload_index' %}">CANCEL</a>
-    </div>
-</div>
 
 <script>
 jQuery(function ($) {
@@ -94,17 +92,17 @@ jQuery(function ($) {
     var $submitButton = $('#id_button_submit');
     var $directiveDateInput = $('#id_valid_date');
     var $inputSelectFile = $("#id_document");
-    var NOW = new Date();
+    var NOW = moment();
 
     // Currently the help links on this page aren't intended to do anything (until behavior is defined):
     $(".upload-requirements__help--right").click(function (event) { event.preventDefault(); });
     $(".upload-requirements-link__item a").click(function (event) { event.preventDefault(); });
 
     function submitButtonEnableDisable () {
-        var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
+        var directiveDate = moment($directiveDateInput.val());
         if ($('.upload-requirements__checkbox:checked').length === $requirements.length
             && $directiveDateInput.combodate('getValue').trim() !== ''
-            && $directiveDate <= NOW
+            && directiveDate.isSameOrBefore(NOW)
             && $inputSelectFile.val().trim() !== ''
             && $inputSelectFile[0].files[0].size < {{ MAX_AD_SIZE }}
         ) {
@@ -132,8 +130,8 @@ jQuery(function ($) {
                 $("#id_valid_date_errors").html("Please enter the valid date of your document.");
             }
         } else {
-            var $directiveDate = new Date($directiveDateInput.val() + " 00:00:00");
-            if ($directiveDate > NOW) {
+            var directiveDate = moment($directiveDateInput.val());
+            if (directiveDate.isAfter(NOW)) {
                 $("#id_valid_date_div select").addClass("upload-requirement__select--invalid");
                 $("#id_valid_date_errors").html("Please enter a valid date on or before today.");
             } else {

@@ -6,53 +6,68 @@
 <script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
 {% endblock %}
 
+{% block main_class %} dashboard__main{% endblock main_class %}
+
 {% block main_content %}
 <div class="row">
-    <div class="col-sm-12">
+    <div class="col-md-6 col-lg-8 dashboard-main">
         <h1 class="h6 dashboard__title">
             My dashboard
         </h1>
 
+        {% if messages %}
+        <div class="row">
+            <div class="col-12">
+                {% for message in messages %}
+                    <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
         <section class="dashboard-user-info">
-            <div class="h1 dashboard-user-info__text">
+            <div class="h1 dashboard-user-info__text dashboard-user-info__text--title">
                 {{ request.user.get_full_name }}
             </div>
-            <div class="h6 dashboard-user-info__text">
+            <div class="h6 text-muted dashboard-user-info__text">
                 {{ request.user.email }}
             </div>
         </section>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6 col-lg-7 dashboard-main">
+
         <hr/>
 
-        <section class="dashboard__section dashboard-profile-information">
+        <section class="mb-5 dashboard__section dashboard-profile-information">
             <div class="h6 float-right">
-                <a href="/" class="small">Edit My Profile</a>
+                <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
             </div>
 
             <h2 class="h6 dashboard__section-title">
                 Profile information
             </h2>
 
-            <p class="small">
-                State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
-            </p>
+            <div class="dashboard__section-content">
+                <p>
+                    State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
+                </p>
 
-            <div class="bg-light dashboard-profile-information__organ-donor-status-box">
-                <div class="big-asterisk">
-                    *
-                </div>
-                <div class="div">
-                    <div class="dashboard-profile-information__organ-donor-status-info">
-                        <span class="h5">I am not an organ donor.</span>
-                        <a class="small" href="/">Edit status</a>
+                <div class="dashboard-profile-information__organ-donor-status-box">
+                    <div>
+                        <img class="dashboard-profile-information__organ-icon" src="{% static 'myhpom/img/donor/icon-donor@3x.png' %}" alt="">
                     </div>
                     <div>
-                        <a href="/" class="small">
-                            Learn how you can be a donor.
-                        </a>
+                        <div class="dashboard-profile-information__organ-donor-status-info">
+                            <span class="h5 dashboard-profile-information__status">I am not an organ donor.</span>
+                        </div>
+                        <div>
+                            <a href="/" class="dashboard-profile-information__organ-donor-link">
+                                Learn how you can be a donor.
+                            </a>
+                        </div>
+                    </div>
+                    <div class="h6 dashboard-profile-information__organ-donor-edit-link">
+                        <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
                     </div>
                 </div>
             </div>
@@ -60,34 +75,54 @@
 
         <hr/>
 
-        <section class="dashboard__section dashboard-health-network">
+        <section class="mb-5 dashboard__section dashboard-health-network">
             <div class="h6 float-right">
-                <a href="/" class="small">Update My Health Network</a>
+                <a href="/" class="small"><span class="oi oi-pencil"></span> Edit</a>
             </div>
 
             <h2 class="h6 dashboard__section-title">
                 Health network
             </h2>
 
-            <div class="bg-light dashboard-health-network__info-box">
-                <div class="h3">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
-                <div class="small">
-                    Last Updated: January 1, 1970
+            <div class="dashboard__section-content">
+                <div class="dashboard-health-network__info-box">
+                    <div class="h3 dashboard-health-network__network-name">{% firstof request.user.userdetails.health_network.name request.user.userdetails.custom_provider '(Unknown Network)' %}</div>
+                    <div>
+                        Last Updated: {% firstof request.user.userdetails.health_network_updated|date:"F j, Y" request.user.date_joined|date:"F j, Y" %}
+                    </div>
                 </div>
             </div>
         </section>
+
+        <hr/>
+
+        <sidebar class="row dashboard-faq">
+            <div class="col-12">
+                <h2 class="h6 dashboard-faq__title">
+                    Frequently asked questions
+                </h2>
+            </div>
+            <div class="col-md-6 small">
+                <strong class="h6 dashboard-faq__heading">{% lorem 5 w %}?</strong>
+                <p>
+                    {% lorem 24 w %}
+                </p>
+            </div>
+            <div class="col-md-6 small">
+                <strong class="h6 dashboard-faq__heading">{% lorem 5 w %}?</strong>
+                <p>
+                    {% lorem 24 w %}
+                </p>
+            </div>
+        </sidebar>
     </div>
-    <div class="col-md-6 col-lg-5">
-        <section class="bg-light dashboard-sidebar">
+    <div class="col-md-6 col-lg-4 vertical-flex">
+        <section class="dashboard-sidebar vertical-flex">
             <h2 class="h6 dashboard__section-title dashboard-sidebar__title">
-                My advance directive
+                My document
             </h2>
 
-            <p class="small">
-                {% lorem 6 w %}
-            </p>
-
-            <div class="advance-directive-widget small" id="advance-directive-widget">
+            <div class="advance-directive-widget vertical-flex" id="advance-directive-widget">
                 {% comment %}
                 The following include is for demonstration purposes only.
                 This element will be selected via `$('#advance-directive-widget')`
@@ -99,34 +134,6 @@
         </section>
     </div>
 </div>
-
-<hr/>
-
-<sidebar class="row dashboard-faq">
-    <div class="col-sm-12">
-        <h2 class="h6 dashboard-faq__title">
-            Common questions
-        </h2>
-    </div>
-    <div class="col-md-4 small">
-        <strong>{% lorem 5 w %}?</strong>
-        <p>
-            {% lorem 24 w %}
-        </p>
-    </div>
-    <div class="col-md-4 small">
-        <strong>{% lorem 5 w %}?</strong>
-        <p>
-            {% lorem 24 w %}
-        </p>
-    </div>
-    <div class="col-md-4 small">
-        <strong>{% lorem 5 w %}?</strong>
-        <p>
-            {% lorem 24 w %}
-        </p>
-    </div>
-</sidebar>
 
 <div id="advance-directive-widget-ajax-failure" class="hidden advance-directive-widget__body" hidden>
     <h3 class="h6">
@@ -154,7 +161,7 @@ jQuery(function ($) {
             if (xhr.status === 401) {
                 return window.location.replace("{% url "login" %}");
             }
-            
+
             // Otherwise this is a 5xx or something else we don't know how to handle:
             $(ADVANCED_DIRECTIVE_WIDGET_ID).html(AJAX_FAILURE_CONTENT);
         });

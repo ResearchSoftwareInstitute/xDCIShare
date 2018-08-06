@@ -1,7 +1,7 @@
 {% extends 'myhpom/includes/upload_base.html' %}
 
 {% block widget_body %}
-<h3 class="h6">
+<h3 class="h5">
     Requirements for Advance Directive:
 </h3>
 
@@ -15,16 +15,18 @@
     {% lorem 6 w %}
 </p>
 
-<p>
-    <a class="advance-directive-widget__button--primary" href="{% url "myhpom:upload_requirements" %}">Upload Your File</a>
-</p>
+<div class="advance-directive-widget__buttons-container vertical-flex">
+    <div>
+        <a class="advance-directive-widget__button--primary" href="{% url "myhpom:upload_requirements" %}">Upload Your File</a>
+    </div>
 
-{% if request.user.userdetails.state.advance_directive_template %}
-<p>
-    <a class="advance-directive-widget__button--secondary" href="{{ request.user.userdetails.state.advance_directive_template.url }}" target="_blank">
-        Download a Template
-    </a>
-</p>
-{% endif %}
+    {% if request.user.userdetails.state.advance_directive_template %}
+    <div>
+        <a class="advance-directive-widget__button--secondary" href="{{ request.user.userdetails.state.advance_directive_template.url }}" target="_blank">
+            Download a Template
+        </a>
+    </div>
+    {% endif %}
+</div>
 
 {% endblock widget_body %}

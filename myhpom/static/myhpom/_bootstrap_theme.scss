@@ -1,0 +1,30 @@
+// Colors
+$primary: $brand-blue;
+$secondary: $brand-orange;
+
+$success: $brand-blue;
+
+// Fonts
+$font-family-sans-serif: "Glenn Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+
+// Type
+$body-color: $text-gray;
+$headings-font-weight: 600;
+$headings-color: $brand-blue;
+$text-muted: $text-gray;
+$hr-border-width: 2px;
+$hr-border-color: $brand-blue;
+
+// Buttons
+$btn-border-radius: 0;
+$btn-border-radius-lg: $btn-border-radius;
+$btn-border-radius-sm: $btn-border-radius;
+
+// Navbar
+$navbar-dark-toggler-border-color: $brand-blue-dark;
+$navbar-dark-color: white;
+$navbar-dark-hover-color: white;
+$navbar-dark-toggler-icon-bg: none;
+
+// Whitespace
+$grid-spacing: 15px;

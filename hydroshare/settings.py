@@ -268,6 +268,11 @@ PASSWORD_RESET_TIMEOUT_DAYS = 1
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        }
+    },
     'formatters': {
         'verbose': {
             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
@@ -303,6 +308,12 @@ LOGGING = {
             'maxBytes': 1024*1024*15, # 15MB
             'backupCount': 10,
         },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
+        },
     },
     'loggers': {
         'django': {
@@ -317,7 +328,7 @@ LOGGING = {
         },
         # Catch-all logger for HydroShare apps
         '': {
-            'handlers': ['hydrosharelog'],
+            'handlers': ['hydrosharelog', 'mail_admins'],
             'propagate': False,
             'level': 'DEBUG'
         },
@@ -325,7 +336,9 @@ LOGGING = {
 }
 
 # inform django that a reverse proxy sever (nginx) is handling ssl/https for it
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# TODO replace with the standard header values once RENCI resolves the issue:
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_PROXY_SSL_HEADER = ('SERVER_NAME', 'myhpom.renci.org')
 
 X_FRAME_OPTIONS = "deny"
 
