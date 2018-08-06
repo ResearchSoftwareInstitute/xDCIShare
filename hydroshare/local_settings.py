@@ -5,6 +5,7 @@
 
 import redis
 import os
+import sys
 from kombu import Queue, Exchange
 from kombu.common import Broadcast
 
@@ -189,3 +190,7 @@ TIME_ZONE = "America/New_York"
 RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY=os.environ.get('RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY=os.environ.get('RECAPTCHA_SECRET_KEY')
+
+if 'test' in sys.argv:
+    # When running local tests, don't rely on remote irods servers.
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
