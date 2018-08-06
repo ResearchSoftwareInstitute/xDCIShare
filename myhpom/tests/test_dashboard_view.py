@@ -40,3 +40,25 @@ class DashboardTestCase(TestCase):
         self.assertTemplateUsed('myhpom/dashboard.html')
         self.assertTemplateUsed('myhpom/upload/current_ad.html')
         self.assertIsNotNone(response.context['advancedirective'])
+
+    def test_user_is_organ_donor(self):
+        """
+        + A user who is an organ donor should see "I am an organ donor" and no link
+        + A user who is not an organ donor should see "I am not an organ donor" and a link
+        """
+        user = UserFactory()
+        user.set_password('password')
+        user.save()
+        self.assertTrue(self.client.login(username=user.username, password='password'))
+
+        user.userdetails.is_organ_donor = False
+        user.userdetails.save()
+        response = self.client.get(self.url)
+        self.assertIn('I am not an organ donor', response.content)
+        self.assertIn('Learn how you can be a donor.', response.content)
+
+        user.userdetails.is_organ_donor = True
+        user.userdetails.save()
+        response = self.client.get(self.url)
+        self.assertIn('I am an organ donor', response.content)
+        self.assertNotIn('Learn how you can be a donor.', response.content)
