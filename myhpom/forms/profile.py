@@ -10,14 +10,23 @@ class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email']
-        widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
-        }
 
+    first_name = forms.CharField(
+        label='First Name',
+        max_length=30,
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        validators=[validators.name_validator],
+        error_messages={'required': 'Please enter your first name.'},
+    )
+    last_name = forms.CharField(
+        label='Last Name',
+        max_length=30,
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
+        validators=[validators.name_validator],
+        error_messages={'required': 'Please enter your last name.'},
+    )
     email = forms.EmailField(
         label='Email Address',
-        validators=[validators.email_validator],
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
