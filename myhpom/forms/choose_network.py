@@ -43,6 +43,7 @@ class ChooseNetworkForm(forms.ModelForm):
 
         saved = unsaved.save()
         self.instance.health_network_updated = timezone.now()
+        self.instance.save()
         return saved
 
     class Meta:
