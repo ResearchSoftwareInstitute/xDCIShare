@@ -29,11 +29,8 @@ def choose_network(request, is_update=False):
                 return redirect("myhpom:next_steps")
 
     # request.method == 'GET'
-    if not user_details.state.healthnetwork_set.exists():
-        if is_update:
-            pass    # use the next_steps_no_ad form
-        else:
-            return redirect(reverse("myhpom:next_steps"))
+    if not is_update and not user_details.state.healthnetwork_set.exists():
+        return redirect(reverse("myhpom:next_steps"))
 
     state_networks = HealthNetwork.objects.filter(state=state)
     health_networks = {
@@ -52,5 +49,6 @@ def choose_network(request, is_update=False):
         "PRIORITY": PRIORITY,
         "form": form,
         "is_update": is_update,
+        "supported_state": state.healthnetwork_set.exists(),
     }
     return render(request, 'myhpom/accounts/choose_network.html', context=context)

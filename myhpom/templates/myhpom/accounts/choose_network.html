@@ -1,5 +1,7 @@
 {% extends "myhpom/base.html" %}
 
+{% block body_on_load %}onLoad="document.getElementById('id_custom_provider').select();"{% endblock %}
+
 {% block main_content %}
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
@@ -37,10 +39,18 @@
                 <div class="row">
                     <div class="col-12">
                         <h4>
-                            Please select a healthcare network for {{ state.title }}
-                            <small>(Change Profile)</small>
+                            Please
+                            {% if supported_state %}
+                            select
+                            {% else %}
+                            write in
+                            {% endif %}
+                            a healthcare network for {{ state.title }}
+                            <small>(<a href="{% url 'myhpom:edit_profile' %}">Change Profile</a>)</small>
                         </h4>
+                        {% if supported_state %}
                         <small>How do I find my healthcare network?</small>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -80,6 +90,7 @@
                 {% endfor %}
 
                 <div class="row mt-4">
+                    {% if supported_state %}
                     <div class="col-md-6 col-lg-8">
                         <div class="form-group">
                             <label for="id_health_network_full">Complete list of healthcare networks:</label>
@@ -100,13 +111,19 @@
                             </select>
                         </div>
                     </div>
+                    {% endif %}
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group">
                             <form id="id_health_network_form" method="post" action="{% if is_update %}{% url 'myhpom:update_network' %}{% else %}{% url 'myhpom:choose_network' %}{% endif %}">
                                 {% csrf_token %}
                                 <!-- store the selected health_network id in the hidden input -->
                                 <input type="hidden" name="health_network" id="id_health_network" />
-                                <label for="id_custom_provider">Not listed? Write network below:</label>
+                                <label for="id_custom_provider">
+                                    {% if supported_state %}
+                                    Not listed?
+                                    {% endif %}
+                                    Write network below:
+                                </label>
                                 <input class="form-control" type="text" name="custom_provider" id="id_custom_provider" value="{% firstof request.user.userdetails.custom_provider '' %}" />
                             </form>
                         </div>
