@@ -47,6 +47,6 @@ def irods_download(request, path):
     # Get the file from irods, and return via stdout
     proc = GLOBAL_SESSION.run_safe('iget', None, path, '-')
     response = FileResponse(proc.stdout, content_type=mtype)
-    response['Content-Disposition'] = 'attachment; filename="{name}"'.format(name=file_name)
+    response['Content-Disposition'] = 'inline; filename="{name}"'.format(name=file_name)
     response['Content-Length'] = int(path_info[3])
     return response
