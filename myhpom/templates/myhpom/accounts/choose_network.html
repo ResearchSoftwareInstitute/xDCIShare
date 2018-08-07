@@ -4,6 +4,7 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
+            {% if not is_update %}
             <div class="modal-header modal-header--main pseudo-modal__header">
                 <h1 class="modal-title pseudo-modal__title--centered">
                     Thank you for registering
@@ -12,8 +13,10 @@
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
+            {% endif %}
 
             <div class="modal-body">
+                {% if not is_update %}
                 <div class="row">
                     <div class="col-12">
                         <p class="pseudo-modal__header-caption-text">
@@ -30,6 +33,7 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-12">
                         <h4>
@@ -111,7 +115,11 @@
                 <a id="id_submit_health_network_form" class="btn btn-primary" href="">
                     Submit
                 </a>
+                {% if is_update %}
+                <a href="{% url 'myhpom:dashboard' %}">Cancel</a>
+                {% else %}
                 <a href="/accounts/next-steps">Skip for now</a>
+                {% endif %}
             </div>
         </div>
     </div>
