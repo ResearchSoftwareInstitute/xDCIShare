@@ -57,14 +57,20 @@
                         <img class="dashboard-profile-information__organ-icon" src="{% static 'myhpom/img/donor/icon-donor@3x.png' %}" alt="">
                     </div>
                     <div>
+                        {% if request.user.userdetails.is_organ_donor %}
+                        <div class="dashboard-profile-information__organ-donor-status-info">
+                            <span class="h5 dashboard-profile-information__status">I am an organ donor.</span>
+                        </div>
+                        {% else %}
                         <div class="dashboard-profile-information__organ-donor-status-info">
                             <span class="h5 dashboard-profile-information__status">I am not an organ donor.</span>
                         </div>
                         <div>
-                            <a href="/" class="dashboard-profile-information__organ-donor-link">
+                            <a href="http://donatelifenc.org/Register" alt="Donate Life" class="dashboard-profile-information__organ-donor-link">
                                 Learn how you can be a donor.
                             </a>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="h6 dashboard-profile-information__organ-donor-edit-link">
                         <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
