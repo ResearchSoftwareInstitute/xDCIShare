@@ -11,7 +11,12 @@ class MyhpomStorage(IrodsStorage):
     """
 
     def url(self, name):
+        # Rather than relying on views in the irods package (which require yet
+        # other hydroshare specific applications), provide one for myhpom:
         return reverse('myhpom:irods_download', kwargs={'path': name})
 
     def get_available_name(self, name):
-        return super(Storage, self).get_available_name(name)
+        # Use the default method of creating the name used to save 'name' as.
+        # The IrodsStorage implementation will prevent files with the same
+        # 'name' from being stored:
+        return Storage.get_available_name(self, name)
