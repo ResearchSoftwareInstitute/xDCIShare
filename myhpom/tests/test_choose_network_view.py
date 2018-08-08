@@ -33,6 +33,8 @@ class ChooseNetworkTestCase(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/accounts/choose_network.html')
+        self.assertTrue(response.context['supported_state'])
+        self.assertFalse(response.context['is_update'])
 
     def test_GET_unsupported_state(self):
         self.user.userdetails.state = models.State.objects.order_by_ad().last()
