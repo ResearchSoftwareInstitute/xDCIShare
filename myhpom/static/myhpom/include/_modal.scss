@@ -1,3 +1,5 @@
+$container-border-radius: 1.5rem;
+
 html [type="button"].close--link {
     -webkit-appearance: none;
 }
@@ -10,9 +12,13 @@ html [type="button"].close--link {
     padding-bottom: 0;
 }
 
+.modal-header--centered {
+  justify-content: center;
+}
+
 .pseudo-modal__header:first-child {
-    border-top-left-radius: 2rem;
-    border-top-right-radius: 2rem;
+    border-top-left-radius: $container-border-radius;
+    border-top-right-radius: $container-border-radius;
 }
 
 .modal-header--subtitle {
@@ -49,15 +55,15 @@ html [type="button"].close--link {
 
 .pseudo-modal__content {
     padding: 4px;
-    border-radius: 2rem;
+    border-radius: $container-border-radius;
     background-color: $brand-blue;
 
     > * {
         background-color: white;
 
         &:last-child {
-            border-bottom-left-radius: 2rem;
-            border-bottom-right-radius: 2rem;
+            border-bottom-left-radius: $container-border-radius;
+            border-bottom-right-radius: $container-border-radius;
         }
     }
 }
@@ -74,6 +80,7 @@ html [type="button"].close--link {
 
 .pseudo-modal__title--centered {
     flex-grow: 1;
+    max-width: 40rem;
 }
 
 .pseudo-modal__title--serif {
@@ -124,4 +131,8 @@ html [type="button"].close--link {
     &:disabled, &.disabled {
         color: rgba(255, 255, 255, 0.9);
     }
+}
+
+.skip-link {
+    @extend .form-group-tos__link;
 }
