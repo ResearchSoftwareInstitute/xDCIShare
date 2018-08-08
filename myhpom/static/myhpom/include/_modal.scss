@@ -50,7 +50,11 @@ html [type="button"].close--link {
 }
 
 .modal-body {
-    padding: 1rem 2rem 2rem 2rem;
+    padding: 1rem 2rem;
+}
+
+.modal-footer {
+    padding: 1rem 2rem;
 }
 
 .pseudo-modal__content {
@@ -135,4 +139,5 @@ html [type="button"].close--link {
 
 .skip-link {
     @extend .form-group-tos__link;
+    line-height: 1;
 }
