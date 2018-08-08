@@ -1,5 +1,5 @@
 from django.core.urlresolvers import reverse
-from django.test import Client, TestCase
+from django.test import TestCase
 from myhpom import models
 from myhpom.tests.factories import UserFactory
 
@@ -47,4 +47,3 @@ class UpdateNetworkTestCase(TestCase):
         self.assertRedirects(response, reverse('myhpom:dashboard'), fetch_redirect_response=False)
         userdetails = models.UserDetails.objects.get(id=self.user.userdetails.id)
         self.assertGreater(userdetails.health_network_updated, health_network_updated_initial)
-

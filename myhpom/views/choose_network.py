@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from myhpom.models.health_network import HealthNetwork, PRIORITY
 from myhpom.forms.choose_network import ChooseNetworkForm
 import math
-from datetime import datetime
 
 
 @login_required
