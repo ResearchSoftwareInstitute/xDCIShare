@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from myhpom import views as myhpom_views
 
 urlpatterns = [
@@ -20,4 +20,5 @@ urlpatterns = [
         {'document_root': settings.STATIC_ROOT + '/styleguide'}),
     url(r'^profile/?$', myhpom_views.view_profile, name='view_profile'),
     url(r'^profile/edit/?$', myhpom_views.edit_profile, name='edit_profile'),
+    url(r'^scribbler/', include('scribbler.urls')),
 ]
