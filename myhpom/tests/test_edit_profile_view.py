@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from myhpom.tests.factories import UserFactory
+from copy import deepcopy
 
 
 class EditProfileViewTestCase(TestCase):
@@ -56,10 +57,12 @@ class EditProfileViewTestCase(TestCase):
         response = self.client.post(self.url, data=valid_post_data)
         self.assertRedirects(response, reverse('myhpom:dashboard'), fetch_redirect_response=False)
         # invalid POST redisplays page
-        invalid_post_data = dict(
-            birthdate='today',  # not a date
-            gender='NOT A GENDER',  # not in GENDER_CHOICES
-            **valid_post_data
-        )
-        response = self.client.post(self.url, data=invalid_post_data)
-        self.assertEqual(200, response.status_code)
+        invalid_post_data = [
+            dict(birthdate='today', **valid_post_data),  # invalid birthdate
+            dict(gender='NOT A GENDER', **valid_post_data),  # invalid gender
+        ]
+        for key in valid_post_data:
+            invalid_post_data.append(dict(key='', **{k:v for k,v in deepcopy(valid_post_data).items() if k != key}))
+        for data in invalid_post_data:
+            response = self.client.post(self.url, data=data)
+            self.assertEqual(200, response.status_code)
