@@ -4,6 +4,7 @@ html [type="button"].close--link {
 
 .modal-header--main {
     border-bottom: none;
+    padding-bottom: 0;
 }
 
 .pseudo-modal {
@@ -50,6 +51,19 @@ html [type="button"].close--link {
     border-top-right-radius: 0;
 }
 
+.pseudo-modal__title {
+    color: $brand-blue;
+}
+
 .pseudo-modal__title--centered {
     flex-grow: 1;
+}
+
+.pseudo-modal__title--serif {
+    font-family: 'Glenn Slab', Georgia, "Times New Roman", Times, serif;
+    font-weight: 600;
+}
+
+.pseudo-modal__login-link {
+    @include orange-link;
 }
