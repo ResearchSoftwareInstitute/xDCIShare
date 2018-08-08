@@ -6,8 +6,6 @@
 <script type="text/javascript" src="{% static "myhpom/combodate/src/combodate.js" %}"></script>
 {% endblock %}
 
-{% block body_on_load %} onLoad="document.getElementById('id_first_name').select();"{% endblock %}
-
 {% block profile_action %}<a id="id_save_profile" href="">Save Profile</a>{% endblock %}
 
 {% block profile_start %}
@@ -140,6 +138,8 @@
 </form>
 <script>
 jQuery(function ($) {
+    $('#id_first_name').select();
+
     $birthdateInput = $('#id_birthdate');
     $saveProfileLink = $('#id_save_profile');
     $editProfileForm = $('#id_edit_profile_form');
