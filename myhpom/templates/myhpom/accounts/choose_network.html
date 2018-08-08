@@ -1,7 +1,5 @@
 {% extends "myhpom/base.html" %}
 
-{% block body_on_load %}onLoad="document.getElementById('id_custom_provider').select();"{% endblock %}
-
 {% block main_content %}
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
@@ -164,6 +162,8 @@
         var $customProvider = $('#id_custom_provider');
         var $submitHealthNetworkFormButton = $('#id_submit_health_network_form');
         var $healthNetwork = $('#id_health_network');
+
+        $customProvider.focus();
 
         // startup assignment
         if ($('input[checked="checked"]').val()) {
