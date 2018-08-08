@@ -4,36 +4,22 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
+            <div class="modal-header pseudo-modal__header">
+              <strong>Thank you for registering.</strong>
+              Please check your email to confirm account.
+            </div>
+
             <div class="modal-header modal-header--main pseudo-modal__header">
                 <h1 class="modal-title pseudo-modal__title--centered">
-                    Thank you for registering
+                    Select your Healthcare Network for {{ state.title }}.
                 </h1>
             </div>
 
             <div class="modal-body">
                 <div class="row">
                     <div class="col-12">
-                        <p class="pseudo-modal__header-caption-text">
-                            You will receive an email asking you to confirm your email
-                            address. <small>(What is this?)</small>
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <p class="pseudo-modal__header-caption-text">
-                            To complete your profile, please add your healthcare
-                            network. <small>(Why do you need this information?)</small>
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <h4>
-                            Please select a healthcare network for {{ state.title }}
-                            <small>(Change Profile)</small>
-                        </h4>
                         <small>How do I find my healthcare network?</small>
+                        <small>Why is Medicare / Medicaid not an option?</small>
                     </div>
                 </div>
 
@@ -74,8 +60,8 @@
                 <div class="row mt-4">
                     <div class="col-md-6 col-lg-8">
                         <div class="form-group">
-                            <label for="id_health_network_full">Complete list of healthcare networks:</label>
-                            <select name="health_network" id="id_health_network_full" class="custom-select">
+                            <label class="pseudo-modal__label pseudo-modal__label--center-full" for="id_health_network_full">Additional healthcare networks</label>
+                            <select name="health_network" id="id_health_network_full" class="pseudo-modal__input custom-select">
                                 <option value="null" selected="selected"></option>
                                 {% for priority, networks in health_networks.items %}
                                     <optgroup label="{{PRIORITY.priority}}">
@@ -93,8 +79,8 @@
                                 {% csrf_token %}
                                 <!-- store the selected health_network id in the hidden input -->
                                 <input type="hidden" name="health_network" id="id_health_network" />
-                                <label for="id_custom_provider">Not listed? Write network below:</label>
-                                <input class="form-control" type="text" name="custom_provider" id="id_custom_provider" />
+                                <label class="pseudo-modal__label" for="id_custom_provider">Not listed? Write network below:</label>
+                                <input class="form-control pseudo-modal__input" type="text" name="custom_provider" id="id_custom_provider" />
                             </form>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ html [type="button"].close--link {
     padding-bottom: 0;
 }
 
-.modal-header--main:first-child {
+.pseudo-modal__header:first-child {
     border-top-left-radius: 2rem;
     border-top-right-radius: 2rem;
 }
@@ -43,7 +43,7 @@ html [type="button"].close--link {
     max-width: 20rem;
 }
 
-.modal-body--signup {
+.modal-body {
     padding: 1rem 2rem 2rem 2rem;
 }
 
@@ -85,11 +85,16 @@ html [type="button"].close--link {
     @include orange-link;
 }
 
-.signup-form__label {
+.pseudo-modal__label {
     font-weight: 600;
 }
 
-.signup-form__input {
+.pseudo-modal__label--center-full {
+    text-align: center;
+    width: 100%;
+}
+
+.pseudo-modal__input {
     background-color: $light-gray;
     border-color: darken($light-gray, 50%);
 }
