@@ -331,3 +331,7 @@
         color: darken($brand-orange, 15%);
     }
 }
+
+@mixin serif {
+    font-family: 'Glenn Slab', Georgia, "Times New Roman", Times, serif;
+}

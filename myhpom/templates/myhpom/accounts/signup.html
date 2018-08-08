@@ -22,7 +22,7 @@
                 <h5 class="pseudo-modal__title--centered pseudo-modal__title--serif">Already have an account? <a class="pseudo-modal__login-link" href="{% url 'myhpom:home' %}"> Sign in</a>.</h5>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body modal-body--signup">
                 {% if form.non_field_errors %}
                 <div class="modal-body__div--invalid">
                     {% for error in form.non_field_errors %}{{ error }}{% endfor %}
@@ -32,22 +32,22 @@
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 col-lg-4 form-group">
-                            <label class="{% if form.errors.first_name %}form-group__label--invalid{% endif %}" for="id_first_name">{{form.fields.first_name.label|upper}}</label>
-                            <input type="text" class="form-control{% if form.errors.first_name %} is-invalid{% endif %}" name="first_name" id="id_first_name" value="{% if form.data.first_name %}{{form.data.first_name}}{% endif %}" />
+                            <label class="signup-form__label {% if form.errors.first_name %}form-group__label--invalid{% endif %}" for="id_first_name">{{form.fields.first_name.label}}</label>
+                            <input type="text" class="form-control signup-form__input{% if form.errors.first_name %} is-invalid{% endif %}" name="first_name" id="id_first_name" placeholder="{{form.fields.first_name.label}}" value="{% if form.data.first_name %}{{form.data.first_name}}{% endif %}" />
                             <div class="invalid-feedback">
                                 {% if form.errors.first_name %}{{ form.errors.first_name }}{% endif %}
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4 form-group">
-                            <label class="{% if form.errors.middle_name %}form-group__label--invalid{% endif %}" for="id_middle_name">{{form.fields.middle_name.label|upper}} (Optional)</label>
-                            <input type="text" class="form-control{% if form.errors.middle_name %} is-invalid{% endif %}" name="middle_name" id="id_middle_name" value="{% if form.data.middle_name %}{{form.data.middle_name}}{% endif %}" />
+                            <label class="signup-form__label {% if form.errors.middle_name %}form-group__label--invalid{% endif %}" for="id_middle_name">{{form.fields.middle_name.label}} (Optional)</label>
+                            <input type="text" class="form-control signup-form__input{% if form.errors.middle_name %} is-invalid{% endif %}" name="middle_name" id="id_middle_name" placeholder="{{form.fields.first_name.label}}" value="{% if form.data.middle_name %}{{form.data.middle_name}}{% endif %}" />
                             <div class="invalid-feedback">
                                 {% if form.errors.middle_name %}{{ form.errors.middle_name }}{% endif %}
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4 form-group">
-                            <label class="{% if form.errors.last_name %}form-group__label--invalid{% endif %}" for="id_last_name">{{form.fields.last_name.label|upper}}</label>
-                            <input type="text" class="form-control{% if form.errors.last_name %} is-invalid{% endif %}" name="last_name" id="id_last_name" value="{% if form.data.last_name %}{{form.data.last_name}}{% endif %}" />
+                            <label class="signup-form__label {% if form.errors.last_name %}form-group__label--invalid{% endif %}" for="id_last_name">{{form.fields.last_name.label}}</label>
+                            <input type="text" class="form-control signup-form__input{% if form.errors.last_name %} is-invalid{% endif %}" name="last_name" id="id_last_name" placeholder="{{form.fields.first_name.label}}" value="{% if form.data.last_name %}{{form.data.last_name}}{% endif %}" />
                             <div class="invalid-feedback">
                                 {% if form.errors.last_name %}{{ form.errors.last_name }}{% endif %}
                             </div>
@@ -57,15 +57,15 @@
                         <div class="col-lg-8">
                             <div class="row">
                                 <div class="col-md-6 form-group">
-                                    <label class="{% if form.errors.email %}form-group__label--invalid{% endif %}" for="id_email">{{form.fields.email.label|upper}}</label>
-                                    <input type="email" class="form-control{% if form.errors.email %} is-invalid{% endif %}" name="email" id="id_email" value="{% if form.data.email %}{{form.data.email}}{% endif %}" />
+                                    <label class="signup-form__label {% if form.errors.email %}form-group__label--invalid{% endif %}" for="id_email">{{form.fields.email.label}}</label>
+                                    <input type="email" class="form-control signup-form__input{% if form.errors.email %} is-invalid{% endif %}" name="email" id="id_email" placeholder="you@email.com" value="{% if form.data.email %}{{form.data.email}}{% endif %}" />
                                     <div class="invalid-feedback">
                                         {% if form.errors.email %}{{ form.errors.email }}{% endif %}
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label class="{% if form.errors.state %}form-group__label--invalid{% endif %}" for="id_state">{{form.fields.state.label|upper}}</label>
-                                    <select name="state" id="id_state" class="form-control{% if form.errors.state %} is-invalid{% endif %}">
+                                    <label class="signup-form__label {% if form.errors.state %}form-group__label--invalid{% endif %}" for="id_state">{{form.fields.state.label}}</label>
+                                    <select name="state" id="id_state" class="signup-form__input form-control{% if form.errors.state %} is-invalid{% endif %}">
                                         <option value=""></option>
                                         {% for state in us_states %}
                                         <option value="{{state.name}}"{% if form.data.state == state.name %} selected="selected"{% endif %} >{{state.title}}</option>
@@ -76,16 +76,16 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label class="{% if form.errors.password %}form-group__label--invalid{% endif %}" for="id_password">{{form.fields.password.label|upper}}</label>
-                                    <input type="password" class="form-control{% if form.errors.password %} is-invalid{% endif %}" name="password" id="id_password" value="{% if form.data.password %}{{form.data.password}}{% endif %}" />
+                                    <label class="signup-form__label {% if form.errors.password %}form-group__label--invalid{% endif %}" for="id_password">{{form.fields.password.label}}</label>
+                                    <input type="password" class="form-control signup-form__input{% if form.errors.password %} is-invalid{% endif %}" name="password" id="id_password" placeholder="••••••••" value="{% if form.data.password %}{{form.data.password}}{% endif %}" />
                                     <div class="invalid-feedback">
                                         {% if form.errors.password %}{{ form.errors.password }}{% endif %}
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label class="{% if form.errors.password_confirm %}form-group__label--invalid{% endif %}" for="id_password_confirm">{{form.fields.password_confirm.label|upper}}</label>
-                                    <input type="password" class="form-control{% if form.errors.password_confirm %} is-invalid{% endif %}" name="password_confirm" id="id_password_confirm" value="{% if form.data.password_confirm %}{{form.data.password_confirm}}{% endif %}" />
+                                    <label class="signup-form__label {% if form.errors.password_confirm %}form-group__label--invalid{% endif %}" for="id_password_confirm">{{form.fields.password_confirm.label}}</label>
+                                    <input type="password" class="form-control signup-form__input{% if form.errors.password_confirm %} is-invalid{% endif %}" name="password_confirm" id="id_password_confirm" placeholder="••••••••" value="{% if form.data.password_confirm %}{{form.data.password_confirm}}{% endif %}" />
                                     <div class="invalid-feedback">
                                         {% if form.errors.password_confirm %}{{ form.errors.password_confirm }}{% endif %}
                                     </div>
@@ -96,19 +96,23 @@
                             <div class="row">
                                 <div class="col-12 form-group form-group-tos">
                                     <div class="form-group-tos__content{% if form.errors.accept_tos %}--invalid{% endif %}">
-                                        <h5 class="{% if form.errors.accept_tos %}form-group-tos__h5--invalid{% endif %}">Terms and conditions</h5>
+                                        <h6 class="form-group-tos__h6 {% if form.errors.accept_tos %}form-group-tos__h6--invalid{% endif %}">Terms and conditions</h6>
                                         <p class="form-group-tos__text">{% lorem 32 w %}</p>
-                                        <p>
-                                            <a href="{% url 'myhpom:home' %}">
+                                        <p class="mb-2">
+                                            <a class="form-group-tos__link" href="{% url 'myhpom:home' %}">
                                                 Read complete terms and conditions
                                             </a>
                                         </p>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input{% if form.errors.accept_tos %} is-invalid{% endif %}" id="id_accept_tos" name="accept_tos"{% if form.data.accept_tos %} checked="checked"{% endif %} />
-                                            <label for="id_accept_tos" class="form-check-label">
+                                            <label for="id_accept_tos" class="signup-form__label form-check-label">
                                                 I agree to the terms and conditions
                                                 of the services provided.
                                             </label>
+
+                                            <button type="button" class="mt-2 btn signup-form__submit-button disabled" id="btn-sign-up" onClick="document.signup_form.submit();">
+                                                Sign Up
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="invalid-feedback">
@@ -119,12 +123,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary disabled" id="btn-sign-up" onClick="document.signup_form.submit();">
-                    Sign Up
-                </button>
             </div>
         </div>
     </div>

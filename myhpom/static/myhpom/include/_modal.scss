@@ -2,9 +2,17 @@ html [type="button"].close--link {
     -webkit-appearance: none;
 }
 
-.modal-header--main {
+.modal-header {
     border-bottom: none;
+}
+
+.modal-header--main {
     padding-bottom: 0;
+}
+
+.modal-header--subtitle {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
 }
 
 .pseudo-modal {
@@ -28,6 +36,10 @@ html [type="button"].close--link {
 
 .pseudo-modal__logo {
     max-width: 20rem;
+}
+
+.modal-body--signup {
+    padding: 1rem 2rem 2rem 2rem;
 }
 
 .pseudo-modal__content {
@@ -60,10 +72,46 @@ html [type="button"].close--link {
 }
 
 .pseudo-modal__title--serif {
-    font-family: 'Glenn Slab', Georgia, "Times New Roman", Times, serif;
+    @include serif;
     font-weight: 600;
 }
 
 .pseudo-modal__login-link {
     @include orange-link;
+}
+
+.signup-form__label {
+    font-weight: 600;
+}
+
+.signup-form__input {
+    background-color: $light-gray;
+    border-color: darken($light-gray, 50%);
+}
+
+.form-group-tos__h6 {
+    text-transform: uppercase;
+    color: black;
+}
+
+.form-group-tos__text {
+    @include serif;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group-tos__link {
+    @include orange-link;
+    text-transform: uppercase;
+}
+
+.signup-form__submit-button {
+    @extend .btn-secondary;
+    padding: 1em 2em;
+    font-size: 125%;
+    width: 100%;
+
+    &:disabled, &.disabled {
+        color: rgba(255, 255, 255, 0.9);
+    }
 }
