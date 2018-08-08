@@ -10,6 +10,11 @@ html [type="button"].close--link {
     padding-bottom: 0;
 }
 
+.modal-header--main:first-child {
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 2rem;
+}
+
 .modal-header--subtitle {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
