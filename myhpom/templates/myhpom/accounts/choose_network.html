@@ -4,6 +4,7 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
+            {% if not is_update %}
             <div class="modal-header modal-header--main pseudo-modal__header">
                 <h1 class="modal-title pseudo-modal__title--centered">
                     Thank you for registering
@@ -12,8 +13,10 @@
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
+            {% endif %}
 
             <div class="modal-body">
+                {% if not is_update %}
                 <div class="row">
                     <div class="col-12">
                         <p class="pseudo-modal__header-caption-text">
@@ -30,13 +33,22 @@
                         </p>
                     </div>
                 </div>
+                {% endif %}
                 <div class="row">
                     <div class="col-12">
                         <h4>
-                            Please select a healthcare network for {{ state.title }}
-                            <small>(Change Profile)</small>
+                            Please
+                            {% if supported_state %}
+                            select
+                            {% else %}
+                            write in
+                            {% endif %}
+                            a healthcare network for {{ state.title }}
+                            <small>(<a href="{% url 'myhpom:edit_profile' %}">Change Profile</a>)</small>
                         </h4>
+                        {% if supported_state %}
                         <small>How do I find my healthcare network?</small>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -61,6 +73,7 @@
                                 id="id_health_network_{{ health_network.id }}"
                                 name="health_network_radio"
                                 value="{{ health_network.id }}"
+                                {% if request.user.userdetails.health_network.id == health_network.id %}checked="checked"{% endif %}
                             />
                             <label
                                 class="custom-control-label nobutton-radio__label"
@@ -75,29 +88,41 @@
                 {% endfor %}
 
                 <div class="row mt-4">
+                    {% if supported_state %}
                     <div class="col-md-6 col-lg-8">
                         <div class="form-group">
                             <label for="id_health_network_full">Complete list of healthcare networks:</label>
-                            <select name="health_network" id="id_health_network_full" class="custom-select">
+                            <select name="health_network_full" id="id_health_network_full" class="custom-select">
                                 <option value="null" selected="selected"></option>
                                 {% for priority, networks in health_networks.items %}
                                     <optgroup label="{{PRIORITY.priority}}">
                                         {% for health_network in networks %}
-                                        <option id="id_health_network_{{ health_network.id }}" name="health_network_option" value="{{ health_network.id }}">{{ health_network.name }}</option>
+                                        <option
+                                            id="id_health_network_{{ health_network.id }}"
+                                            name="health_network_option"
+                                            value="{{ health_network.id }}"
+                                            {% if request.user.userdetails.health_network.id == health_network.id %}selected="selected"{% endif %}
+                                        >{{ health_network.name }}</option>
                                         {% endfor %}
                                     </optgroup>
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
+                    {% endif %}
                     <div class="col-md-6 col-lg-4">
                         <div class="form-group">
-                            <form id="id_health_network_form" method="post" action="{% url 'myhpom:choose_network' %}">
+                            <form id="id_health_network_form" method="post" action="{% if is_update %}{% url 'myhpom:update_network' %}{% else %}{% url 'myhpom:choose_network' %}{% endif %}">
                                 {% csrf_token %}
                                 <!-- store the selected health_network id in the hidden input -->
                                 <input type="hidden" name="health_network" id="id_health_network" />
-                                <label for="id_custom_provider">Not listed? Write network below:</label>
-                                <input class="form-control" type="text" name="custom_provider" id="id_custom_provider" />
+                                <label for="id_custom_provider">
+                                    {% if supported_state %}
+                                    Not listed?
+                                    {% endif %}
+                                    Write network below:
+                                </label>
+                                <input class="form-control" type="text" name="custom_provider" id="id_custom_provider" value="{% firstof request.user.userdetails.custom_provider '' %}" />
                             </form>
                         </div>
                     </div>
@@ -111,7 +136,11 @@
                 <a id="id_submit_health_network_form" class="btn btn-primary" href="">
                     Submit
                 </a>
+                {% if is_update %}
+                <a href="{% url 'myhpom:dashboard' %}">Cancel</a>
+                {% else %}
                 <a href="/accounts/next-steps">Skip for now</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -134,6 +163,18 @@
         var $submitHealthNetworkFormButton = $('#id_submit_health_network_form');
         var $healthNetwork = $('#id_health_network');
 
+        $customProvider.focus();
+
+        // startup assignment
+        if ($('input[checked="checked"]').val()) {
+            $healthNetwork.val($('input[checked="checked"]').val());
+        } else if ($fullSelect.val() && $fullSelect.val() != 'null') {
+            $healthNetwork.val($fullSelect.val());
+        } else {
+            $healthNetwork.val($customProvider.val());
+        }
+
+        // event-based assignment
         $radios.on('change', function (e) {
             $healthNetwork.val($(e.target).val());
             if ($(e.target).prop('checked')) {

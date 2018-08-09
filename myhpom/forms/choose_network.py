@@ -1,18 +1,9 @@
 from django import forms
+from django.utils import timezone
 from myhpom.models import (
     HealthNetwork,
     UserDetails,
 )
-
-
-class ChooseNetworkNoADTemplateForm(forms.ModelForm):
-    custom_provider = forms.CharField(max_length=1024)
-
-    class Meta:
-        model = UserDetails
-        fields = [
-            'custom_provider',
-        ]
 
 
 class ChooseNetworkForm(forms.ModelForm):
@@ -50,7 +41,10 @@ class ChooseNetworkForm(forms.ModelForm):
         if not self.cleaned_data['custom_provider']:
             unsaved.cleaned_data = None
 
-        return unsaved.save()
+        saved = unsaved.save()
+        self.instance.health_network_updated = timezone.now()
+        self.instance.save()
+        return saved
 
     class Meta:
         model = UserDetails
