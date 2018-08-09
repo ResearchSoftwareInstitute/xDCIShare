@@ -24,7 +24,7 @@ class ScribblerTestCase(TestCase):
             for s in [s.__dict__ for s in Scribble.objects.all()]
         ]
         migration_scribbles_data = [
-            {'slug': 'signup-tos-short', 'url': reverse('myhpom:signup')},
+            {'slug': 'signup-tos-short', 'url': 'shared'},
             {'slug': 'next-steps-header', 'url': 'shared'},
             {'slug': 'next-steps-download', 'url': 'shared'},
             {'slug': 'next-steps-upload', 'url': 'shared'},

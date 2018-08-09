@@ -7,7 +7,7 @@ from scribbler.models import Scribble
 
 
 SCRIBBLES = [
-    {'slug': 'signup-tos-short', 'url': reverse('myhpom:signup'), 'content': '{% lorem 32 w %}'},
+    {'slug': 'signup-tos-short', 'url': 'shared', 'content': '{% lorem 32 w %}'},
     {'slug': 'next-steps-header', 'url': 'shared', 'content': '{% lorem 24 w %}'},
     {'slug': 'next-steps-download', 'url': 'shared', 'content': '<p>\n{% lorem 36 w %}\n</p>'},
     {'slug': 'next-steps-upload', 'url': 'shared', 'content': '<p>\n{% lorem 36 w %}\n</p>'},
