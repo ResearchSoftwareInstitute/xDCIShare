@@ -29,5 +29,5 @@ def unload_scribbles_data(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-    dependencies = [('myhpom', '0015_userdetails_updated')]
+    dependencies = [('myhpom', '0015_userdetails_updated'), ('scribbler', '0001_initial')]
     operations = [migrations.RunPython(load_scribbles_data, reverse_code=unload_scribbles_data)]
