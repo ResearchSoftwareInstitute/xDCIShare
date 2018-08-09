@@ -1,5 +1,6 @@
 {% extends "myhpom/base.html" %}
 {% load sass_tags static %}
+{% load scribbler_tags %}
 
 {% block extra-head %}
 <script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
@@ -109,16 +110,24 @@
                 </h2>
             </div>
             <div class="col-md-6 small">
-                <strong class="h6 dashboard-faq__heading">{% lorem 5 w %}?</strong>
+                <strong class="h6 dashboard-faq__heading">
+                    {% scribble 'dashboard-faq-1-head' %}{% lorem 5 w %}?{% endscribble %}
+                </strong>
+                {% scribble 'dashboard-faq-1' %}
                 <p>
                     {% lorem 24 w %}
                 </p>
+                {% endscribble %}
             </div>
             <div class="col-md-6 small">
-                <strong class="h6 dashboard-faq__heading">{% lorem 5 w %}?</strong>
+                <strong class="h6 dashboard-faq__heading">
+                    {% scribble 'dashboard-faq-2-head' %}{% lorem 5 w %}?{% endscribble %}
+                </strong>
+                {% scribble 'dashboard-faq-2' %}
                 <p>
                     {% lorem 24 w %}
                 </p>
+                {% endscribble %}
             </div>
         </sidebar>
     </div>
