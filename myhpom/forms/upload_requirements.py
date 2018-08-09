@@ -35,7 +35,7 @@ class UploadRequirementsForm(forms.ModelForm):
         if 'document' in data:
             data['original_filename'] = data['document'].name
             name, extension = os.path.splitext(data['document'].name)
-            data['document'].name = "%s-%s%s" % (name, str(uuid.uuid4())[:5], extension)
+            data['document'].name = "%s-%s%s" % (name, str(uuid.uuid4())[:6], extension)
 
         return data
 
