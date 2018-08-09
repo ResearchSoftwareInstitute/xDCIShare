@@ -1,13 +1,14 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.template import Context, Template
+from scribbler.models import Scribble
+from myhpom.tests.factories import UserFactory
 
 
 class ScribblerTestCase(TestCase):
     """
     * The scribbler urls should exist: create, edit, delete, preview, edit-field.
-    * Scribbler admin should be available.
     * Scribbles should exist already for signup and next-steps (not accessible from UI).
-    * Scribbles in the dashboard among others should function as expected.
     """
 
     def test_scribbler_urls(self):
@@ -17,3 +18,16 @@ class ScribblerTestCase(TestCase):
         self.assertIn('preview/', reverse("preview-scribble", args=['1']))
         self.assertIn('delete/', reverse("delete-scribble", args=['1']))
 
+    def test_migration_scribbles(self):
+        scribbles_data = [
+            {k: v for k, v in s.items() if k in ['slug', 'url']}
+            for s in [s.__dict__ for s in Scribble.objects.all()]
+        ]
+        migration_scribbles_data = [
+            {'slug': 'signup-tos-short', 'url': reverse('myhpom:signup')},
+            {'slug': 'next-steps-header', 'url': 'shared'},
+            {'slug': 'next-steps-download', 'url': 'shared'},
+            {'slug': 'next-steps-upload', 'url': 'shared'},
+        ]
+        for data in migration_scribbles_data:
+            self.assertIn(data, scribbles_data)
