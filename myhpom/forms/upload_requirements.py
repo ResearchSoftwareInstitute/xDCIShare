@@ -2,6 +2,9 @@ from django import forms
 from django.conf import settings
 from myhpom.models import AdvanceDirective
 
+import os
+import uuid
+
 
 class UploadRequirementsForm(forms.ModelForm):
     """ Capture the valid_date for the user's AD """
@@ -31,6 +34,8 @@ class UploadRequirementsForm(forms.ModelForm):
         data = self.cleaned_data
         if 'document' in data:
             data['original_filename'] = data['document'].name
+            name, extension = os.path.splitext(data['document'].name)
+            data['document'].name = "%s-%s%s" % (name, str(uuid.uuid4())[:6], extension)
 
         return data
 

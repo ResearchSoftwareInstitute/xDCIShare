@@ -3,7 +3,7 @@
 The scripts herein are a one-way street that update the configuration of MyHPOM to use a locally deployed federated pair 
 of iCAT v.4.1.8 servers in Docker.
 
-Effected files:
+Affected files:
 -	modified:   hsctl
 -	modified:   hydroshare/local_settings.py
 -	modified:   scripts/templates/docker-compose-local-irods.template
@@ -15,6 +15,7 @@ From within the `irods` directory, run the script named **use-local-irods.sh**
 **NOTE:** This script requires that package `jq` be installed on the host from which the script is being run. If it's not present it can be installed by invoking `sudo apt-get install jq` in Ubuntu (or similar) environments. 
 
 ```bash
+$ docker login -u USERNAME -p PASSWORD
 $ cd irods
 $ ./use-local-irods.sh
 ```
@@ -36,7 +37,7 @@ $ cd ../
 $ ./hsctl rebuild --db
 ```
 
-Subsequent runs may require a git checkout of the three effected files since there is no guarantee that the internal Docker IP addresses originally assigned to the containers will reused each time. 
+Subsequent runs may require a git checkout of the three affected files since there is no guarantee that the internal Docker IP addresses originally assigned to the containers will reused each time. 
 
 Example:
 

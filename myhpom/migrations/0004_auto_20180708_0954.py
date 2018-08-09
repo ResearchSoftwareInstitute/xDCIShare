@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='state',
             name='advance_directive_template',
-            field=models.FileField(help_text=b'AD instructions associated with this State', upload_to=b'myhpom', blank=True),
+            field=models.FileField(help_text=b'AD instructions associated with this State', upload_to=b'myhpom/advance_directive_templates', blank=True),
         ),
         migrations.AlterField(
             model_name='state',
