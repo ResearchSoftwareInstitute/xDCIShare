@@ -1,4 +1,5 @@
 $container-border-radius: 1.5rem;
+$container-border-width: 4px;
 
 html [type="button"].close--link {
     -webkit-appearance: none;
@@ -8,22 +9,13 @@ html [type="button"].close--link {
     border-bottom: none;
 }
 
-.modal-header--main {
-    padding-bottom: 0;
-}
-
 .modal-header--centered {
-  justify-content: center;
+    justify-content: center;
 }
 
 .pseudo-modal__header:first-child {
     border-top-left-radius: $container-border-radius;
     border-top-right-radius: $container-border-radius;
-}
-
-.modal-header--subtitle {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
 }
 
 .pseudo-modal {
@@ -58,7 +50,7 @@ html [type="button"].close--link {
 }
 
 .pseudo-modal__content {
-    padding: 4px;
+    padding: $container-border-width;
     border-radius: $container-border-radius;
     background-color: $brand-blue;
 
