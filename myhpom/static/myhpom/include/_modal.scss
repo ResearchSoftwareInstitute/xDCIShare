@@ -141,3 +141,7 @@ html [type="button"].close--link {
     @extend .form-group-tos__link;
     line-height: 1;
 }
+
+.pseudo-modal__header-caption-text {
+    @include serif;
+}

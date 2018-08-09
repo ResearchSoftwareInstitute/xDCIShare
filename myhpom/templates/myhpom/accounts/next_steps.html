@@ -12,41 +12,54 @@
 
             <div class="modal-header modal-header--subtitle pseudo-modal__header">
                 <p class="pseudo-modal__header-caption-text">
-                    {% lorem 24 w %}
+                    <!-- TODO: Scribbler -->
+                    You are joining millions across the country in owning
+                    your own health by planning for care in advance.
+                    Your next steps:
                 </p>
             </div>
 
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-lg-4">
-                        <h4>
-                            Your next steps to own your own health:
-                        </h4>
-                    </div>
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="col-md-6 vertical-fill-box">
-                                <div class="advance-directive-block">
-                                    <h5>
-                                        <a href="{{ ad_template.url }}" target="_blank" rel="noopener noreferrer">
-                                            Download a Template Advance Directive
-                                        </a>
-                                    </h5>
-                                    <p>
-                                        {% lorem 36 w %}
-                                    </p>
+                    <div class="col-md-6 vertical-fill-box">
+                        <div class="advance-directive-block">
+                            <h4 class="advance-directive-block__title">
+                                Do you already have your advance care plan?
+                            </h4>
+                            <p class="next-steps__text">
+                                <!-- TODO: Scribbler -->
+                                <strong class="next-steps__strong">Wonderful! Is it in PDF form?</strong>
+                                Scan and save your document in high resolution
+                                to upload on your Mind My Health dashboard.
+                            </p>
+                            <div class="advance-directive-block-footer">
+                                <div class="advance-directive-block-footer__info-link">
+                                    Learn more in our FAQs
+                                </div>
+                                <div class="advance-directive-block-footer__caption">
+                                    Link will open in new window
                                 </div>
                             </div>
-                            <div class="col-md-6 vertical-fill-box">
-                                <div class="advance-directive-block">
-                                    <h5>
-                                        <a href="{% url 'myhpom:dashboard' %}">
-                                            Upload Your Advance Directive
-                                        </a>
-                                    </h5>
-                                    <p>
-                                        {% lorem 36 w %}
-                                    </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 vertical-fill-box">
+                        <div class="advance-directive-block">
+                            <h4 class="advance-directive-block__title">
+                                Are you just starting to plan your advance care?
+                            </h4>
+                            <p class="next-steps__text">
+                                <!-- TODO: Scribbler -->
+                                <a class="advance-directive-block__template-link" href="{{ ad_template.url }}" target="_blank" rel="noopener noreferrer">
+                                    Download our free template</a>,
+                                document your desired care, and following the
+                                instructions on your Mind My Health Dashboard.
+                            </p>
+                            <div class="advance-directive-block-footer">
+                                <div class="advance-directive-block-footer__info-link">
+                                    Learn more in our FAQs
+                                </div>
+                                <div class="advance-directive-block-footer__caption">
+                                    Link will open in new window
                                 </div>
                             </div>
                         </div>
