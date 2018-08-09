@@ -13,8 +13,8 @@ admin.autodiscover()
 urlpatterns = [
     url("^mmh-admin/", include(admin.site.urls)),
     url(r'^accounts/login/$', auth_views.login, name='login'),
-    url(r'', include('myhpom.urls', namespace='myhpom')),
     url(r'^scribbler/', include('scribbler.urls')),
+    url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
 
 # These should be served by nginx for deployed environments,
