@@ -76,6 +76,24 @@
             ]
         },
         {
+            "name": "forms",
+            "title": "Forms",
+            "components": [
+                {
+                    "group": "forms",
+                    "name": "text",
+                    "title": "Text input",
+                    "width": "half"
+                },
+                {
+                    "group": "forms",
+                    "name": "text_validation",
+                    "title": "Text validation error",
+                    "width": "half"
+                }
+            ]
+        },
+        {
             "name": "uploadWidget",
             "title": "Upload Widget",
             "components": [
