@@ -4,14 +4,14 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
-            <div class="modal-header modal-header--main pseudo-modal__header">
-                <h1 class="modal-title pseudo-modal__title--centered">
+            <div class="modal-header modal-header--main modal-header--next-steps pseudo-modal__header">
+                <h1 class="mx-auto modal-title pseudo-modal__title--centered">
                     Welcome to MindMyHealth
                 </h1>
             </div>
 
-            <div class="modal-header modal-header--subtitle pseudo-modal__header">
-                <p class="pseudo-modal__header-caption-text">
+            <div class="modal-header modal-header--subtitle modal-header--next-steps pseudo-modal__header">
+                <p class="mx-auto mb-0 pseudo-modal__header-caption-text pseudo-modal__header-caption-text--next-steps">
                     <!-- TODO: Scribbler -->
                     You are joining millions across the country in owning
                     your own health by planning for care in advance.
@@ -64,13 +64,12 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-12 col--centered">
+                        <a class="mt-4 mb-2 mx-auto btn btn-secondary btn--big" href="{% url 'myhpom:dashboard' %}">
+                            Go To Dashboard
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{% url 'myhpom:dashboard' %}">
-                    Go To Dashboard
-                </a>
             </div>
         </div>
     </div>

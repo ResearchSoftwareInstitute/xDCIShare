@@ -1,8 +1,17 @@
+.modal-header--next-steps {
+    text-align: center;
+}
+
+.pseudo-modal__header-caption-text--next-steps {
+    max-width: 75%;
+}
+
 .advance-directive-block {
     background-color: $light-gray;
     border: 1px solid $brand-blue;
     border-radius: 0.75rem;
     padding: 2rem 3rem;
+    text-align: center;
 }
 
 .advance-directive-block__title {
