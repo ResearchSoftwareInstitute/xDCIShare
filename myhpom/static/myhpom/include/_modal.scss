@@ -18,6 +18,30 @@ html [type="button"].close--link {
     border-top-right-radius: $container-border-radius;
 }
 
+.pseudo-modal__header {
+    text-align: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.pseudo-modal__title {
+    color: $brand-blue;
+}
+
+.pseudo-modal__title--centered {
+    font-weight: 600;
+}
+
+.pseudo-modal__title--centered {
+    flex-grow: 1;
+    max-width: 40rem;
+}
+
+.pseudo-modal__title--serif {
+    @include serif;
+    font-weight: 600;
+}
+
 .pseudo-modal {
     display: block;
     overflow-y: scroll;
@@ -64,30 +88,6 @@ html [type="button"].close--link {
     }
 }
 
-.pseudo-modal__header {
-    text-align: center;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-
-.pseudo-modal__title {
-    color: $brand-blue;
-}
-
-.pseudo-modal__title--centered {
-    font-weight: 600;
-}
-
-.pseudo-modal__title--centered {
-    flex-grow: 1;
-    max-width: 40rem;
-}
-
-.pseudo-modal__title--serif {
-    @include serif;
-    font-weight: 600;
-}
-
 .pseudo-modal__login-link {
     @include orange-link;
 }
@@ -104,33 +104,6 @@ html [type="button"].close--link {
 .pseudo-modal__input {
     background-color: $light-gray;
     border-color: darken($light-gray, 50%);
-}
-
-.form-group-tos__h6 {
-    text-transform: uppercase;
-    color: black;
-}
-
-.form-group-tos__text {
-    @include serif;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
-.form-group-tos__link {
-    @include orange-link;
-    text-transform: uppercase;
-}
-
-.signup-form__submit-button {
-    @extend .btn-secondary;
-    padding: 1em 2em;
-    font-size: 125%;
-    width: 100%;
-
-    &:disabled, &.disabled {
-        color: rgba(255, 255, 255, 0.9);
-    }
 }
 
 .skip-link {
