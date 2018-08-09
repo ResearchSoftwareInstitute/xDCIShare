@@ -29,3 +29,12 @@ class AdvanceDirective(models.Model):
     @property
     def filename(self):
         return self.original_filename or os.path.basename(self.document.name)
+
+
+def remove_documents_on_delete(sender, instance, using, **kwargs):
+    if not instance.document:
+        return
+    instance.document.storage.delete(instance.document.name)
+
+
+models.signals.post_delete.connect(remove_documents_on_delete, sender=AdvanceDirective)
