@@ -1,13 +1,15 @@
 {% extends "myhpom/base.html" %}
+{% load staticfiles %}
 
 {% block main_content %}
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             <div class="modal-header modal-header--main modal-header--next-steps pseudo-modal__header">
-                <h1 class="mx-auto modal-title pseudo-modal__title--centered">
-                    Welcome to MindMyHealth
+                <h1 class="mx-auto h2 modal-title pseudo-modal__title pseudo-modal__title--centered pseudo-modal__title--light">
+                    Welcome to <span class="d-none">Mind My Health</span>
                 </h1>
+                <img class="next-steps__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-color@3x.png' %}" alt="">
             </div>
 
             <div class="modal-header modal-header--subtitle modal-header--next-steps pseudo-modal__header">
@@ -22,7 +24,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6 vertical-fill-box">
-                        <div class="advance-directive-block">
+                        <div class="mb-3 advance-directive-block">
                             <h4 class="advance-directive-block__title">
                                 Do you already have your advance care plan?
                             </h4>
@@ -43,7 +45,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 vertical-fill-box">
-                        <div class="advance-directive-block">
+                        <div class="mb-3 advance-directive-block">
                             <h4 class="advance-directive-block__title">
                                 Are you just starting to plan your advance care?
                             </h4>
@@ -65,8 +67,8 @@
                         </div>
                     </div>
                     <div class="col-12 col--centered">
-                        <a class="mt-4 mb-2 mx-auto btn btn-secondary btn--big" href="{% url 'myhpom:dashboard' %}">
-                            Go To Dashboard
+                        <a class="mt-2 mb-2 mx-auto btn btn-secondary btn--big" href="{% url 'myhpom:dashboard' %}">
+                            Go to Your Dashboard
                         </a>
                     </div>
                 </div>
