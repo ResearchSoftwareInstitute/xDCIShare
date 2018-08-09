@@ -13,8 +13,7 @@ class ScribblerTestCase(TestCase):
     def test_scribbler_urls(self):
         # none of the following should throw an error
         self.assertIn('create/', reverse("create-scribble"))
-        self.assertIn('edit/', reverse("edit-scribble"))
-        self.assertIn('preview/', reverse("preview-scribble"))
-        self.assertIn('delete/', reverse("delete-scribble"))
-        self.assertIn('edit-field/', reverse("edit-scribble-field"))
+        self.assertIn('edit/', reverse("edit-scribble", args=['1']))
+        self.assertIn('preview/', reverse("preview-scribble", args=['1']))
+        self.assertIn('delete/', reverse("delete-scribble", args=['1']))
 
