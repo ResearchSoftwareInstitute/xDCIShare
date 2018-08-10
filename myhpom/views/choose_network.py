@@ -16,6 +16,7 @@ def choose_network(request, is_update=False):
     """
     user_details = request.user.userdetails
     state = user_details.state
+    supported_state = state.healthnetwork_set.exists()
     form = ChooseNetworkForm(instance=request.user.userdetails)
 
     if request.POST:
@@ -48,6 +49,6 @@ def choose_network(request, is_update=False):
         "PRIORITY": PRIORITY,
         "form": form,
         "is_update": is_update,
-        "supported_state": state.healthnetwork_set.exists(),
+        "supported_state": supported_state,
     }
     return render(request, 'myhpom/accounts/choose_network.html', context=context)

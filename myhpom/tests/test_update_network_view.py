@@ -47,3 +47,29 @@ class UpdateNetworkTestCase(TestCase):
         self.assertRedirects(response, reverse('myhpom:dashboard'), fetch_redirect_response=False)
         userdetails = models.UserDetails.objects.get(id=self.user.userdetails.id)
         self.assertGreater(userdetails.health_network_updated, health_network_updated_initial)
+
+    def test_POST_no_data_supported_state(self):
+        self.user.userdetails.state = models.State.objects.get(name='NC')
+        self.user.userdetails.save()
+        form_data = {"custom_provider": "", "health_network": None}
+        response = self.client.post(self.url, data=form_data)
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/accounts/choose_network.html')
+        self.assertTrue(response.context['is_update'])
+        self.assertTrue(response.context['supported_state'])
+        form = response.context['form']
+        self.assertIn(
+            'Please either choose a network or enter a custom network.', form.non_field_errors()
+        )
+
+    def test_POST_no_data_unsupported_state(self):
+        self.user.userdetails.state = models.State.objects.last()
+        self.user.userdetails.save()
+        form_data = {"custom_provider": ""}
+        response = self.client.post(self.url, data=form_data)
+        self.assertEqual(200, response.status_code)
+        self.assertTemplateUsed('myhpom/accounts/choose_network.html')
+        self.assertTrue(response.context['is_update'])
+        self.assertFalse(response.context['supported_state'])
+        form = response.context['form']
+        self.assertIn('Please enter a custom network.', form.non_field_errors())
