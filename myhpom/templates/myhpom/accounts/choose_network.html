@@ -129,8 +129,6 @@
                 </div>
             </div>
 
-
-
             <div class="modal-footer">
                 <!-- TODO: add real URL -->
                 <a id="id_submit_health_network_form" class="btn btn-primary" href="">
@@ -170,8 +168,6 @@
             $healthNetwork.val($('input[checked="checked"]').val());
         } else if ($fullSelect.val() && $fullSelect.val() != 'null') {
             $healthNetwork.val($fullSelect.val());
-        } else {
-            $healthNetwork.val($customProvider.val());
         }
 
         // event-based assignment
