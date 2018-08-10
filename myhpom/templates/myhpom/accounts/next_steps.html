@@ -1,4 +1,5 @@
 {% extends "myhpom/base.html" %}
+{% load scribbler_tags %}
 
 {% block main_content %}
 <div class="modal show pseudo-modal">
@@ -15,7 +16,7 @@
 
             <div class="modal-header modal-header--subtitle pseudo-modal__header">
                 <p class="pseudo-modal__header-caption-text">
-                    {% lorem 24 w %}
+                    {% scribble 'next-steps-header' 'shared' %}{% lorem 24 w %}{% endscribble %}
                 </p>
             </div>
 
@@ -35,9 +36,11 @@
                                             Download a Template Advance Directive
                                         </a>
                                     </h5>
+                                    {% scribble 'next-steps-download' 'shared' %}
                                     <p>
                                         {% lorem 36 w %}
                                     </p>
+                                    {% endscribble %}
                                 </div>
                             </div>
                             <div class="col-md-6 vertical-fill-box">
@@ -47,9 +50,11 @@
                                             Upload Your Advance Directive
                                         </a>
                                     </h5>
+                                    {% scribble 'next-steps-upload' 'shared' %}
                                     <p>
                                         {% lorem 36 w %}
                                     </p>
+                                    {% endscribble %}
                                 </div>
                             </div>
                         </div>
