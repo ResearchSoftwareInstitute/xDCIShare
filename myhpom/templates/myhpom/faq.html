@@ -1,0 +1,47 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+<div class="row">
+<div class="col">
+    <h2>Frequently Asked Questions (FAQs)</h2>
+    <div class="row">
+        <div class="col">
+            <ul class="nav nav-tabs" id="faqs" role="tablist">
+                {% for section in faqs %}
+                <li class="nav-item"><a class="nav-link {% if forloop.counter == 1 %}active{% endif %}" id="{{ section.name }}-tab" data-toggle="tab" role="tab" href="#{{ section.name }}">{{ section.description }}</a></li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for section in faqs %}
+                <div class="tab-pane fade {% if forloop.counter == 1 %}show active{% endif %}" id="{{ section.name }}" role="tabpanel" aria-labelledby="{{ section.name }}-tab">
+                    <div class="row">
+                        <div class="col">
+                            <h3>{{ section.description }}</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="accordian" id="{{ section.name }}_accordian">
+                                {% for entry in section.entries %}
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ section.name }}_{{ forloop.counter }}">{{ entry.question }}</button></h5>
+                                    </div>
+                                    <div id="{{ section.name }}_{{ forloop.counter }}" class="collapse" data-parent="#{{ section.name }}_accordian">
+                                        <div class="card-body">
+                                            {{ entry.answer }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock main_content %}
