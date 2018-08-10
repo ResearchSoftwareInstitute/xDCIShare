@@ -13,9 +13,7 @@ class ChooseNetworkForm(forms.ModelForm):
         health_network = cleaned_data.get('health_network')
 
         if self.instance and self.instance.state and self.instance.state.healthnetwork_set.exists():
-            if ((not custom_provider) and (not health_network)) or (
-                custom_provider and health_network
-            ):
+            if (not custom_provider and not health_network) or (custom_provider and health_network):
                 raise forms.ValidationError(
                     'Please either choose a network or enter a custom network.'
                 )
@@ -26,10 +24,10 @@ class ChooseNetworkForm(forms.ModelForm):
         return cleaned_data
 
     def clean_health_network(self):
-        data = self.cleaned_data['health_network']
-        if data:
+        health_network_id = self.cleaned_data['health_network']
+        if health_network_id:
             try:
-                return HealthNetwork.objects.get(id=data)
+                return HealthNetwork.objects.get(id=health_network_id)
             except HealthNetwork.DoesNotExist:
                 raise forms.ValidationError('Selected health network does not exist.')
         return None
