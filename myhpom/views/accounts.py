@@ -3,16 +3,17 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 
-from myhpom.forms.choose_network import ChooseNetworkNoADTemplateForm
+from myhpom.forms.choose_network import ChooseNetworkForm
 
 
 @login_required
 def next_steps(request):
     state = request.user.userdetails.state
-    form = ChooseNetworkNoADTemplateForm(instance=request.user.userdetails)
+
+    form = ChooseNetworkForm(instance=request.user.userdetails)
 
     if request.POST:
-        form = ChooseNetworkNoADTemplateForm(request.POST, instance=request.user.userdetails)
+        form = ChooseNetworkForm(request.POST, instance=request.user.userdetails)
         if form.is_valid():
             form.save()
             return redirect("myhpom:dashboard")
