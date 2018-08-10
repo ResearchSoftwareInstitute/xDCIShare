@@ -1,9 +1,20 @@
 from django import forms
 from django.utils import timezone
-from myhpom.models import (
-    HealthNetwork,
-    UserDetails,
-)
+from myhpom.models import HealthNetwork, UserDetails
+
+
+class ChooseNetworkNoADTemplateForm(forms.ModelForm):
+    custom_provider = forms.CharField(max_length=1024)
+
+    class Meta:
+        model = UserDetails
+        fields = ['custom_provider']
+
+    def save(self, *args, **kwargs):
+        saved = super(ChooseNetworkNoADTemplateForm, self).save(*args, **kwargs)
+        self.instance.health_network_updated = timezone.now()
+        self.instance.save()
+        return saved
 
 
 class ChooseNetworkForm(forms.ModelForm):
@@ -16,9 +27,7 @@ class ChooseNetworkForm(forms.ModelForm):
         health_network = cleaned_data.get('health_network')
 
         if ((not custom_provider) and (not health_network)) or (custom_provider and health_network):
-            raise forms.ValidationError(
-                'Please either choose a network or enter a custom network.'
-            )
+            raise forms.ValidationError('Please either choose a network or enter a custom network.')
 
         return cleaned_data
 
@@ -28,9 +37,7 @@ class ChooseNetworkForm(forms.ModelForm):
             try:
                 return HealthNetwork.objects.get(id=data)
             except HealthNetwork.DoesNotExist:
-                raise forms.ValidationError(
-                    'Selected health network does not exist.'
-                )
+                raise forms.ValidationError('Selected health network does not exist.')
         return None
 
     def save(self, *args, **kwargs):
@@ -48,7 +55,4 @@ class ChooseNetworkForm(forms.ModelForm):
 
     class Meta:
         model = UserDetails
-        fields = [
-            'health_network',
-            'custom_provider',
-        ]
+        fields = ['health_network', 'custom_provider']
