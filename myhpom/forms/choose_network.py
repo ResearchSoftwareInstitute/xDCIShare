@@ -12,14 +12,15 @@ class ChooseNetworkForm(forms.ModelForm):
         custom_provider = cleaned_data.get('custom_provider')
         health_network = cleaned_data.get('health_network')
 
+        # if state has health networks, one and only one health_network or custom_provider
         if self.instance and self.instance.state and self.instance.state.healthnetwork_set.exists():
             if (not custom_provider and not health_network) or (custom_provider and health_network):
                 raise forms.ValidationError(
                     'Please either choose a network or enter a custom network.'
                 )
-        else:
-            if not custom_provider:
-                raise forms.ValidationError('Please enter a custom network.')
+        # if state has no health networks, there must be a custom_provider
+        elif not custom_provider:
+            raise forms.ValidationError('Please enter a custom network.')
 
         return cleaned_data
 
