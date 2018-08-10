@@ -1,7 +1,8 @@
 from django.core.urlresolvers import reverse
-from django.test import Client, TestCase
+from django.test import TestCase
 from myhpom import models
 from myhpom.models.user import User
+from myhpom.tests.factories import UserFactory
 
 
 class ChooseNetworkTestCase(TestCase):
@@ -17,15 +18,13 @@ class ChooseNetworkTestCase(TestCase):
     """
 
     def setUp(self):
-        user_data = dict(email="Ab@example.com", password="Abbbbb1@", first_name='A', last_name='b')
-        self.user = User(**user_data)
-        self.user.set_password(user_data['password'])
+        self.user = UserFactory()
+        self.user.set_password('password')
         self.user.save()
-        self.client = Client()
-        self.client.login(username=user_data['email'], password=user_data['password'])
+        self.client.login(username=self.user.username, password='password')
         self.url = reverse('myhpom:choose_network')
-        state = models.State.objects.get(name="NC")
-        userdetails = models.UserDetails.objects.create(user=self.user, state=state)
+        self.user.userdetails.state = models.State.objects.get(name="NC")
+        self.user.userdetails.save()
 
     def test_GET_supported_state(self):
         """GET with supported state views this page
@@ -59,34 +58,26 @@ class ChooseNetworkTestCase(TestCase):
         """
         state = self.user.userdetails.state
         health_network = models.HealthNetwork.objects.filter(state=state, priority=0)[0]
-        form_data = {
-            "custom_provider": "Foo Bar Baz",
-            "health_network": health_network.id
-        }
+        form_data = {"custom_provider": "Foo Bar Baz", "health_network": health_network.id}
         response = self.client.post(self.url, data=form_data)
         form = response.context['form']
         self.assertIsNotNone(form.errors)
         self.assertIsNotNone(form.non_field_errors())
         self.assertIn(
-            'Please either choose a network or enter a custom network.',
-            form.non_field_errors(),
+            'Please either choose a network or enter a custom network.', form.non_field_errors()
         )
 
     def test_POST_neither_provider_type_fails(self):
         """
         POST without either type of health network data will be rejected.
         """
-        form_data = {
-            "custom_provider": '',
-            "health_network": None,
-        }
+        form_data = {"custom_provider": '', "health_network": None}
         response = self.client.post(self.url, data=form_data)
         form = response.context['form']
         self.assertIsNotNone(form.errors)
         self.assertIsNotNone(form.non_field_errors())
         self.assertIn(
-            'Please either choose a network or enter a custom network.',
-            form.non_field_errors(),
+            'Please either choose a network or enter a custom network.', form.non_field_errors()
         )
 
     def test_POST_health_network(self):
