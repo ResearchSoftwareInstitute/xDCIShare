@@ -9,6 +9,6 @@ class LimitedTestSuiteRunner(DiscoverRunner):
             # No appnames specified on the command line, so we run all
             # tests in our INSTALLED_APPS (and in the tree below where
             # we are being run from).
-            test_labels = [app for app in settings.INSTALLED_APPS]
+            test_labels = [app for app in settings.INSTALLED_APPS if app not in ['scribbler']]
         return super(LimitedTestSuiteRunner, self).run_tests(test_labels, extra_tests, **kwargs)
 
