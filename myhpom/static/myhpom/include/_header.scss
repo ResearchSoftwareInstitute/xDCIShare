@@ -183,6 +183,11 @@
     }
 }
 
+.nav-link--light {
+    @extend .nav-link;
+    color: rgba(255,255,255,0.5)!important;
+}
+
 .myhpom-header__menu-small-divider {
     margin-top: ($navbar-padding-y * 2);
     margin-bottom: ($navbar-padding-y * 2);
