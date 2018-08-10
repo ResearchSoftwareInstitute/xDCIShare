@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load scribbler_tags %}
 
 <footer>
     <div class="pt-3 footer-headline-enclosure">
@@ -47,8 +48,10 @@
                             <a class="footer-links-list__link--legal" href="/">Legal Disclaimers</a>
                         </li>
                     </ul>
-
-                    <strong>&copy; MIND MY HEALTH</strong> {% lorem 48 w %}
+                    {% scribble 'footer-text' 'shared' %}
+                    <strong>&copy; MIND MY HEALTH</strong>
+                    {% lorem 48 w %}
+                    {% endscribble %}
                 </div>
             </div>
         </div>
