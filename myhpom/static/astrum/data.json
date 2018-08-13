@@ -98,6 +98,30 @@
                     "width": "half"
                 }
             ]
+        },
+        {
+            "name": "signupModals",
+            "title": "Signup Workflow Modals",
+            "components": [
+                {
+                    "group": "signupModals",
+                    "name": "forms",
+                    "title": "Form fields",
+                    "width": "half"
+                },
+                {
+                    "group": "signupModals",
+                    "name": "networkSelect",
+                    "title": "Network radio select buttons",
+                    "width": "half"
+                },
+                {
+                    "group": "signupModals",
+                    "name": "advanceDirectiveBlock",
+                    "title": "Advance directive info block",
+                    "width": "half"
+                }
+            ]
         }
     ],
     "version": "1.9.5"

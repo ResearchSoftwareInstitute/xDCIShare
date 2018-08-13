@@ -18,7 +18,7 @@ html [type="button"].close--link {
     margin-top: 4rem;
 
     @include media-breakpoint-up(sm) {
-      max-width: 90vw;
+        max-width: 90vw;
     }
 
     @media (min-width: map-get($grid-breakpoints, "lg") + 30px) {
