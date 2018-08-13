@@ -19,6 +19,13 @@
     align-items: center;
 }
 
+.col-sm-down--no-padding {
+    @include media-breakpoint-down(sm) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
 // Typography
 h1, .h1 {
     color: $brand-blue-dark;

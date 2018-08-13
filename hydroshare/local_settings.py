@@ -110,7 +110,8 @@ DATABASES = {
 POSTGIS_VERSION=(2,1,1)
 
 # Local resource iRODS configuration
-USE_IRODS = os.environ.get('USE_IRODS', 'true') == 'true'
+DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage')
+USE_IRODS = os.environ.get('USE_IRODS', 'false') == 'true'
 IRODS_ROOT = os.environ.get('IRODS_ROOT', '/tmp')
 IRODS_ICOMMANDS_PATH = os.environ.get('IRODS_ICOMMANDS_PATH', '/usr/bin')
 IRODS_HOST = os.environ.get('IRODS_HOST', 'hydrotest41.renci.org')

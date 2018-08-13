@@ -1,5 +1,6 @@
 {% extends "myhpom/base.html" %}
 {% load sass_tags static %}
+{% load scribbler_tags %}
 
 {% block extra-head %}
 <script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
@@ -7,9 +8,10 @@
 {% endblock %}
 
 {% block main_class %} dashboard__main{% endblock main_class %}
+{% block main_container_class %} dashboard__main-container{% endblock main_container_class %}
 
 {% block main_content %}
-<div class="row">
+<div class="row dashboard__main-row">
     <div class="col-md-6 col-lg-8 dashboard-main">
         <h1 class="h6 dashboard__title">
             My dashboard
@@ -57,14 +59,20 @@
                         <img class="dashboard-profile-information__organ-icon" src="{% static 'myhpom/img/donor/icon-donor@3x.png' %}" alt="">
                     </div>
                     <div>
+                        {% if request.user.userdetails.is_organ_donor %}
+                        <div class="dashboard-profile-information__organ-donor-status-info">
+                            <span class="h5 dashboard-profile-information__status">I am an organ donor.</span>
+                        </div>
+                        {% else %}
                         <div class="dashboard-profile-information__organ-donor-status-info">
                             <span class="h5 dashboard-profile-information__status">I am not an organ donor.</span>
                         </div>
                         <div>
-                            <a href="/" class="dashboard-profile-information__organ-donor-link">
+                            <a href="http://donatelifenc.org/Register" alt="Donate Life" class="dashboard-profile-information__organ-donor-link" target="_blank" rel="noopener noreferrer">
                                 Learn how you can be a donor.
                             </a>
                         </div>
+                        {% endif %}
                     </div>
                     <div class="h6 dashboard-profile-information__organ-donor-edit-link">
                         <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
@@ -77,7 +85,7 @@
 
         <section class="mb-5 dashboard__section dashboard-health-network">
             <div class="h6 float-right">
-                <a href="/" class="small"><span class="oi oi-pencil"></span> Edit</a>
+                <a href="{% url 'myhpom:update_network' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
             </div>
 
             <h2 class="h6 dashboard__section-title">
@@ -103,20 +111,24 @@
                 </h2>
             </div>
             <div class="col-md-6 small">
-                <strong class="h6 dashboard-faq__heading">{% lorem 5 w %}?</strong>
+                <strong class="h6 dashboard-faq__heading">
+                    {% scribble 'dashboard-faq-1-head' %}{% lorem 5 w %}?{% endscribble %}
+                </strong>
                 <p>
-                    {% lorem 24 w %}
+                    {% scribble 'dashboard-faq-1' %}{% lorem 24 w %}{% endscribble %}
                 </p>
             </div>
             <div class="col-md-6 small">
-                <strong class="h6 dashboard-faq__heading">{% lorem 5 w %}?</strong>
+                <strong class="h6 dashboard-faq__heading">
+                    {% scribble 'dashboard-faq-2-head' %}{% lorem 5 w %}?{% endscribble %}
+                </strong>
                 <p>
-                    {% lorem 24 w %}
+                    {% scribble 'dashboard-faq-2' %}{% lorem 24 w %}{% endscribble %}
                 </p>
             </div>
         </sidebar>
     </div>
-    <div class="col-md-6 col-lg-4 vertical-flex">
+    <div class="col-md-6 col-lg-4 vertical-flex col-sm-down--no-padding">
         <section class="dashboard-sidebar vertical-flex">
             <h2 class="h6 dashboard__section-title dashboard-sidebar__title">
                 My document

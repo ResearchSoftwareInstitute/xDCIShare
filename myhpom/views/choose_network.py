@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from myhpom.models.health_network import HealthNetwork, PRIORITY
 from myhpom.forms.choose_network import ChooseNetworkForm
@@ -6,7 +7,7 @@ import math
 
 
 @login_required
-def choose_network(request):
+def choose_network(request, is_update=False):
     """
     Allow the logged in user to choose their health network.
     If the user is in an unsupported state, redirect to next_steps. Otherwise,
@@ -15,21 +16,21 @@ def choose_network(request):
     """
     user_details = request.user.userdetails
     state = user_details.state
+    supported_state = state.healthnetwork_set.exists()
     form = ChooseNetworkForm(instance=request.user.userdetails)
 
     if request.POST:
-        form = ChooseNetworkForm(
-            request.POST,
-            instance=request.user.userdetails,
-        )
+        form = ChooseNetworkForm(request.POST, instance=request.user.userdetails)
         if form.is_valid():
             form.save()
-
-            return redirect("myhpom:next_steps")
+            if is_update:
+                return redirect("myhpom:dashboard")
+            else:
+                return redirect("myhpom:next_steps")
 
     # request.method == 'GET'
-    if not user_details.state.healthnetwork_set.exists():
-        return redirect("myhpom:next_steps")
+    if not is_update and not user_details.state.healthnetwork_set.exists():
+        return redirect(reverse("myhpom:next_steps"))
 
     state_networks = HealthNetwork.objects.filter(state=state)
     health_networks = {
@@ -37,7 +38,7 @@ def choose_network(request):
     }
     # priority=0: 3 entries per row
     priority_0_rows = [
-        health_networks[0][(row) * 3:((row) * 3) + 3]
+        health_networks[0][(row) * 3 : ((row) * 3) + 3]
         for row in range(int(math.ceil(len(health_networks[0]) / 3.)))
     ]
     health_networks.pop(0)  # we're going to iterate only the groups with priority 1..N
@@ -47,5 +48,7 @@ def choose_network(request):
         "priority_0_rows": priority_0_rows,
         "PRIORITY": PRIORITY,
         "form": form,
+        "is_update": is_update,
+        "supported_state": supported_state,
     }
     return render(request, 'myhpom/accounts/choose_network.html', context=context)

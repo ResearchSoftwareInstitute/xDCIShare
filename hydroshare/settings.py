@@ -167,6 +167,7 @@ INSTALLED_APPS = (
     "django.contrib.postgres",
     "haystack",
     "sass_processor",
+    "scribbler",
     "myhpom",
 )
 

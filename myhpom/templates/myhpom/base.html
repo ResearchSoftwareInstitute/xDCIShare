@@ -8,6 +8,7 @@
         <script type="text/javascript" src="{% static 'myhpom/jquery/dist/jquery.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'myhpom/popper.js/dist/umd/popper.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'myhpom/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'scribbler/js/scribbler-min.js' %}"></script>
 
         <link rel="apple-touch-icon-precomposed" sizes="57x57" href="{% static 'myhpom/img/favicon/apple-touch-icon-57x57.png' %}" />
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'myhpom/img/favicon/apple-touch-icon-114x114.png' %}" />
@@ -25,15 +26,16 @@
 
         <link href="{% sass_src 'myhpom/myhpom.scss' %}" rel="stylesheet" type="text/css" />
         <link href="{% static 'myhpom/open-iconic/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet" />
+        <link href="{% static 'scribbler/css/scribbler.css' %}" rel="stylesheet">
 
         <title>{% block title %}My Health Peace Of Mind{% endblock title %}</title>
         {% block extra-head %}{% endblock %}
     </head>
-    <body class="myhpom-page--flush-footer"{% block body_on_load %}{% endblock %}>
+    <body class="myhpom-page--flush-footer">
         {% include 'myhpom/includes/header.html' %}
 
         <main class="main myhpom-page__main--flush-footer{% block main_class %}{% endblock main_class %}">
-            <div class="container{% block main_container_class %}{% endblock main_container_class %}">
+            <div class="container myhpom-page__container{% block main_container_class %}{% endblock main_container_class %}">
                 {% block main_content %}{% endblock main_content %}
             </div>
         </main>

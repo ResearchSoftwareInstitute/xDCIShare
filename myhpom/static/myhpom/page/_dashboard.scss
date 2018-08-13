@@ -1,5 +1,17 @@
 .dashboard__main {
-  border-top: 4px solid $brand-blue-dark;
+    border-top: 4px solid $brand-blue-dark;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard__main-container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard__main-row {
+    flex-grow: 1;
 }
 
 .dashboard__title,
@@ -112,8 +124,6 @@
 */
 .dashboard-sidebar {
     padding: 0 1em 1em 1em;
-    margin-left: -$grid-spacing;
-    margin-right: -$grid-spacing;
     background-color: $brand-blue-fade-7;
     border-top: 4px solid $brand-blue-medium-fade-70;
     flex-grow: 1;

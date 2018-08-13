@@ -3,6 +3,7 @@ from django.contrib import admin
 from myhpom.models.state import State
 from myhpom.models.state_requirement import StateRequirement
 from myhpom.models.state_requirement_link import StateRequirementLink
+from scribbler.models import Scribble
 
 
 class StateRequirementLinkAdmin(admin.TabularInline):
@@ -25,5 +26,10 @@ class StateAdmin(admin.ModelAdmin):
     inlines = [StateRequirementInlineAdmin]
 
 
+class ScribbleAdmin(admin.ModelAdmin):
+    model = Scribble
+
+
 admin.site.register(State, StateAdmin)
 admin.site.register(StateRequirement, StateRequirementAdmin)
+admin.site.register(Scribble, ScribbleAdmin)
