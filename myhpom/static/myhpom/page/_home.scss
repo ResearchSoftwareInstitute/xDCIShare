@@ -1,0 +1,18 @@
+$banner-proportion: 60%;
+
+.homepage__section {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.homepage__section--propfix {
+    padding-bottom: $banner-proportion;
+    position: relative;
+}
+
+.container--propfix {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}

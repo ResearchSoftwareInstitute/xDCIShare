@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block main_class %} dashboard__main{% endblock main_class %}
-{% block main_container_class %} dashboard__main-container{% endblock main_container_class %}
+{% block main_container_class %}{{ block.super }} dashboard__main-container{% endblock main_container_class %}
 
 {% block main_content %}
 <div class="row dashboard__main-row">

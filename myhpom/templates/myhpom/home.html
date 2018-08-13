@@ -1,23 +1,34 @@
 {% extends "myhpom/base.html" %}
+{% load staticfiles %}
+
+{% block main_container_class %}container-fluid myhpom-page__container{% endblock main_container_class %}
 
 {% block main_content %}
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Intro Text. Own Your Health.</h1>
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing
-            elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis
-            nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu
-            fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-            non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
-        </p>
-        <p>
-            <a class="btn btn-primary" href="{% url 'myhpom:signup' %}">START NOW</a>
-        </p>
+<section class="homepage__section homepage__section--propfix hero-section" style="background-image: url({% static hero_image %})">
+    <div class="container container--propfix">
+        <div class="row">
+            <div class="col-12">
+                <div class="hero-section__title">
+                    Own your care. Plan in advance.
+                </div>
+                <div class="hero-section__subtitle">
+                    {% lorem 12 w %}
+                </div>
+                <div class="hero-section__start-now">
+                    <a class="btn btn-secondary d-none d-lg-block" href="{% url 'myhpom:signup' %}">Start Now</a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<section class="homepage__section homepage__section--features"></section>
+
+<section class="homepage__section homepage__section--questions"></section>
+
+<section class="homepage__section homepage__section--supported-by"></section>
+
+<section class="homepage__section homepage__section--how-it-works"></section>
+
+<section class="homepage__section homepage__section--sidekick"></section>
 {% endblock main_content %}
