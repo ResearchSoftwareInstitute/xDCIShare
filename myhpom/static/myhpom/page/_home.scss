@@ -8,11 +8,52 @@ $banner-proportion: 60%;
 .homepage__section--propfix {
     padding-bottom: $banner-proportion;
     position: relative;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .container--propfix {
     position: absolute;
     left: 0;
     top: 0;
+    bottom: 0;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/*
+  Hero section
+*/
+.hero-section__title {
+    @include serif;
+    font-size: 3.5rem;
+    color: white;
+    font-weight: 400;
+    text-align: center;
+}
+
+.hero-section__subtitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+}
+
+.hero-section__start-now {
+    font-size: 1.5rem;
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-section__start-now-button {
+    font-size: 1.5rem;
+    line-height: 2.5em;
+    width: 12em;
+    text-transform: uppercase;
+    border: 2px solid white;
 }
