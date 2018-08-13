@@ -22,9 +22,9 @@
                 <h5 class="mx-auto pseudo-modal__title--centered pseudo-modal__title--serif">Already have an account? <a class="pseudo-modal__login-link" href="{% url 'myhpom:home' %}"> Sign in</a>.</h5>
             </div>
 
-            <div class="modal-body modal-body--signup">
+            <div class="modal-body pseudo-modal__body pseudo-modal__body--signup">
                 {% if form.non_field_errors %}
-                <div class="modal-body__div--invalid">
+                <div class="pseudo-modal__body_div--invalid">
                     {% for error in form.non_field_errors %}{{ error }}{% endfor %}
                 </div>
                 {% endif %}

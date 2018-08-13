@@ -1,15 +1,39 @@
 $container-border-radius: 1.5rem;
 $container-border-width: 4px;
+$modal-heavy-font-weight: 600;
 
 html [type="button"].close--link {
     -webkit-appearance: none;
 }
 
-.modal-header {
+/*
+    General container styles
+*/
+.pseudo-modal {
+    display: block;
+    overflow-y: scroll;
+}
+
+.pseudo-modal__dialog {
+    margin-top: 4rem;
+
+    @include media-breakpoint-up(sm) {
+      max-width: 90vw;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "lg") + 30px) {
+        max-width: map-get($grid-breakpoints, "lg");
+    }
+}
+
+/*
+    Header styles
+*/
+.pseudo-modal__header {
     border-bottom: none;
 }
 
-.modal-header--centered {
+.pseudo-modal__header--centered {
     justify-content: center;
 }
 
@@ -29,7 +53,7 @@ html [type="button"].close--link {
 }
 
 .pseudo-modal__title--centered {
-    font-weight: 600;
+    font-weight: $modal-heavy-font-weight;
 }
 
 .pseudo-modal__title--centered {
@@ -39,24 +63,7 @@ html [type="button"].close--link {
 
 .pseudo-modal__title--serif {
     @include serif;
-    font-weight: 600;
-}
-
-.pseudo-modal {
-    display: block;
-    overflow-y: scroll;
-}
-
-.pseudo-modal__dialog {
-    margin-top: 4rem;
-
-    @include media-breakpoint-up(sm) {
-      max-width: 90vw;
-    }
-
-    @media (min-width: map-get($grid-breakpoints, "lg") + 30px) {
-        max-width: map-get($grid-breakpoints, "lg");
-    }
+    font-weight: $modal-heavy-font-weight;
 }
 
 .pseudo-modal__pre-header {
@@ -69,11 +76,10 @@ html [type="button"].close--link {
     max-width: 20rem;
 }
 
-.modal-body {
-    padding: 1rem 2rem;
-}
-
-.modal-footer {
+/*
+    Main content
+*/
+.pseudo-modal__body {
     padding: 1rem 2rem;
 }
 
@@ -92,12 +98,23 @@ html [type="button"].close--link {
     }
 }
 
-.pseudo-modal__login-link {
-    @include orange-link;
+.pseudo-modal__header-caption-text {
+    @include serif;
 }
 
+/*
+    Footer
+*/
+.pseudo-modal__footer {
+    padding: 1rem 2rem;
+}
+
+
+/*
+    Forms
+*/
 .pseudo-modal__label {
-    font-weight: 600;
+    font-weight: $modal-heavy-font-weight;
 }
 
 .pseudo-modal__label--center-full {
@@ -110,11 +127,14 @@ html [type="button"].close--link {
     border-color: darken($light-gray, 50%);
 }
 
-.skip-link {
-    @extend .form-group-tos__link;
-    line-height: 1;
+/*
+    Links
+*/
+.pseudo-modal__login-link {
+    @include orange-link;
 }
 
-.pseudo-modal__header-caption-text {
-    @include serif;
+.pseudo-modal__skip-link {
+    @extend .form-group-tos__link;
+    line-height: 1;
 }

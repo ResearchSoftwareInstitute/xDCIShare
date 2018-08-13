@@ -4,18 +4,18 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
-            <div class="pb-0 modal-header pseudo-modal__header modal-header--centered">
+            <div class="pb-0 modal-header pseudo-modal__header pseudo-modal__header--centered">
               <strong>Thank you for registering.&nbsp;</strong>
               Please check your email to confirm account.
             </div>
 
-            <div class="pt-0 pb-0 modal-header modal-header--centered modal-header--main pseudo-modal__header">
+            <div class="pt-0 pb-0 modal-header pseudo-modal__header--centered modal-header--main pseudo-modal__header">
                 <h1 class="modal-title pseudo-modal__title pseudo-modal__title--centered">
                     Select your Healthcare Network for {{ state.title }}.
                 </h1>
             </div>
 
-            <div class="pt-0 modal-body">
+            <div class="pt-0 modal-body pseudo-modal__body">
                 <div class="row">
                     <div class="col-12">
                         <small>How do I find my healthcare network?</small>
@@ -94,9 +94,9 @@
 
 
 
-            <div class="modal-footer">
+            <div class="modal-footer pseudo-modal__footer">
                 <!-- TODO: add real URL -->
-                <a class="skip-link small" href="/accounts/next-steps">Skip for now</a>
+                <a class="pseudo-modal__skip-link small" href="/accounts/next-steps">Skip for now</a>
             </div>
         </div>
     </div>
