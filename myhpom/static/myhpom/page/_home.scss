@@ -57,3 +57,27 @@ $banner-proportion: 60%;
     text-transform: uppercase;
     border: 2px solid white;
 }
+
+/*
+    Features
+*/
+.features-section {
+    background-color: $brand-blue-dark;
+}
+.feature__image-container {
+    text-align: center;
+}
+.feature__image {
+    max-width: 75%;
+}
+.feature__title {
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 150%;
+}
+.feature__text {
+    @include serif;
+    text-align: center;
+    color: white;
+}
