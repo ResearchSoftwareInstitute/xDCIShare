@@ -1,3 +1,5 @@
+// NOTE: adjusting this border-radius down by 0.1rem in the inner
+// container is necessary to avoid a strange visual discrepancy
 $container-border-radius: 1.5rem;
 $container-border-width: 4px;
 $modal-heavy-font-weight: 600;
@@ -38,8 +40,8 @@ html [type="button"].close--link {
 }
 
 .pseudo-modal__header:first-child {
-    border-top-left-radius: $container-border-radius;
-    border-top-right-radius: $container-border-radius;
+    border-top-left-radius: ($container-border-radius - 0.1);
+    border-top-right-radius: ($container-border-radius - 0.1);
 }
 
 .pseudo-modal__header {
@@ -92,8 +94,8 @@ html [type="button"].close--link {
         background-color: white;
 
         &:last-child {
-            border-bottom-left-radius: $container-border-radius;
-            border-bottom-right-radius: $container-border-radius;
+            border-bottom-left-radius: ($container-border-radius - 0.1);
+            border-bottom-right-radius: ($container-border-radius - 0.1);
         }
     }
 }
