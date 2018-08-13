@@ -1,5 +1,6 @@
 {% extends "myhpom/base.html" %}
 {% load staticfiles %}
+{% load scribbler_tags %}
 
 {% block main_container_class %}container-fluid myhpom-page__container{% endblock main_container_class %}
 
@@ -21,7 +22,7 @@
 <section class="pt-3 pb-3 homepage__section homepage__section--features features-section">
     <div class="container">
         <ul class="row">
-            <li class="col-sm-6 col-lg-3">
+            <li class="col-6 col-lg-3">
                 <div class="feature">
                     <div class="feature__image-container">
                         <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-stack-2@3x.png' %}" alt="">
@@ -34,7 +35,7 @@
                     </p>
                 </div>
             </li>
-            <li class="col-sm-6 col-lg-3">
+            <li class="col-6 col-lg-3">
                 <div class="feature">
                     <div class="feature__image-container">
                         <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-lightbulb@3x.png' %}" alt="">
@@ -47,7 +48,7 @@
                     </p>
                 </div>
             </li>
-            <li class="col-sm-6 col-lg-3">
+            <li class="col-6 col-lg-3">
                 <div class="feature">
                     <div class="feature__image-container">
                         <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-desktop-mobile@3x.png' %}" alt="">
@@ -60,7 +61,7 @@
                     </p>
                 </div>
             </li>
-            <li class="col-sm-6 col-lg-3">
+            <li class="col-6 col-lg-3">
                 <div class="feature">
                     <div class="feature__image-container">
                         <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-piggy@3x.png' %}" alt="">
@@ -112,7 +113,61 @@
     </div>
 </section>
 
-<section class="homepage__section homepage__section--how-it-works"></section>
+<section class="pt-3 pb-5 homepage__section homepage__section--how-it-works how-it-works-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="how-it-works-section__title">How it works.</div>
+                {% scribble 'homepage' 'how-it-works' %}
+                <p class="ml-auto mr-auto how-it-works-section__subtitle">{% lorem 24 w %}</p>
+                {% endscribble %}
+            </div>
+        </div>
+        <ul class="row">
+            <li class="col-sm-4">
+                <div class="how-it-works-item">
+                    <div class="how-it-works-item__title">Create.</div>
+                    <div class="how-it-works-item__img-container">
+                        <img class="how-it-works-item__img" src="{% static 'myhpom/img/home/mmh-icon-stack-3@3x.png' %}" alt="">
+                    </div>
+                    <div class="how-it-works-item__caption">
+                        Follow your state's guidelines and prepare
+                        a PDF with your advance care plan.
+                    </div>
+                </div>
+            </li>
+            <li class="col-sm-4">
+                <div class="how-it-works-item">
+                    <div class="how-it-works-item__title">Upload.</div>
+                    <div class="how-it-works-item__img-container">
+                        <img class="how-it-works-item__img" src="{% static 'myhpom/img/home/mmh-icon-cloud@3x.png' %}" alt="">
+                    </div>
+                    <div class="how-it-works-item__caption">
+                        Login to your Mind My Health account and upload
+                        your advance plan PDF.
+                    </div>
+                </div>
+            </li>
+            <li class="col-sm-4">
+                <div class="how-it-works-item">
+                    <div class="how-it-works-item__title">Access.</div>
+                    <div class="how-it-works-item__img-container">
+                        <img class="how-it-works-item__img" src="{% static 'myhpom/img/home/mmh-icon-mobile-logo@3x.png' %}" alt="">
+                    </div>
+                    <div class="how-it-works-item__caption">
+                        Whether on your device or desktop, review or
+                        print your advance care plan.
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="mt-5 row d-xs-only-none">
+            <div class="col-12 col--centered">
+                <a href="{% url 'myhpom:signup' %}" class="btn btn-secondary how-it-works__start-now-link">Start Now</a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="homepage__section homepage__section--sidekick"></section>
 {% endblock main_content %}

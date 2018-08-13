@@ -11,6 +11,7 @@ $banner-proportion: 60%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    min-height: 350px;
 }
 
 .container--propfix {
@@ -33,6 +34,11 @@ $banner-proportion: 60%;
     color: white;
     font-weight: 400;
     text-align: center;
+
+    @include media-breakpoint-down(sm) {
+        line-height: 1.25;
+        font-size: 2rem;
+    }
 }
 
 .hero-section__subtitle {
@@ -40,22 +46,32 @@ $banner-proportion: 60%;
     font-weight: 600;
     color: white;
     text-align: center;
+
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
 }
 
 .hero-section__start-now {
-    font-size: 1.5rem;
     height: 5em;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @include media-breakpoint-up(md) {
+        font-size: 1.5rem;
+    }
 }
 
 .hero-section__start-now-button {
-    font-size: 1.5rem;
     line-height: 2.5em;
     width: 12em;
     text-transform: uppercase;
     border: 2px solid white;
+
+    @include media-breakpoint-up(md) {
+        font-size: 1.5rem;
+    }
 }
 
 /*
@@ -69,6 +85,10 @@ $banner-proportion: 60%;
 }
 .feature__image {
     max-width: 75%;
+
+    @include media-breakpoint-down(xs) {
+        max-width: 50%;
+    }
 }
 .feature__title {
     text-align: center;
@@ -89,13 +109,17 @@ $banner-proportion: 60%;
     background-color: $brand-blue;
     color: white;
     text-align: center;
-}
 
-.questions-section__item:not(:last-child) {
     @include media-breakpoint-down(xs) {
-        padding-bottom: 4rem;
+        display: none;
     }
 }
+
+// .questions-section__item:not(:last-child) {
+//     @include media-breakpoint-down(xs) {
+//         padding-bottom: 4rem;
+//     }
+// }
 
 .question::before {
     content: "?";
@@ -131,4 +155,90 @@ $banner-proportion: 60%;
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
+}
+
+/*
+    How it works
+*/
+.how-it-works-section {
+    background-color: $brand-blue;
+    text-align: center;
+
+    @include media-breakpoint-up(sm) {
+        background: linear-gradient(
+            0deg,
+            white 0px,
+            white 300px,
+            #{$brand-blue} 300px,
+            #{$brand-blue} 100%
+        );
+    }
+}
+
+.how-it-works-section__title {
+    @include serif;
+    font-size: 3rem;
+    color: white;
+    font-weight: 300;
+
+    @include media-breakpoint-down(xs) {
+        font-size: 2.5rem;
+    }
+}
+
+.how-it-works-section__subtitle {
+    color: $brand-blue-dark;
+    font-weight: 600;
+    max-width: map-get($grid-breakpoints, "sm");
+}
+
+.how-it-works-item {
+    @include media-breakpoint-down(xs) {
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+
+        &::before {
+            content: " ";
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: $brand-blue-dark;
+            height: 2px;
+            width: 66%;
+            margin: 0.5rem auto;
+        }
+    }
+}
+
+.how-it-works-item__title {
+    font-size: 2.5rem;
+    color: white;
+    font-weight: 300;
+
+    @include media-breakpoint-down(xs) {
+        font-size: 2rem;
+    }
+}
+
+.how-it-works-item__img {
+    max-width: 100%;
+
+    @include media-breakpoint-down(xs) {
+        max-width: 50%;
+    }
+}
+
+.how-it-works-item__caption {
+    @include serif;
+    line-height: 1.25;
+    color: white;
+    font-weight: 600;
+
+    @include media-breakpoint-up(sm) {
+        color: $brand-blue-medium;
+    }
+}
+
+.how-it-works__start-now-link {
+    text-transform: uppercase;
 }

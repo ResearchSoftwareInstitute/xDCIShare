@@ -26,6 +26,12 @@
     }
 }
 
+.d-xs-only-none {
+    @include media-breakpoint-down(xs) {
+        display: none;
+    }
+}
+
 // Typography
 h1, .h1 {
     color: $brand-blue-dark;
