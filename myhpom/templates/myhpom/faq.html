@@ -37,15 +37,21 @@
                 <div class="row faq-entry__header">
                     <div class="col">
                         <div class="d-flex">
-                            <button class="flex-fill btn btn-link collapsed faq-entry__header__button" type="button" data-toggle="collapse" data-target="#{{ section.name }}_{{ forloop.counter }}"><h4 class="faq-entry__header__content">{{ entry.question }}</h4></button>
+                            <button class="flex-fill btn btn-link collapsed faq-entry__header__button"
+                                type="button" data-toggle="collapse"
+                                data-target="#{{ section.name }}_{{ forloop.counter }}"
+                            >
+                                <h4 class="faq-entry__header__content">{{ entry.question }}</h4>
+                            </button>
                             <div class="flex-fill faq-entry__header__collapser"></div>
                         </div>
                     </div>
                 </div>
-                <div id="{{ section.name }}_{{ forloop.counter }}" class="row collapse" data-parent="#faq_accordian">
-                    <div class="col faq-entry__body">
-                        {{ entry.answer }}
-                    </div>
+                <div id="{{ section.name }}_{{ forloop.counter }}" class="row collapse"
+                    data-parent="#faq_accordian"
+                    data-name="#{{ entry.name }}"
+                >
+                    <div class="col faq-entry__body">{{ entry.answer }}</div>
                 </div>
             </div>
             {% endfor %}
@@ -57,3 +63,23 @@
 </div>
 </div>
 {% endblock main_content %}
+
+{% block extra-js %}
+<script>
+jQuery(function ($) {
+    // If there is a hash, expand the matching element:
+    $('[data-name]').map(function() {
+        var name = $(this).data('name');
+        if (name === window.location.hash) {
+            $(this).collapse('show');
+        }
+    });
+
+    // Change the anchor tag to reflect the current element
+    var $faqEntryHeaders = $('#faq_accordian');
+    $($faqEntryHeaders).on('shown.bs.collapse', function (e) {
+        window.location.hash = $(e.target).data('name');
+    });
+});
+</script>
+{% endblock extra-js %}
