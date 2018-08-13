@@ -114,3 +114,21 @@ $banner-proportion: 60%;
     transform: translate(-50%, -2.5rem);
     border: 2px solid $brand-blue;
 }
+
+/*
+    "Supported by"
+*/
+.supported-by-section {
+    background-color: white;
+    color: $brand-blue;
+}
+.supported-by-section__title {
+    text-align: center;
+    text-transform: uppercase;
+    color: $brand-blue;
+}
+.supported-by-logos {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
