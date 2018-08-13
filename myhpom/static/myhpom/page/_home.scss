@@ -81,3 +81,36 @@ $banner-proportion: 60%;
     text-align: center;
     color: white;
 }
+
+/*
+    Questions
+*/
+.questions-section {
+    background-color: $brand-blue;
+    color: white;
+    text-align: center;
+}
+
+.questions-section__item:not(:last-child) {
+    @include media-breakpoint-down(xs) {
+        padding-bottom: 4rem;
+    }
+}
+
+.question::before {
+    content: "?";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2rem;
+    width: 2rem;
+    font-size: 125%;
+    font-weight: 600;
+    background-color: $brand-blue-medium;
+    border-radius: 2rem;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -2.5rem);
+    border: 2px solid $brand-blue;
+}
