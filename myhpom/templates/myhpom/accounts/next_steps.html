@@ -1,71 +1,82 @@
 {% extends "myhpom/base.html" %}
+{% load staticfiles %}
 {% load scribbler_tags %}
 
 {% block main_content %}
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
-            <div class="modal-header modal-header--main pseudo-modal__header">
-                <h1 class="modal-title pseudo-modal__title--centered">
-                    Welcome to MindMyHealth
+            <div class="pb-0 modal-header modal-header--main modal-header--next-steps pseudo-modal__header">
+                <h1 class="mx-auto h2 modal-title pseudo-modal__title pseudo-modal__title--centered pseudo-modal__title--light">
+                    Welcome to <span class="d-none">Mind My Health</span>
                 </h1>
-                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
+                <img class="next-steps__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-color@3x.png' %}" alt="">
             </div>
 
-            <div class="modal-header modal-header--subtitle pseudo-modal__header">
-                <p class="pseudo-modal__header-caption-text">
-                    {% scribble 'next-steps-header' 'shared' %}{% lorem 24 w %}{% endscribble %}
+            <div class="pt-1 pb-1 modal-header modal-header--subtitle modal-header--next-steps pseudo-modal__header">
+                <p class="mx-auto mb-0 pseudo-modal__header-caption-text pseudo-modal__header-caption-text--next-steps">
+                    {% scribble 'next-steps-header' 'shared' %}
+                    You are joining millions across the country in owning
+                    your own health by planning for care in advance.
+                    Your next steps:
+                    {% endscribble %}
                 </p>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body pseudo-modal__body">
                 <div class="row">
-                    <div class="col-lg-4">
-                        <h4>
-                            Your next steps to own your own health:
-                        </h4>
-                    </div>
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="col-md-6 vertical-fill-box">
-                                <div class="advance-directive-block">
-                                    <h5>
-                                        <a href="{{ ad_template.url }}" target="_blank" rel="noopener noreferrer">
-                                            Download a Template Advance Directive
-                                        </a>
-                                    </h5>
-                                    {% scribble 'next-steps-download' 'shared' %}
-                                    <p>
-                                        {% lorem 36 w %}
-                                    </p>
-                                    {% endscribble %}
+                    <div class="col-md-6 vertical-fill-box">
+                        <div class="mb-3 advance-directive-block">
+                            <h4 class="advance-directive-block__title">
+                                Do you already have your advance care plan?
+                            </h4>
+                            <p class="next-steps__text">
+                                {% scribble 'next-steps-upload' 'shared' %}
+                                <strong class="next-steps__strong">Wonderful! Is it in PDF form?</strong>
+                                Scan and save your document in high resolution
+                                to upload on your Mind My Health dashboard.
+                                {% endscribble %}
+                            </p>
+                            <div class="advance-directive-block-footer">
+                                <div class="advance-directive-block-footer__info-link">
+                                    Learn more in our FAQs
                                 </div>
-                            </div>
-                            <div class="col-md-6 vertical-fill-box">
-                                <div class="advance-directive-block">
-                                    <h5>
-                                        <a href="{% url 'myhpom:dashboard' %}">
-                                            Upload Your Advance Directive
-                                        </a>
-                                    </h5>
-                                    {% scribble 'next-steps-upload' 'shared' %}
-                                    <p>
-                                        {% lorem 36 w %}
-                                    </p>
-                                    {% endscribble %}
+                                <div class="advance-directive-block-footer__caption">
+                                    Link will open in new window
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6 vertical-fill-box">
+                        <div class="mb-3 advance-directive-block">
+                            <h4 class="advance-directive-block__title">
+                                Are you just starting to plan your advance care?
+                            </h4>
+                            <p class="next-steps__text">
+                                <!-- TODO: Scribbler -->
+                                {% scribble 'next-steps-upload' 'upload' %}
+                                <a class="advance-directive-block__template-link" href="{{ ad_template.url }}" target="_blank" rel="noopener noreferrer">
+                                    Download our free template</a>,
+                                document your desired care, and following the
+                                instructions on your Mind My Health Dashboard.
+                                {% endscribble %}
+                            </p>
+                            <div class="advance-directive-block-footer">
+                                <div class="advance-directive-block-footer__info-link">
+                                    Learn more in our FAQs
+                                </div>
+                                <div class="advance-directive-block-footer__caption">
+                                    Link will open in new window
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col--centered">
+                        <a class="mt-2 mb-2 mx-auto btn btn-secondary btn--big" href="{% url 'myhpom:dashboard' %}">
+                            Go to Your Dashboard
+                        </a>
+                    </div>
                 </div>
-            </div>
-
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{% url 'myhpom:dashboard' %}">
-                    Go To Dashboard
-                </a>
             </div>
         </div>
     </div>

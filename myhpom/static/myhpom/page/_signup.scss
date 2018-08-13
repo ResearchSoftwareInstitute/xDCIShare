@@ -13,7 +13,6 @@ ul.errorlist {
 .form-group-tos__content {
     border: 1px solid #ced4da;
     border-radius: 0.25rem;
-    // border: 1px solid var(--danger);
     padding: 1rem;
 }
 
@@ -21,6 +20,22 @@ ul.errorlist {
     border: 1px solid $invalid_color;
     border-radius: 0.25rem;
     padding: 1rem;
+}
+
+.form-group-tos__h6 {
+    text-transform: uppercase;
+    color: black;
+}
+
+.form-group-tos__text {
+    @include serif;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group-tos__link {
+    @include orange-link;
+    text-transform: uppercase;
 }
 
 .form-group__label--invalid {
@@ -35,4 +50,15 @@ ul.errorlist {
     color: $invalid_color;
     padding-bottom: 1rem;
     text-align: center;
+}
+
+.signup-form__submit-button {
+    @extend .btn-secondary;
+    padding: 1em 2em;
+    font-size: 125%;
+    width: 100%;
+
+    &:disabled, &.disabled {
+        color: rgba(255, 255, 255, 0.9);
+    }
 }
