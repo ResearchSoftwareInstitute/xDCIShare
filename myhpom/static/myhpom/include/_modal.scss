@@ -50,8 +50,12 @@ html [type="button"].close--link {
 .pseudo-modal__dialog {
     margin-top: 4rem;
 
-    @media (min-width: 576px) {
-        max-width: 90vw;
+    @include media-breakpoint-up(sm) {
+      max-width: 90vw;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "lg") + 30px) {
+        max-width: map-get($grid-breakpoints, "lg");
     }
 }
 
