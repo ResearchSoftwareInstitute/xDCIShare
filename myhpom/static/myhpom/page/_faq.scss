@@ -1,0 +1,72 @@
+.faq-heading {
+  border-left: solid $brand-blue;
+  border-bottom: solid $brand-blue;
+}
+
+.faq-heading__section {
+  @extend .nav-link;
+
+  color: $brand-orange;
+}
+
+.faq-heading__section--active {
+  @extend .faq-heading__section;
+
+  color: $brand-blue;
+}
+
+.faq-section {
+}
+
+.faq-section__title {
+  padding: 1.5rem 0;
+}
+
+.faq-section__title__go-to-top {
+  @extend .text-right;
+}
+
+.faq-section__title__go-to-top__link {
+  color: $brand-orange;
+  margin-top: 7px;
+}
+
+.faq-entry {
+  border-bottom: 1px solid $text-gray;
+  margin-bottom: 0.5rem;
+}
+
+.faq-entry__header__button {
+  @extend .text-left;
+
+  padding: 0;
+}
+
+.faq-entry__header__content {
+  color: $brand-orange;
+  font-size: 1.2rem;
+}
+
+.faq-entry__header__collapser {
+  @extend .text-right;
+}
+
+[data-toggle="collapse"] + .faq-entry__header__collapser::after {
+  content: "-";
+
+  color: $brand-orange;
+  font-size: 20px;
+  margin-right: 2rem;
+}
+
+[data-toggle="collapse"].collapsed + .faq-entry__header__collapser::after {
+  content: "+";
+
+  color: $brand-orange;
+  font-size: 20px;
+  margin-right: 2rem;
+}
+
+.faq-entry__body {
+  padding: 0.5rem 1rem;
+}

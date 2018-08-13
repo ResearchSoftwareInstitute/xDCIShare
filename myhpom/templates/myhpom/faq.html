@@ -4,41 +4,55 @@
 <div class="row">
 <div class="col">
     <h2>Frequently Asked Questions (FAQs)</h2>
-    <div class="row">
+</div>
+</div>
+<div class="row">
+<div class="col">
+    <div class="row faq-heading">
+        {% for section in faqs %}
         <div class="col">
-            <ul class="nav nav-tabs" id="faqs" role="tablist">
-                {% for section in faqs %}
-                <li class="nav-item"><a class="nav-link {% if forloop.counter == 1 %}active{% endif %}" id="{{ section.name }}-tab" role="tab" href="#{{ section.name }}">{{ section.description }}</a></li>
-                {% endfor %}
-            </ul>
-            {% for section in faqs %}
-            <div class="tab-pane fade show active" id="{{ section.name }}" role="tabpanel" aria-labelledby="{{ section.name }}-tab">
-                <div class="row">
-                    <div class="col">
-                        <h3>{{ section.description }}</h3>
+            <a class="faq-heading__section" href="#{{ section.name }}">{{ section.description }}</a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+    <div class="col">
+        <div class="accordian" id="faq_accordian">
+        {% for section in faqs %}
+        <div class="faq-section" id="{{ section.name }}">
+            <div class="row faq-section__title">
+                <div class="col">
+                    <h3>{{ section.description }}</h3>
+                </div>
+                {% if forloop.counter > 1 %}
+                <div class="col">
+                    <div class="faq-section__title__go-to-top">
+                        <a class="faq-section__title__go-to-top__link" href="#about">Back to Top</a>
                     </div>
                 </div>
-                <div class="row">
+                {% endif %}
+            </div>
+            {% for entry in section.entries %}
+            <div class="faq-entry">
+                <div class="row faq-entry__header">
                     <div class="col">
-                        <div class="accordian" id="faq_accordian">
-                            {% for entry in section.entries %}
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5><button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ section.name }}_{{ forloop.counter }}">{{ entry.question }}</button></h5>
-                                </div>
-                                <div id="{{ section.name }}_{{ forloop.counter }}" class="collapse" data-parent="#faq_accordian">
-                                    <div class="card-body">
-                                        {{ entry.answer }}
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
+                        <div class="d-flex">
+                            <button class="flex-fill btn btn-link collapsed faq-entry__header__button" type="button" data-toggle="collapse" data-target="#{{ section.name }}_{{ forloop.counter }}"><h4 class="faq-entry__header__content">{{ entry.question }}</h4></button>
+                            <div class="flex-fill faq-entry__header__collapser"></div>
                         </div>
+                    </div>
+                </div>
+                <div id="{{ section.name }}_{{ forloop.counter }}" class="row collapse" data-parent="#faq_accordian">
+                    <div class="col faq-entry__body">
+                        {{ entry.answer }}
                     </div>
                 </div>
             </div>
             {% endfor %}
         </div>
+        {% endfor %}
+        </div>
+    </div>
     </div>
 </div>
 </div>
