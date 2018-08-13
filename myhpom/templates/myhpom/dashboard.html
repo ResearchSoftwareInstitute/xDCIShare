@@ -8,9 +8,10 @@
 {% endblock %}
 
 {% block main_class %} dashboard__main{% endblock main_class %}
+{% block main_container_class %} dashboard__main-container{% endblock main_container_class %}
 
 {% block main_content %}
-<div class="row">
+<div class="row dashboard__main-row">
     <div class="col-md-6 col-lg-8 dashboard-main">
         <h1 class="h6 dashboard__title">
             My dashboard
@@ -127,7 +128,7 @@
             </div>
         </sidebar>
     </div>
-    <div class="col-md-6 col-lg-4 vertical-flex">
+    <div class="col-md-6 col-lg-4 vertical-flex col-sm-down--no-padding">
         <section class="dashboard-sidebar vertical-flex">
             <h2 class="h6 dashboard__section-title dashboard-sidebar__title">
                 My document
