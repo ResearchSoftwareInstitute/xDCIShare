@@ -51,14 +51,3 @@ ul.errorlist {
     padding-bottom: 1rem;
     text-align: center;
 }
-
-.signup-form__submit-button {
-    @extend .btn-secondary;
-    padding: 1em 2em;
-    font-size: 125%;
-    width: 100%;
-
-    &:disabled, &.disabled {
-        color: rgba(255, 255, 255, 0.9);
-    }
-}
