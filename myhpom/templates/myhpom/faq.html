@@ -1,7 +1,7 @@
 {% extends "myhpom/base.html" %}
 
 {% block main_content %}
-<div class="row">
+<div class="row faq-title">
 <div class="col">
     <h2>Frequently Asked Questions (FAQs)</h2>
 </div>
@@ -10,8 +10,18 @@
 <div class="col">
     <div class="row faq-heading">
         {% for section in faqs %}
-        <div class="col">
-            <a class="faq-heading__section" href="#{{ section.name }}">{{ section.description }}</a>
+        <div class="col-md 
+            {% if forloop.first %}faq-heading__section-wrapper--first
+            {% elif forloop.last %}faq-heading__section-wrapper--last
+            {% else %}faq-heading__section-wrapper{% endif %}"
+        >
+            <a class="faq-heading__section 
+               {% if forloop.first %}faq-heading__section--first
+               {% elif forloop.last %}faq-heading__section--last{% endif %}"
+                href="#{{ section.name }}"
+            >
+                {{ section.description }}
+            </a>
         </div>
         {% endfor %}
     </div>
@@ -73,6 +83,14 @@
 {% block extra-js %}
 <script>
 jQuery(function ($) {
+    // Style the headings if the user has selected that element
+    $('.faq-heading__section').map(function() {
+        var url = $(this).prop('href');
+        if (url == window.location) {
+            $(this).addClass('faq-heading__section--active');
+        }
+    });
+
     // If there is a hash, expand the matching element:
     $('[data-name]').map(function() {
         var name = $(this).data('name');
