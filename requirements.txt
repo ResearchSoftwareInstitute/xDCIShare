@@ -7,4 +7,4 @@ django-scribbler==0.9.0
 factory-boy==2.8.1
 libsass==0.14.5
 python-dotenv==0.8.2
-bgs==0.1.2
+bgs==0.2.0
