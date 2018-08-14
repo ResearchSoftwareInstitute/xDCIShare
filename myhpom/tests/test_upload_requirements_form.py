@@ -1,3 +1,4 @@
+import os
 from datetime import date, timedelta
 from os.path import basename
 
@@ -7,6 +8,7 @@ from myhpom.forms.upload_requirements import UploadRequirementsForm
 from myhpom.models import AdvanceDirective
 from myhpom.tests.factories import UserFactory
 
+PDF_FILENAME = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
 
 class UploadRequirementsFormTestCase(TestCase):
     """
@@ -22,10 +24,11 @@ class UploadRequirementsFormTestCase(TestCase):
     def setUp(self):
         user = UserFactory()
         self.directive = AdvanceDirective(user=user, share_with_ehs=False)
+        with open(PDF_FILENAME, 'rb') as f:
+            self.valid_file = SimpleUploadedFile(os.path.basename(PDF_FILENAME), f.read())
 
     @override_settings(MAX_AD_SIZE=10)
     def test_not_valid(self):
-        valid_file = SimpleUploadedFile('afile.pdf', 'binary')
         invalid_data = [
             {},
             {'valid_date': ''},
@@ -33,7 +36,7 @@ class UploadRequirementsFormTestCase(TestCase):
             {'valid_date': (date.today() + timedelta(1)).strftime("%Y-%m-%d")},  # tomorrow!
         ]
         for data in invalid_data:
-            form = UploadRequirementsForm(data, files={'document': valid_file})
+            form = UploadRequirementsForm(data, files={'document': self.valid_file})
             self.assertFalse(form.is_valid())
 
         # If the date is valid, but the file isn't
@@ -45,21 +48,19 @@ class UploadRequirementsFormTestCase(TestCase):
             self.assertFalse(form.is_valid())
 
     def test_valid(self):
-        valid_file = SimpleUploadedFile('afile.pdf', 'binary_contents')
         valid_data = [
             {'valid_date': date.today().strftime("%Y-%m-%d")},  # today!
             {'valid_date': (date.today() - timedelta(1)).strftime("%Y-%m-%d")},  # yesterday!
         ]
         for data in valid_data:
-            form = UploadRequirementsForm(data, instance=self.directive, files={'document': valid_file})
+            form = UploadRequirementsForm(data, instance=self.directive, files={'document': self.valid_file})
             self.assertTrue(form.is_valid(), msg=data)
             form.save()
 
     def test_clean(self):
         # When a file is cleaned and saved, the filename is modified to prevent
         # clashing and guessing from would-be attackers.
-        valid_file = SimpleUploadedFile('afile.pdf', 'binary_contents')
-        form = UploadRequirementsForm({'valid_date': date.today().strftime("%Y-%m-%d")}, instance=self.directive, files={'document': valid_file})
+        form = UploadRequirementsForm({'valid_date': date.today().strftime("%Y-%m-%d")}, instance=self.directive, files={'document': self.valid_file})
         self.assertTrue(form.is_valid())
         form.save()
         self.assertNotEqual('afile.pdf', basename(self.directive.document.name))
