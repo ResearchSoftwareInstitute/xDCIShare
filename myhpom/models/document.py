@@ -55,7 +55,8 @@ class AdvanceDirective(models.Model):
         # first write the document to a temporary file in the filesystem
         tempdir = tempfile.mkdtemp()
         pdf_filename = os.path.join(tempdir, self.filename)
-        fd = self.document.storage.open(self.document.name, 'rb').read()
+        with self.document.storage.open(self.document.name, 'rb') as f:
+            fd = f.read()
         with open(pdf_filename, 'wb') as f:
             f.write(fd)
         # then use ghostscript to render it
