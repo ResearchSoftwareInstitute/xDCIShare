@@ -1,3 +1,19 @@
+.faq-to-dashboard {
+  @extend .tabbed;
+  background-color: $brand-orange;
+  color: white;
+  padding-left: 1rem;
+
+  &::after {
+      background-color: $brand-orange;
+  }
+}
+
+.faq-to-dashboard__link {
+  color: white;
+  text-transform: uppercase;
+}
+
 .faq-title {
   padding-top: 2rem;
 }
