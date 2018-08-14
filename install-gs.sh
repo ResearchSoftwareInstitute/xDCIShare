@@ -5,6 +5,6 @@ cd /usr/local/src
 wget -q $GHOSTSCRIPT_URL
 tar xjf ghostscript-9.06.tar.bz2
 cd ghostscript-9.06
-./configure -q
-make -s install 
+./configure -q >configure.log 2>&1
+make -s install >make.log 2>&1
 # and now we have the "gs" command on our system.
