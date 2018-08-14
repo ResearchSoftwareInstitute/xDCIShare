@@ -32,7 +32,7 @@
 }
 
 .faq-entry {
-  border-bottom: 1px solid $text-gray;
+  border-bottom: 1px solid $light-gray;
   margin-bottom: 0.5rem;
 }
 
@@ -70,4 +70,26 @@
 
 .faq-entry__body {
   padding: 0.5rem 1rem;
+}
+
+.contact-us {
+  border: 1px solid $brand-blue;
+  margin: 2rem 0;
+  padding: 1rem;
+}
+
+.contact-us__title {
+  @extend .text-center;
+
+  color: $brand-blue;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.contact-us__subtitle {
+  @extend .text-center;
+}
+
+.contact-us__link {
+  color: $brand-orange;
 }
