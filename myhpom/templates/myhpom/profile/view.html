@@ -1,6 +1,6 @@
 {% extends "myhpom/base.html" %}
 
-{% block main_container_class %} mt-4 mb-4{% endblock main_container_class %}
+{% block main_container_class %}{{ block.super }} mt-4 mb-4{% endblock main_container_class %}
 
 {% block main_content %}
 <div class="row">

@@ -26,6 +26,12 @@
     }
 }
 
+.d-xs-only-none {
+    @include media-breakpoint-down(xs) {
+        display: none;
+    }
+}
+
 // Typography
 h1, .h1 {
     color: $brand-blue-dark;
@@ -45,4 +51,11 @@ a:not(.btn):not(.img-link):hover {
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: inherit;
+}
+
+// Layout
+ul.row {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
 }
