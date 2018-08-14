@@ -10,6 +10,10 @@ RUN cd /opt && npm install
 RUN npm install -g astrum
 ### End - HydroShare Development Image Additions ###
 
+# Install Ghostscript
+ADD install-gs.sh /opt
+RUN /opt/install-gs.sh
+
 # Patch for Mezzanone 4.10 collecttemplates bugfix
 RUN echo -e "\
 \n42c42,44\
@@ -19,10 +23,6 @@ RUN echo -e "\
 \n>         # to_dir = settings.TEMPLATE_DIRS[0]\
 \n>         to_dir = settings.TEMPLATES[0][\"DIRS\"][0]\
 " | patch /usr/local/lib/python2.7/site-packages/mezzanine/core/management/commands/collecttemplates.py -
-
-# Install Ghostscript
-ADD install-gs.sh /usr/local
-RUN /usr/local/install-gs.sh
 
 ### End - MyHPOM Development Image Additions ###
 
