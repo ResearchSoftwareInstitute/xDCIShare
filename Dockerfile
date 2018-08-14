@@ -20,6 +20,10 @@ RUN echo -e "\
 \n>         to_dir = settings.TEMPLATES[0][\"DIRS\"][0]\
 " | patch /usr/local/lib/python2.7/site-packages/mezzanine/core/management/commands/collecttemplates.py -
 
+# Install Ghostscript
+ADD install-gs.sh /usr/local
+RUN /usr/local/install-gs.sh
+
 ### End - MyHPOM Development Image Additions ###
 
 USER root
