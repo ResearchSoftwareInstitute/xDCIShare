@@ -98,6 +98,7 @@ $banner-proportion: 60%;
 
     @include media-breakpoint-up(md) {
         font-size: 1.5rem;
+        height: 5em;
     }
 }
 
@@ -279,4 +280,15 @@ $banner-proportion: 60%;
 
 .how-it-works__start-now-link {
     text-transform: uppercase;
+}
+
+/*
+    "Sidekick" (secondary hero-like section)
+*/
+
+.sidekick-section {
+    padding-bottom: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
