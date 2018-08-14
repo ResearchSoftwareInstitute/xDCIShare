@@ -1,5 +1,40 @@
 $banner-proportion: 60%;
 
+.myhpom-header__navbar--main {
+    position: absolute;
+    z-index: $zindex-sticky;
+    left: 50%;
+    transform: translateX(-50%);
+
+    @include media-breakpoint-down(sm) {
+        border-bottom: 1px solid $navbar-dark-toggler-border-color;
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, #0b8dbe 100%);
+    }
+}
+
+.myhpom-header__navbar-brand--home {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.myhpom-header__logo--home {
+    @include media-breakpoint-up(md) {
+        max-width: 25rem;
+    }
+}
+
+.myhpom-header__home-logo-caption {
+    @include serif;
+    font-weight: 400;
+    color: $brand-orange;
+    align-self: flex-end;
+
+    @include media-breakpoint-down(sm) {
+        display: none;
+    }
+}
+
 .homepage__section {
     margin-left: -15px;
     margin-right: -15px;

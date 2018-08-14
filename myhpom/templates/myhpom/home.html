@@ -2,6 +2,10 @@
 {% load staticfiles %}
 {% load scribbler_tags %}
 
+{% block header %}
+{% include 'myhpom/includes/header.html' with home=1 %}
+{% endblock header %}
+
 {% block main_container_class %}container-fluid myhpom-page__container{% endblock main_container_class %}
 
 {% block main_content %}
