@@ -1,3 +1,7 @@
+.login__generic-error {
+  color: red;
+}
+
 .login__forgot-password {
   @extend .text-right;
 }
@@ -12,4 +16,3 @@
   width: auto;
   padding: 0.5rem;
 }
-
