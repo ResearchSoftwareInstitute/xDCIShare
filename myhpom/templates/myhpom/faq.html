@@ -68,7 +68,9 @@
                     data-parent="#faq_accordian"
                     data-name="#{{ entry.name }}"
                 >
-                    <div class="col faq-entry__body">{{ entry.answer }}</div>
+                    <div class="faq-entry__wrapper">
+                        <div class="col faq-entry__body">{{ entry.answer }}</div>
+                    </div>
                 </div>
             </div>
             {% endfor %}

@@ -112,6 +112,7 @@
   color: $brand-orange;
   font-size: 20px;
   margin-right: 2rem;
+  padding-left: 0.5rem;
 }
 
 [data-toggle="collapse"].collapsed + .faq-entry__header__collapser::after {
@@ -120,6 +121,7 @@
   color: $brand-orange;
   font-size: 20px;
   margin-right: 2rem;
+  padding-left: 0.5rem;
 }
 
 .faq-entry__body {
