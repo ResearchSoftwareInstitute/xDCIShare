@@ -1,8 +1,77 @@
 {% extends "myhpom/base.html" %}
+{% load scribbler_tags %}
+
+{% block main_container_class %}myhpom-page__container{% endblock main_container_class %}
 
 {% block main_content %}
     <section class="content-page__hero-banner"></section>
-    <section class="why-plan__overview"></section>
+    <section class="why-plan-overview">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="why-plan-overview__title">
+                        Why Plan?
+                    </h1>
+                    <h2 class="why-plan-overview__subtitle">
+                        A quick guide to how an advance care plan
+                        keeps your care in check.
+                    </h2>
+                    <div class="mt-3 mb-4 why-plan-overview__text">
+                        {% scribble 'why-plan' 'overview' %}
+                        An <em>advance directive</em> is a legal document which
+                        allows you to record your healthcare wishes in case you can
+                        no longer speak for yourself. These documents can also be
+                        combined with Power of Attorney documents and are used by
+                        medical professionals as well as family and caregivers to
+                        ensure your decisions are heard and respected.
+                        {% endscribble %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 col-md-3">
+                    <div class="why-plan-overview__link-container">
+                        <div class="why-plan-overview__link">
+                            <a href="#">Ownership</a>
+                        </div>
+                        <div class="why-plan-overview__link-text">
+                            It empowers you to make your own healthcare decisions.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="why-plan-overview__link-container">
+                        <div class="why-plan-overview__link">
+                            <a href="#">Communication</a>
+                        </div>
+                        <div class="why-plan-overview__link-text">
+                            It allows you a clear, concise way to share your choices.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="why-plan-overview__link-container">
+                        <div class="why-plan-overview__link">
+                            <a href="#">Responsibility</a>
+                        </div>
+                        <div class="why-plan-overview__link-text">
+                            Reduces difficulty on yourself and those you care about.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="why-plan-overview__link-container">
+                        <div class="why-plan-overview__link">
+                            <a href="#">Peace of mind</a>
+                        </div>
+                        <div class="why-plan-overview__link-text">
+                            Brings confidence that your wishes will be heard.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section class="why-plan__ownership"></section>
     <section class="why-plan__communication"></section>
     <section class="why-plan__responsibility"></section>

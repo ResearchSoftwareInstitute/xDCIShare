@@ -1,0 +1,52 @@
+.why-plan-overview {
+    background-color: $brand-blue-medium;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.why-plan-overview__title {
+    @include serif;
+    color: white;
+    font-weight: normal;
+    font-size: 3.5rem;
+}
+
+.why-plan-overview__subtitle {
+    color: $brand-blue-medium-fade-40;
+    font-size: 1.25rem;
+    font-weight: normal;
+}
+
+.why-plan-overview__text {
+    @include serif;
+
+    em {
+        font-style: normal;
+        color: $brand-blue-medium-fade-40;
+    }
+}
+
+.why-plan-overview__link-container {
+    @include media-breakpoint-down(sm) {
+        margin-bottom: 1rem;
+    }
+}
+
+.why-plan-overview__link {
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+
+    :any-link {
+        color: white;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.why-plan-overview__link-text {
+    color: $brand-blue-medium-fade-40;
+}
