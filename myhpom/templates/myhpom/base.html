@@ -32,10 +32,12 @@
         {% block extra-head %}{% endblock %}
     </head>
     <body class="myhpom-page--flush-footer">
+        {% block header %}
         {% include 'myhpom/includes/header.html' %}
+        {% endblock header %}
 
         <main class="main myhpom-page__main--flush-footer{% block main_class %}{% endblock main_class %}">
-            <div class="container myhpom-page__container{% block main_container_class %}{% endblock main_container_class %}">
+            <div class="{% block main_container_class %}container myhpom-page__container{% endblock main_container_class %}">
                 {% block main_content %}{% endblock main_content %}
             </div>
         </main>

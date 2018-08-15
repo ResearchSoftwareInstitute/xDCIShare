@@ -1,10 +1,12 @@
 import os
+import random
 import yaml
 
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.urlresolvers import reverse
 
 from myhpom import models
@@ -25,7 +27,13 @@ def home(request):
     if request.user.is_authenticated():
         return redirect(reverse('myhpom:dashboard'))
 
-    return render(request, 'myhpom/home.html')
+    return render(
+        request,
+        'myhpom/home.html',
+        {
+            'hero_image': static('myhpom/img/home/mmh-home-%s.jpg' % (random.choice((1, 2, 3,)))),
+        }
+    )
 
 
 @require_GET
