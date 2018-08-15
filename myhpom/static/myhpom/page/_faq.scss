@@ -96,7 +96,8 @@
   padding: 0;
 }
 
-.faq-entry__header__button:hover {
+.faq-entry__header__button:hover,
+.faq-entry__header__button:focus {
   text-decoration-color: $brand-orange;
 }
 
