@@ -17,6 +17,12 @@
     </di>
 </dl>
 
+{% if request.user.advancedirective.thumbnail %}
+<a href="{{ request.user.advancedirective.document.url }}" target="_blank" rel="noopener noreferrer">
+    <img class="advance-directive-widget__thumbnail" src="{{ request.user.advancedirective.thumbnail.url }}"/>
+</a>
+{% endif %}
+
 <a class="advance-directive-widget__button--primary" href="{{ request.user.advancedirective.document.url }}" target="_blank" rel="noopener noreferrer">Download</a>
 
 <a class="mt-2 advance-directive-widget__delete-link" href="#delete-modal" data-no-ajax="true" data-toggle="modal" data-target="#delete-modal">Delete document</a>

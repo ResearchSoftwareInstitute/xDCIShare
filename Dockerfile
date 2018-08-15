@@ -10,6 +10,10 @@ RUN cd /opt && npm install
 RUN npm install -g astrum
 ### End - HydroShare Development Image Additions ###
 
+# Install Ghostscript
+ADD install-gs.sh /opt
+RUN /opt/install-gs.sh
+
 # Patch for Mezzanone 4.10 collecttemplates bugfix
 RUN echo -e "\
 \n42c42,44\

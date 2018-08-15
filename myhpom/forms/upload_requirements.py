@@ -39,6 +39,11 @@ class UploadRequirementsForm(forms.ModelForm):
 
         return data
 
+    def save(self, commit=True):
+        saved = super(forms.ModelForm, self).save(commit=commit)
+        self.instance.save_thumbnail(save=commit)
+        return saved
+
 
 class SharingForm(forms.ModelForm):
     """ Update the sharing settings for the user's AD """
