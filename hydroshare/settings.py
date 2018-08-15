@@ -233,6 +233,16 @@ OPTIONAL_APPS = (
 
 DEBUG_TOOLBAR_CONFIG = {"INTERCEPT_REDIRECTS": False}
 
+###################
+# MYHPOM Settings #
+###################
+
+# Maximum size of file uploads in bytes:
+MAX_AD_SIZE = 25 * 1024 * 1024
+
+# Where users are directed to send contacts in MYHPOM:
+CONTACT_EMAIL = 'contact@example.com'
+
 ##################
 # LOCAL SETTINGS #
 ##################
@@ -353,9 +363,3 @@ LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 
 # Custom test runner that excludes apps we don't use
 TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
-
-
-# MYHPOM settings
-
-# Maximum size of file uploads in bytes:
-MAX_AD_SIZE = 25 * 1024 * 1024

@@ -1,4 +1,8 @@
+import os
 import random
+import yaml
+
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET
@@ -15,6 +19,9 @@ from myhpom.views.upload import (upload_current_ad, upload_index, upload_require
 from myhpom.views.signup import signup
 from myhpom.views.profile import (edit_profile, view_profile)
 
+FAQS = yaml.load(open(os.path.join(settings.PROJECT_ROOT, '../myhpom/static/myhpom/data/faq.yaml'), 'r'))
+
+
 @require_GET
 def home(request):
     if request.user.is_authenticated():
@@ -27,6 +34,15 @@ def home(request):
             'hero_image': static('myhpom/img/home/mmh-home-%s.jpg' % (random.choice((1, 2, 3,)))),
         }
     )
+
+
+@require_GET
+def faq(request):
+    context = {
+        'contact_email': settings.CONTACT_EMAIL,
+        'faqs': FAQS,
+    }
+    return render(request, 'myhpom/faq.html', context)
 
 
 @require_GET
