@@ -132,17 +132,6 @@ html [type="button"].close--link {
     border-color: darken($light-gray, 50%);
 }
 
-.psuedo-modal__submit-button {
-    @extend .btn-secondary;
-    padding: 1em 2em;
-    font-size: 125%;
-    width: 100%;
-
-    &:disabled, &.disabled {
-        color: rgba(255, 255, 255, 0.9);
-    }
-}
-
 /*
     Links
 */
