@@ -96,6 +96,10 @@
   padding: 0;
 }
 
+.faq-entry__header__button:hover {
+  text-decoration-color: $brand-orange;
+}
+
 .faq-entry__header__content {
   color: $brand-orange;
   font-size: 1.2rem;
