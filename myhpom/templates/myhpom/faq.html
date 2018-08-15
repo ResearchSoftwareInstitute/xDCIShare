@@ -69,7 +69,7 @@
                     data-name="#{{ entry.name }}"
                 >
                     <div class="faq-entry__wrapper">
-                        <div class="col faq-entry__body">{{ entry.answer }}</div>
+                        <div class="col faq-entry__body">{{ entry.answer|safe }}</div>
                     </div>
                 </div>
             </div>

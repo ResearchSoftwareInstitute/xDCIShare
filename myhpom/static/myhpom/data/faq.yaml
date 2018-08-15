@@ -36,7 +36,7 @@
     tooltip: "Mind My Health stores your advance care plan in our secure, online registry."
   - question: I already made an advance care plan. Can I still upload it?
     name: i_already_made_an_advance_care_plan
-    answer: "Yes! Congratulations on keeping your advance care in check. If your advance care plan document meets state requirements, you are ready to upload it. Your next step is to make sure your document meets our technical requirements (link to technical requirements FAQ). Once ready, upload your advance care plan to Mind My Health. If you are unsure that your advance care plan meets your state's requirements, please consult a legal professional. For those living North Carolina, here is a list of the state's requirements. (link to NC requirements)"
+    answer: Yes! Congratulations on keeping your advance care in check. If your advance care plan document meets state requirements, you are ready to upload it. Your next step is to make sure your document meets our technical requirements (link to technical requirements FAQ). Once ready, upload your advance care plan to Mind My Health. If you are unsure that your advance care plan meets your state's requirements, please consult a legal professional. For those living North Carolina, here is a list of the state's requirements. (link to NC requirements)
     tooltip: Yes. Please make sure your document meets your state's requirements and our technical requirements and start your upload.
   - question: Who can access my plan when I upload it?
     name: who_can_access_my_plan_when_i_upload_it
@@ -47,9 +47,9 @@
     answer: Mind My Health is not responsible for the authenticity nor guarantees use of your document at a healthcare institution. It is the user's responsibility to meet legal requirements and communicate to their caregivers and medical professionals the contents of their advance care plan. We recommend printing a copy of your advance care document to have available to your caregivers or medical professionals in case of emergency.
     tooltip: Mind My Health is not responsible for the authenticity nor guarantees use of your document at a healthcare institution.
   - question: "How do I access my document?"
-    name: "How_do_I_access_my_document"
-    answer: To access your document, log in to Mind My Health (link to homepage) and select the "Download Document" button on your Dashboard. If you are having trouble logging in, click here (account recovery info).
-    tooltip: To access your document, log in to Mind My Health (link to homepage) and select the "Download Document" button on your Dashboard.
+    name: how_do_i_access_my_document
+    answer: To access your document, log in to <a href="/">Mind My Health</a> and select the "Download Document" button on your Dashboard. If you are having trouble logging in, click here (account recovery info).
+    tooltip: To access your document, log in to <a href="/">Mind My Health</a> and select the "Download Document" button on your Dashboard.
   - question: Can I upload more than one document?
     name: can_i_upload_more_than_one_document
     answer: "Mind My Health accepts a single advance care plan document. That document must be in the form of an Adobe Acrobat PDF. Your document may contain more than one page, but the filesize must be no more than 5MB. If you have more than one advance care document, consider combining your document into a single PDF or making a new one based upon our provided template (link to provided template)."
@@ -76,7 +76,7 @@
     tooltip: "You are able to download your advance care plan and share it, but your family, friend, or caregiver cannot directly access your document on this site."
   - question: How can I use Mind My Health to become an organ donor?
     name: how_can_i_use_mind_my_health_to_become_an_organ_donor
-    answer: "Deciding if you want to be an organ donor is an important part of your advance care plan. Complete your member profile by including your organ donor status. Want to know more about how organ donation is an important decision in advance care planning, click here (link to https://www.donatelifenc.org/content/frequently-asked-questions). Ready to save lives by being an organ donor, start here (link to https://www.donatelifenc.org/)."
+    answer: Deciding if you want to be an organ donor is an important part of your advance care plan. Complete your member profile by including your organ donor status. Want to know more about how organ donation is an important decision in advance care planning, <a href="https://www.donatelifenc.org/content/frequently-asked-questions">click here</a>. Ready to save lives by being an organ donor, <a href="https://www.donatelifenc.org/">start here</a>.
     tooltip: Complete your Mind My Health member profile by including your organ donor status. 
   - question: Who can sign up to become an organ donor?
     name: who_can_sign_up_to_become_an_organ_donor
@@ -111,7 +111,7 @@
     answer: A health care power of attorney is a legal document that allows you to name a person to serve as your "Healthcare Agent." Your agent is able to make decisions about your care if you are not able to make care decisions yourself.
     tooltip: A health care power of attorney is a legal document that allows you to name a person to serve as your "Healthcare Agent."
   - question: "If I appoint a healthcare agent, what can that person do?"
-    name: "If_I_appoint_a_healthcare_agent,_what_can_that_person_do"
+    name: if_i_appoint_a_healthcare_agent
     answer: "Your agent can make almost any healthcare decision you would normally make. If you have documented specific preferences in a living will (e.g. you do not want a feeding tube), your healthcare agent cannot change these wishes. (paragraph break). The types of care decisions your agent can make include  (put in bullet form): Starting or stopping life prolonging measures, Decisions on pain medication, Choosing your doctors and facilities"
     tooltip: Your agent can make almost any healthcare decision you would normally make. 
   - question: When does my healthcare agent make decisions for me?
@@ -120,7 +120,7 @@
     tooltip: Your healthcare agent will make decisions for you if you are no longer able to make them for yourself. 
   - question: Who can be my Healthcare Agent?
     name: who_can_be_my_healthcare_agent
-    answer: "When choosing your agent, you want to make sure it is someone with whom you feel comfortable sharing your wishes. Commonly, people will appoint a spouse, family member, or a close friend to be their agent. (Paragraph break) There are some restrictions on who can be your agent. Your agent must be at least 18 years old. If you live in North Carolina, your agent cannot be your healthcare provider."
+    answer: "When choosing your agent, you want to make sure it is someone with whom you feel comfortable sharing your wishes. Commonly, people will appoint a spouse, family member, or a close friend to be their agent. <br/><br/>There are some restrictions on who can be your agent. Your agent must be at least 18 years old. If you live in North Carolina, your agent cannot be your healthcare provider."
     tooltip: There are some restrictions on who can be your agent. Your agent must be at least 18 years old. 
   - question: What if I don't have the legal requirements for my Advance Care Plan?
     name: what_if_i_don't_have_the_legal_requirements_for_my_Advance_Care_Plan
@@ -152,11 +152,11 @@
     tooltip: A notary is a person certified by state governments to act as a witness and make sure that a document is free of fraud. 
   - question: How can I find a notary?
     name: how_can_i_find_a_notary
-    answer: "Most banks have a notary (link to what is a notary FAQ). Also, many states have a directory. For example, North Carolina's registry of notaries is located here (link to https://www.sosnc.gov/online_services/notary/find_a_notary). "
+    answer: Most banks have a notary (link to what is a notary FAQ). Also, many states have a directory. For example, North Carolina's registry of notaries is <a href="https://www.sosnc.gov/online_services/notary/find_a_notary">located here</a>.
     tooltip: "Most banks have a notary, and many states have a listings directory."
   - question: Who can be a witness for my plan?
     name: who_can_be_a_witness_for_my_plan
-    answer: "Your witnesses must be at least eighteen years old. They cannot be (bulleted list)  ▪ related to you by blood or marriage, ▪ your heir, or a person named to receive a portion of your estate in your will, ▪ someone who has a claim against you or against your estate, or ▪ your doctor, other health care provider, or an employee of a hospital in which you are a patient, or an employee of the nursing home or adult care home where you live.                "
+    answer: Your witnesses must be at least eighteen years old. They cannot be  <ul><li>related to you by blood or marriage</li><li>your heir, or a person named to receive a portion of your estate in your will</li><li>someone who has a claim against you or against your estate</li><li>your doctor, other health care provider, or an employee of a hospital in which you are a patient, or an employee of the nursing home or adult care home where you live.</li></ul>
     tooltip: "Witnesses must be at least eighteen years old. They cannot be related to you, able to benefit from your avance care plan, or  your healthcare provider."
 
 - name: help
