@@ -1,0 +1,18 @@
+.login__generic-error {
+  color: red;
+}
+
+.login__forgot-password {
+  @extend .text-right;
+}
+
+.login__forgot-password__link {
+  color: $brand-orange;
+}
+
+.login__submit {
+  @extend .psuedo-modal__submit-button;
+
+  width: auto;
+  padding: 0.5rem;
+}
