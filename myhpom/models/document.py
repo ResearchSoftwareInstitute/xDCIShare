@@ -6,6 +6,9 @@ from django.core.files.base import ContentFile
 from myhpom.validators import validate_date_in_past
 from bgs import GS
 
+PDF_RESOLUTION = 150  # this is the resolution at which to render the PDF to images.
+THUMBNAIL_WIDTH = 508  # this is the exact maximum width of the thumbnail in the layout
+
 
 class AdvanceDirective(models.Model):
     """ A user's Advance Directive. """
@@ -33,10 +36,15 @@ class AdvanceDirective(models.Model):
     def filename(self):
         return self.original_filename or os.path.basename(self.document.name)
 
-    def save_thumbnail(self, save=True, res=150, **gsargs):
-        self.render_images(save=save, save_thumbnail=True, allpages=False, res=res, **gsargs)
+    def save_thumbnail(self, save=True, res=PDF_RESOLUTION, **gsargs):
+        mogrify = {'resize': "%dx>" % THUMBNAIL_WIDTH}
+        self.render_images(
+            save=save, save_thumbnail=True, allpages=False, res=res, mogrify=mogrify, **gsargs
+        )
 
-    def render_images(self, save=True, save_thumbnail=True, allpages=True, res=150, **gsargs):
+    def render_images(
+        self, save=True, save_thumbnail=True, allpages=True, res=PDF_RESOLUTION, **gsargs
+    ):
         """create one or more images of pages of the current document. 
         Requires that the AD has a document in storage
         Returns a list of (temporary) filenames (deleted after the AD object goes out of scope).
@@ -46,10 +54,11 @@ class AdvanceDirective(models.Model):
             (if all you want is a thumbnail, creating only the first page is MUCH faster)
         * res=150: the resolution of the output images based on the pdf page size
         * **gsargs: The GS.render() method takes several other arguments that you can specify:
-            * outfn = specify the output filename. If multiple pages, a numerical counter is added.
-            * device = the device to use to create the output; implies the file extension
-            * alpha = the number of bits to use for the alpha value.
-            * quality = the jpeg quality: 100 = highest.
+            * outfn: specify the output filename. If multiple pages, a numerical counter is added.
+            * device='jpeg': the device to use to create the output; implies the file extension
+            * alpha=4: the number of bits to use for the alpha value.
+            * quality=90: the jpeg quality: 100 = highest.
+            * mogrify=None: if given, these are post-processing arguments to mogrify (ImageMagick)
         """
         gs = GS()  # ghostscript interpreter
         # first write the document to a temporary file in the filesystem
