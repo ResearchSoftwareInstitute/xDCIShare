@@ -34,7 +34,7 @@
     </div>
     <div class="row">
     <div class="col">
-        <div class="accordian" id="faq_accordian">
+        <div class="accordion" id="faq_accordion">
         {% for section in faqs %}
         <div class="faq-section" id="{{ section.name }}">
             <div class="row faq-section__title">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div id="{{ section.name }}_{{ forloop.counter }}" class="row collapse"
-                    data-parent="#faq_accordian"
+                    data-parent="#faq_accordion"
                     data-name="#{{ entry.name }}"
                 >
                     <div class="faq-entry__wrapper">
@@ -109,7 +109,7 @@ jQuery(function ($) {
     });
 
     // Change the anchor tag to reflect the current element
-    var $faqEntryHeaders = $('#faq_accordian');
+    var $faqEntryHeaders = $('#faq_accordion');
     $($faqEntryHeaders).on('shown.bs.collapse', function (e) {
         window.location.hash = $(e.target).data('name');
     });
