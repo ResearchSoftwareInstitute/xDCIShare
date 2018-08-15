@@ -28,6 +28,8 @@ class StateAdmin(admin.ModelAdmin):
 
 class ScribbleAdmin(admin.ModelAdmin):
     model = Scribble
+    readonly_fields = ['slug', 'url']
+    list_display = ['slug', 'name', 'url']
 
 
 admin.site.register(State, StateAdmin)
