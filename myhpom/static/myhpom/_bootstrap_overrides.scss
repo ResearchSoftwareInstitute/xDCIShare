@@ -2,10 +2,33 @@
     color: white;
 }
 
+.btn--wide {
+    min-width: 12em;
+}
+
+.btn--big {
+    @extend .btn--wide;
+    font-size: 125%;
+}
+
+.col--centered {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .col-sm-down--no-padding {
     @include media-breakpoint-down(sm) {
         padding-left: 0;
         padding-right: 0;
+    }
+}
+
+.d-xs-only-none {
+    @include media-breakpoint-down(xs) {
+        display: none;
     }
 }
 
@@ -28,4 +51,11 @@ a:not(.btn):not(.img-link):hover {
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: inherit;
+}
+
+// Layout
+ul.row {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
 }

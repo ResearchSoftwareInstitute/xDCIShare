@@ -5,22 +5,19 @@
 <div class="modal show pseudo-modal">
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
-            <div class="modal-header modal-header--main pseudo-modal__header">
-                <h1 class="modal-title pseudo-modal__title--centered">
+            <div class="pb-0 modal-header modal-header--main pseudo-modal__header">
+                <h1 class="mx-auto modal-title pseudo-modal__title--centered">
                     Thank you for registering
                 </h1>
-                <a href="{% url 'myhpom:home' %}" type="button" class="close close--link" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
             </div>
 
-            <div class="modal-header modal-header--subtitle pseudo-modal__header">
-                <p class="pseudo-modal__header-caption-text">
+            <div class="pt-1 pb-1 modal-header modal-header--subtitle pseudo-modal__header">
+                <p class="mb-0 pseudo-modal__header-caption-text">
                     {% scribble 'next-steps-header' 'shared' %}{% lorem 24 w %}{% endscribble %}
                 </p>
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body pseudo-modal__body">
                 <div class="row">
                     <div class="col-12">
                         <h3>Welcome!</h3>
@@ -45,9 +42,9 @@
                         <form method="post" action="{% url 'myhpom:next_steps' %}">
                             {% csrf_token %}
                             <div class="form-group">
-                                <label for="id_custom_provider">Please share your healthcare network:</label>
+                                <label class="pseudo-modal__label" for="id_custom_provider">Please share your healthcare network:</label>
                                 <input
-                                    class="form-control"
+                                    class="form-control pseudo-modal__input"
                                     aria-describedby="custom_provider_help"
                                     type="text"
                                     name="custom_provider"
@@ -62,7 +59,7 @@
                                         How do I find my healthcare network?
                                     </a>
                                 </small>
-                                <input type="submit" class="btn btn-primary float-right" value="Submit" />
+                                <input type="submit" class="btn btn-secondary btn--wide float-right" value="Submit" />
                             </div>
                         </form>
                     </div>
