@@ -122,6 +122,10 @@ html [type="button"].close--link {
     font-weight: $modal-heavy-font-weight;
 }
 
+.pseudo-modal__label--subdued {
+    font-weight: normal;
+}
+
 .pseudo-modal__label--center-full {
     text-align: center;
     width: 100%;
@@ -153,4 +157,8 @@ html [type="button"].close--link {
 .pseudo-modal__skip-link {
     @extend .form-group-tos__link;
     line-height: 1;
+}
+
+.pseudo-modal__tooltip-text {
+    @include orange-link;
 }
