@@ -5,6 +5,10 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    @include media-breakpoint-down(xs) {
+        height: 80vw;
+    }
 }
 /*
     Overview section
