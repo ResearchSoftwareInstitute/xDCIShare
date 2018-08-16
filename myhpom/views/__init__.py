@@ -43,6 +43,11 @@ def about(request):
 
 
 @require_GET
+def privacy(request):
+    return render(request, 'myhpom/privacy.html')
+
+
+@require_GET
 def faq(request):
     context = {
         'contact_email': settings.CONTACT_EMAIL,
