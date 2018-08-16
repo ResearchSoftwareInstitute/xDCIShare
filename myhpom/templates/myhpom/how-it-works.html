@@ -2,11 +2,7 @@
 {% load scribbler_tags %}
 
 {% block main_content %}
-<div class="row">
-<div class="col">
-    {% scribble 'how-it-works-text' 'how-it-works' %}
-    {% lorem %}
-    {% endscribble %}
-</div>
-</div>
+{% scribble 'how-it-works-text' 'how-it-works' %}
+{% lorem %}
+{% endscribble %}
 {% endblock main_content %}
