@@ -2,7 +2,9 @@
 {% load scribbler_tags %}
 
 {% block main_content %}
-{% scribble 'legal-text' 'legal' %}
-{% lorem %}
-{% endscribble %}
+<div class="py-4">
+    {% scribble 'legal-text' 'legal' %}
+    {% lorem %}
+    {% endscribble %}
+</div>
 {% endblock main_content %}

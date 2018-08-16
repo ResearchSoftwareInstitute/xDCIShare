@@ -2,7 +2,9 @@
 {% load scribbler_tags %}
 
 {% block main_content %}
-{% scribble 'privacy-text' 'privacy' %}
-{% lorem %}
-{% endscribble %}
+<div class="py-4">
+    {% scribble 'privacy-text' 'privacy' %}
+    {% lorem %}
+    {% endscribble %}
+</div>
 {% endblock main_content %}
