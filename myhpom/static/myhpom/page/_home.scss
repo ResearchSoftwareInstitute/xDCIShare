@@ -180,6 +180,14 @@ $banner-proportion: 60%;
     border: 2px solid $brand-blue;
 }
 
+.question:hover .question__inner-text,
+.question__inner-text:hover {
+    text-decoration: none;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: inherit;
+}
+
 .questions-section__link {
     color: $white!important;
 }
