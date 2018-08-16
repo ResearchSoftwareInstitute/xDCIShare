@@ -91,12 +91,12 @@
 
 {% block extra-js %}
 <script>
-if (window.location.hash) {
-    var id = window.location.hash.replace(/^#/,'');
-    document.getElementById(id).scrollIntoView();
-}
-
 jQuery(function ($) {
+    if (window.location.hash) {
+        var id = window.location.hash.replace(/^#/,'');
+        document.getElementById(id).scrollIntoView();
+    }
+    
     // Style the headings if the user has selected that element
     $('.faq-heading__section').map(function() {
         var url = $(this).prop('href');
