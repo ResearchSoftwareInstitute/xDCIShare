@@ -76,10 +76,10 @@
     <section class="why-plan-bigimg">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col--big-img">
+                <div class="col-md-6">
                     <img src="{% static 'myhpom/img/why-plan/mmh-whyplan-markinset1.png' %}" alt="" class="why-plan-bigimg__img">
                 </div>
-                <div class="col-md-6 col--big-img">
+                <div class="col-md-6">
                     <h2 class="why-plan-bigimg__title">
                         It Empowers You to Own Your Health
                     </h2>
@@ -95,7 +95,28 @@
             </div>
         </div>
     </section>
-    <section class="why-plan__big-img-section--right"></section>
-    <section class="why-plan__big-img-section"></section>
-    <section class="why-plan__big-img-section--right"></section>
+    <section class="why-plan-quote">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-9 col--centered">
+                    <blockquote class="mb-0 why-plan-quote__blockquote">
+                        <div class="mb-2 why-plan-quote__text">{% scribble 'why-plan' 'sarah-wong-quote' %}{% lorem 36 w %}{% endscribble %}</div>
+                        <footer class="why-plan-quote__source">
+                            Sarah Wong of Charleston, NC
+                        </footer>
+                    </blockquote>
+                </div>
+                <div class="col-sm-6 col-lg-2 col--centered">
+                    <div class="why-plan-quote__img-container">
+                        <img class="why-plan-quote__img" src="{% static 'myhpom/img/why-plan/mmh-whyplan-inset2.jpg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="why-plan-bigimg"></section>
+    <section class="why-plan-blockquote-section"></section>
+    <section class="why-plan-bigimg"></section>
+    <section class="why-plan-blockquote-section"></section>
+    <section class="why-plan-bigimg"></section>
 {% endblock main_content %}

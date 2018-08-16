@@ -61,10 +61,6 @@
     padding: 2rem;
 }
 
-.col--big-img {
-    padding: 2.5rem;
-}
-
 .why-plan-bigimg__img {
     max-width: 100%;
     height: auto;
@@ -78,4 +74,53 @@
 
 .why-plan-bigimg__subtitle {
     color: $brand-blue;
+}
+
+/*
+    Blockquote sections
+*/
+.why-plan-quote {
+    background-color: $brand-blue;
+    color: white;
+    padding: 2rem 0;
+    font-size: 110%;
+
+    @include media-breakpoint-down(xs) {
+        padding: 2rem;
+    }
+}
+
+.why-plan-quote__text {
+    fong-weight: 700;
+
+    > div::before {
+        content: "“";
+    }
+
+    > div::after {
+        content: "”";
+    }
+}
+
+.why-plan-quote__source {
+    text-transform: uppercase;
+    color: $brand-blue-medium-fade-40;
+    font-weight: 600;
+
+    &::before {
+        content: "— ";
+    }
+}
+
+.why-plan-quote__img-container {
+    border-radius: 0.4rem;
+    overflow: hidden;
+
+    @include media-breakpoint-down(xs) {
+        display: none;
+    }
+}
+
+.why-plan-quote__img {
+    width: 100%;
 }
