@@ -1,3 +1,11 @@
+.content-page__hero-banner {
+    width: 100vw;
+    height: 40vw;
+    background-color: $brand-blue-medium;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 /*
     Overview section
 */
@@ -18,7 +26,7 @@
 .why-plan-overview__subtitle {
     color: $brand-blue-medium-fade-40;
     font-size: 1.25rem;
-    font-weight: normal;
+    font-weight: 600;
 }
 
 .why-plan-overview__text {
@@ -51,6 +59,7 @@
 }
 
 .why-plan-overview__link-text {
+    @include serif;
     color: $brand-blue-medium-fade-40;
 }
 
