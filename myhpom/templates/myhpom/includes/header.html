@@ -2,7 +2,7 @@
 
 <header class="shadow-sm myhpom-header {% if home %} myhpom-header--main{% endif %}">
     <nav class="navbar navbar-dark navbar-expand-lg container myhpom-header__navbar{% if home %} myhpom-header__navbar--main{% endif %}">
-        <a class="navbar-brand mb-0 mr-4 h1 img-link myhpom-header__navbar-brand{% if home %} myhpom-header__navbar-brand--home{% endif %}" href="">
+        <a class="navbar-brand mb-0 mr-4 h1 img-link myhpom-header__navbar-brand{% if home %} myhpom-header__navbar-brand--home{% endif %}" href="{% url 'myhpom:home' %}">
             <img class="myhpom-header__logo{% if home %} myhpom-header__logo--home{% endif %}" src="{% static 'myhpom/img/logo/mmh-logo-hor-color-rev@3x.png' %}" alt="Mind My Health">
             {% if home %}
                 <span class="myhpom-header__home-logo-caption">

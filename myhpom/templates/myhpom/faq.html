@@ -17,12 +17,12 @@
 <div class="col">
     <div class="row faq-heading">
         {% for section in faqs %}
-        <div class="col-md 
+        <div class="col-md
             {% if forloop.first %}faq-heading__section-wrapper--first
             {% elif forloop.last %}faq-heading__section-wrapper--last
             {% else %}faq-heading__section-wrapper{% endif %}"
         >
-            <a class="faq-heading__section 
+            <a class="faq-heading__section
                {% if forloop.first %}faq-heading__section--first
                {% elif forloop.last %}faq-heading__section--last{% endif %}"
                 href="#{{ section.name }}"
@@ -50,7 +50,7 @@
                 {% endif %}
             </div>
             {% for entry in section.entries %}
-            <div class="faq-entry">
+            <div class="faq-entry" id="{{ entry.name }}">
                 <div class="row faq-entry__header">
                     <div class="col">
                         <div class="d-flex">
@@ -95,6 +95,11 @@
 {% block extra-js %}
 <script>
 jQuery(function ($) {
+    if (window.location.hash) {
+        var id = window.location.hash.replace(/^#/,'');
+        document.getElementById(id).scrollIntoView();
+    }
+    
     // Style the headings if the user has selected that element
     $('.faq-heading__section').map(function() {
         var url = $(this).prop('href');
