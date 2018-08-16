@@ -27,5 +27,6 @@ urlpatterns = [
     url(r'^faq/?$', myhpom_views.faq, name='faq'),
     url(r'^(?P<slug>[a-zA-Z0-9\-]+)/?$', myhpom_views.content_page, name='content'),
     url(r'^about/?$', myhpom_views.about, name='about'),
+    url(r'^legal/?$', myhpom_views.legal, name='legal'),
     url(r'^privacy/?$', myhpom_views.privacy, name='privacy'),
 ]

@@ -43,6 +43,11 @@ def about(request):
 
 
 @require_GET
+def legal(request):
+    return render(request, 'myhpom/legal.html')
+
+
+@require_GET
 def privacy(request):
     return render(request, 'myhpom/privacy.html')
 
