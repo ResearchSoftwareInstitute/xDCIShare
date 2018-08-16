@@ -115,12 +115,6 @@ jQuery(function ($) {
             $(this).collapse('show');
         }
     });
-
-    // Change the anchor tag to reflect the current element
-    var $faqEntryHeaders = $('#faq_accordion');
-    $($faqEntryHeaders).on('shown.bs.collapse', function (e) {
-        window.location.hash = $(e.target).data('name');
-    });
 });
 </script>
 {% endblock extra-js %}
