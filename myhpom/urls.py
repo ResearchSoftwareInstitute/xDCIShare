@@ -1,5 +1,7 @@
 from django.conf import settings
 from django.conf.urls import url
+from django.shortcuts import render
+
 from myhpom import views as myhpom_views
 
 urlpatterns = [
@@ -25,5 +27,20 @@ urlpatterns = [
     url(r'^profile/?$', myhpom_views.view_profile, name='view_profile'),
     url(r'^profile/edit/?$', myhpom_views.edit_profile, name='edit_profile'),
     url(r'^faq/?$', myhpom_views.faq, name='faq'),
-    url(r'^(?P<slug>[a-zA-Z0-9\-]+)/?$', myhpom_views.content_page, name='content'),
 ]
+
+# Static pages that have no actual view logic (but likely will at some future
+# date):
+static_views = [
+    [r'^about/?', 'about', 'myhpom/about.html'],
+    [r'^how-it-works/?', 'how-it-works', 'myhpom/how-it-works.html'],
+    [r'^legal/?', 'legal', 'myhpom/legal.html'],
+    [r'^privacy/?', 'privacy', 'myhpom/privacy.html'],
+    [r'^why-plan/?', 'why-plan', 'myhpom/content/why-plan.html'],
+]
+
+
+for pattern, name, template in static_views:
+    urlpatterns.append(
+        url(pattern, myhpom_views.content_page, {'template': template}, name=name)
+    )
