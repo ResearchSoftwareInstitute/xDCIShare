@@ -63,6 +63,8 @@
                             <div class="flex-fill faq-entry__header__collapser"
                                 data-toggle="collapse"
                                 data-target="#{{ section.name }}_{{ forloop.counter }}"
+                                role="button"
+                                tabindex="0"
                             ></div>
                         </div>
                     </div>
@@ -99,7 +101,7 @@ jQuery(function ($) {
         var id = window.location.hash.replace(/^#/,'');
         document.getElementById(id).scrollIntoView();
     }
-    
+
     // Style the headings if the user has selected that element
     $('.faq-heading__section').map(function() {
         var url = $(this).prop('href');
@@ -114,12 +116,6 @@ jQuery(function ($) {
         if (name === window.location.hash) {
             $(this).collapse('show');
         }
-    });
-
-    // Change the anchor tag to reflect the current element
-    var $faqEntryHeaders = $('#faq_accordion');
-    $($faqEntryHeaders).on('shown.bs.collapse', function (e) {
-        window.location.hash = $(e.target).data('name');
     });
 });
 </script>
