@@ -1,6 +1,5 @@
 {% extends "myhpom/base.html" %}
 {% load staticfiles %}
-{% load scribbler_tags %}
 
 {% block main_content %}
 <div class="modal show pseudo-modal">
@@ -15,11 +14,9 @@
 
             <div class="pt-1 pb-1 modal-header modal-header--subtitle modal-header--next-steps pseudo-modal__header">
                 <div class="mx-auto mb-0 pseudo-modal__header-caption-text pseudo-modal__header-caption-text--next-steps">
-                    {% scribble 'header-text' 'next_steps' %}
                     You are joining millions across the country in owning
                     your own health by planning for care in advance.
                     Your next steps:
-                    {% endscribble %}
                 </div>
             </div>
 
@@ -31,12 +28,10 @@
                                 Do you already have your advance care plan?
                             </h4>
                             <div class="next-steps__text">
-                                {% scribble 'upload-text' 'next_steps' %}
                                 <strong class="next-steps__strong">Wonderful! Is it in PDF form?</strong>
                                 <br/>
                                 Scan and save your document in high resolution
                                 to upload on your Mind My Health dashboard.
-                                {% endscribble %}
                             </div>
                             <div class="advance-directive-block-footer">
                                 <div class="advance-directive-block-footer__info-link">
@@ -54,12 +49,10 @@
                                 Are you just starting to plan your advance care?
                             </h4>
                             <div class="next-steps__text">
-                                {% scribble 'download-text' 'next_steps' %}
                                 <a class="advance-directive-block__template-link" href="{{ ad_template.url }}" target="_blank" rel="noopener noreferrer">
                                     Download our free template</a>,
                                 document your desired care, and follow the
                                 instructions on your Mind My Health Dashboard.
-                                {% endscribble %}
                             </div>
                             <div class="advance-directive-block-footer">
                                 <div class="advance-directive-block-footer__info-link">
