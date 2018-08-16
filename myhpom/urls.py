@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^profile/edit/?$', myhpom_views.edit_profile, name='edit_profile'),
     url(r'^faq/?$', myhpom_views.faq, name='faq'),
     url(r'^(?P<slug>[a-zA-Z0-9\-]+)/?$', myhpom_views.content_page, name='content'),
+    url(r'^about/?$', myhpom_views.about, name='about'),
+    # url(r'^terms/?$', myhpom_views.terms, name='terms'),
 ]
