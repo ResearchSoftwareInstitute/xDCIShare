@@ -10,15 +10,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    {% scribble 'overview-title' 'why-plan' %}
                     <h1 class="why-plan-overview__title">
                         Why Plan?
                     </h1>
+                    {% endscribble %}
+
+                    {% scribble 'overview-subtitle' 'why-plan' %}
                     <h2 class="why-plan-overview__subtitle">
                         A quick guide to how an advance care plan
                         keeps your care in check.
                     </h2>
+                    {% endscribble %}
+
                     <div class="mt-3 mb-4 why-plan-overview__text">
-                        {% scribble 'why-plan' 'overview' %}
+                        {% scribble 'overview' 'why-plan' %}
                         An <em>advance directive</em> is a legal document which
                         allows you to record your healthcare wishes in case you can
                         no longer speak for yourself. These documents can also be
@@ -36,7 +42,9 @@
                             <a href="#ownership">Ownership</a>
                         </div>
                         <div class="why-plan-overview__link-text">
+                            {% scribble 'ownership-explanation' 'why-plan' %}
                             It empowers you to make your own healthcare decisions.
+                            {% endscribble %}
                         </div>
                     </div>
                 </div>
@@ -46,7 +54,9 @@
                             <a href="#communication">Communication</a>
                         </div>
                         <div class="why-plan-overview__link-text">
+                            {% scribble 'communication-explanation' 'why-plan' %}
                             It allows you a clear, concise way to share your choices.
+                            {% endscribble %}
                         </div>
                     </div>
                 </div>
@@ -56,7 +66,9 @@
                             <a href="#responsibility">Responsibility</a>
                         </div>
                         <div class="why-plan-overview__link-text">
+                            {% scribble 'responsibility-explanation' 'why-plan' %}
                             Reduces difficulty on yourself and those you care about.
+                            {% endscribble %}
                         </div>
                     </div>
                 </div>
@@ -66,7 +78,9 @@
                             <a href="#peace-of-mind">Peace of mind</a>
                         </div>
                         <div class="why-plan-overview__link-text">
+                            {% scribble 'peace-of-mind-explanation' 'why-plan' %}
                             Brings confidence that your wishes will be heard.
+                            {% endscribble %}
                         </div>
                     </div>
                 </div>
@@ -80,15 +94,36 @@
                     <img src="{% static 'myhpom/img/why-plan/mmh-whyplan-markinset1.png' %}" alt="" class="why-plan-bigimg__img">
                 </div>
                 <div class="col-md-6">
+                    {% scribble 'ownership-title' 'why-plan' %}
                     <h2 class="why-plan-bigimg__title">
                         It Empowers You to Own Your Health
                     </h2>
+                    {% endscribble %}
+
+                    {% scribble 'ownership-subtitle' %}
                     <h3 class="h4 why-plan-bigimg__subtitle">
                         Make Your Own Healthcare Decisions
                     </h3>
-                    <div class="mt-3">
-                        {% scribble 'why-plan' 'empowerment' %}
-                        {% lorem 80 w %}
+                    {% endscribble %}
+
+                    <div class="mt-3 why-plan-bigimg__text">
+                        {% scribble 'ownership-text' 'why-plan' %}
+                        People are owning their healthcare more than ever
+                        before. Whether through health-related internet
+                        searches or health tracking apps, more and more
+                        people are taking steps to play an active role in
+                        making their health decisions. Setting up an advance
+                        care plan is another tool for taking ownership of
+                        your healthcare. It lets you document your decisions
+                        for what kind of care you want if you could not
+                        speak for yourself. A recent national survey found
+                        that 90% of Americans think discussing your
+                        healthcare preferences if you can’t speak for
+                        yourself is important, but <em>fewer than 30% have
+                        taken steps to do so</em>. By going ahead and making
+                        your plan, you make sure your healthcare will
+                        align with your values and decisions no matter
+                        what life throws your way.
                         {% endscribble %}
                     </div>
                 </div>
@@ -100,10 +135,12 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-lg-9 col--centered">
                     <blockquote class="mb-0 why-plan-quote__blockquote">
-                        <div class="mb-2 why-plan-quote__text">{% scribble 'why-plan' 'sarah-wong-quote' %}{% lorem 36 w %}{% endscribble %}</div>
+                        <div class="mb-2 why-plan-quote__text">{% scribble 'quote-new-parent' 'why-plan' %}After my daughter was born, my husband and I sat down to make sure we have plans in every aspect of our life in case something ever happens to one of us. Our advance care plans help us make sure our health care wishes are easily accessible in case of emergency so that we will have one less thing to worry about.{% endscribble %}</div>
+                        {% scribble 'quote-new-parent-source' 'why-plan' %}
                         <footer class="why-plan-quote__source">
                             Sarah Wong of Charleston, NC
                         </footer>
+                        {% endscribble %}
                     </blockquote>
                 </div>
                 <div class="col-sm-6 col-lg-2 col--centered">
@@ -121,15 +158,30 @@
                     <img src="{% static 'myhpom/img/why-plan/mmh-whyplan-markinset2.png' %}" alt="" class="why-plan-bigimg__img">
                 </div>
                 <div class="col-md-6">
+                    {% scribble 'communication-title' 'why-plan' %}
                     <h2 class="why-plan-bigimg__title">
                         It Communicates Your Decisions
                     </h2>
+                    {% endscribble %}
+
+                    {% scribble 'communication-subtitle' 'why-plan' %}
                     <h3 class="h4 why-plan-bigimg__subtitle">
                         Create a Game Plan for Your Healthcare Team
                     </h3>
+                    {% endscribble %}
+
                     <div class="mt-3">
-                        {% scribble 'why-plan' 'communication' %}
-                        {% lorem 80 w %}
+                        {% scribble 'communication-text' 'why-plan' %}
+                        Communication between patients and doctors is
+                        crucial for ensuring proper care. You know your
+                        wishes for your healthcare better than anyone else.
+                        But what if you cannot discuss your wishes with
+                        your healthcare team? When you create an advance
+                        care plan you provide a direction that can help
+                        guide your treatment and prevent your healthcare
+                        team from having to guess what care you want.
+                        That way your voice can always stay central
+                        to your care.
                         {% endscribble %}
                     </div>
                 </div>
@@ -141,10 +193,12 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-lg-9 col--centered">
                     <blockquote class="mb-0 why-plan-quote__blockquote">
-                        <div class="mb-2 why-plan-quote__text">{% scribble 'why-plan' 'mohammed-kuriq-quote' %}{% lorem 36 w %}{% endscribble %}</div>
+                        <div class="mb-2 why-plan-quote__text">{% scribble 'quote-mohammed-kuriq' 'why-plan' %}My Dad is very particular about his care. Having an Advance Care Plan helps us make sure the rest of our family and his doctors will know his preferences and be able to honor them. His planning also made me think about my own wishes, so I made one too.{% endscribble %}</div>
+                        {% scribble 'quote-mohammed-kuriq-source' 'why-plan' %}
                         <footer class="why-plan-quote__source">
                             Mohammed Kuriq of Winston-Salem, NC
                         </footer>
+                        {% endscribble %}
                     </blockquote>
                 </div>
                 <div class="col-sm-6 col-lg-2 col--centered">
@@ -162,15 +216,31 @@
                     <img src="{% static 'myhpom/img/why-plan/mmh-whyplan-markinset3.png' %}" alt="" class="why-plan-bigimg__img">
                 </div>
                 <div class="col-md-6">
+                    {% scribble 'responsibility-title' 'why-plan' %}
                     <h2 class="why-plan-bigimg__title">
                         It's a Responsibility to Those You Love
                     </h2>
+                    {% endscribble %}
+
+                    {% scribble 'responsibility-subtitle' 'why-plan' %}
                     <h3 class="h4 why-plan-bigimg__subtitle">
                         Plan for Yourself and Your Loved Ones
                     </h3>
+                    {% endscribble %}
+
                     <div class="mt-3">
-                        {% scribble 'why-plan' 'responsibility' %}
-                        {% lorem 80 w %}
+                        {% scribble 'responsibility-text' 'why-plan' %}
+                        Discussing your healthcare wishes with your loved ones
+                        can be challenging. But sharing your healthcare
+                        decisions with close family and friends is one of the
+                        best ways to guarantee your wishes will be known and
+                        honored. Making an advance care plan does not only
+                        benefit you. It can also help those closest to you
+                        feel empowered to act as an advocate on your behalf
+                        no matter what. Giving them the knowledge of your
+                        choices can reduce their stress so that they can work
+                        with healthcare providers more confidently to manage
+                        your care in a way that aligns with your values.
                         {% endscribble %}
                     </div>
                 </div>
@@ -182,10 +252,12 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-lg-9 col--centered">
                     <blockquote class="mb-0 why-plan-quote__blockquote">
-                        <div class="mb-2 why-plan-quote__text">{% scribble 'why-plan' 'cheryl-wilson-quote' %}{% lorem 36 w %}{% endscribble %}</div>
+                        <div class="mb-2 why-plan-quote__text">{% scribble 'quote-cheryl-wilson' 'why-plan' %}My health is not as good as it used to be, so I have thought a lot more about what kind of care I am comfortable with. I value my advance care plan because it allows me to not worry about whether I will get the treatment I want. Thanks to my advance care plan, I am sure my family and docttor know what I really I want.{% endscribble %}</div>
+                        {% scribble 'quote-cheryl-wilson-source' 'why-plan' %}
                         <footer class="why-plan-quote__source">
                             Cheryl Wilson of Asheboro, NC
                         </footer>
+                        {% endscribble %}
                     </blockquote>
                 </div>
                 <div class="col-sm-6 col-lg-2 col--centered">
@@ -203,15 +275,29 @@
                     <img src="{% static 'myhpom/img/why-plan/mmh-whyplan-markinset4.png' %}" alt="" class="why-plan-bigimg__img">
                 </div>
                 <div class="col-md-6">
+                    {% scribble 'peace-of-mind-title' 'why-plan' %}
                     <h2 class="why-plan-bigimg__title">
                         It Gives You Peace of Mind
                     </h2>
+                    {% endscribble %}
+
+                    {% scribble 'peace-of-mind-subtitle' 'why-plan' %}
                     <h3 class="h4 why-plan-bigimg__subtitle">
                         Be Confident Your Wishes are Known and Accessible
                     </h3>
+                    {% endscribble %}
+
                     <div class="mt-3">
-                        {% scribble 'why-plan' 'peace-of-mind' %}
-                        {% lorem 80 w %}
+                        {% scribble 'peace-of-mind-text' 'why-plan' %}
+                        Making an Advance Care Plan empowers you to be
+                        confident that you do not have to worry about
+                        your care if you cannot speak for yourself. By
+                        taking the time to discuss, document, and share
+                        your plan you can reduce your own stress. Nothing
+                        is more personal than your health. By taking time
+                        to create an advance care plan, you can rest
+                        assured that you will remain the guiding
+                        force in your care.
                         {% endscribble %}
                     </div>
                 </div>
@@ -223,7 +309,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="h5">
+                        {% scribble 'call-to-action' 'why-plan' %}
                         Plan your care in advance today by signing up for Mind My Health.
+                        {% endscribble %}
                     </div>
                     {% if not user.is_authenticated %}
                     <div class="mt-4 why-plan-start-now__button">
