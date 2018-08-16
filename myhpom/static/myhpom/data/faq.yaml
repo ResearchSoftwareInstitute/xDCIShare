@@ -60,7 +60,7 @@
     tooltip: Mind My Health provides secure online storage only for your advance care plan document.
   - question: Do I need an Advance Care Plan?
     name: do_i_need_an_advance_care_plan
-    answer: "Yes! Everyone has the right and responsibility to own their health care decisions, and an advance care plan is an important way to communicate your choices with your family, caregivers, and medical professionals. Learn more about why you should plan (link to Why Plan).   "
+    answer: Yes! Everyone has the right and responsibility to own their health care decisions, and an advance care plan is an important way to communicate your choices with your family, caregivers, and medical professionals. Learn more about <a href="/why-plan">why you should plan</a>.
     tooltip: Yes. An advance care plan is an important way for everyone to share advance care plan choices.
   - question: Do I need a printed copy of my Advance Care Plan?
     name: do_i_need_a_printed_copy_of_my_advance_care_plan
@@ -91,8 +91,8 @@
     answer: An advance directive is a legal document which allows you to record your healthcare wishes in case you can no longer speak for yourself. It has two parts. The first is called a Living Will. It lets you choose what kind of treatment you would want if you could not speak for yourself. The second part is called a Healthcare Power of Attorney. It allows you to select a trusted person to speak on your behalf about your care if you cannot speak for yourself. Each state has its own version. View our recommended version for North Carolina here (link to provided template). View our recommended version for South Carolina here (link to provided template). 
     tooltip: An advance directive is a legal document which allows you to record your healthcare wishes in case you are unable to speak for yourself.
   - question: Why do I need an advance directive or other Advance Care Plan?
-    name: why_do_i_need_an_advance_directive_or_other_advance_care_plan
-    answer: "An Advance Directive allows you to keep your voice in your care no matter what. With an advance directive, you provide clear instructions for your care to family, caregivers, and medical professionals.. You can also give legal power to a trusted loved one to speak for you. Learn more about why an advance care plan is important for owning your health here (link to Why Plan page)."
+    name: why_do_i_need_an_advance_directive
+    answer: An Advance Directive allows you to keep your voice in your care no matter what. With an advance directive, you provide clear instructions for your care to family, caregivers, and medical professionals.. You can also give legal power to a trusted loved one to speak for you. Learn more about why an advance care plan is important for <a href="/why-plan">owning your health here</a>.
     tooltip: "With an advance directive, you provide clear instructions for your care to family, caregivers, and medical professionals."
   - question: Is an advance directive different than a Do Not Resuscitate Order (DNR)?
     name: is_an_advance_directive_different_than_a_do_not_resuscitate_order

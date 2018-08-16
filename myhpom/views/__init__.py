@@ -43,6 +43,11 @@ def about(request):
 
 
 @require_GET
+def how_it_works(request):
+    return render(request, 'myhpom/how-it-works.html')
+
+
+@require_GET
 def legal(request):
     return render(request, 'myhpom/legal.html')
 
