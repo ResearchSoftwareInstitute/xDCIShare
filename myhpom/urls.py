@@ -13,9 +13,9 @@ urlpatterns = [
     url(r'^logout/?$', myhpom_views.logout, name='logout'),
     url(r'^accounts/signup/?$', myhpom_views.signup, name='signup'),
     url(r'^accounts/next-steps/?$', myhpom_views.next_steps, name='next_steps'),
-    url(r'^accounts/choose-network/?$', myhpom_views.choose_network, 
+    url(r'^accounts/choose-network/?$', myhpom_views.choose_network,
         {'is_update': False}, name='choose_network'),
-    url(r'^accounts/update-network/?$', myhpom_views.choose_network, 
+    url(r'^accounts/update-network/?$', myhpom_views.choose_network,
         {'is_update': True}, name='update_network'),
     url(r'^styleguide/$', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT + '/styleguide', 'path': 'index.html'}),
@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^profile/?$', myhpom_views.view_profile, name='view_profile'),
     url(r'^profile/edit/?$', myhpom_views.edit_profile, name='edit_profile'),
     url(r'^faq/?$', myhpom_views.faq, name='faq'),
+    url(r'^(?P<slug>[a-zA-Z0-9\-]+)/?$', myhpom_views.content_page, name='content'),
 ]

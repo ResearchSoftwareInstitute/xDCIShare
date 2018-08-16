@@ -1,0 +1,160 @@
+.content-page__hero-banner {
+    width: 100vw;
+    height: 40vw;
+    background-color: $brand-blue-dark;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @include media-breakpoint-down(xs) {
+        height: 80vw;
+    }
+}
+/*
+    Overview section
+*/
+.why-plan-overview {
+    background-color: $brand-blue-dark;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.why-plan-overview__title {
+    @include serif;
+    color: white;
+    font-weight: normal;
+    font-size: 3.5rem;
+}
+
+.why-plan-overview__subtitle {
+    color: $brand-blue-medium-fade-40;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.why-plan-overview__text {
+    @include serif;
+
+    em {
+        font-style: normal;
+        color: $brand-blue-medium-fade-40;
+    }
+}
+
+.why-plan-overview__link-container {
+    @include media-breakpoint-down(sm) {
+        margin-bottom: 1rem;
+    }
+}
+
+.why-plan-overview__link {
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 1.25rem;
+
+    :any-link {
+        color: white;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.why-plan-overview__link-text {
+    @include serif;
+    color: $brand-blue-medium-fade-40;
+}
+
+/*
+    "Big picture" sections
+*/
+.why-plan-bigimg {
+    padding: 2rem;
+}
+
+.why-plan-bigimg__img {
+    max-width: 100%;
+    height: auto;
+}
+
+.why-plan-bigimg__title {
+    @include serif;
+    font-weight: normal;
+    font-size: 3rem;
+}
+
+.why-plan-bigimg__subtitle {
+    color: $brand-blue;
+}
+
+.why-plan-bigimg__text {
+    em {
+        color: $brand-orange;
+        font-style: normal;
+        font-weight: 700;
+    }
+}
+
+/*
+    Blockquote sections
+*/
+.why-plan-quote {
+    background-color: $brand-blue;
+    color: white;
+    padding: 2rem 0;
+    font-size: 110%;
+
+    @include media-breakpoint-down(xs) {
+        padding: 2rem;
+    }
+}
+
+.why-plan-quote__text {
+    font-weight: 600;
+
+    > div::before {
+        content: "“";
+    }
+
+    > div::after {
+        content: "”";
+    }
+}
+
+.why-plan-quote__source {
+    text-transform: uppercase;
+    color: $brand-blue-medium-fade-40;
+    font-weight: 600;
+
+    &::before {
+        content: "— ";
+    }
+}
+
+.why-plan-quote__img-container {
+    border-radius: 0.4rem;
+    overflow: hidden;
+
+    @include media-breakpoint-down(xs) {
+        display: none;
+    }
+}
+
+.why-plan-quote__img {
+    width: 100%;
+}
+
+/*
+    Grand finale section
+*/
+.why-plan-start-now {
+    padding: 2rem;
+    text-align: center;
+}
+
+.why-plan-start-now__button {
+    padding: 0.75em;
+    text-transform: uppercase;
+}

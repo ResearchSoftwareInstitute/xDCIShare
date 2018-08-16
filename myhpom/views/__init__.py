@@ -13,6 +13,7 @@ from myhpom import models
 from myhpom.views.accounts import next_steps
 from myhpom.views.auth import logout
 from myhpom.views.choose_network import choose_network
+from myhpom.views.content import content_page
 from myhpom.views.irods import irods_download
 from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,
     upload_sharing, upload_delete_ad)
