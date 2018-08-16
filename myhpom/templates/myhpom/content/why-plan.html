@@ -218,4 +218,20 @@
             </div>
         </div>
     </section>
+    <section class="why-plan-start-now">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="h5">
+                        Plan your care in advance today by signing up for Mind My Health.
+                    </div>
+                    {% if not user.is_authenticated %}
+                    <div class="mt-4 why-plan-start-now__button">
+                        <a href="{% url 'myhpom:signup' %}" class="btn btn-secondary btn--big why-plan-start-now__button">Start Now</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock main_content %}
