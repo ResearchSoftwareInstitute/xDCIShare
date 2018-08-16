@@ -1,5 +1,6 @@
 {% extends "myhpom/base.html" %}
 {% load scribbler_tags %}
+{% load staticfiles %}
 
 {% block main_container_class %}myhpom-page__container{% endblock main_container_class %}
 
@@ -72,8 +73,29 @@
             </div>
         </div>
     </section>
-    <section class="why-plan__ownership"></section>
-    <section class="why-plan__communication"></section>
-    <section class="why-plan__responsibility"></section>
-    <section class="why-plan__pom"></section>
+    <section class="why-plan-bigimg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col--big-img">
+                    <img src="{% static 'myhpom/img/why-plan/mmh-whyplan-markinset1.png' %}" alt="" class="why-plan-bigimg__img">
+                </div>
+                <div class="col-md-6 col--big-img">
+                    <h2 class="why-plan-bigimg__title">
+                        It Empowers You to Own Your Health
+                    </h2>
+                    <h3 class="h4 why-plan-bigimg__subtitle">
+                        Make Your Own Healthcare Decisions
+                    </h3>
+                    <div>
+                        {% scribble 'why-plan' 'empowerment' %}
+                        {% lorem 90 w %}
+                        {% endscribble %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="why-plan__big-img-section--right"></section>
+    <section class="why-plan__big-img-section"></section>
+    <section class="why-plan__big-img-section--right"></section>
 {% endblock main_content %}

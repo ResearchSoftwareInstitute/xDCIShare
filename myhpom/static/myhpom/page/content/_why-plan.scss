@@ -1,3 +1,6 @@
+/*
+    Overview section
+*/
 .why-plan-overview {
     background-color: $brand-blue-medium;
     color: white;
@@ -49,4 +52,30 @@
 
 .why-plan-overview__link-text {
     color: $brand-blue-medium-fade-40;
+}
+
+/*
+    "Big picture" sections
+*/
+.why-plan-bigimg {
+    padding: 2rem;
+}
+
+.col--big-img {
+    padding: 2.5rem;
+}
+
+.why-plan-bigimg__img {
+    max-width: 100%;
+    height: auto;
+}
+
+.why-plan-bigimg__title {
+    @include serif;
+    font-weight: normal;
+    font-size: 3rem;
+}
+
+.why-plan-bigimg__subtitle {
+    color: $brand-blue;
 }
