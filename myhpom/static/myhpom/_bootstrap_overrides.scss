@@ -60,6 +60,17 @@ ul.row {
     list-style: none;
 }
 
+ol.container {
+    margin-bottom: none;
+    list-style: none;
+}
+
 .row--reverse {
     flex-direction: row-reverse;
+}
+
+.mt-3--sm-down {
+    @include media-breakpoint-down(sm) {
+        margin-top: 1rem !important;
+    }
 }
