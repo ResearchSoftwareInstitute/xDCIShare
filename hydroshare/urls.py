@@ -6,13 +6,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 
+from myhpom.forms.signup import SetPasswordForm
 
 admin.autodiscover()
 
 
 urlpatterns = [
     url("^mmh-admin/", include(admin.site.urls)),
-    url(r'^accounts/login/$', auth_views.login, name='login'),
+    url(r'^accounts/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        auth_views.password_reset_confirm,
+        {'set_password_form': SetPasswordForm}, name='password_reset_confirm'),
+    url(r'^accounts/', include('django.contrib.auth.urls'), name='login'),
     url(r'^scribbler/', include('scribbler.urls')),
     url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
