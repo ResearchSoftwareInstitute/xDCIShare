@@ -12,7 +12,8 @@ admin.autodiscover()
 
 urlpatterns = [
     url("^mmh-admin/", include(admin.site.urls)),
-    url(r'^accounts/login/$', auth_views.login, name='login'),
+    url(r'^accounts/', include('django.contrib.auth.urls'), name='login'),
+    url(r'^accounts/reset/done/$', auth_views.password_reset_complete, name='password_reset_complete'),
     url(r'^scribbler/', include('scribbler.urls')),
     url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
