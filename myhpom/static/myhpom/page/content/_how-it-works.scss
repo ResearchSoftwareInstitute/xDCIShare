@@ -1,0 +1,33 @@
+.how-it-works-steps {
+    counter-reset: steps;
+}
+
+.how-it-works-steps__huge-number {
+    font-size: 10rem;
+    color: $brand-blue-medium;
+    font-weight: 700;
+    text-align: center;
+
+    &::before {
+        counter-increment: steps;
+        content: counter(steps);
+    }
+}
+
+.how-it-works-steps__list {
+    list-style: disc;
+    padding-left: 1.25em;
+}
+
+.how-it-works-steps__list-item {
+    margin-bottom: 1em;
+
+    em {
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
