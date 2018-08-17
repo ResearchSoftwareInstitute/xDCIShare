@@ -97,11 +97,6 @@
 {% block extra-js %}
 <script>
 jQuery(function ($) {
-    if (window.location.hash) {
-        var id = window.location.hash.replace(/^#/,'');
-        document.getElementById(id).scrollIntoView();
-    }
-
     // Style the headings if the user has selected that element
     $('.faq-heading__section').map(function() {
         var url = $(this).prop('href');
@@ -111,12 +106,19 @@ jQuery(function ($) {
     });
 
     // If there is a hash, expand the matching element:
-    $('[data-name]').map(function() {
-        var name = $(this).data('name');
-        if (name === window.location.hash) {
-            $(this).collapse('show');
-        }
-    });
+    function showEntryWithHash() {
+        $('[data-name]').map(function() {
+            var name = $(this).data('name');
+            if (name === window.location.hash) {
+                $(name)[0].scrollIntoView();
+                $(this).collapse('show');
+            }
+        });
+    }
+
+    window.addEventListener("hashchange", showEntryWithHash, false);
+
+    showEntryWithHash();
 });
 </script>
 {% endblock extra-js %}
