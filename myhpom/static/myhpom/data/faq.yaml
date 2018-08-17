@@ -36,7 +36,7 @@
     tooltip: "Mind My Health stores your advance care plan in our secure, online registry."
   - question: I already made an advance care plan. Can I still upload it?
     name: i_already_made_an_advance_care_plan
-    answer: Yes! Congratulations on keeping your advance care in check. If your advance care plan document meets state requirements, you are ready to upload it. Your next step is to make sure your document meets our technical requirements (link to technical requirements FAQ). Once ready, upload your advance care plan to Mind My Health. If you are unsure that your advance care plan meets your state's requirements, please consult a legal professional. For those living North Carolina, here is a list of the state's requirements. (link to NC requirements)
+    answer: Yes! Congratulations on keeping your advance care in check. If your advance care plan document meets state requirements, you are ready to upload it. Your next step is to make sure your document meets our <a href="#what_kind_of_documents_can_i_upload">technical requirements</a>. Once ready, upload your advance care plan to Mind My Health. If you are unsure that your advance care plan meets your state's requirements, please consult a legal professional. For those living North Carolina, here is a list of the <a href="#what_are_the_legal_requirements">state's requirements</a>.
     tooltip: Yes. Please make sure your document meets your state's requirements and our technical requirements and start your upload.
   - question: Who can access my plan when I upload it?
     name: who_can_access_my_plan_when_i_upload_it
@@ -52,11 +52,11 @@
     tooltip: To access your document, log in to <a href="/">Mind My Health</a> and select the "Download Document" button on your Dashboard.
   - question: Can I upload more than one document?
     name: can_i_upload_more_than_one_document
-    answer: "Mind My Health accepts a single advance care plan document. That document must be in the form of an Adobe Acrobat PDF. Your document may contain more than one page, but the filesize must be no more than 5MB. If you have more than one advance care document, consider combining your document into a single PDF or making a new one based upon our provided template (link to provided template)."
+    answer: Mind My Health accepts a single advance care plan document. That document must be in the form of an Adobe Acrobat PDF. Your document may contain more than one page, but the filesize must be no more than 5MB. If you have more than one advance care document, consider combining your document into a single PDF or making a new one based upon our provided templates for <a href="/states/nc/template">North Carolina</a> and <a href="/states/sc/template">South Carolina</a>.
     tooltip: Mind My Health accepts a single advance care plan document in PDF form of no more than 5MB.
   - question: What kind of documents can I upload?
     name: what_kind_of_documents_can_i_upload
-    answer: "Mind My Health is your tool to keep your advance care plan in check. Currently, we provide secure online storage only for your advance care plan document. Learn more about what is an advance care document. (link to What is advance care document FAQ) Any uploaded documents  that do not meet the intended use of this web application will be subject to systemic deletion without the knowledge of the user.                "
+    answer: Mind My Health is your tool to keep your advance care plan in check. Currently, we provide secure online storage only for your advance care plan document. Learn more about <a href="#what is an advance care document">what is an advance care document</a>. Any uploaded documents  that do not meet the intended use of this web application will be subject to systemic deletion without the knowledge of the user.
     tooltip: Mind My Health provides secure online storage only for your advance care plan document.
   - question: Do I need an Advance Care Plan?
     name: do_i_need_an_advance_care_plan
@@ -88,7 +88,7 @@
   entries:
   - question: What is an advance directive?
     name: what_is_an_advance_directive
-    answer: An advance directive is a legal document which allows you to record your healthcare wishes in case you can no longer speak for yourself. It has two parts. The first is called a Living Will. It lets you choose what kind of treatment you would want if you could not speak for yourself. The second part is called a Healthcare Power of Attorney. It allows you to select a trusted person to speak on your behalf about your care if you cannot speak for yourself. Each state has its own version. View our recommended version for North Carolina here (link to provided template). View our recommended version for South Carolina here (link to provided template). 
+    answer: An advance directive is a legal document which allows you to record your healthcare wishes in case you can no longer speak for yourself. It has two parts. The first is called a Living Will. It lets you choose what kind of treatment you would want if you could not speak for yourself. The second part is called a Healthcare Power of Attorney. It allows you to select a trusted person to speak on your behalf about your care if you cannot speak for yourself. Each state has its own version. View our recommended version for North Carolina <a href="/states/nc/template">here</a>. View our recommended version for South Carolina <a href="/states/sc/template">here</a>. 
     tooltip: An advance directive is a legal document which allows you to record your healthcare wishes in case you are unable to speak for yourself.
   - question: Why do I need an advance directive or other Advance Care Plan?
     name: why_do_i_need_an_advance_directive
@@ -112,7 +112,7 @@
     tooltip: A health care power of attorney is a legal document that allows you to name a person to serve as your "Healthcare Agent."
   - question: "If I appoint a healthcare agent, what can that person do?"
     name: if_i_appoint_a_healthcare_agent
-    answer: "Your agent can make almost any healthcare decision you would normally make. If you have documented specific preferences in a living will (e.g. you do not want a feeding tube), your healthcare agent cannot change these wishes. (paragraph break). The types of care decisions your agent can make include  (put in bullet form): Starting or stopping life prolonging measures, Decisions on pain medication, Choosing your doctors and facilities"
+    answer: "Your agent can make almost any healthcare decision you would normally make. If you have documented specific preferences in a living will (e.g. you do not want a feeding tube), your healthcare agent cannot change these wishes.<br/><br/> The types of care decisions your agent can make include: <ul><li>Starting or stopping life prolonging measures</li><li>Decisions on pain medication</li><li>Choosing your doctors and facilities</li></ul>"
     tooltip: Your agent can make almost any healthcare decision you would normally make. 
   - question: When does my healthcare agent make decisions for me?
     name: when_does_my_healthcare_agent_make_decisions_for_me
@@ -123,7 +123,7 @@
     answer: "When choosing your agent, you want to make sure it is someone with whom you feel comfortable sharing your wishes. Commonly, people will appoint a spouse, family member, or a close friend to be their agent. <br/><br/>There are some restrictions on who can be your agent. Your agent must be at least 18 years old. If you live in North Carolina, your agent cannot be your healthcare provider."
     tooltip: There are some restrictions on who can be your agent. Your agent must be at least 18 years old. 
   - question: What if I don't have the legal requirements for my Advance Care Plan?
-    name: what_if_i_don't_have_the_legal_requirements_for_my_Advance_Care_Plan
+    name: dont_have_the_legal_requirements
     answer: If your form does not meet the legal requirements for your state's guidelines, you may need to create a new plan. To do this, you can use a resource of your choice or use the "Create a Plan" on your dashboard through Mind My Health to access a free form from your state.
     tooltip: "If your form does not meet the legal requirements for your state's guidelines, you may need to create a new plan. "
   - question: I made my plan in a state other than North Carolina. Will it still be honored?
@@ -143,16 +143,16 @@
     answer: "You should talk to everyone that will be involved in your care. That may be family members, close friends, caregivers, and your doctor. Making sure they understand your wishes will help them honor your decisions. "
     tooltip: You should talk to everyone that will be involved in your care. 
   - question: What are the legal requirements for my plan?
-    name: what_are_the_legal_requirements_for_my_plan
-    answer: "Each state has a unique set of requirements. For example, advance care plans for a person living in North Carolina must be signed by two witnesses that meet the state's requirements in addition to a notary (link to what is a notary FAQ). We are not able to verify that uploaded documents meet a state's legal requirements for an advance care plan. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan. "
+    name: what_are_the_legal_requirements
+    answer: Each state has a unique set of requirements. For example, advance care plans for a person living in North Carolina must be signed by two witnesses that meet the state's requirements in addition to <a href="#what_is_a_notary">a notary</a>. We are not able to verify that uploaded documents meet a state's legal requirements for an advance care plan. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan.
     tooltip: "Each state has a unique set of requirements. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan. "
   - question: What is a notary? Do I need one to complete my advance directive?
-    name: what_is_a_notary?_Do_I_need_one_to_complete_my_advance_directive
+    name: what_is_a_notary
     answer: "A notary is a person certified by state governments to act as a witness and make sure that a document is free of fraud. For some states, a notary is required to sign that they were present when you and your witnesses sign your advance care plan. "
     tooltip: A notary is a person certified by state governments to act as a witness and make sure that a document is free of fraud. 
   - question: How can I find a notary?
     name: how_can_i_find_a_notary
-    answer: Most banks have a notary (link to what is a notary FAQ). Also, many states have a directory. For example, North Carolina's registry of notaries is <a href="https://www.sosnc.gov/online_services/notary/find_a_notary">located here</a>.
+    answer: Most banks <a href="#what_is_a_notary">have a notary</a>. Also, many states have a directory. For example, North Carolina's registry of notaries is <a href="https://www.sosnc.gov/online_services/notary/find_a_notary">located here</a>.
     tooltip: "Most banks have a notary, and many states have a listings directory."
   - question: Who can be a witness for my plan?
     name: who_can_be_a_witness_for_my_plan
