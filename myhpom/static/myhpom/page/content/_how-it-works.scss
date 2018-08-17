@@ -2,6 +2,11 @@
     counter-reset: steps;
 }
 
+.how-it-works-steps__step {
+    @extend .py-4;
+    border-bottom: 1px solid $text-gray-medium;
+}
+
 .how-it-works-steps__huge-number {
     font-size: 10rem;
     color: $brand-blue-medium;
@@ -11,16 +16,24 @@
     &::before {
         counter-increment: steps;
         content: counter(steps);
+        display: block;
+        line-height: 8rem;
+        height: 8rem;
     }
 }
 
+.how-it-works-steps__title {
+    @extend .h5;
+    @extend .mb-3;
+}
+
 .how-it-works-steps__list {
+    @extend .pl-3;
     list-style: disc;
-    padding-left: 1.25em;
 }
 
 .how-it-works-steps__list-item {
-    margin-bottom: 1em;
+    @extend .mb-3;
 
     em {
         font-style: normal;
@@ -28,6 +41,6 @@
     }
 
     &:last-child {
-        margin-bottom: 0;
+        margin-bottom: 0 !important;
     }
 }
