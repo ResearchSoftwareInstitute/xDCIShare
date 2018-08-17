@@ -92,6 +92,7 @@ html [type="button"].close--link {
     padding: $container-border-width;
     border-radius: $container-border-radius;
     background-color: $brand-blue;
+    min-height: 250px;
 
     > * {
         background-color: white;
