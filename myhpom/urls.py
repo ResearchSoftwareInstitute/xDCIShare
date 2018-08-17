@@ -33,7 +33,7 @@ urlpatterns = [
 # date):
 static_views = [
     [r'^about/?', 'about', 'myhpom/about.html'],
-    [r'^how-it-works/?', 'how-it-works', 'myhpom/how-it-works.html'],
+    [r'^how-it-works/?', 'how-it-works', 'myhpom/content/how-it-works.html'],
     [r'^legal/?', 'legal', 'myhpom/legal.html'],
     [r'^privacy/?', 'privacy', 'myhpom/privacy.html'],
     [r'^why-plan/?', 'why-plan', 'myhpom/content/why-plan.html'],

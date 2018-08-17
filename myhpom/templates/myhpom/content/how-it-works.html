@@ -1,0 +1,43 @@
+{% extends "myhpom/base.html" %}
+{% load scribbler_tags %}
+{% load staticfiles %}
+
+{% block main_container_class %}myhpom-page__container{% endblock main_container_class %}
+
+{% block main_content %}
+<section class="content-page__hero-banner" style="background-image: url({% static 'myhpom/img/how-it-works/happy-couple-relaxing-at-home_web.jpg' %})"></section>
+<section class="content-overview">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% scribble 'overview-title' 'how-it-works' %}
+                <h1 class="content-overview__title">
+                    How it works.
+                </h1>
+                {% endscribble %}
+
+                {% scribble 'overview-subtitle' 'how-it-works' %}
+                <h2 class="content-overview__subtitle">
+                    Your simple step-by-step guide to empowering
+                    your advance care planning with Mind My Health.
+                </h2>
+                {% endscribble %}
+
+                <div class="mt-3 mb-4 content-overview__text">
+                    {% scribble 'overview' 'how-it-works' %}
+                    Mind My Health empowers people by encouraging everyong make plans for care in advance. To help you complete your plan and upload it to Mind My Health, we have provided you this useful guide.
+                    {% endscribble %}
+                </div>
+
+                <div class="mt-3 mb-4 content-overview__text">
+                    Why should you have an advance care plan? <a class="content-overview__link" href="{% url 'myhpom:why-plan' %}">Find out.</a>
+                </div>
+
+                <div class="mt-3 mb-4 content-overview__text">
+                    Got additional questions? <a class="content-overview__link" href="{% url 'myhpom:faq' %}">Please visit our FAQ for more answers.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
