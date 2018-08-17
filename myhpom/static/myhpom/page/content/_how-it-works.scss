@@ -9,7 +9,7 @@
 
 .how-it-works-steps__huge-number {
     font-size: 10rem;
-    color: $brand-blue-medium;
+    color: $brand-blue;
     font-weight: 700;
     text-align: center;
 
@@ -25,6 +25,7 @@
 .how-it-works-steps__title {
     @extend .h5;
     @extend .mb-3;
+    color: $brand-blue;
 }
 
 .how-it-works-steps__subtitle {
