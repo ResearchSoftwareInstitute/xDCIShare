@@ -344,10 +344,7 @@ LOGGING = {
     }
 }
 
-# inform django that a reverse proxy sever (nginx) is handling ssl/https for it
-# TODO replace with the standard header values once RENCI resolves the issue:
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_PROXY_SSL_HEADER = ('SERVER_NAME', 'myhpom.renci.org')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 X_FRAME_OPTIONS = "deny"
 
