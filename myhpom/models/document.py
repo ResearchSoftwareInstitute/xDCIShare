@@ -28,6 +28,7 @@ class AdvanceDirective(models.Model):
     )
     thumbnail = models.FileField(
         null=True,
+        blank=True,
         upload_to='myhpom/advance_directives',
         help_text='The first-page thumbnail image of the user\'s Advance Directive.',
     )
