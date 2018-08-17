@@ -44,3 +44,13 @@
         margin-bottom: 0 !important;
     }
 }
+
+.how-it-works-conclusion__item {
+    @extend .mb-4;
+    @extend .h4;
+    text-align: center;
+}
+
+.how-it-works-conclusion__link {
+    @include orange-link;
+}

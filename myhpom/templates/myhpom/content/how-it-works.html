@@ -189,4 +189,20 @@
         </li>
     </ol>
 </section>
+<section class="pb-4 how-it-works-conclusion">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="how-it-works-conclusion__item">
+                    Got more questions? Learn more in our <a class="how-it-works-conclusion__link" href="{% url 'myhpom:faq' %}">FAQ</a>.
+                </div>
+                {% if not request.user.is_authenticated %}
+                <div class="how-it-works-conclusion__item">
+                    Ready to start your advance care plan? <a class="how-it-works-conclusion__link" href="{% url 'myhpom:signup' %}">Join here.</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock main_content %}
