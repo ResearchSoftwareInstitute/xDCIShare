@@ -27,6 +27,14 @@
     @extend .mb-3;
 }
 
+.how-it-works-steps__subtitle {
+    @extend .h6;
+}
+
+.how-it-works-steps__link {
+    @include orange-link;
+}
+
 .how-it-works-steps__list {
     @extend .pl-3;
     list-style: disc;
