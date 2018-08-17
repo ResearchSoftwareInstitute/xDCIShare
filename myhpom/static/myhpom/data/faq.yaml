@@ -56,7 +56,7 @@
     tooltip: Mind My Health accepts a single advance care plan document in PDF form of no more than 5MB.
   - question: What kind of documents can I upload?
     name: what_kind_of_documents_can_i_upload
-    answer: Mind My Health is your tool to keep your advance care plan in check. Currently, we provide secure online storage only for your advance care plan document. Learn more about <a href="#what is an advance care document">what is an advance care document</a>. Any uploaded documents  that do not meet the intended use of this web application will be subject to systemic deletion without the knowledge of the user.
+    answer: Mind My Health is your tool to keep your advance care plan in check. Currently, we provide secure online storage only for your advance care plan document. Learn more about <a href="#what_is_an_advance_directive">what is an advance care document</a>. Any uploaded documents  that do not meet the intended use of this web application will be subject to systemic deletion without the knowledge of the user.
     tooltip: Mind My Health provides secure online storage only for your advance care plan document.
   - question: Do I need an Advance Care Plan?
     name: do_i_need_an_advance_care_plan
