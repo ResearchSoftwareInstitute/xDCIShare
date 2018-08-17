@@ -5,6 +5,7 @@ import yaml
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.http import require_GET
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.urlresolvers import reverse
@@ -44,6 +45,19 @@ def faq(request):
         'faqs': FAQS,
     }
     return render(request, 'myhpom/faq.html', context)
+
+
+@require_GET
+def state_template(request, state):
+    try:
+        state = models.State.objects.get(name__iexact=state)
+    except models.State.DoesNotExist:
+        raise Http404()
+
+    if not state.advance_directive_template:
+        raise Http404()
+
+    return HttpResponseRedirect(state.advance_directive_template.url)
 
 
 @require_GET
