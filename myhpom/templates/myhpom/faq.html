@@ -1,7 +1,7 @@
 {% extends "myhpom/base.html" %}
 
 {% block main_content %}
-{% if request.user %}
+{% if user.is_authenticated %}
 <div class="row faq-to-dashboard">
 <div class="col px-0">
     <a class="faq-to-dashboard__link" href="{% url 'myhpom:dashboard' %}">Return to dashboard</a>
