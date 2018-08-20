@@ -9,7 +9,7 @@ class Tracking(object):
     def process_response(self, request, response):
 
         # filter out heartbeat messages
-        if request.path.startswith('/heartbeat/'):
+        if request.path.startswith('/hydroshare/heartbeat/'):
             return response
 
         is_human = getattr(request, 'is_human', False)

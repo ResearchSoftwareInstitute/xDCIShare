@@ -1,0 +1,64 @@
+.modal-header--next-steps {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.next-steps__logo {
+    width: 24rem;
+    height: auto;
+    max-width: 90%;
+}
+
+.pseudo-modal__header-caption-text--next-steps {
+    max-width: 75%;
+}
+
+.advance-directive-block {
+    background-color: $light-gray;
+    border: 2px solid $brand-blue;
+    border-radius: 0.75rem;
+    padding: 2rem 3rem;
+    text-align: center;
+}
+
+.advance-directive-block__title {
+    font-weight: 600;
+    color: $brand-blue;
+}
+
+.advance-directive-block__template-link {
+    @include orange-link;
+    font-weight: 600;
+}
+
+.advance-directive-block-footer__info-link {
+    color: $brand-orange;
+    font-size: 125%;
+    font-weight: 700;
+}
+
+.advance-directive-block-footer__caption {
+    @extend .small;
+    color: $text-gray;
+}
+
+.next-steps__text {
+    @include serif;
+    font-size: 125%;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.next-steps__strong {
+    font-weight: 600;
+}
+
+/*
+    Helper to ensure that adjacent boxes are able to fill all
+    available vertical space.
+*/
+.vertical-fill-box {
+    display: flex;
+}

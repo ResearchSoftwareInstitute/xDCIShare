@@ -60,12 +60,12 @@ def contact(content):
     if not content.is_authenticated():
         content = "Anonymous"
     elif content.first_name:
-        content = format_html("<a href='/user/{uid}/'>{fn} {ln}</a>",
+        content = format_html("<a href='/hydroshare/user/{uid}/'>{fn} {ln}</a>",
                               fn=content.first_name,
                               ln=content.last_name,
                               uid=content.pk)
     else:
-        content = format_html("<a href='/user/{uid}/'>{un}</a>",
+        content = format_html("<a href='/hydroshare/user/{uid}/'>{un}</a>",
                               uid=content.pk,
                               un=content.username)
 
@@ -153,3 +153,11 @@ def res_uuid_from_res_path(path):
 @register.filter
 def remove_last_char(statement):
     return statement[:len(statement)-1]
+
+
+@register.simple_tag
+def pluralize_title(title, queryset):
+    if queryset.count() > 1:
+        return '%ss'%title
+    else:
+        return title

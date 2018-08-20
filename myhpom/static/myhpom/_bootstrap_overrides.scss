@@ -1,0 +1,76 @@
+.btn-secondary {
+    color: white;
+}
+
+.btn--wide {
+    min-width: 12em;
+}
+
+.btn--big {
+    @extend .btn--wide;
+    font-size: 125%;
+}
+
+.col--centered {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-sm-down--no-padding {
+    @include media-breakpoint-down(sm) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.d-xs-only-none {
+    @include media-breakpoint-down(xs) {
+        display: none;
+    }
+}
+
+// Typography
+h1, .h1 {
+    color: $brand-blue-dark;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-weight: 700;
+    color: $brand-blue-medium;
+}
+
+hr {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+a:not(.btn):not(.img-link):hover {
+    text-decoration: none;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+    border-bottom-color: inherit;
+}
+
+// Layout
+ul.row {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+ol.container {
+    margin-bottom: none;
+    list-style: none;
+}
+
+.row--reverse {
+    flex-direction: row-reverse;
+}
+
+.mt-3--sm-down {
+    @include media-breakpoint-down(sm) {
+        margin-top: 1rem !important;
+    }
+}

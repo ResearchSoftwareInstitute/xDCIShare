@@ -112,7 +112,7 @@ class TestCollection(MockIRODSTestCaseMixin, TransactionTestCase):
             title='Gen 4'
         )
 
-        base_url = "/hsapi/_internal/{0}"
+        base_url = "/hydroshare/hsapi/_internal/{0}"
         self.url_to_update_collection = base_url + "/update-collection/"
         self.url_to_collection_member_permission = base_url + "/collection-member-permission/{1}/"
         self.url_to_set_resource_flag = base_url + "/set-resource-flag/"
@@ -120,7 +120,7 @@ class TestCollection(MockIRODSTestCaseMixin, TransactionTestCase):
         self.url_to_update_collection_for_deleted_resources = \
             base_url + "/update-collection-for-deleted-resources/"
         self.url_to_calculate_collection_coverages = \
-            "/hsapi/_internal/calculate-collection-coverages/{0}/"
+            "/hydroshare/hsapi/_internal/calculate-collection-coverages/{0}/"
 
     def test_collection_basic_functions(self):
         # test basic collection class with different res types

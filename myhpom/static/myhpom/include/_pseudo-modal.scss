@@ -1,0 +1,165 @@
+// NOTE: adjusting this border-radius down by 0.1rem in the inner
+// container is necessary to avoid a strange visual discrepancy
+$container-border-radius: 1.5rem;
+$container-border-width: 4px;
+$modal-heavy-font-weight: 600;
+
+html [type="button"].close--link {
+    -webkit-appearance: none;
+}
+
+/*
+    General container styles
+*/
+.pseudo-modal {
+    display: block;
+    overflow-y: scroll;
+}
+
+.pseudo-modal__dialog {
+    margin-top: 4rem;
+
+    @include media-breakpoint-up(sm) {
+        max-width: 90vw;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "lg") + 30px) {
+        max-width: map-get($grid-breakpoints, "lg");
+    }
+}
+
+/*
+    Header styles
+*/
+.pseudo-modal__header {
+    border-bottom: none;
+}
+
+.pseudo-modal__header--centered {
+    justify-content: center;
+}
+
+.pseudo-modal__header:first-child {
+    border-top-left-radius: ($container-border-radius - 0.1);
+    border-top-right-radius: ($container-border-radius - 0.1);
+}
+
+.pseudo-modal__header {
+    text-align: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.pseudo-modal__title {
+    color: $brand-blue;
+
+    @include media-breakpoint-up(lg) {
+        padding: 0 10rem;
+    }
+}
+
+.pseudo-modal__title--centered {
+    font-weight: $modal-heavy-font-weight;
+}
+
+.pseudo-modal__title--centered {
+    flex-grow: 1;
+}
+
+.pseudo-modal__title--serif {
+    @include serif;
+    font-weight: $modal-heavy-font-weight;
+}
+
+.pseudo-modal__pre-header {
+    background-color: transparent !important;
+    padding: 1rem;
+    text-align: center;
+}
+
+.pseudo-modal__logo {
+    max-width: 20rem;
+}
+
+/*
+    Main content
+*/
+.pseudo-modal__body {
+    padding: 1rem 2rem;
+}
+
+.pseudo-modal__content {
+    padding: $container-border-width;
+    border-radius: $container-border-radius;
+    background-color: $brand-blue;
+    min-height: 250px;
+
+    > * {
+        background-color: white;
+
+        &:last-child {
+            border-bottom-left-radius: ($container-border-radius - 0.1);
+            border-bottom-right-radius: ($container-border-radius - 0.1);
+        }
+    }
+}
+
+.pseudo-modal__header-caption-text {
+    @include serif;
+}
+
+/*
+    Footer
+*/
+.pseudo-modal__footer {
+    padding: 1rem 2rem;
+}
+
+
+/*
+    Forms
+*/
+.pseudo-modal__label {
+    font-weight: $modal-heavy-font-weight;
+}
+
+.pseudo-modal__label--subdued {
+    font-weight: normal;
+}
+
+.pseudo-modal__label--center-full {
+    text-align: center;
+    width: 100%;
+}
+
+.pseudo-modal__input {
+    background-color: $light-gray;
+    border-color: darken($light-gray, 50%);
+}
+
+.psuedo-modal__submit-button {
+    @extend .btn-secondary;
+    padding: 1em 2em;
+    font-size: 125%;
+    width: 100%;
+
+    &:disabled, &.disabled {
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+/*
+    Links
+*/
+.pseudo-modal__login-link {
+    @include orange-link;
+}
+
+.pseudo-modal__skip-link {
+    @extend .form-group-tos__link;
+    line-height: 1;
+}
+
+.pseudo-modal__tooltip-text {
+    @include orange-link;
+}

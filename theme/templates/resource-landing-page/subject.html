@@ -11,6 +11,16 @@
             </ul>
         </div>
     </div>
+    {% else %}
+    <div class="col-xs-12">
+        <h3>Subject</h3>
+        <hr>
+        <div class="alert  alert-info" role="alert">
+            <span class="glyphicon glyphicon-question-sign"></span>
+            <small> Click on the edit button ( <span class="glyphicon glyphicon-pencil"></span> ) above to add keywords this resource.</small>
+        </div>
+        <br>
+    </div>
     {% endif %}
 {% else %}
     <div class="col-sm-12 content-block">
@@ -25,11 +35,11 @@
                         <a id="btn-add-keyword" class="btn btn-success" type="button">Add</a>
                     </span>
                 </div>
-                <ul id="lst-tags" class="custom-well tag-list">
+                <ul id="lst-tags" class="tag-list">
                 </ul>
             </div>
-            <strong class="text-danger small">Note: Deleting all keywords will set the resource sharing status to
-                private.</strong>
+            <!-- <strong class="text-danger small">Note: Deleting all keywords will set the resource sharing status to
+                private.</strong> -->
             <div>
                 <p class="text-danger small" id="id-keywords-msg" style="display: none;"> Duplicate. Keyword not added.</p>
             </div>

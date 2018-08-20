@@ -3482,7 +3482,7 @@ class GenericResource(BaseResource):
     class Meta:
         """Define meta properties for GenericResource model."""
 
-        verbose_name = 'Generic'
+        verbose_name = 'Document'
         proxy = True
 
 

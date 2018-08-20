@@ -9,6 +9,10 @@ HS_PATH=/home/hydro/hydroshare
 BACKUP_PATH=/home/${USER}/backup
 HS_PATH_DOCKER=/hydroshare
 
+if [ -f .env ]; then
+    source .env
+fi
+
 # set variables for use in script
 MEDIA_FILES=${HS_PATH}/media_files
 

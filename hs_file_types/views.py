@@ -262,7 +262,7 @@ def add_metadata_element(request, hs_file_type, file_type_id, element_name, **kw
         err_msg = err_msg.format(element_name, validation_response['errors'])
 
     if is_add_success:
-        form_action = "/hsapi/_internal/{0}/{1}/{2}/{3}/update-file-metadata/"
+        form_action = "/hydroshare/hsapi/_internal/{0}/{1}/{2}/{3}/update-file-metadata/"
         form_action = form_action.format(logical_file.type_name(), logical_file.id, element_name,
                                          element.id)
 

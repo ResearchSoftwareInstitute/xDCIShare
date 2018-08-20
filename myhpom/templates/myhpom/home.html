@@ -1,0 +1,182 @@
+{% extends "myhpom/base.html" %}
+{% load staticfiles %}
+
+{% block header %}
+{% include 'myhpom/includes/header.html' with home=1 %}
+{% endblock header %}
+
+{% block main_container_class %}container-fluid myhpom-page__container{% endblock main_container_class %}
+
+{% block main_content %}
+<section class="homepage__section homepage__section--propfix hero-section" style="background-image: url({% static hero_image %})">
+    <div class="container--propfix">
+        <div class="hero-section__title">
+            Own your care. Plan in advance.
+        </div>
+        <div class="hero-section__subtitle">
+            Your online tool to keep your advance care plan in check.
+        </div>
+        <div class="mt-2 hero-section__start-now">
+            <a class="btn btn-secondary hero-section__start-now-button" href="{% url 'myhpom:signup' %}">Start Now</a>
+        </div>
+    </div>
+</section>
+
+<section class="pt-3 pb-3 homepage__section homepage__section--features features-section">
+    <div class="container">
+        <ul class="row">
+            <li class="col-6 col-lg-3">
+                <div class="feature">
+                    <div class="feature__image-container">
+                        <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-stack-2@3x.png' %}" alt="">
+                    </div>
+                    <div class="feature__title">
+                        Easy to use
+                    </div>
+                    <p class="feature__text">
+                        Simply select network and upload your plan.
+                    </p>
+                </div>
+            </li>
+            <li class="col-6 col-lg-3">
+                <div class="feature">
+                    <div class="feature__image-container">
+                        <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-lightbulb@3x.png' %}" alt="">
+                    </div>
+                    <div class="feature__title">
+                        From experts
+                    </div>
+                    <p class="feature__text">
+                        Simply select network and upload your plan.
+                    </p>
+                </div>
+            </li>
+            <li class="col-6 col-lg-3">
+                <div class="feature">
+                    <div class="feature__image-container">
+                        <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-desktop-mobile@3x.png' %}" alt="">
+                    </div>
+                    <div class="feature__title">
+                        Secure storage
+                    </div>
+                    <p class="feature__text">
+                        Simply select network and upload your plan.
+                    </p>
+                </div>
+            </li>
+            <li class="col-6 col-lg-3">
+                <div class="feature">
+                    <div class="feature__image-container">
+                        <img class="feature__image" src="{% static 'myhpom/img/home/mmh-icon-piggy@3x.png' %}" alt="">
+                    </div>
+                    <div class="feature__title">
+                        100% free
+                    </div>
+                    <p class="feature__text">
+                        Simply select network and upload your plan.
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="pt-4 pb-3 homepage__section homepage__section--questions questions-section">
+    <div class="container">
+        <ul class="row">
+            <li class="col-sm-4 questions-section__item">
+                <a class="questions-section__link" href="{% url 'myhpom:faq' %}#what_is_an_advance_directive">
+                    <div class="question">
+                        <span class="question__inner-text">What is an Advance Directive?</span>
+                    </div>
+                </a>
+            </li>
+            <li class="col-sm-4 questions-section__item">
+                <a class="questions-section__link" href="{% url 'myhpom:faq' %}#why_do_i_need_an_advance_directive">
+                    <div class="question">
+                        <span class="question__inner-text">Why do I need an Advance Directive?</span>
+                    </div>
+                </a>
+            </li>
+            <li class="col-sm-4 questions-section__item">
+                <a class="questions-section__link" href="{% url 'myhpom:faq' %}#why_should_i_put_my_advance_directive_online">
+                    <div class="question">
+                        <span class="question__inner-text">Who benefits from my planning?</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<section class="pt-3 pb-3 homepage__section homepage__section--supported-by supported-by-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="supported-by-section__title">
+                    A nonprofit initiative supported by
+                </div>
+                <ul class="supported-by-logos"></ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-3 pb-5 homepage__section homepage__section--how-it-works how-it-works-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="how-it-works-section__title">How it works.</div>
+                <p class="ml-auto mr-auto how-it-works-section__subtitle">
+                    Your simple step-by-step guide to empowering your advance care planning with Mind My Health.
+                </p>
+            </div>
+        </div>
+        <ul class="row">
+            <li class="col-sm-4">
+                <div class="how-it-works-item">
+                    <div class="how-it-works-item__title">Create.</div>
+                    <div class="how-it-works-item__img-container">
+                        <img class="how-it-works-item__img" src="{% static 'myhpom/img/home/mmh-icon-stack-3@3x.png' %}" alt="">
+                    </div>
+                    <div class="how-it-works-item__caption">
+                        Follow your state's guidelines and prepare
+                        a PDF with your advance care plan.
+                    </div>
+                </div>
+            </li>
+            <li class="col-sm-4">
+                <div class="how-it-works-item">
+                    <div class="how-it-works-item__title">Upload.</div>
+                    <div class="how-it-works-item__img-container">
+                        <img class="how-it-works-item__img" src="{% static 'myhpom/img/home/mmh-icon-cloud@3x.png' %}" alt="">
+                    </div>
+                    <div class="how-it-works-item__caption">
+                        Login to your Mind My Health account and upload
+                        your advance plan PDF.
+                    </div>
+                </div>
+            </li>
+            <li class="col-sm-4">
+                <div class="how-it-works-item">
+                    <div class="how-it-works-item__title">Access.</div>
+                    <div class="how-it-works-item__img-container">
+                        <img class="how-it-works-item__img" src="{% static 'myhpom/img/home/mmh-icon-mobile-logo@3x.png' %}" alt="">
+                    </div>
+                    <div class="how-it-works-item__caption">
+                        Whether on your device or desktop, review or
+                        print your advance care plan.
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="mt-5 row d-xs-only-none">
+            <div class="col-12 col--centered">
+                <a href="{% url 'myhpom:signup' %}" class="btn btn-secondary how-it-works__start-now-link">Start Now</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="homepage__section homepage__section--sidekick sidekick-section" style="background-image: url({% static 'myhpom/img/home/mmh-home-whyplan-block.jpg' %})"></section>
+{% endblock main_content %}

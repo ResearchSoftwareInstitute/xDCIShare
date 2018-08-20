@@ -48,25 +48,25 @@ class TestPublicUnzipEndpoint(HSRESTTestCase):
         self.resources_to_delete.append(self.pid)
 
         # create a folder 'foo'
-        url2 = str.format('/hsapi/resource/{}/folders/foo/', self.pid)
+        url2 = str.format('/hydroshare/hsapi/resource/{}/folders/foo/', self.pid)
         self.client.put(url2, {})
 
         # put the file 'test.zip' into folder 'foo'
-        url4 = str.format('/hsapi/resource/{}/files/foo/', self.pid)
+        url4 = str.format('/hydroshare/hsapi/resource/{}/files/foo/', self.pid)
         params = {'file': (payload,)}
         self.client.post(url4, params)
 
     def test_unzip(self):
-        unzip_url = "/hsapi/resource/%s/functions/unzip/test.zip/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/unzip/test.zip/" % self.pid
         response = self.client.post(unzip_url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_deep_unzip(self):
-        unzip_url = "/hsapi/resource/%s/functions/unzip/foo/test.zip/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/unzip/foo/test.zip/" % self.pid
         response = self.client.post(unzip_url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_unzip_unsuccessful(self):
-        unzip_url = "/hsapi/resource/%s/functions/unzip/badpath/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/unzip/badpath/" % self.pid
         response = self.client.post(unzip_url, {}, format='json')
         self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)

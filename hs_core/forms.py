@@ -121,7 +121,7 @@ class MetaDataElementDeleteForm(forms.Form):
         """
         super(MetaDataElementDeleteForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
-        self.delete_element_action = '"/hsapi/_internal/%s/%s/%s/delete-metadata/"' % \
+        self.delete_element_action = '"/hydroshare/hsapi/_internal/%s/%s/%s/delete-metadata/"' % \
                                      (res_short_id, element_name, element_id)
         self.helper.layout = _get_modal_confirm_delete_matadata_element()
         self.helper.layout[0] = HTML('<div class="modal fade" id="delete-%s-element-dialog_%s" '
@@ -209,7 +209,7 @@ class CreatorForm(PartyForm):
         self.helper = CreatorFormSetHelper()
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/creator/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/creator/add-metadata/" % res_short_id
         else:
             self.action = ""
         if not allow_edit:
@@ -260,7 +260,7 @@ class PartyValidationForm(forms.Form):
         user_absolute_url = self.cleaned_data['description']
         if user_absolute_url:
             url_parts = user_absolute_url.split('/')
-            return '/user/{user_id}/'.format(user_id=url_parts[4])
+            return '/hydroshare/user/{user_id}/'.format(user_id=url_parts[5])
         return user_absolute_url
 
     def clean(self):
@@ -340,7 +340,7 @@ class ContributorForm(PartyForm):
         self.helper = ContributorFormSetHelper()
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/contributor/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/contributor/add-metadata/" % res_short_id
         else:
             self.action = ""
 
@@ -420,7 +420,7 @@ class RelationForm(ModelForm):
         self.number = 0
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/relation/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/relation/add-metadata/" % res_short_id
         else:
             self.action = ""
 
@@ -488,7 +488,7 @@ class SourceForm(ModelForm):
         self.delete_modal_form = None
         self.allow_edit = allow_edit
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/source/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/source/add-metadata/" % res_short_id
         else:
             self.action = ""
         if not allow_edit:
@@ -557,7 +557,7 @@ class IdentifierForm(ModelForm):
         self.number = 0
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/identifier/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/identifier/add-metadata/" % res_short_id
         else:
             self.action = ""
 
@@ -610,7 +610,7 @@ class FundingAgencyForm(ModelForm):
         self.number = 0
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/fundingagency/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/fundingagency/add-metadata/" % res_short_id
         else:
             self.action = ""
 
@@ -673,10 +673,10 @@ class BaseFormHelper(FormHelper):
                 self.form_id = 'id-%s' % element_name.lower()
 
             if element_id:
-                self.form_action = "/hsapi/_internal/%s/%s/%s/update-metadata/" % \
+                self.form_action = "/hydroshare/hsapi/_internal/%s/%s/%s/update-metadata/" % \
                                    (res_short_id, element_name.lower(), element_id)
             else:
-                self.form_action = "/hsapi/_internal/%s/%s/add-metadata/" % (res_short_id,
+                self.form_action = "/hydroshare/hsapi/_internal/%s/%s/add-metadata/" % (res_short_id,
                                                                              element_name)
         else:
             self.form_tag = False
@@ -756,7 +756,7 @@ class SubjectsForm(forms.Form):
         self.number = 0
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/subject/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/subject/add-metadata/" % res_short_id
         else:
             self.action = ""
 
@@ -867,7 +867,7 @@ class CoverageTemporalForm(forms.Form):
         self.number = 0
         self.delete_modal_form = None
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/coverage/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/coverage/add-metadata/" % res_short_id
         else:
             self.action = ""
 
@@ -970,7 +970,7 @@ class CoverageSpatialForm(forms.Form):
         if self.errors:
             self.errors.clear()
         if res_short_id:
-            self.action = "/hsapi/_internal/%s/coverage/add-metadata/" % res_short_id
+            self.action = "/hydroshare/hsapi/_internal/%s/coverage/add-metadata/" % res_short_id
         else:
             self.action = ""
 

@@ -43,7 +43,7 @@ class TestSetFileTypeEndPoint(HSRESTTestCase):
         self.assertEqual(res_file.file_name, self.raster_file_name)
 
         # test the set file type endpoint
-        url_template = "/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
+        url_template = "/hydroshare/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
         set_file_type_url = url_template.format(res_id=self.resource.short_id,
                                                 file_path=self.raster_file_name,
                                                 file_type="GeoRaster")
@@ -77,7 +77,7 @@ class TestSetFileTypeEndPoint(HSRESTTestCase):
         res_file = self.resource.files.all().first()
         self.assertEqual(res_file.short_path, "sub_test_dir/" + self.raster_file_name)
         # test the set file type endpoint
-        url_template = "/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
+        url_template = "/hydroshare/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
 
         set_file_type_url = url_template.format(res_id=self.resource.short_id,
                                                 file_path=res_file.short_path,
@@ -102,7 +102,7 @@ class TestSetFileTypeEndPoint(HSRESTTestCase):
         self.assertEqual(res_file.file_name, self.raster_file_name)
 
         # test the set file type endpoint using a wrong file type (NetCDF)
-        url_template = "/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
+        url_template = "/hydroshare/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
         set_file_type_url = url_template.format(res_id=self.resource.short_id,
                                                 file_path=self.raster_file_name,
                                                 file_type="NetCDF")
@@ -127,7 +127,7 @@ class TestSetFileTypeEndPoint(HSRESTTestCase):
         self.assertEqual(res_file.file_name, self.raster_file_name)
 
         # test the set file type endpoint using a wrong file path
-        url_template = "/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
+        url_template = "/hydroshare/hsapi/resource/{res_id}/functions/set-file-type/{file_path}/{file_type}/"
         file_path = os.path.join("no-such-folder", self.raster_file_name)
         set_file_type_url = url_template.format(res_id=self.resource.short_id,
                                                 file_path=file_path,

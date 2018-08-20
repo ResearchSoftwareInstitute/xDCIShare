@@ -65,7 +65,7 @@ class TestCreateResourceViewFunctions(MockIRODSTestCaseMixin, ViewTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         json_content = json.loads(response.content)
         self.assertEqual(json_content['status'], 'success')
-        res_id = json_content['resource_url'].split('/')[2]
+        res_id = json_content['resource_url'].split('/')[3]
         self.assertEqual(BaseResource.objects.filter(short_id=res_id).exists(), True)
         hydroshare.delete_resource(res_id)
         self.assertEqual(BaseResource.objects.count(), 0)
@@ -88,7 +88,7 @@ class TestCreateResourceViewFunctions(MockIRODSTestCaseMixin, ViewTestCase):
         json_content = json.loads(response.content)
         self.assertEqual(json_content['status'], 'success')
         self.assertEqual(json_content['file_upload_status'], 'success')
-        res_id = json_content['resource_url'].split('/')[2]
+        res_id = json_content['resource_url'].split('/')[3]
         self.assertEqual(BaseResource.objects.filter(short_id=res_id).exists(), True)
         # there should be 2 files (tif and vrt) - successful metadata extraction
         self.assertEqual(ResourceFile.objects.count(), 2)
@@ -118,7 +118,7 @@ class TestCreateResourceViewFunctions(MockIRODSTestCaseMixin, ViewTestCase):
         json_content = json.loads(response.content)
         self.assertEqual(json_content['status'], 'success')
         self.assertEqual(json_content['file_upload_status'], 'error')
-        res_id = json_content['resource_url'].split('/')[2]
+        res_id = json_content['resource_url'].split('/')[3]
         self.assertEqual(BaseResource.objects.filter(short_id=res_id).exists(), True)
         # test that the bad tif file was not uploaded
         self.assertEqual(ResourceFile.objects.count(), 0)

@@ -1,14 +1,3 @@
-### Nightly Build Status (develop branch)
-
-| Workflow | Clean | Build/Deploy | Unit Tests | Flake8
-| :----- | :--- | :--- | :-------- | :------------ | :----------- |
-| [![Build Status](http://ci.myhpom.renci.org:8080/job/nightly-build-workflow/badge/icon?style=plastic)](http://ci.myhpom.renci.org:8080/job/nightly-build-workflow/) | [![Build Status](http://ci.myhpom.renci.org:8080/job/nightly-build-clean/badge/icon?style=plastic)](http://ci.myhpom.renci.org:8080/job/nightly-build-clean/) | [![Build Status](http://ci.myhpom.renci.org:8080/job/nightly-build-deploy/badge/icon?style=plastic)](http://ci.myhpom.renci.org:8080/job/nightly-build-deploy/) | [![Build Status](http://ci.myhpom.renci.org:8080/job/nightly-build-test/badge/icon?style=plastic)](http://ci.myhpom.renci.org:8080/job/nightly-build-test/) | [![Build Status](http://ci.myhpom.renci.org:8080/job/nightly-build-flake8/badge/icon?style=plastic)](http://ci.myhpom.renci.org:8080/job/nightly-build-flake8/) |
-
-Build generate by [Jenkins CI](http://ci.myhpom.renci.org:8080)
-
-### requires.io
-[![Requirements Status](https://requires.io/github/SoftwareResearchInstitute/MyHPOM/hs_docker_base/requirements.svg?branch=develop)](https://requires.io/github/SoftwareResearchInstitute/MyHPOM/hs_docker_base/requirements/?branch=master)
-
 MyHPOM
 ============
 
@@ -25,12 +14,66 @@ There are very good instructions on the [hydroshare
 wiki](https://github.com/hydroshare/hydroshare/wiki/getting_started) to set up a
 local dev environment that matches production.
 
-If you have docker installed locally, you can use `hsctl` commands to setup a
+Docker Development
+==================
+
+If you have [docker installed](https://www.docker.com/community-edition#/download) locally, you can use `hsctl` commands to setup a
 local development environment without VirtualBox.
 
-*OS X Users* note that `hsctl` requires gnu sed. You can use
-[homebrew](https://brew.sh) to install it as the default using the following
-command: `brew install gnu-sed --with-default-names`.
+```bash
+# Copy the developer settings template, and configure your system to use it:
+echo "LOCAL_SETTINGS=dev_settings" > .env
+cp hydroshare/dev_settings.example.py hydroshare/dev_settings.py
+
+# Rebuild your local developer environment, and install a database snapshot:
+./hsctl rebuild --db
+
+# To see which services are running, one would expect to see the following
+# services:
+docker-compose ps
+
+Name            Command                          State   Ports
+-------------------------------------------------------------------------------------------------------
+defaultworker   /bin/bash init-defaultworker     Up
+hydroshare      /bin/bash init-hydroshare        Up      0.0.0.0:1338->2022/tcp, 0.0.0.0:8000->8000/tcp
+postgis         /docker-entrypoint.sh postgres   Up      5432/tcp
+rabbitmq        /docker-entrypoint.sh rabb ...   Up      25672/tcp, 4369/tcp, 5671/tcp, 5672/tcp
+redis           docker-entrypoint.sh redis ...   Up      6379/tcp
+solr            sh -c /bin/bash /opt/solr/ ...   Up      8983/tcp
+
+# To look at logs for any service, you can use docker-compose. For instance to
+# see the django server logs:
+docker-compose logs -f hydroshare
+
+# When you are done developing, and want to stop the services (analagous to docker-compose stop)
+./hsctl stop
+
+# To restart your stack again (without replacing the database):
+./hsctl rebuild
+
+# To run a manage.py command:
+./hsctl managepy createsuperuser
+
+# If you want to set breakpoints, you can stop the existing hydroshare you
+# can manually execute runserver yourself:
+docker-compose stop hydroshare
+# create a new hydroshare server, with service ports exposed, and run
+# whatever django command you wish to run:
+docker-compose run --rm --service-ports hydroshare bash
+python manage.py runserver 0.0.0.0:8000
+# exit the docker instance when done:
+exit
+
+# To run tests (which take about an hour to run):
+./hsctl managepy test
+```
+
+*OS X Users* note that scripts require some gnu versions of builtin libraries.
+You can use [homebrew](https://brew.sh) to install it as the default using the
+following commands:
+ * `brew install gnu-sed --with-default-names`.
+ * `brew install gnu-getopt ; brew link --force gnu-getopt`.
+ * `brew install gettext ; brew link --force gettext`.
 
 Environments
 ------------
@@ -54,80 +97,29 @@ within your dev_settings.py (which will not be added to git).
 You can also use the .env file to specify a different hydroshare-config.yaml
 derived file (i.e., a production version).
 
-Deployment
-----------
-
-Deployments settings can also take advantage of dotenv based settings by
-specifying any variables directly in a .env file. The staging deployment
-configuration is configured this way and requires the following steps to do a
-formal deploy:
-
-Any custom configuration is stored within `.env.staging.template.gpg`, a
-[gpg](https://www.gnupg.org/) encrypted file. Ask another developer or
-sysadmin for the password to edit this file. To make changes to the
-configuration decrypt the file, make changes, and encrypt it again:
-
-```shell
-# decrypt the settings that are under version control:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.template.gpg
-
-# edit the decrypted file .env.staging.template
-
-# encrypt the modified file, and commit:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --symmetric .env.staging.template
-```
-
-When Jenkins checks out a version of this project it will decrypt this file,
-run it through the `envsubst` to fill in any variables provided by Jenkins, and
-save the results in `.env`. Jenkins uses the following simple script to deploy:
-
-```shell
-rm -f .env .env.template
-
-# Decrypt the environmental variables for staging:
-echo PASSWORD | gpg --batch --yes --passphrase-fd 0 --decrypt .env.staging.template.gpg
-
-# substitutes Jenkins environmental variables into the .env file
-cat .env.staging.template | envsubst > .env
-./hsctl rebuild --db
-```
-
-Provisioning New Servers
-------------------------
+Deployment and Provisioning
+---------------------------
 
 When a new server is created, MyHPOM requires a few additional packages. The
 following steps have been used to set up docker (for hsctl) and java (for
-jenkins) and add the deploy user to docker group.
+jenkins) and add the deploy user to docker group. See the [deployment
+docs](deploy/README.md) for more information.
 
-```shell
-# Install docker repositories:
-# https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce
-sudo yum install -y yum-utils \
-  device-mapper-persistent-data \
-  lvm2
-sudo yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo
+Code Style Notes
+================
 
-# Jenkins needs java installed for to use a server as a node, and to build
-# htpasswd in a reliable way, htpasswd command is needed:
-sudo yum install java-1.8.0-openjdk docker-ce httpd-tools
 
-# Install docker-compose
-# https://docs.docker.com/compose/install/#install-compose
-sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+BEM
+---
 
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo groupadd docker
-sudo usermod -aG docker xdci-service
-sudo systemctl restart docker
-# at this point I had to disconnect the one node I had set up for mhpom-dev b/c it was keeping itself online
-# and therefor not getting a refresh of its groups and couldn't connect to docker.
+To ensure that the MyHPOM app uses a set of selectors that can be layered
+on top of Bootstrap without conflicts as well as to ensure that style
+rules are legible and follow a maintainable convention, MyHPOM's app-specific
+selectors are written in the [BEM (Block Element Modifier)](getbem.com) style.
 
-# create the xdci-service user's home directory by logging in for the first time:
-sudu su - xdci-service
-
-# also I copied /root/ssl from myhpom into /home/xdci-service/ssl for use of the dev deploy.
-```
+When creating new front-end components, please follow the convention of
+creating a new "block" class for your component (e.g. `.pseudo-modal`),
+specifying rules for component-internal elements in un-nested selectors
+following the "element" pattern (e.g. `.pseudo-modal__headline`),
+and specifying rules for variations on either by means of the "modifier"
+convention (e.g. `.pseudo-modal__headline--subtitle`).

@@ -1,0 +1,46 @@
+.content-page__hero-banner {
+    width: 100vw;
+    height: 40vw;
+    background-color: $brand-blue-dark;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @include media-breakpoint-down(xs) {
+        height: 80vw;
+    }
+}
+
+.content-overview {
+    background-color: $brand-blue-dark;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.content-overview__title {
+    @include serif;
+    color: white;
+    font-weight: normal;
+    font-size: 3.5rem;
+}
+
+.content-overview__subtitle {
+    color: $brand-blue-medium-fade-40;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.content-overview__link,
+.content-overview__link:hover {
+    color: $brand-blue-medium-fade-40;
+}
+
+.content-overview__text {
+    @include serif;
+
+    em {
+        font-style: normal;
+        color: $brand-blue-medium-fade-40;
+    }
+}

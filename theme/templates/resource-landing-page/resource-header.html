@@ -3,7 +3,7 @@
 {% if not metadata_form %}
 <div class="col-xs-12">
     <table class="info-table">
-        <tr><th>Authors:</th><td id="authors">
+        <tr><th>{% pluralize_title 'Author' creators %}:</th><td id="authors">
             {% for cr in creators %}
                 {% if forloop.counter0 != 0 %} <span>·</span> {% endif %}
                 {% if cr.name %}
@@ -21,7 +21,7 @@
                 {% endif %}
             {% endfor %}
         </td></tr>
-        <tr><th>Owners:</th><td>
+        <tr><th>{% pluralize_title 'Owner' owners %}:</th><td>
             {% for u in owners %}
                 {% if forloop.counter0 != 0 %} <span class="list-separator">·</span> {% endif %}
                 <span>{{ u|contact }}</span>
@@ -36,7 +36,7 @@
     <div class="col-sm-6">
         <table class="info-table">
             <tr>
-                <th>Authors:</th>
+                <th>{% pluralize_title 'Author' creator_formset.initial %}:</th>
                 <td><span id="authors">
 
                         {% for author in creator_formset.initial %}
@@ -58,7 +58,7 @@
                     </span>
                 </td>
             </tr>
-            <tr><th>Owners:</th><td>
+            <tr><th>{% pluralize_title 'Owner' owners %}:</th><td>
                 {% for u in owners %}
                     {% if forloop.counter0 != 0 %} <span class="list-separator">·</span> {% endif %}
                     <span>{{ u|contact }}</span>

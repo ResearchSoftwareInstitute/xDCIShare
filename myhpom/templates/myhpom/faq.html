@@ -1,0 +1,124 @@
+{% extends "myhpom/base.html" %}
+
+{% block main_content %}
+{% if request.user %}
+<div class="row faq-to-dashboard">
+<div class="col px-0">
+    <a class="faq-to-dashboard__link" href="{% url 'myhpom:dashboard' %}">Return to dashboard</a>
+</div>
+</div>
+{% endif %}
+<div class="row faq-title">
+<div class="col">
+    <h2>Frequently Asked Questions (FAQs)</h2>
+</div>
+</div>
+<div class="row">
+<div class="col">
+    <div class="row faq-heading">
+        {% for section in faqs %}
+        <div class="col-md
+            {% if forloop.first %}faq-heading__section-wrapper--first
+            {% elif forloop.last %}faq-heading__section-wrapper--last
+            {% else %}faq-heading__section-wrapper{% endif %}"
+        >
+            <a class="faq-heading__section
+               {% if forloop.first %}faq-heading__section--first
+               {% elif forloop.last %}faq-heading__section--last{% endif %}"
+                href="#{{ section.name }}"
+            >
+                {{ section.description }}
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+    <div class="col">
+        <div class="accordion" id="faq_accordion">
+        {% for section in faqs %}
+        <div class="faq-section" id="{{ section.name }}">
+            <div class="row faq-section__title">
+                <div class="col">
+                    <h3>{{ section.description }}</h3>
+                </div>
+                {% if forloop.counter > 1 %}
+                <div class="col">
+                    <div class="faq-section__title__go-to-top">
+                        <a class="faq-section__title__go-to-top__link" href="#about">Back to Top</a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% for entry in section.entries %}
+            <div class="faq-entry" id="{{ entry.name }}">
+                <div class="row faq-entry__header">
+                    <div class="col">
+                        <div class="d-flex">
+                            <button class="flex-fill btn btn-link collapsed faq-entry__header__button"
+                                type="button" data-toggle="collapse"
+                                data-target="#{{ section.name }}_{{ forloop.counter }}"
+                            >
+                                <h4 class="faq-entry__header__content">{{ entry.question }}</h4>
+                            </button>
+                            <div class="flex-fill faq-entry__header__collapser"
+                                data-toggle="collapse"
+                                data-target="#{{ section.name }}_{{ forloop.counter }}"
+                                role="button"
+                                tabindex="0"
+                            ></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="{{ section.name }}_{{ forloop.counter }}" class="row collapse"
+                    data-parent="#faq_accordion"
+                    data-name="#{{ entry.name }}"
+                >
+                    <div class="faq-entry__wrapper">
+                        <div class="col faq-entry__body">{{ entry.answer|safe }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+    <div class="row contact-us">
+    <div class="col">
+        <h2 class="contact-us__title">Need more assistance?</h2>
+        <h4 class="contact-us__subtitle"><a class="contact-us__link" href="mailto:{{ contact_email }}">Contact us here.</a></h4>
+    </div>
+    </div>
+</div>
+</div>
+{% endblock main_content %}
+
+{% block extra-js %}
+<script>
+jQuery(function ($) {
+    // Style the headings if the user has selected that element
+    $('.faq-heading__section').map(function() {
+        var url = $(this).prop('href');
+        if (url == window.location) {
+            $(this).addClass('faq-heading__section--active');
+        }
+    });
+
+    // If there is a hash, expand the matching element:
+    function showEntryWithHash() {
+        $('[data-name]').map(function() {
+            var name = $(this).data('name');
+            if (name === window.location.hash) {
+                $(name)[0].scrollIntoView();
+                $(this).collapse('show');
+            }
+        });
+    }
+
+    window.addEventListener("hashchange", showEntryWithHash, false);
+
+    showEntryWithHash();
+});
+</script>
+{% endblock extra-js %}

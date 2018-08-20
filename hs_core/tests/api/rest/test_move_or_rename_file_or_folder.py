@@ -32,25 +32,25 @@ class TestPublicRenameEndpoint(HSRESTTestCase):
         self.resources_to_delete.append(self.pid)
 
         # create a folder 'foo'
-        url2 = str.format('/hsapi/resource/{}/folders/foo/', self.pid)
+        url2 = str.format('/hydroshare/hsapi/resource/{}/folders/foo/', self.pid)
         self.client.put(url2, {})
 
         # put a file 'test.txt' into folder 'foo'
-        url2 = str.format('/hsapi/resource/{}/files/foo/', self.pid)
+        url2 = str.format('/hydroshare/hsapi/resource/{}/files/foo/', self.pid)
         params = {'file': (self.txt_file_name,
                            open(self.txt_file_path, 'rb'),
                            'text/plain')}
         self.client.post(url2, params)
 
         # put a file 'cea.tif' into folder 'foo'
-        url3 = str.format('/hsapi/resource/{}/files/foo/', self.pid)
+        url3 = str.format('/hydroshare/hsapi/resource/{}/files/foo/', self.pid)
         params = {'file': (self.raster_file_name,
                            open(self.raster_file_path, 'rb'),
                            'image/tiff')}
         self.client.post(url3, params)
 
     def test_bad_requests(self):
-        unzip_url = "/hsapi/resource/%s/functions/move-or-rename/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/move-or-rename/" % self.pid
         response = self.client.post(unzip_url, {
             "source_path": " ",
             "target_path": "data/contents/foo"
@@ -71,7 +71,7 @@ class TestPublicRenameEndpoint(HSRESTTestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_good_request(self):
-        unzip_url = "/hsapi/resource/%s/functions/move-or-rename/" % self.pid
+        unzip_url = "/hydroshare/hsapi/resource/%s/functions/move-or-rename/" % self.pid
         response = self.client.post(unzip_url, {
             "source_path": "data/contents/foo",
             "target_path": "data/contents/bar"

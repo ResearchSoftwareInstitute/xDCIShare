@@ -715,7 +715,7 @@ class TestGroup(MockIRODSTestCaseMixin, ViewTestCase):
         client = Client()
         # let mike click the link in the email
         response = client.get(url)
-        redirect_url = '/group/{}/'.format(new_group.id)
+        redirect_url = '/hydroshare/group/{}/'.format(new_group.id)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
         self.assertTrue(response['Location'].endswith(redirect_url))
@@ -737,7 +737,7 @@ class TestGroup(MockIRODSTestCaseMixin, ViewTestCase):
         url = reverse('group_membership', kwargs=url_params)
         # let john click the link
         response = client.get(url)
-        redirect_url = '/group/{}/'.format(new_group.id)
+        redirect_url = '/hydroshare/group/{}/'.format(new_group.id)
 
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
         self.assertTrue(response['Location'].endswith(redirect_url))
