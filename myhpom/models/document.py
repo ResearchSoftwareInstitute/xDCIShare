@@ -28,6 +28,7 @@ class AdvanceDirective(models.Model):
     )
     thumbnail = models.FileField(
         null=True,
+        blank=True,
         upload_to='myhpom/advance_directives',
         help_text='The first-page thumbnail image of the user\'s Advance Directive.',
     )
@@ -36,20 +37,20 @@ class AdvanceDirective(models.Model):
     def filename(self):
         return self.original_filename or os.path.basename(self.document.name)
 
-    def save_thumbnail(self, save=True, res=PDF_RESOLUTION, **gsargs):
+    def render_thumbnail_data(self, res=PDF_RESOLUTION, **gsargs):
+        """return the thumbnail binary file data for the given AdvanceDirective instance"""
         mogrify = {'resize': "%dx>" % THUMBNAIL_WIDTH}
-        self.render_images(
-            save=save, save_thumbnail=True, allpages=False, res=res, mogrify=mogrify, **gsargs
+        filenames = self.render_images(
+            allpages=False, res=res, mogrify=mogrify, **gsargs
         )
+        if len(filenames) > 0:
+            with open(filenames[0], 'rb') as f:
+                return f.read()
 
-    def render_images(
-        self, save=True, save_thumbnail=True, allpages=True, res=PDF_RESOLUTION, **gsargs
-    ):
+    def render_images(self, allpages=True, res=PDF_RESOLUTION, **gsargs):
         """create one or more images of pages of the current document. 
         Requires that the AD has a document in storage
         Returns a list of (temporary) filenames (deleted after the AD object goes out of scope).
-        * save=True: if true, saves (persists) the underlying model
-        * save_thumbnail=True: if true, saves the first image as the AD.thumbnail
         * allpages=False: if true, creates all pages. if False, creates only the first page.
             (if all you want is a thumbnail, creating only the first page is MUCH faster)
         * res=150: the resolution of the output images based on the pdf page size
@@ -60,23 +61,14 @@ class AdvanceDirective(models.Model):
             * quality=90: the jpeg quality: 100 = highest.
             * mogrify=None: if given, these are post-processing arguments to mogrify (ImageMagick)
         """
-        gs = GS()  # ghostscript interpreter
         # first write the document to a temporary file in the filesystem
+        # then use ghostscript (gs) to render it
+        gs = GS()
         tempdir = tempfile.mkdtemp()
         pdf_filename = os.path.join(tempdir, self.filename)
-        with self.document.storage.open(self.document.name, 'rb') as f:
-            fd = f.read()
         with open(pdf_filename, 'wb') as f:
-            f.write(fd)
-        # then use ghostscript to render it
+            f.write(self.document.file.read())
         image_filenames = gs.render(pdf_filename, res=res, allpages=allpages, **gsargs)
-        # and save a thumbnail
-        if save_thumbnail is True and len(image_filenames or []) > 0:
-            thumbnail_filename = image_filenames[0]
-            fd = open(thumbnail_filename, 'rb').read()
-            # the save name of the thumbnail is the document name + ext
-            name = self.document.name + os.path.splitext(thumbnail_filename)[-1]
-            self.thumbnail.save(name, ContentFile(fd), save=save)
         return image_filenames
 
 
