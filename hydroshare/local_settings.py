@@ -190,3 +190,5 @@ TIME_ZONE = "America/New_York"
 RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY=os.environ.get('RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY=os.environ.get('RECAPTCHA_SECRET_KEY')
+
+CONTACT_EMAIL=os.environ.get('CONTACT_EMAIL')
