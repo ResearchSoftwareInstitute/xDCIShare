@@ -41,14 +41,14 @@
                         </div>
                         <div class="col-md-6 col-lg-4 form-group">
                             <label class="pseudo-modal__label {% if form.errors.middle_name %}form-group__label--invalid{% endif %}" for="id_middle_name">{{form.fields.middle_name.label}} (Optional)</label>
-                            <input type="text" class="form-control pseudo-modal__input{% if form.errors.middle_name %} is-invalid{% endif %}" name="middle_name" id="id_middle_name" placeholder="{{form.fields.first_name.label}}" value="{% if form.data.middle_name %}{{form.data.middle_name}}{% endif %}" />
+                            <input type="text" class="form-control pseudo-modal__input{% if form.errors.middle_name %} is-invalid{% endif %}" name="middle_name" id="id_middle_name" placeholder="{{form.fields.middle_name.label}}" value="{% if form.data.middle_name %}{{form.data.middle_name}}{% endif %}" />
                             <div class="invalid-feedback">
                                 {% if form.errors.middle_name %}{{ form.errors.middle_name }}{% endif %}
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-4 form-group">
                             <label class="pseudo-modal__label {% if form.errors.last_name %}form-group__label--invalid{% endif %}" for="id_last_name">{{form.fields.last_name.label}}</label>
-                            <input type="text" class="form-control pseudo-modal__input{% if form.errors.last_name %} is-invalid{% endif %}" name="last_name" id="id_last_name" placeholder="{{form.fields.first_name.label}}" value="{% if form.data.last_name %}{{form.data.last_name}}{% endif %}" />
+                            <input type="text" class="form-control pseudo-modal__input{% if form.errors.last_name %} is-invalid{% endif %}" name="last_name" id="id_last_name" placeholder="{{form.fields.last_name.label}}" value="{% if form.data.last_name %}{{form.data.last_name}}{% endif %}" />
                             <div class="invalid-feedback">
                                 {% if form.errors.last_name %}{{ form.errors.last_name }}{% endif %}
                             </div>
