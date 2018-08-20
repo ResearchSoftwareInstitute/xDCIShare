@@ -1,6 +1,5 @@
 {% extends "myhpom/base.html" %}
 {% load staticfiles %}
-{% load scribbler_tags %}
 
 {% block header %}
 {% include 'myhpom/includes/header.html' with home=1 %}
@@ -15,7 +14,7 @@
             Own your care. Plan in advance.
         </div>
         <div class="hero-section__subtitle">
-            {% lorem 12 w %}
+            Your online tool to keep your advance care plan in check.
         </div>
         <div class="mt-2 hero-section__start-now">
             <a class="btn btn-secondary hero-section__start-now-button" href="{% url 'myhpom:signup' %}">Start Now</a>
@@ -128,9 +127,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="how-it-works-section__title">How it works.</div>
-                {% scribble 'homepage' 'how-it-works' %}
-                <p class="ml-auto mr-auto how-it-works-section__subtitle">{% lorem 24 w %}</p>
-                {% endscribble %}
+                <p class="mx-auto how-it-works-section__subtitle">
+                    Your simple step-by-step guide to empowering your advance care planning with Mind My Health.
+                </p>
             </div>
         </div>
         <ul class="row">
