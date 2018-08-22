@@ -56,7 +56,7 @@
 
                 <div class="dashboard-profile-information__organ-donor-status-box{% if not request.user.userdetails.is_organ_donor %} dashboard-profile-information__organ-donor-status-box--non-donor{% endif %}">
                     <div>
-                        <img class="dashboard-profile-information__organ-icon" src="{% static 'myhpom/img/donor/icon-donor@3x.png' %}" alt="">
+                        <img class="dashboard-profile-information__organ-icon{% if not request.user.userdetails.is_organ_donor %} dashboard-profile-information__organ-icon--non-donor{% endif %}" src="{% static 'myhpom/img/donor/icon-donor@3x.png' %}" alt="">
                     </div>
                     <div>
                         {% if request.user.userdetails.is_organ_donor %}
@@ -74,9 +74,12 @@
                         </div>
                         {% endif %}
                     </div>
-                    <div class="h6 dashboard-profile-information__organ-donor-edit-link{% if not request.user.userdetails.is_organ_donor %} dashboard-profile-information__organ-donor-edit-link--non-donor{% endif %}">
+
+                    {% if not request.user.userdetails.is_organ_donor %}
+                    <div class="h6 dashboard-profile-information__organ-donor-edit-link">
                         <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
                     </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
