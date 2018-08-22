@@ -10,6 +10,7 @@
 
 .nobutton-radio__label {
     @extend .btn;
+    text-transform: none;
 
     background-color: $brand-orange-fade-10;
     border: 1px solid $brand-orange;
