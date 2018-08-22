@@ -54,7 +54,7 @@
                     State resident: <strong>{{ request.user.userdetails.state.title|default:'(Unknown state)' }}</strong>
                 </p>
 
-                <div class="dashboard-profile-information__organ-donor-status-box">
+                <div class="dashboard-profile-information__organ-donor-status-box{% if not request.user.userdetails.is_organ_donor %} dashboard-profile-information__organ-donor-status-box--non-donor{% endif %}">
                     <div>
                         <img class="dashboard-profile-information__organ-icon" src="{% static 'myhpom/img/donor/icon-donor@3x.png' %}" alt="">
                     </div>
@@ -74,7 +74,7 @@
                         </div>
                         {% endif %}
                     </div>
-                    <div class="h6 dashboard-profile-information__organ-donor-edit-link">
+                    <div class="h6 dashboard-profile-information__organ-donor-edit-link{% if not request.user.userdetails.is_organ_donor %} dashboard-profile-information__organ-donor-edit-link--non-donor{% endif %}">
                         <a href="{% url 'myhpom:edit_profile' %}" class="small"><span class="oi oi-pencil"></span> Edit</a>
                     </div>
                 </div>

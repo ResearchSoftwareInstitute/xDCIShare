@@ -63,7 +63,6 @@
     font-weight: 700;
 }
 
-.dashboard-profile-information__organ-donor-status-box,
 .dashboard-health-network__info-box {
     padding: 1em;
 }
@@ -78,10 +77,14 @@
 }
 
 .dashboard-profile-information__organ-donor-status-box {
-    border: 2px solid $brand-orange;
     display: flex;
     align-items: center;
     flex-wrap: nowrap;
+}
+
+.dashboard-profile-information__organ-donor-status-box--non-donor {
+    border: 2px solid $brand-orange;
+    padding: 1em;
 }
 
 .dashboard-profile-information__organ-donor-status-info {
@@ -106,7 +109,9 @@
     align-self: flex-start;
     justify-self: flex-end;
     margin-left: auto;
+}
 
+.dashboard-profile-information__organ-donor-edit-link--non-donor {
     :any-link {
         @include orange-link;
     }
