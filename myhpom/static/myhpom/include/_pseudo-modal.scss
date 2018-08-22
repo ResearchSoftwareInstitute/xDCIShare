@@ -52,6 +52,8 @@ html [type="button"].close--link {
 
 .pseudo-modal__title {
     color: $brand-blue;
+    line-height: 1.25;
+    margin-bottom: 0.2em;
 
     @include media-breakpoint-up(lg) {
         padding: 0 10rem;
