@@ -1,8 +1,11 @@
-{% extends "myhpom/base.html" %}
+{% extends "myhpom/with_modal.html" %}
 {% load scribbler_tags %}
 
 {% block main_content %}
-<div class="modal show pseudo-modal">
+<div
+    class="modal show pseudo-modal"
+    data-close-href="{% url 'myhpom:dashboard' %}"
+>
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             <div class="pb-0 modal-header modal-header--main pseudo-modal__header">

@@ -1,4 +1,4 @@
-{% extends "myhpom/base.html" %}
+{% extends "myhpom/with_modal.html" %}
 {% load scribbler_tags %}
 
 {% load staticfiles %}
@@ -6,7 +6,10 @@
 {% block title %}Create Your Account | My Health Peace Of Mind{% endblock title %}
 
 {% block main_content %}
-<div class="modal show pseudo-modal">
+<div
+    class="modal show pseudo-modal"
+    data-close-href="{% url 'myhpom:home' %}"
+>
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             <div class="pseudo-modal__pre-header">
@@ -133,6 +136,7 @@
 {% endblock main_content %}
 
 {% block extra-js %}
+{{ block.super }}
 <script>
     jQuery(function ($) {
         var $tosAccept = $('#id_accept_tos');

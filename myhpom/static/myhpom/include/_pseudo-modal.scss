@@ -14,10 +14,12 @@ html [type="button"].close--link {
 .pseudo-modal {
     display: block;
     overflow-y: scroll;
+    cursor: pointer;
 }
 
 .pseudo-modal__dialog {
     margin-top: 4rem;
+    cursor: initial;
 
     @include media-breakpoint-up(sm) {
         max-width: 90vw;
