@@ -30,7 +30,7 @@ $banner-proportion: 60%;
     color: $brand-orange;
     align-self: flex-end;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         display: none;
     }
 }
