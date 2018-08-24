@@ -19,7 +19,7 @@ $banner-proportion: 60%;
 }
 
 .myhpom-header__logo--home {
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
         max-width: 25rem;
     }
 }
@@ -30,7 +30,7 @@ $banner-proportion: 60%;
     color: $brand-orange;
     align-self: flex-end;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         display: none;
     }
 }
@@ -201,8 +201,7 @@ $banner-proportion: 60%;
 }
 .supported-by-section__title {
     text-align: center;
-    text-transform: uppercase;
-    color: $brand-blue;
+    color: black;
 }
 .supported-by-logos {
     padding-left: 0;

@@ -1,6 +1,14 @@
-
 from django import forms
+from django.contrib.auth import views as auth_views
+
 from myhpom import models, validators
+
+
+class SetPasswordForm(auth_views.SetPasswordForm):
+
+    def __init__(self, user, *args, **kwargs):
+        super(SetPasswordForm, self).__init__(user, *args, **kwargs)
+        self.fields['new_password1'].validators = [validators.password_validator]
 
 
 class SignupForm(forms.Form):

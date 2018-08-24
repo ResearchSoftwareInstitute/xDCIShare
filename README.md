@@ -105,6 +105,15 @@ following steps have been used to set up docker (for hsctl) and java (for
 jenkins) and add the deploy user to docker group. See the [deployment
 docs](deploy/README.md) for more information.
 
+To deploy this application, login to the [Jenkins
+server](https://ci.mindmyhealth.org) and start the 'Deploy MMH' job.
+
+Note that this project uses the [Django Sites
+plugin](https://docs.djangoproject.com/en/2.1/ref/contrib/sites/): when creating
+a new environment, or restoring databases from production to staging be sure to
+login to the admin interface and change the site domain to the correct value for
+that environment.
+
 Code Style Notes
 ================
 

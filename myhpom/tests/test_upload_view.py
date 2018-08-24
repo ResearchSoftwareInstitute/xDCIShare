@@ -107,19 +107,20 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
     def setUp(self):
         self.url = reverse('myhpom:upload_requirements')
         with open(PDF_FILENAME, 'rb') as f:
-            self.valid_file = SimpleUploadedFile(os.path.basename(PDF_FILENAME), f.read())
+            self.pdfdata = f.read()
 
     def test_POST_valid_date_for_unsupported_state(self):
         user = self._setup_user_and_login()
-        form_data = {'valid_date': '2018-01-01', 'document': self.valid_file}
+        document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
+        post_data = {'valid_date': '2018-01-01', 'document': document}
         response = self.client.post(
-            self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertRedirects(
             response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False
         )
         self.assertEqual(
-            form_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
+            post_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
         )
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)
@@ -128,24 +129,26 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         user = self._setup_user_and_login()
         user.userdetails.state.advance_directive_template = SimpleUploadedFile('ad.pdf', '')
         user.userdetails.state.save()
-        form_data = {'valid_date': '2018-01-01', 'document': self.valid_file}
+        document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
+        post_data = {'valid_date': '2018-01-01', 'document': document}
         response = self.client.post(
-            self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertRedirects(
             response, reverse('myhpom:upload_sharing'), fetch_redirect_response=False
         )
         self.assertEqual(
-            form_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
+            post_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
         )
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)
 
     def test_POST_invalid_date(self):
         user = self._setup_user_and_login()
-        form_data = {'valid_date': '', 'document': self.valid_file}
+        document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
+        post_data = {'valid_date': '', 'document': document}
         response = self.client.post(
-            self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
@@ -153,12 +156,12 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
 
     def test__POST_invalid_filename(self):
         user = self._setup_user_and_login()
-        form_data = {
+        post_data = {
             'valid_date': '2018-01-01',
             'document': SimpleUploadedFile('afile.txt', 'binary_contents'),
         }
         response = self.client.post(
-            self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
@@ -167,9 +170,10 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
     @override_settings(MAX_AD_SIZE=10)
     def test_POST_invalid_filesize(self):
         user = self._setup_user_and_login()
-        form_data = {'valid_date': '2018-01-01', 'document': self.valid_file}
+        document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
+        post_data = {'valid_date': '2018-01-01', 'document': document}
         response = self.client.post(
-            self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+            self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
         )
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
@@ -183,8 +187,9 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         """
         og_name = os.path.basename(PDF_FILENAME)
         user = self._setup_user_and_login()
-        form_data = {'valid_date': '2018-01-01', 'document': self.valid_file}
-        self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
+        post_data = {'valid_date': '2018-01-01', 'document': document}
+        self.client.post(self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)
         self.assertEqual(og_name, user.advancedirective.filename)
@@ -196,8 +201,8 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         # old AD and still see the correct filename value
         with open(PDF_FILENAME, 'rb') as f:
             new_file = SimpleUploadedFile(og_name, f.read())
-        form_data = {'valid_date': '2018-01-01', 'document': new_file}
-        self.client.post(self.url, data=form_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        post_data = {'valid_date': '2018-01-01', 'document': new_file}
+        self.client.post(self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         user = User.objects.get(pk=user.pk)
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)

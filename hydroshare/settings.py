@@ -155,8 +155,6 @@ ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
 ################
 
 INSTALLED_APPS = (
-    "django.contrib.admin",
-    "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.redirects",
     "django.contrib.sessions",
@@ -169,6 +167,10 @@ INSTALLED_APPS = (
     "sass_processor",
     "scribbler",
     "myhpom",
+    # Load auth app after our app, so that our templates for login/password
+    # reset are found first:
+    "django.contrib.admin",
+    "django.contrib.auth",
 )
 
 SASS_PROCESSOR_AUTO_INCLUDE = True
@@ -334,7 +336,7 @@ LOGGING = {
             'handlers': ['syslog'],
             'level': 'WARNING',
             'propagate': False,
-        },
+    },
         # Catch-all logger for HydroShare apps
         '': {
             'handlers': ['hydrosharelog', 'mail_admins'],
