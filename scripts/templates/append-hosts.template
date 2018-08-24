@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# errexit: abort script at first error
+set -e
+
+HOSTS=/etc/hosts
+HOSTSD=HS_HOSTSD_DIR
+if [ -d "$HOSTSD" ]; then
+    for FILENAME in ${HOSTSD}/*.conf; do
+        FIRST=$(head -n 1 "$FILENAME")
+        if ! grep -xq "$FIRST" ${HOSTS}; then
+            printf "\n" >> ${HOSTS}
+            cat ${FILENAME} >> ${HOSTS}
+            echo Concatenated ${FILENAME} to ${HOSTS}
+        else
+            echo ${FILENAME} already concatenated to ${HOSTS}
+        fi
+    done
+fi

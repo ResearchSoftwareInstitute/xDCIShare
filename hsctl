@@ -195,6 +195,9 @@ preflight_hs() {
         echo "This directory is used for celery beat scheduler to write celerybeat-schedule file for \
             scheduling purposes." > ${HS_PATH}/celery/readme.txt;
     fi
+    # Generate append-hosts
+    cp -rf ${HS_PATH}/scripts/templates/append-hosts.template ${HS_PATH}/scripts/append-hosts
+    sed -i 's!HS_HOSTSD_DIR!'${HS_HOSTSD_DIR}'!g' ${HS_PATH}/scripts/append-hosts
     # Generate init-hydroshare
     cp -rf ${HS_PATH}/scripts/templates/init-hydroshare.template ${HS_PATH}/init-hydroshare
     sed -i 's!HS_SERVICE_UID!'${HS_SERVICE_UID}'!g' ${HS_PATH}/init-hydroshare
