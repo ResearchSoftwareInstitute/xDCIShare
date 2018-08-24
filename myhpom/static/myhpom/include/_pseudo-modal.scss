@@ -113,11 +113,11 @@ html [type="button"].close--link {
 
 .pseudo-modal__close-button--dark {
     color: $brand-blue-dark;
-    transition: color 0.25s ease;
+    transition: color 0.15s ease-in-out;
 
     &:hover {
         color: $brand-blue;
-        transition: color 0.25s ease;
+        transition: color 0.15s ease-in-out;
     }
 }
 
