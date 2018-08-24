@@ -1,12 +1,21 @@
-{% extends "myhpom/base.html" %}
+{% extends "myhpom/with_modal.html" %}
 
 {% block main_content %}
-<div class="modal show pseudo-modal">
+<div
+    class="modal show pseudo-modal"
+    data-close-href="{% url 'myhpom:dashboard' %}"
+>
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             {% if not is_update %}
             <div class="pb-0 modal-header pseudo-modal__header pseudo-modal__header--centered">
-              <strong>Thank you for registering.&nbsp;</strong>
+                <strong class="ml-auto">Thank you for registering.&nbsp;</strong>
+                <div
+                    class="ml-auto oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark"
+                    role="button"
+                    tabindex="0"
+                    data-close-href="{% url 'myhpom:dashboard' %}"
+                ></div>
             </div>
             {% endif %}
 
@@ -119,6 +128,7 @@
 {% endblock main_content %}
 
 {% block extra-js %}
+{{ block.super }}
 <script>
     /*
         Enforce mutual exclusion of radio button selection and
