@@ -191,9 +191,4 @@ RECAPTCHA_VERIFY_URL='https://www.google.com/recaptcha/api/siteverify'
 RECAPTCHA_SITE_KEY=os.environ.get('RECAPTCHA_SITE_KEY')
 RECAPTCHA_SECRET_KEY=os.environ.get('RECAPTCHA_SECRET_KEY')
 
-# When serving behind a reverse proxy where SSL is terminated at the proxy,
-# respect the protocol passed in the X-Forwarded-Proto header.
-if os.environ.get('SECURE_PROXY_SSL_HEADER_VALUE', False):
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', os.environ.get('SECURE_PROXY_SSL_HEADER_VALUE'))
-
 CONTACT_EMAIL=os.environ.get('CONTACT_EMAIL')
