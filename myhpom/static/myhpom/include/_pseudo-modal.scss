@@ -76,13 +76,39 @@ html [type="button"].close--link {
 }
 
 .pseudo-modal__pre-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: transparent !important;
     padding: 1rem;
-    text-align: center;
 }
 
 .pseudo-modal__logo {
     max-width: 20rem;
+}
+
+.pseudo-modal__close-button {
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.pseudo-modal__close-button--dark {
+    color: $brand-blue-dark;
+    transition: color 0.25s ease;
+
+    &:hover {
+        color: $brand-blue;
+        transition: color 0.25s ease;
+    }
+}
+
+.pseudo-modal__close-button--high {
+    align-self: flex-start;
 }
 
 /*
