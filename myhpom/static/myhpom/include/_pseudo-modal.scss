@@ -35,6 +35,11 @@ html [type="button"].close--link {
 */
 .pseudo-modal__header {
     border-bottom: none;
+    align-items: center;
+
+    @include media-breakpoint-down(md) {
+        align-items: flex-start;
+    }
 }
 
 .pseudo-modal__header--centered {
@@ -57,12 +62,17 @@ html [type="button"].close--link {
     line-height: 1.25;
     margin-bottom: 0.2em;
 
+    @include media-breakpoint-down(md) {
+        font-size: 2rem;
+    }
+
     @include media-breakpoint-up(lg) {
         padding: 0 10rem;
     }
 }
 
 .pseudo-modal__title--centered {
+    @extend .pseudo-modal__title;
     font-weight: $modal-heavy-font-weight;
 }
 
@@ -85,6 +95,10 @@ html [type="button"].close--link {
 
 .pseudo-modal__logo {
     max-width: 20rem;
+
+    @include media-breakpoint-down(sm) {
+        max-width: 12rem;
+    }
 }
 
 .pseudo-modal__close-button {
@@ -107,10 +121,13 @@ html [type="button"].close--link {
     }
 }
 
-.pseudo-modal__close-button--high {
-    align-self: flex-start;
+.pseudo-modal__close-button--absolute.oi { // include .oi to override specificity rules
+    @include media-breakpoint-down(sm) {
+        position: absolute;
+        right: 0.7rem;
+        top: 0.7rem;
+    }
 }
-
 /*
     Main content
 */
