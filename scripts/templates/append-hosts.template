@@ -16,4 +16,6 @@ if [ -d "$HOSTSD" ]; then
             echo ${FILENAME} already concatenated to ${HOSTS}
         fi
     done
+else
+    echo ${HOSTSD} not found; nothing concatenated to ${HOSTS}
 fi
