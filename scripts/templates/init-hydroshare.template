@@ -8,6 +8,7 @@ sleep 3s
 cp /hydroshare/hydroshare.conf /etc/supervisor/conf.d/hydroshare.conf
 usermod -u HS_SERVICE_UID hydro-service
 groupmod -g HS_SERVICE_GID storage-hydro
+/hydroshare/scripts/append-hosts
 chown -R hydro-service:storage-hydro /etc/ssh
 chown -R hydro-service:storage-hydro /hs_tmp
 chown -R hydro-service:storage-hydro /shared_tmp
