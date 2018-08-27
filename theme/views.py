@@ -300,7 +300,7 @@ def update_user_password(request):
         return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
     messages.info(request, 'Password reset was successful')
-    return HttpResponseRedirect('/user/{}/'.format(user.id))
+    return HttpResponseRedirect('/hydroshare/user/{}/'.format(user.id))
 
 
 @login_required
@@ -417,7 +417,7 @@ def email_verify(request, new_email, uidb36=None, token=None):
         auth_login(request, user)
         messages.info(request, _("Successfully updated email"))
         # redirect to user profile page
-        return HttpResponseRedirect('/user/{}/'.format(user.id))
+        return HttpResponseRedirect('/hydroshare/user/{}/'.format(user.id))
     else:
         messages.error(request, _("The link you clicked is no longer valid."))
         return redirect("/")
@@ -445,7 +445,7 @@ def deactivate_user(request):
     user.is_active = False
     user.save()
     messages.success(request, "Your account has been successfully deactivated.")
-    return HttpResponseRedirect('/accounts/logout/')
+    return HttpResponseRedirect('/hydroshare/accounts/logout/')
 
 @login_required
 def delete_irods_account(request):

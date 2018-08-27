@@ -1,0 +1,8 @@
+[
+  {"name": "AS", "title": "American Samoa", "is_territory": true },
+  {"name": "GU", "title": "Guam", "is_territory": true },
+  {"name": "MP", "title": "Northern Mariana Islands", "is_territory": true },
+  {"name": "PR", "title": "Puerto Rico", "is_territory": true },
+  {"name": "VI", "title": "U.S. Virgin Islands", "is_territory": true },
+  {"name": "UM", "title": "U.S. Minor Outlying Islands", "is_territory": true }
+]

@@ -282,7 +282,7 @@ class TimeSeriesFileMetaData(TimeSeriesMetaDataMixin, AbstractFileMetaData):
         heading = heading.format(str(time_series_count))
         with root_div:
             strong(heading)
-            action_url = "/hsapi/_internal/{logical_file_id}/series_id/resource_mode/"
+            action_url = "/hydroshare/hsapi/_internal/{logical_file_id}/series_id/resource_mode/"
             action_url += "get-timeseries-file-metadata/"
             action_url = action_url.format(logical_file_id=self.logical_file.id)
             with form(id="series-selection-form-file_type", action=action_url, method="get",
@@ -298,7 +298,7 @@ class TimeSeriesFileMetaData(TimeSeriesMetaDataMixin, AbstractFileMetaData):
         return root_div
 
     def get_update_sqlite_file_html_form(self):
-        form_action = "/hsapi/_internal/{}/update-sqlite-file/".format(self.id)
+        form_action = "/hydroshare/hsapi/_internal/{}/update-sqlite-file/".format(self.id)
         style = "display:none;"
         is_dirty = 'False'
         can_update_sqlite_file = 'False'
@@ -330,7 +330,7 @@ class TimeSeriesFileMetaData(TimeSeriesMetaDataMixin, AbstractFileMetaData):
         return root_div
 
     def get_abstract_form(self):
-        form_action = "/hsapi/_internal/{}/update-timeseries-abstract/"
+        form_action = "/hydroshare/hsapi/_internal/{}/update-timeseries-abstract/"
         form_action = form_action.format(self.logical_file.id)
         root_div = div(cls="col-xs-12")
         if self.abstract:
@@ -1823,12 +1823,12 @@ def _get_element_update_form_action(element_name, target_id, element_id, file_ty
     if not file_type:
         # TimeSeries resource level metadata update
         # target_id is resource short_id
-        action = "/hsapi/_internal/{res_id}/{element_name}/{element_id}/update-metadata/"
+        action = "/hydroshare/hsapi/_internal/{res_id}/{element_name}/{element_id}/update-metadata/"
         return action.format(res_id=target_id, element_name=element_name, element_id=element_id)
     else:
         # Time series file type metadata update
         # target_id is logical file object id
-        action = "/hsapi/_internal/TimeSeriesLogicalFile/{logical_file_id}/{element_name}/" \
+        action = "/hydroshare/hsapi/_internal/TimeSeriesLogicalFile/{logical_file_id}/{element_name}/" \
                  "{element_id}/update-file-metadata/"
         return action.format(logical_file_id=target_id, element_name=element_name,
                              element_id=element_id)
@@ -1838,11 +1838,11 @@ def _get_element_create_form_action(element_name, target_id, file_type=False):
     if not file_type:
         # TimeSeries resource level metadata update
         # target_id is resource short_id
-        action = "/hsapi/_internal/{res_id}/{element_name}/create-metadata/"
+        action = "/hydroshare/hsapi/_internal/{res_id}/{element_name}/create-metadata/"
         return action.format(res_id=target_id, element_name=element_name)
     else:
         # Time series file type metadata update
         # target_id is logical file object id
-        action = "/hsapi/_internal/TimeSeriesLogicalFile/{logical_file_id}/{element_name}/" \
+        action = "/hydroshare/hsapi/_internal/TimeSeriesLogicalFile/{logical_file_id}/{element_name}/" \
                  "add-file-metadata/"
         return action.format(logical_file_id=target_id, element_name=element_name)

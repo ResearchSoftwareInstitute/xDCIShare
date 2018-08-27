@@ -1,0 +1,212 @@
+// NOTE: adjusting this border-radius down by 0.1rem in the inner
+// container is necessary to avoid a strange visual discrepancy
+$container-border-radius: 1.5rem;
+$container-border-width: 4px;
+$modal-heavy-font-weight: 600;
+
+html [type="button"].close--link {
+    -webkit-appearance: none;
+}
+
+/*
+    General container styles
+*/
+.pseudo-modal {
+    display: block;
+    overflow-y: scroll;
+    cursor: pointer;
+}
+
+.pseudo-modal__dialog {
+    margin-top: 4rem;
+    cursor: initial;
+
+    @include media-breakpoint-up(sm) {
+        max-width: 90vw;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, "lg") + 30px) {
+        max-width: map-get($grid-breakpoints, "lg");
+    }
+}
+
+/*
+    Header styles
+*/
+.pseudo-modal__header {
+    border-bottom: none;
+    align-items: center;
+
+    @include media-breakpoint-down(md) {
+        align-items: flex-start;
+    }
+}
+
+.pseudo-modal__header--centered {
+    justify-content: center;
+}
+
+.pseudo-modal__header:first-child {
+    border-top-left-radius: ($container-border-radius - 0.1);
+    border-top-right-radius: ($container-border-radius - 0.1);
+}
+
+.pseudo-modal__header {
+    text-align: center;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.pseudo-modal__title {
+    color: $brand-blue;
+    line-height: 1.25;
+    margin-bottom: 0.2em;
+
+    @include media-breakpoint-down(md) {
+        font-size: 2rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+        padding: 0 10rem;
+    }
+}
+
+.pseudo-modal__title--centered {
+    @extend .pseudo-modal__title;
+    font-weight: $modal-heavy-font-weight;
+}
+
+.pseudo-modal__title--centered {
+    flex-grow: 1;
+}
+
+.pseudo-modal__title--serif {
+    @include serif;
+    font-weight: $modal-heavy-font-weight;
+}
+
+.pseudo-modal__pre-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent !important;
+    padding: 1rem;
+}
+
+.pseudo-modal__logo {
+    max-width: 20rem;
+
+    @include media-breakpoint-down(sm) {
+        max-width: 12rem;
+    }
+}
+
+.pseudo-modal__close-button {
+    color: white;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.pseudo-modal__close-button--dark {
+    color: $brand-blue-dark;
+    transition: color 0.15s ease-in-out;
+
+    &:hover {
+        color: $brand-blue;
+        transition: color 0.15s ease-in-out;
+    }
+}
+
+.pseudo-modal__close-button--absolute.oi { // include .oi to override specificity rules
+    @include media-breakpoint-down(sm) {
+        position: absolute;
+        right: 0.7rem;
+        top: 0.7rem;
+    }
+}
+/*
+    Main content
+*/
+.pseudo-modal__body {
+    padding: 1rem 2rem;
+}
+
+.pseudo-modal__content {
+    padding: $container-border-width;
+    border-radius: $container-border-radius;
+    background-color: $brand-blue;
+    min-height: 250px;
+
+    > * {
+        background-color: white;
+
+        &:last-child {
+            border-bottom-left-radius: ($container-border-radius - 0.1);
+            border-bottom-right-radius: ($container-border-radius - 0.1);
+        }
+    }
+}
+
+.pseudo-modal__header-caption-text {
+    @include serif;
+}
+
+/*
+    Footer
+*/
+.pseudo-modal__footer {
+    padding: 1rem 2rem;
+}
+
+
+/*
+    Forms
+*/
+.pseudo-modal__label {
+    font-weight: $modal-heavy-font-weight;
+}
+
+.pseudo-modal__label--subdued {
+    font-weight: normal;
+}
+
+.pseudo-modal__label--center-full {
+    text-align: center;
+    width: 100%;
+}
+
+.pseudo-modal__input {
+    background-color: $light-gray;
+    border-color: darken($light-gray, 50%);
+}
+
+.psuedo-modal__submit-button {
+    @extend .btn-secondary;
+    padding: 1em 2em;
+    font-size: 125%;
+    width: 100%;
+
+    &:disabled, &.disabled {
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+/*
+    Links
+*/
+.pseudo-modal__login-link {
+    @include orange-link;
+}
+
+.pseudo-modal__skip-link {
+    @extend .form-group-tos__link;
+    line-height: 1;
+}
+
+.pseudo-modal__tooltip-text {
+    @include orange-link;
+}

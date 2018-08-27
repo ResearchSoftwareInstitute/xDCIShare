@@ -57,7 +57,7 @@ class TestGroupCRUD(ViewTestCase):
         request = self.factory.post(url, data=post_data)
         request.user = self.john
         expected_new_group_id = Group.objects.all().order_by("-id").first().id + 1
-        request.META['HTTP_REFERER'] = '/group/{}'.format(expected_new_group_id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(expected_new_group_id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = create_user_group(request)
@@ -82,12 +82,12 @@ class TestGroupCRUD(ViewTestCase):
         request = self.factory.post(url, data=post_data)
         request.user = self.john
         expected_new_group_id = Group.objects.all().order_by("-id").first().id + 1
-        request.META['HTTP_REFERER'] = '/group/{}'.format(expected_new_group_id - 1)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(expected_new_group_id - 1)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = create_user_group(request)
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
-        self.assertNotEqual(response['Location'], '/group/{}'.format(expected_new_group_id))
+        self.assertNotEqual(response['Location'], '/hydroshare/group/{}'.format(expected_new_group_id))
         flag_messages = get_messages(request)
         err_messages = [m for m in flag_messages if m.tags == 'error']
         self.assertNotEqual(len(err_messages), 0)
@@ -115,7 +115,7 @@ class TestGroupCRUD(ViewTestCase):
 
         request = self.factory.post(url, data=post_data)
         request.user = self.john
-        request.META['HTTP_REFERER'] = '/group/{}'.format(new_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(new_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = update_user_group(request, group_id=new_group.id)
@@ -148,7 +148,7 @@ class TestGroupCRUD(ViewTestCase):
 
         request = self.factory.post(url, data=post_data)
         request.user = self.john
-        request.META['HTTP_REFERER'] = '/group/{}'.format(new_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(new_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = update_user_group(request, group_id=new_group.id)
@@ -181,7 +181,7 @@ class TestGroupCRUD(ViewTestCase):
 
         request = self.factory.post(url, data=post_data)
         request.user = self.john
-        request.META['HTTP_REFERER'] = '/group/{}'.format(new_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(new_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = delete_user_group(request, group_id=new_group.id)
@@ -215,7 +215,7 @@ class TestGroupCRUD(ViewTestCase):
         request = self.factory.post(url, data=post_data)
         # mike does not have permission to delete this group - delete should fail
         request.user = self.mike
-        request.META['HTTP_REFERER'] = '/group/{}'.format(new_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(new_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = delete_user_group(request, group_id=new_group.id)
@@ -252,7 +252,7 @@ class TestGroupCRUD(ViewTestCase):
 
         request = self.factory.post(url, data=post_data)
         request.user = self.john
-        request.META['HTTP_REFERER'] = '/group/{}'.format(new_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(new_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = restore_user_group(request, group_id=new_group.id)
@@ -290,7 +290,7 @@ class TestGroupCRUD(ViewTestCase):
         request = self.factory.post(url, data=post_data)
         # mike does not have permission over new_group - restore should fail
         request.user = self.mike
-        request.META['HTTP_REFERER'] = '/group/{}'.format(new_group.id)
+        request.META['HTTP_REFERER'] = '/hydroshare/group/{}'.format(new_group.id)
         self.set_request_message_attributes(request)
         self.add_session_to_request(request)
         response = restore_user_group(request, group_id=new_group.id)

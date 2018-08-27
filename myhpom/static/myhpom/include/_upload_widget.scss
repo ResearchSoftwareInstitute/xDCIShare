@@ -1,0 +1,133 @@
+.advance-directive-widget {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.advance-directive-widget__breadcrumbs {
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-top: 1rem;
+    list-style: none;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.advance-directive-widget__breadcrumb-item {
+    color: $brand-blue;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    &:not(:first-child)::before {
+        font-family: 'Icons';
+        font-size: 80%;
+        line-height: 75%;
+        content:'\e036';
+        display: inline-block;
+        margin: 0 0.35rem;
+    }
+}
+
+.advance-directive-widget__breadcrumb-item--active {
+    @extend .advance-directive-widget__breadcrumb-item;
+
+    font-weight: bold;
+}
+
+.advance-directive-widget__breadcrumb-status {
+    display: inline-flex;
+    flex-wrap: nowrap;
+
+    text-transform: uppercase;
+}
+
+.advance-directive-widget__breadcrumb-status-value {
+    display: inline-flex;
+    flex-wrap: nowrap;
+
+    padding-left: 0.35rem;
+    font-weight: bold;
+}
+
+.advance-directive-widget__divider {
+  width: 100%;
+}
+
+.advance-directive-widget__body {
+    flex-grow: 1;
+    width: 100%;
+}
+
+.advance-directive-widget__buttons-container {
+    flex-grow: 1;
+    justify-content: flex-end;
+
+    @include media-breakpoint-down(sm) {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+}
+
+.advance-directive-widget__button {
+    @extend .btn;
+    margin-top: 1em;
+    padding: 1em 2em;
+    font-size: 125%;
+    width: 100%;
+}
+
+.advance-directive-widget__button--primary {
+    @extend .advance-directive-widget__button;
+    @extend .btn-secondary;
+
+    &:disabled {
+        color: rgba(255, 255, 255, 0.9);
+    }
+}
+
+.advance-directive-widget__button--secondary {
+    @extend .advance-directive-widget__button;
+    @extend .btn-primary;
+}
+
+.advance-directive-widget__definition {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.advance-directive-widget__definition__key {
+    @extend .advance-directive-widget__breadcrumb-status;
+
+    font-weight: normal;
+}
+
+.advance-directive-widget__definition__value {
+    @extend .advance-directive-widget__breadcrumb-status-value;
+}
+
+.advance-directive-widget__filename {
+    word-break: break-word;
+}
+
+.advance-directive-widget__delete-link {
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    align-self: center;
+}
+
+.advance-directive-widget__selection-box {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+.advance-directive-widget__change-file {
+    flex-shrink: 0;
+    margin-left: 1rem;
+}
+
+.advance-directive-widget__thumbnail {
+    width: 100%;
+}

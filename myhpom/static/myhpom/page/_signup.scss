@@ -1,0 +1,53 @@
+$invalid_color: #dc3545;
+
+ul.errorlist {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.form-group-tos {
+    font-size: 80%;
+    margin-bottom: 0;
+}
+
+.form-group-tos__content {
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.form-group-tos__content--invalid {
+    border: 1px solid $invalid_color;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.form-group-tos__h6 {
+    text-transform: uppercase;
+    color: black;
+}
+
+.form-group-tos__text {
+    @include serif;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group-tos__link {
+    @include orange-link;
+    text-transform: uppercase;
+}
+
+.form-group__label--invalid {
+	color: $invalid_color;
+}
+
+.form-group-tos__h5--invalid {
+	color: $invalid_color;
+}
+
+.modal-body__div--invalid {
+    color: $invalid_color;
+    padding-bottom: 1rem;
+    text-align: center;
+}

@@ -1,0 +1,84 @@
+{% extends "myhpom/with_modal.html" %}
+{% load scribbler_tags %}
+
+{% block main_content %}
+<div
+    class="modal show pseudo-modal"
+    data-close-href="{% url 'myhpom:dashboard' %}"
+>
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            <div class="pb-0 modal-header modal-header--main pseudo-modal__header">
+                <h1 class="mx-auto modal-title pseudo-modal__title--centered">
+                    Thank you for registering
+                </h1>
+                <div
+                    class="ml-auto oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark"
+                    role="button"
+                    tabindex="0"
+                    data-close-href="{% url 'myhpom:dashboard' %}"
+                ></div>
+            </div>
+
+            <div class="pt-1 pb-1 modal-header modal-header--subtitle pseudo-modal__header">
+                <p class="mb-0 pseudo-modal__header-caption-text">
+                    {% scribble 'header-text-no-template' 'next_steps' %}{% lorem 24 w %}{% endscribble %}
+                </p>
+            </div>
+
+            <div class="modal-body pseudo-modal__body">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Welcome!</h3>
+                        {% scribble 'welcome-text-no-template' 'next_steps' %}
+                        <p>
+                            Currently, Mind My Health serves North Carolina
+                            and South Carolina.
+                            <small>
+                                <a href="{% url 'myhpom:home' %}">
+                                    (Why North and South Carolina?)
+                                </a>
+                            </small>
+                        </p>
+                        <p>
+                            However, we are continuing to grow and invite
+                            you to continue building your account.
+                            We will notify you as we expand into your state.
+                        </p>
+                        <p>
+                            You may still store your documents with us
+                            and retrieve them upon request.
+                        </p>
+                        {% endscribble %}
+                        <form method="post" action="{% url 'myhpom:next_steps' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="pseudo-modal__label" for="id_custom_provider">Please share your healthcare network:</label>
+                                <input
+                                    class="form-control pseudo-modal__input"
+                                    aria-describedby="custom_provider_help"
+                                    type="text"
+                                    name="custom_provider"
+                                    id="id_custom_provider"
+                                    placeholder="My healthcare network"
+                                />
+                                <div class="invalid-feedback">
+                                    {% if form.errors.custom_provider %}{{ form.errors.custom_provider }}{% endif %}
+                                </div>
+                                <small class="form-text text-muted" id="custom_provider_help">
+                                    <a href="{% url 'myhpom:home' %}">
+                                        How do I find my healthcare network?
+                                    </a>
+                                </small>
+                                <input type="submit" class="btn btn-secondary btn--wide float-right" value="Submit" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}

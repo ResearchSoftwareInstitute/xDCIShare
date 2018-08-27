@@ -98,8 +98,8 @@ class GeoFeatureFileMetaData(GeographicFeatureMetaDataMixin, AbstractFileMetaDat
         context_dict = dict()
 
         context_dict["geometry_information_form"] = self.get_geometry_information_form()
-        update_action = "/hsapi/_internal/GeoFeatureLogicalFile/{0}/{1}/{2}/update-file-metadata/"
-        create_action = "/hsapi/_internal/GeoFeatureLogicalFile/{0}/{1}/add-file-metadata/"
+        update_action = "/hydroshare/hsapi/_internal/GeoFeatureLogicalFile/{0}/{1}/{2}/update-file-metadata/"
+        create_action = "/hydroshare/hsapi/_internal/GeoFeatureLogicalFile/{0}/{1}/add-file-metadata/"
         temp_cov_form = self.get_temporal_coverage_form()
         if self.temporal_coverage:
             form_action = update_action.format(self.logical_file.id, "coverage",

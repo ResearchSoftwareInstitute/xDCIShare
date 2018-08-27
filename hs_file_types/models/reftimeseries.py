@@ -619,7 +619,7 @@ class RefTimeseriesFileMetaData(AbstractFileMetaData):
         return rendered_html
 
     def get_abstract_form(self):
-        form_action = "/hsapi/_internal/{}/update-reftimeseries-abstract/"
+        form_action = "/hydroshare/hsapi/_internal/{}/update-reftimeseries-abstract/"
         form_action = form_action.format(self.logical_file.id)
         root_div = div(cls="col-xs-12")
 

@@ -1,0 +1,28 @@
+.myhpom-page--flush-footer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.myhpom-page__main--flush-footer {
+    flex-grow: 1;
+}
+
+.vertical-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    /*
+        For the sake of IE 11, which does not sensibly limit
+        the width of elements in flex columns.
+    */
+    > * {
+        max-width: 100%;
+    }
+}
+
+main, footer {
+    overflow: hidden;
+}

@@ -118,8 +118,8 @@ class GeoRasterFileMetaData(GeoRasterMetaDataMixin, AbstractFileMetaData):
         context_dict["cellinfo_form"] = self.get_cellinfo_form()
         temp_cov_form = self.get_temporal_coverage_form()
 
-        update_action = "/hsapi/_internal/GeoRasterLogicalFile/{0}/{1}/{2}/update-file-metadata/"
-        create_action = "/hsapi/_internal/GeoRasterLogicalFile/{0}/{1}/add-file-metadata/"
+        update_action = "/hydroshare/hsapi/_internal/GeoRasterLogicalFile/{0}/{1}/{2}/update-file-metadata/"
+        create_action = "/hydroshare/hsapi/_internal/GeoRasterLogicalFile/{0}/{1}/add-file-metadata/"
         spatial_cov_form = self.get_spatial_coverage_form(allow_edit=True)
         if self.spatial_coverage:
             form_action = update_action.format(self.logical_file.id, "coverage",
@@ -160,7 +160,7 @@ class GeoRasterFileMetaData(GeoRasterMetaDataMixin, AbstractFileMetaData):
 
         for frm in bandinfo_formset.forms:
             if len(frm.initial) > 0:
-                frm.action = "/hsapi/_internal/%s/%s/bandinformation/%s/update-file-metadata/" % (
+                frm.action = "/hydroshare/hsapi/_internal/%s/%s/bandinformation/%s/update-file-metadata/" % (
                     "GeoRasterLogicalFile", self.logical_file.id, frm.initial['id'])
                 frm.number = frm.initial['id']
 

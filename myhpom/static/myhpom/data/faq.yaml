@@ -1,0 +1,184 @@
+---
+- name: about
+  description: About Mind My Health
+  entries:
+  - question: What is Mind My Health?
+    name: what_is_mind_my_health
+    answer: "Mind My Health is a free online tool that helps you keep your care plan in check. Created by healthcare experts, MMH’s innovative experience stores your advance care plan in our secure cloud-based registry, making it easy to access your plan whenever and wherever you need it. "
+    tooltip: Mind My Health is a free online tool that securely stores your advance care plan.
+  - question: How does Mind My Health Work?
+    name: how_does_mind_my_health_work
+    answer: "When you upload your advance care plan document to Mind My Health, it is stored in a secure, cloud-based registry. You can access it or update it anytime you want from any computer or mobile device. You can also download your advance care plan document to share with loved ones and your doctor so they completely understand your health choices."
+    tooltip: "Once you upload your advance care plan to our secure, cloud-based registry, you can access and print the document from any device. "
+  - question: Is Mind My Health Free for Users?
+    name: is_mind_my_health_free_for_users
+    answer: "Yes! Mind My Health is completely free to use. MMH is a nonprofit project developed by healthcare experts with launch funding from the Duke Endowment and support from patient advocacy organizations and healthcare networks. We will never charge you to use our website. We will also never sell your data. We believe you should be able to own all of your health decisions, including your advance care."
+    tooltip: Yes! Mind My Health is completely free to use.
+  - question: Why does Mind My Health want to know my healthcare network?
+    name: why_does_mind_my_health_want_to_know_my_healthcare_network
+    answer: "With the launch of Mind My Health, we are just beginning to expand the ways in which technology will make it easier to own your advance care planning. Linking your care plan to a health network ensures that future enhancements offer you more opportunities to connect your care plan to the people and medical professionals who need to know.  "
+    tooltip: Linking your care plan to a health network ensures that future enhancements offer you more opportunities to share your care plan with care providers.
+  - question: I do not live in North Carolina. Can I still use Mind My Health?
+    name: i_do_not_live_in_north_carolina
+    answer: "Yes. You are still able to upload and access your care plan document from any device. We are not able to verify that your uploaded document meets your state's legal requirements for an advance care plan. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan. "
+    tooltip: Yes. You are still able to upload and access your care plan document from any device.
+  - question: I do not live in South Carolina. Can I still use Mind My Health?
+    name: i_do_not_live_in_south_carolina
+    answer: "Yes. You are still able to upload and access your care plan document from any device. We are not able to verify that your uploaded document meets your state's legal requirements for an advance care plan. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan. "
+    tooltip: Yes. You are still able to upload and access your care plan document from any device.
+  - question: Why should I put my advance directive online?
+    name: why_should_i_put_my_advance_directive_online
+    answer: "Many individuals are unable to find and share their advance care plans on paper when family, caregivers, and medical professionals need them. By uploading and securing your plan online, your advance care plan is easier to find and share with those who need to know your healthcare choices. Our goal is to ensure that your health decisions are communicated easily, securely and effectively to the people and professionals you choose."
+    tooltip: "By uploading and securing your plan online, your advance care plan is easier to find and share with family, caregivers, and medical professionals that you choose. "
+  - question: How secure is Mind My Health?
+    name: how_secure_is_mind_my_health
+    answer: "Mind My Health stores your advance care plan in our secure, online registry."
+    tooltip: "Mind My Health stores your advance care plan in our secure, online registry."
+  - question: I already made an advance care plan. Can I still upload it?
+    name: i_already_made_an_advance_care_plan
+    answer: Yes! Congratulations on keeping your advance care in check. If your advance care plan document meets state requirements, you are ready to upload it. Your next step is to make sure your document meets our <a href="#what_kind_of_documents_can_i_upload">technical requirements</a>. Once ready, upload your advance care plan to Mind My Health. If you are unsure that your advance care plan meets your state's requirements, please consult a legal professional. For those living North Carolina, here is a list of the <a href="#what_are_the_legal_requirements">state's requirements</a>.
+    tooltip: Yes. Please make sure your document meets your state's requirements and our technical requirements and start your upload.
+  - question: Who can access my plan when I upload it?
+    name: who_can_access_my_plan_when_i_upload_it
+    answer: "Only you can access your own advance care plan directly through Mind My Health. You are able to download your advance care plan from Mind My Health, print it, and share your printed document with your family, friend, or caregiver. You are also able to download your advance care plan from Mind My Health and send the PDF document by email attachment to our family, friend, or caregiver. Your family, friend, or caregiver cannot directly access your securely stored document on Mind My Health."
+    tooltip: Only you can access your own advance care plan directly through Mind My Health.
+  - question: Is Mind My Health legally responsible for my document?
+    name: is_mind_my_health_legally_responsible_for_my_document
+    answer: Mind My Health is not responsible for the authenticity nor guarantees use of your document at a healthcare institution. It is the user's responsibility to meet legal requirements and communicate to their caregivers and medical professionals the contents of their advance care plan. We recommend printing a copy of your advance care document to have available to your caregivers or medical professionals in case of emergency.
+    tooltip: Mind My Health is not responsible for the authenticity nor guarantees use of your document at a healthcare institution.
+  - question: "How do I access my document?"
+    name: how_do_i_access_my_document
+    answer: To access your document, log in to <a href="/">Mind My Health</a> and select the "Download Document" button on your Dashboard. If you are having trouble logging in, <a href="/accounts/password_reset/">click here</a>.
+    tooltip: To access your document, log in to <a href="/">Mind My Health</a> and select the "Download Document" button on your Dashboard.
+  - question: Can I upload more than one document?
+    name: can_i_upload_more_than_one_document
+    answer: Mind My Health accepts a single advance care plan document. That document must be in the form of an Adobe Acrobat PDF. Your document may contain more than one page, but the filesize must be no more than 5MB. If you have more than one advance care document, consider combining your document into a single PDF or making a new one based upon our provided templates for <a href="/states/nc/template" target="_blank" rel="noopener noreferrer">North Carolina</a> and <a href="/states/sc/template" target="_blank" rel="noopener noreferrer">South Carolina</a>.
+    tooltip: Mind My Health accepts a single advance care plan document in PDF form of no more than 5MB.
+  - question: What kind of documents can I upload?
+    name: what_kind_of_documents_can_i_upload
+    answer: Mind My Health is your tool to keep your advance care plan in check. Currently, we provide secure online storage only for your advance care plan document. Learn more about <a href="#what_is_an_advance_directive">what is an advance care document</a>. Any uploaded documents  that do not meet the intended use of this web application will be subject to systemic deletion without the knowledge of the user.
+    tooltip: Mind My Health provides secure online storage only for your advance care plan document.
+  - question: Do I need an Advance Care Plan?
+    name: do_i_need_an_advance_care_plan
+    answer: Yes! Everyone has the right and responsibility to own their health care decisions, and an advance care plan is an important way to communicate your choices with your family, caregivers, and medical professionals. Learn more about <a href="/why-plan">why you should plan</a>.
+    tooltip: Yes. An advance care plan is an important way for everyone to share advance care plan choices.
+  - question: Do I need a printed copy of my Advance Care Plan?
+    name: do_i_need_a_printed_copy_of_my_advance_care_plan
+    answer: "Yes. In addition to securely storing your document on Mind My Health, we still recommend holding onto a paper copy and making it available to family, caregivers, and medical professionals. Be sure to throw away old advance care plans since they might have different wishes that could be confusing for your care team."
+    tooltip: "Yes. We still recommend having a paper copy available for family, caregivers, and medical professionals."
+  - question: Can my doctor access my Advance Care Plan?
+    name: can_my_doctor_access_my_advance_care_plan
+    answer: "You are able to download your advance care plan from Mind My Health, print it, and share your printed document with your doctor. You are also able to download your advance care plan from Mind My Health and send the PDF document by email attachment to your doctor. Your doctor cannot directly access your securely stored document on Mind My Health."
+    tooltip: "You are able to download your advance care plan and share it, but your doctor cannot directly access your document on this site."
+  - question: Can a family member or friend access my Advance Care Plan?
+    name: can_a_family_member_or_friend_access_my_advance_care_plan
+    answer: "You are able to download your advance care plan from Mind My Health, print it, and share your printed document with your family, friend, or caregiver. You are also able to download your advance care plan from Mind My Health and send the PDF document by email attachment to our family, friend, or caregiver. Your family, friend, or caregiver cannot directly access your securely stored document on Mind My Health."
+    tooltip: "You are able to download your advance care plan and share it, but your family, friend, or caregiver cannot directly access your document on this site."
+  - question: How can I use Mind My Health to become an organ donor?
+    name: how_can_i_use_mind_my_health_to_become_an_organ_donor
+    answer: Deciding if you want to be an organ donor is an important part of your advance care plan. Complete your member profile by including your organ donor status. Want to know more about how organ donation is an important decision in advance care planning, <a href="https://www.donatelifenc.org/content/frequently-asked-questions">click here</a>. Ready to save lives by being an organ donor, <a href="https://www.donatelifenc.org/">start here</a>.
+    tooltip: Complete your Mind My Health member profile by including your organ donor status.
+  - question: Who can sign up to become an organ donor?
+    name: who_can_sign_up_to_become_an_organ_donor
+    answer: "Everyone! An individual of any age is able to join the organ, eye and tissue donor registry. This includes individuals who have been sick, had cancer in the past, or who have HIV or Hepatitis C."
+    tooltip: "Everyone! An individual of any age is able to join the organ, eye and tissue donor registry. "
+
+- name: understanding
+  description: Understanding My Plan
+  entries:
+  - question: What is an advance directive?
+    name: what_is_an_advance_directive
+    answer: An advance directive is a legal document which allows you to record your healthcare wishes in case you can no longer speak for yourself. It has two parts. The first is called a Living Will. It lets you choose what kind of treatment you would want if you could not speak for yourself. The second part is called a Healthcare Power of Attorney. It allows you to select a trusted person to speak on your behalf about your care if you cannot speak for yourself. Each state has its own version. View our recommended version for North Carolina <a href="/states/nc/template" target="_blank" rel="noopener noreferrer">here</a>. View our recommended version for South Carolina <a href="/states/sc/template" target="_blank" rel="noopener noreferrer">here</a>.
+    tooltip: An advance directive is a legal document which allows you to record your healthcare wishes in case you are unable to speak for yourself.
+  - question: Why do I need an advance directive or other Advance Care Plan?
+    name: why_do_i_need_an_advance_directive
+    answer: An Advance Directive allows you to keep your voice in your care no matter what. With an advance directive, you provide clear instructions for your care to family, caregivers, and medical professionals.. You can also give legal power to a trusted loved one to speak for you. Learn more about why an advance care plan is important for <a href="/why-plan">owning your health here</a>.
+    tooltip: "With an advance directive, you provide clear instructions for your care to family, caregivers, and medical professionals."
+  - question: Is an advance directive different than a Do Not Resuscitate Order (DNR)?
+    name: is_an_advance_directive_different_than_a_do_not_resuscitate_order
+    answer: Yes. The DNR tells the health team if you want cardiopulmonary resuscitation (CPR) or to be put on a ventilator to breathe. An Advance Directive documents your wishes for life-sustaining treatment such as a feeding tube and your desired Healthcare agent.
+    tooltip: "Yes. A DNR informs a health professional if you should receive CPR or ventilation; an advance directive communicates your choices for life-sustaining treatment to family, caregivers, and medical professionals"
+  - question: What is a Living Will?
+    name: what_is_a_living_will
+    answer: A Living Will is a legal document that lets you specify what medical treatment you want in certain situations. The types of treatment you can include vary by state.
+    tooltip: A Living Will is a legal document that lets you specify what medical treatment you want in certain situations.
+  - question: What kinds of care instructions can be covered in my Living Will?
+    name: what_kinds_of_care_instructions_can_be_covered_in_my_living_will
+    answer: Every state has specific requirements for consideration of a Living Will. If you are not aware of your state's requirements, please seek legal counsel. In North Carolina, you can use your Living Will to detail your preferences for "Life-Sustaining treatments." These treatments include things that will help keep you alive. Examples include a feeding tube, a breathing machine, or dialysis.
+    tooltip: Every state has specific requirements for consideration of a Living Will. If you are not aware of your state's requirements, please seek legal counsel.
+  - question: What is a Healthcare Power of Attorney?
+    name: what_is_a_healthcare_power_of_attorney
+    answer: A health care power of attorney is a legal document that allows you to name a person to serve as your "Healthcare Agent." Your agent is able to make decisions about your care if you are not able to make care decisions yourself.
+    tooltip: A health care power of attorney is a legal document that allows you to name a person to serve as your "Healthcare Agent."
+  - question: "If I appoint a healthcare agent, what can that person do?"
+    name: if_i_appoint_a_healthcare_agent
+    answer: "Your agent can make almost any healthcare decision you would normally make. If you have documented specific preferences in a living will (e.g. you do not want a feeding tube), your healthcare agent cannot change these wishes.<br/><br/> The types of care decisions your agent can make include: <ul><li>Starting or stopping life prolonging measures</li><li>Decisions on pain medication</li><li>Choosing your doctors and facilities</li></ul>"
+    tooltip: Your agent can make almost any healthcare decision you would normally make.
+  - question: When does my healthcare agent make decisions for me?
+    name: when_does_my_healthcare_agent_make_decisions_for_me
+    answer: "Your healthcare agent will make decisions for you if you are no longer able to make them for yourself. In North Carolina, your doctor declares when you cannot make your own healthcare decisions. "
+    tooltip: Your healthcare agent will make decisions for you if you are no longer able to make them for yourself.
+  - question: Who can be my Healthcare Agent?
+    name: who_can_be_my_healthcare_agent
+    answer: "When choosing your agent, you want to make sure it is someone with whom you feel comfortable sharing your wishes. Commonly, people will appoint a spouse, family member, or a close friend to be their agent. <br/><br/>There are some restrictions on who can be your agent. Your agent must be at least 18 years old. If you live in North Carolina, your agent cannot be your healthcare provider."
+    tooltip: There are some restrictions on who can be your agent. Your agent must be at least 18 years old.
+  - question: What if I don't have the legal requirements for my Advance Care Plan?
+    name: dont_have_the_legal_requirements
+    answer: If your form does not meet the legal requirements for your state's guidelines, you may need to create a new plan. To do this, you can use a resource of your choice or use the "Create a Plan" on your dashboard through Mind My Health to access a free form from your state.
+    tooltip: "If your form does not meet the legal requirements for your state's guidelines, you may need to create a new plan. "
+  - question: I made my plan in a state other than North Carolina. Will it still be honored?
+    name: i_made_my_plan_in_a_state_other_than_north_carolina
+    answer: "As long as your document was legally valid in the state where you made it, you can use it in North Carolina."
+    tooltip: "As long as your document was legally valid in the state where you made it, you can use it in North Carolina."
+
+- name: filling
+  description: Filling out My Plan
+  entries:
+  - question: Do I need a lawyer to complete an advance care plan?
+    name: do_i_need_a_lawyer_to_complete_an_advance_care_plan
+    answer: "You do not need a lawyer to complete an advance care plan. However, if you have questions, a lawyer can help you better understand your document and complete it to meet your state's requirements. "
+    tooltip: "You do not need a lawyer to complete an advance care plan, but if you have questions, a lawyer can assist you."
+  - question: Who should I talk to about the decisions I've made in my advance care plan?
+    name: who_should_i_talk_to_about_the_decisions_i've_made_in_my_advance_care_plan
+    answer: "You should talk to everyone that will be involved in your care. That may be family members, close friends, caregivers, and your doctor. Making sure they understand your wishes will help them honor your decisions. "
+    tooltip: You should talk to everyone that will be involved in your care.
+  - question: What are the legal requirements for my plan?
+    name: what_are_the_legal_requirements
+    answer: Each state has a unique set of requirements. For example, advance care plans for a person living in North Carolina must be signed by two witnesses that meet the state's requirements in addition to <a href="#what_is_a_notary">a notary</a>. We are not able to verify that uploaded documents meet a state's legal requirements for an advance care plan. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan.
+    tooltip: "Each state has a unique set of requirements. To align your health care planning to your state's laws, please consult a legal expert in preparing your advance care plan. "
+  - question: What is a notary? Do I need one to complete my advance directive?
+    name: what_is_a_notary
+    answer: "A notary is a person certified by state governments to act as a witness and make sure that a document is free of fraud. For some states, a notary is required to sign that they were present when you and your witnesses sign your advance care plan. "
+    tooltip: A notary is a person certified by state governments to act as a witness and make sure that a document is free of fraud.
+  - question: How can I find a notary?
+    name: how_can_i_find_a_notary
+    answer: Most banks <a href="#what_is_a_notary">have a notary</a>. Also, many states have a directory. For example, North Carolina's registry of notaries is <a href="https://www.sosnc.gov/online_services/notary/find_a_notary">located here</a>.
+    tooltip: "Most banks have a notary, and many states have a listings directory."
+  - question: Who can be a witness for my plan?
+    name: who_can_be_a_witness_for_my_plan
+    answer: Your witnesses must be at least eighteen years old. They cannot be  <ul><li>related to you by blood or marriage</li><li>your heir, or a person named to receive a portion of your estate in your will</li><li>someone who has a claim against you or against your estate</li><li>your doctor, other health care provider, or an employee of a hospital in which you are a patient, or an employee of the nursing home or adult care home where you live.</li></ul>
+    tooltip: "Witnesses must be at least eighteen years old. They cannot be related to you, able to benefit from your avance care plan, or  your healthcare provider."
+
+- name: help
+  description: Help and Troubleshooting
+  entries:
+  - question: How do I upload my Plan?
+    name: how_do_i_upload_my_plan
+    answer: To upload your plan, click "Upload My Plan" button on your dashboard. Select a single PDF no larger than 5MB in filesize. Your document can be a single page or have multiple pages, but it must be one document. Once selected, complete the fields, and we will securely store your document.
+    tooltip:
+  - question: How do I change my plan?
+    name: how_do_i_change_my_plan
+    answer: "A member of Mind My Health may change or delete their advance care plan. To update your plan to a newer version, you must first delete your current advance care plan. To delete your advance care plan, you must select 'Delete Document' from the document bar on your Dashboard. You must then confirm the deletion. Then, select the button to 'Upload Your File' to select your new advance care plan. To avoid confusion, you can only store one form at a time, so your old form must be deleted. We also recommend discarding your old paper form and keeping only the updated advance care plan so that your loved ones will not be confused about which form to use ."
+    tooltip: "To update your plan to a newer version, you must first delete your current advance care plan. Then, select the button to 'Upload Your File' to select your new advance care plan. "
+  - question: How do I delete my plan?
+    name: how_do_i_delete_my_plan
+    answer: "To delete your advance care plan, you must select 'Delete Document' from the document bar on your Dashboard. You must then confirm the deletion. "
+    tooltip: "To delete your advance care plan, you must select 'Delete Document' from the document bar on your Dashboard. You must then confirm the deletion. "
+  - question: Can I upload a plan for a parent or other relative?
+    name: can_i_upload_a_plan_for_a_parent_or_other_relative
+    answer: "When you sign up for Mind My Health, you should only upload your own advance care plan document. You are welcome to assist a loved one with creating an account, but all documentation should be done in their name with their consent. "
+    tooltip: "When you sign up for Mind My Health, you should only upload your own advance care plan document. "
+  - question: I forgot my password. What do I do?
+    name: i_forgot_my_password
+    answer: If you forget your password you can recover it by clicking 'Reset Password' from the Login screen. We will send you an email with instructions for setting a new password.
+    tooltip: If you forget your password you can recover it by clicking 'Reset Password' from the Login screen.

@@ -3,6 +3,7 @@ HS_PATH: $HOME_DIR
 HOST_SSL_DIR: $HS_PATH/hs-certs
 HS_DATABASE: pg.myhpomdevelopment.sql
 HS_LOG_FILES: $HS_PATH/log
+HS_HOSTSD_DIR: /hydroshare/deploy/files/etc/hosts.d
 HS_SERVICE_UID: $UID
 HS_SERVICE_GID: $GID
 

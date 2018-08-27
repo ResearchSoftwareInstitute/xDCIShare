@@ -1,0 +1,208 @@
+{% extends "myhpom/base.html" %}
+{% load scribbler_tags %}
+{% load staticfiles %}
+
+{% block main_container_class %}myhpom-page__container{% endblock main_container_class %}
+
+{% block main_content %}
+<section class="content-page__hero-banner" style="background-image: url({% static 'myhpom/img/how-it-works/happy-couple-relaxing-at-home_web.jpg' %})"></section>
+<section class="content-overview">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% scribble 'overview-title' 'how-it-works' %}
+                <h1 class="content-overview__title">
+                    How it works.
+                </h1>
+                {% endscribble %}
+
+                {% scribble 'overview-subtitle' 'how-it-works' %}
+                <h2 class="content-overview__subtitle">
+                    Your simple step-by-step guide to empowering
+                    your advance care planning with Mind My Health.
+                </h2>
+                {% endscribble %}
+
+                <div class="mt-3 mb-4 content-overview__text">
+                    {% scribble 'overview' 'how-it-works' %}
+                    Mind My Health empowers people by encouraging everyong make plans for care in advance. To help you complete your plan and upload it to Mind My Health, we have provided you this useful guide.
+                    {% endscribble %}
+                </div>
+
+                <div class="mt-3 mb-4 content-overview__text">
+                    Why should you have an advance care plan? <a class="content-overview__link" href="{% url 'myhpom:why-plan' %}">Find out.</a>
+                </div>
+
+                <div class="mt-3 mb-4 content-overview__text">
+                    Got additional questions? <a class="content-overview__link" href="{% url 'myhpom:faq' %}">Please visit our FAQ for more answers.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="py-4 how-it-works-steps">
+    <ol class="container">
+        <li class="row how-it-works-steps__step">
+            <div class="d-none d-sm-block col-sm-3">
+                <div class="how-it-works-steps__huge-number"></div>
+            </div>
+            <div class="col-sm-9">
+                <div class="how-it-works-steps__content">
+                    <h2 class="how-it-works-steps__title">
+                        Make Your Own Healthcare Decisions
+                    </h2>
+
+                    <ul class="how-it-works-steps__list">
+                        <li class="how-it-works-steps__list-item">
+                            <em>Reflect</em> about what kind of emergency or life-sustaining treatment you would want if you could not speak for yourself. Who you would want to speak on your behalf.
+                        </li>
+                        <li class="how-it-works-steps__list-item">
+                            <em>Discuss</em> these decisions with your family, friends, or care providers. These conversations can be challenging, but it is important that your wishes are understood completely by those you trust who may be making decisions on your behalf.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        <li class="row how-it-works-steps__step">
+            <div class="d-none d-sm-block col-sm-3">
+                <div class="how-it-works-steps__huge-number"></div>
+            </div>
+            <div class="col-sm-9">
+                <div class="how-it-works-steps__content">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2 class="how-it-works-steps__title">
+                                Document Your Decisions
+                            </h2>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="how-it-works-steps__subtitle">
+                                Don't have a plan?
+                            </h3>
+
+                            <ul class="mb-3 how-it-works-steps__list">
+                                <li class="how-it-works-steps__list-item">
+                                    <em>Download</em> our advance directive template.  Use it to document your healthcare wishes and appoint a trusted person who can speak for you if you cannot speak for yourself.
+                                </li>
+                                <li class="how-it-works-steps__list-item">
+                                    <em>In North Carolina</em>, you must have a notary and two witnesses that meet your state’s legal requirements sign your document. <a href="{% url 'myhpom:faq' %}#what_are_the_legal_requirements" class="how-it-works-steps__link">Learn more.</a>
+                                </li>
+                                <li class="how-it-works-steps__list-item">
+                                    <em>In South Carolina</em>, you must have a witness that meet your state’s legal requirements sign your document. <a href="{% url 'myhpom:faq' %}#what_are_the_legal_requirements" class="how-it-works-steps__link">Learn more.</a>
+                                </li>
+                            </ul>
+
+                            <p class="pl-3 mb-0">
+                                <i>Note:</i> Not sure if your existing plan fits your state’s requirements? <a href="{% url 'myhpom:faq' %}#i_made_my_plan_in_a_state_other_than_north_carolina" class="how-it-works-steps__link">Go here.</a>
+                            </p>
+                        </div>
+                        <div class="col-md-6 mt-3--sm-down">
+                            <h3 class="how-it-works-steps__subtitle">Already have a plan?</h3>
+
+                            <ul class="mb-3 how-it-works-steps__list">
+                                <li class="how-it-works-steps__list-item">
+                                    <em>Great!</em> We are happy that you have taken such an important step to owning your health and advance to the next step.
+                                </li>
+                            </ul>
+
+                            <p class="pl-3 mb-0">
+                                <i>Note:</i> Not sure if your existing plan fits your state’s requirements? <a href="{% url 'myhpom:faq' %}#i_made_my_plan_in_a_state_other_than_north_carolina" class="how-it-works-steps__link">Go here.</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li class="row how-it-works-steps__step">
+            <div class="d-none d-sm-block col-sm-3">
+                <div class="how-it-works-steps__huge-number"></div>
+            </div>
+            <div class="col-sm-9">
+                <div class="how-it-works-steps__content">
+                    <h2 class="how-it-works-steps__title">
+                        Upload your plan
+                    </h2>
+
+                    <ul class="how-it-works-steps__list">
+                        <li class="how-it-works-steps__list-item">
+                            <em>Create</em> a PDF scan of your form. You may only have a single PDF document, though it may have more than one page. The document should be 72dpi or larger. <a href="{% url 'myhpom:faq' %}#how_do_i_upload_my_plan" class="how-it-works-steps__link">Learn more.</a>
+                        </li>
+                        <li class="how-it-works-steps__list-item">
+                            <em>Login</em> to Mind My Health or create an account if you do not have one.
+                        </li>
+                        <li class="how-it-works-steps__list-item">
+                            <em>Click “Upload Document”</em> on your account dashboard.
+                        </li>
+                        <li class="how-it-works-steps__list-item">
+                            <em>Follow</em> the instructions to complete your upload.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+
+        <li class="row how-it-works-steps__step">
+            <div class="d-none d-sm-block col-sm-3">
+                <div class="how-it-works-steps__huge-number"></div>
+            </div>
+            <div class="col-sm-9">
+                <div class="how-it-works-steps__content">
+                    <h2 class="how-it-works-steps__title">
+                        Share your plans
+                    </h2>
+
+                    <ul class="mb-3 how-it-works-steps__list">
+                        <li class="how-it-works-steps__list-item">
+                            <em>Download</em> your plan at any time by clicking “Download my Plan” on your account dashboard. Then, you can print or email the PDF document to your family, caregivers, or medical professional.
+                        </li>
+                    </ul>
+
+                    <p class="pl-3 mb-0">
+                        <i>Note:</i> For supported networks, you may also send your advance care document directly to your health system so that it will be added to your medical record in the Electronic Healthcare Record and can be easily accessed by your care providers if and when needed.
+                    </p>
+                </div>
+            </div>
+        </li>
+
+        <li class="row how-it-works-steps__step">
+            <div class="d-none d-sm-block col-sm-3">
+                <div class="how-it-works-steps__huge-number"></div>
+            </div>
+            <div class="col-sm-9">
+                <div class="how-it-works-steps__content">
+                    <h2 class="how-it-works-steps__title">
+                        Update Your Plan
+                    </h2>
+
+                    <ul class="how-it-works-steps__list">
+                        <li class="how-it-works-steps__list-item">
+                            <em>Delete</em> your current plan from your account dashboard by selecting “Delete Document” and following instructions.
+                        </li>
+                        <li class="how-it-works-steps__list-item">
+                            <em>Upload</em> your new plan by selecting “Upload Document” and following instructions.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ol>
+</section>
+<section class="pb-4 how-it-works-conclusion">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="how-it-works-conclusion__item">
+                    Got more questions? Learn more in our <a class="how-it-works-conclusion__link" href="{% url 'myhpom:faq' %}">FAQ</a>.
+                </div>
+                {% if not request.user.is_authenticated %}
+                <div class="how-it-works-conclusion__item">
+                    Ready to start your advance care plan? <a class="how-it-works-conclusion__link" href="{% url 'myhpom:signup' %}">Join here.</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

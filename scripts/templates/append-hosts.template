@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# errexit: abort script at first error
+set -e
+
+# Append a list of hosts in HS_HOSTSD_DIR to /etc/hosts.
+#
+# Resources stored in IRODS are associated to the hostname that they are
+# connected to - thus it is important for clients to use a hostname rather than
+# an IP address to connect to IRODS. This script allows configurations to use
+# the setup hostname for this purpose.
+
+HOSTS=/etc/hosts
+HOSTSD=HS_HOSTSD_DIR
+if [ -d "$HOSTSD" ]; then
+    for FILENAME in ${HOSTSD}/*.conf; do
+        FIRST=$(head -n 1 "$FILENAME")
+        if ! grep -xq "$FIRST" ${HOSTS}; then
+            printf "\n" >> ${HOSTS}
+            cat ${FILENAME} >> ${HOSTS}
+            echo Concatenated ${FILENAME} to ${HOSTS}
+        else
+            echo ${FILENAME} already concatenated to ${HOSTS}
+        fi
+    done
+else
+    echo ${HOSTSD} not found; nothing concatenated to ${HOSTS}
+fi

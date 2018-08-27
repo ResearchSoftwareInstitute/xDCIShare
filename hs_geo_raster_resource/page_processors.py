@@ -66,7 +66,7 @@ def landing_page(request, page):
 
         for form in bandinfo_formset.forms:
             if len(form.initial) > 0:
-                form.action = "/hsapi/_internal/%s/bandinformation/%s/update-metadata/" % \
+                form.action = "/hydroshare/hsapi/_internal/%s/bandinformation/%s/update-metadata/" % \
                               (content_model.short_id, form.initial['id'])
                 form.number = form.initial['id']
 

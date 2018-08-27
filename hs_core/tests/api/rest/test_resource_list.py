@@ -17,7 +17,7 @@ class TestResourceList(HSRESTTestCase):
         pid = new_res.short_id
         self.resources_to_delete.append(pid)
 
-        response = self.client.get('/hsapi/resourceList/', format='json')
+        response = self.client.get('/hydroshare/hsapi/resourceList/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 1)
@@ -31,7 +31,7 @@ class TestResourceList(HSRESTTestCase):
         pid = new_res.short_id
         self.resources_to_delete.append(pid)
 
-        response = self.client.get('/hsapi/resource/', format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 1)
@@ -62,7 +62,7 @@ class TestResourceList(HSRESTTestCase):
         # pattern for end of all URLS
         res_tail = '/' + os.path.join('resource', '{res_id}') + '/'
 
-        response = self.client.get('/hsapi/resourceList/', format='json')
+        response = self.client.get('/hydroshare/hsapi/resourceList/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 3)
@@ -83,7 +83,7 @@ class TestResourceList(HSRESTTestCase):
                         .endswith(res_tail.format(res_id=app_pid)))
 
         # Filter by type (single)
-        response = self.client.get('/hsapi/resourceList/', {'type': 'RasterResource'},
+        response = self.client.get('/hydroshare/hsapi/resourceList/', {'type': 'RasterResource'},
                                    format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
@@ -95,7 +95,7 @@ class TestResourceList(HSRESTTestCase):
                         .endswith(res_tail.format(res_id=geo_pid)))
 
         # Filter by type (multiple)
-        response = self.client.get('/hsapi/resourceList/',
+        response = self.client.get('/hydroshare/hsapi/resourceList/',
                                    {'type': ['RasterResource', 'ToolResource']},
                                    format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -137,7 +137,7 @@ class TestResourceList(HSRESTTestCase):
         # pattern for end of all URLS
         res_tail = '/' + os.path.join('resource', '{res_id}') + '/'
 
-        response = self.client.get('/hsapi/resource/', format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 3)
@@ -158,7 +158,7 @@ class TestResourceList(HSRESTTestCase):
                         .endswith(res_tail.format(res_id=app_pid)))
 
         # Filter by type (single)
-        response = self.client.get('/hsapi/resource/', {'type': 'RasterResource'}, format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', {'type': 'RasterResource'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
 
@@ -169,7 +169,7 @@ class TestResourceList(HSRESTTestCase):
                         .endswith(res_tail.format(res_id=geo_pid)))
 
         # Filter by type (multiple)
-        response = self.client.get('/hsapi/resource/', {'type': ['RasterResource', 'ToolResource']},
+        response = self.client.get('/hydroshare/hsapi/resource/', {'type': ['RasterResource', 'ToolResource']},
                                    format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
@@ -201,22 +201,22 @@ class TestResourceList(HSRESTTestCase):
         gen_res_three.metadata.create_element("subject", value="One")
         gen_res_four.metadata.create_element("subject", value="Other")
 
-        response = self.client.get('/hsapi/resource/', {'subject': 'one'}, format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', {'subject': 'one'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 2)
 
-        response = self.client.get('/hsapi/resource/', {'subject': 'other'}, format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', {'subject': 'other'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 2)
 
-        response = self.client.get('/hsapi/resource/', {'subject': 'one,other'}, format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', {'subject': 'one,other'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 4)
 
-        response = self.client.get('/hsapi/resource/', {'subject': 'oth'}, format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', {'subject': 'oth'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 2)
@@ -233,14 +233,14 @@ class TestResourceList(HSRESTTestCase):
         self.resources_to_delete.append(gen_res_one.short_id)
 
         # the default for include_obsolete is False which should NOT return obsoleted resources
-        response = self.client.get('/hsapi/resource/', format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 1)
         self.assertEqual(content['results'][0]['resource_id'], new_ver_gen_res_one.short_id)
 
         # set include_obsolete to True, which should return all resources including obsoleted ones
-        response = self.client.get('/hsapi/resource/', {'include_obsolete': True}, format='json')
+        response = self.client.get('/hydroshare/hsapi/resource/', {'include_obsolete': True}, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         content = json.loads(response.content)
         self.assertEqual(content['count'], 2)
@@ -281,7 +281,7 @@ class TestResourceList(HSRESTTestCase):
         self.resources_to_delete.append(gen_res_two.short_id)
         self.resources_to_delete.append(gen_res_three.short_id)
 
-        response = self.client.get('/hsapi/resource/', {'coverage_type': 'box',
+        response = self.client.get('/hydroshare/hsapi/resource/', {'coverage_type': 'box',
                                                         'north': '70',
                                                         'east': '50',
                                                         'south': '50',
@@ -290,7 +290,7 @@ class TestResourceList(HSRESTTestCase):
         content = json.loads(response.content)
         self.assertEqual(content['count'], 1)
 
-        response = self.client.get('/hsapi/resource/', {'coverage_type': 'box',
+        response = self.client.get('/hydroshare/hsapi/resource/', {'coverage_type': 'box',
                                                         'north': '70',
                                                         'east': '120',
                                                         'south': '40',
@@ -299,7 +299,7 @@ class TestResourceList(HSRESTTestCase):
         content = json.loads(response.content)
         self.assertEqual(content['count'], 1)
 
-        response = self.client.get('/hsapi/resource/', {'coverage_type': 'box',
+        response = self.client.get('/hydroshare/hsapi/resource/', {'coverage_type': 'box',
                                                         'north': '90',
                                                         'east': '140',
                                                         'south': '30',
@@ -309,7 +309,7 @@ class TestResourceList(HSRESTTestCase):
         self.assertEqual(content['count'], 3)
 
         # Bad coverage has no effect
-        response = self.client.get('/hsapi/resource/', {'coverage_type': 'bad',
+        response = self.client.get('/hydroshare/hsapi/resource/', {'coverage_type': 'bad',
                                                         'nonsensical': '90',
                                                         'params': '140'}, format='json')
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

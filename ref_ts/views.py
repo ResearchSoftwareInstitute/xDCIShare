@@ -119,7 +119,7 @@ def time_series_from_service(request):
                                 variable_name=variable_name, units=units, noDataValue=noDataValue,
                                 predefined_name=PREVIEW_NAME)
             tempdir_last_six_chars = tempdir[-6:]
-            preview_url = "/hsapi/_internal/refts/preview-figure/%s/" % (tempdir_last_six_chars)
+            preview_url = "/hydroshare/hsapi/_internal/refts/preview-figure/%s/" % (tempdir_last_six_chars)
             return json_or_jsonp(request, {'status': "success", 'preview_url': preview_url})
         else:
             raise Exception("GetTSValuesForm form validation failed.")

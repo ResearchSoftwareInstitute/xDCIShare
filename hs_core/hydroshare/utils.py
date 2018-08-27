@@ -868,7 +868,7 @@ def get_party_data_from_user(user):
 
     party_data['name'] = party_name
     party_data['email'] = user.email
-    party_data['description'] = '/user/{uid}/'.format(uid=user.pk)
+    party_data['description'] = '/hydroshare/user/{uid}/'.format(uid=user.pk)
     party_data['phone'] = user_profile.phone_1
     party_data['organization'] = user_profile.organization
     return party_data

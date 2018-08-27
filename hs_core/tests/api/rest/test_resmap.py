@@ -29,7 +29,7 @@ class TestResourceMap(ResMapTestCase):
         super(TestResourceMap, self).tearDown()
 
     def test_get_resmap(self):
-        response = self.client.get("/hsapi/resource/{pid}/map/".format(pid=self.pid),
+        response = self.client.get("/hydroshare/hsapi/resource/{pid}/map/".format(pid=self.pid),
                                    format='json')
         # Note: this presumes that there is always a single redirection.
         # This might not be true if we utilize systems other than iRODS.
@@ -81,14 +81,14 @@ class TestResourceMap(ResMapTestCase):
         params = {'file': (txt_file_name,
                            open(txt_file_path),
                            'text/plain')}
-        url = "/hsapi/resource/{pid}/files/".format(pid=self.pid)
+        url = "/hydroshare/hsapi/resource/{pid}/files/".format(pid=self.pid)
         response = self.client.post(url, params)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         content = json.loads(response.content)
         self.assertEquals(content['resource_id'], self.pid)
 
         # download the resource map and # make sure the new file appears
-        response = self.client.get("/hsapi/resource/{pid}/map/".format(pid=self.pid))
+        response = self.client.get("/hydroshare/hsapi/resource/{pid}/map/".format(pid=self.pid))
         self.assertEqual(response.status_code, status.HTTP_302_FOUND)
         response2 = self.client.get(response.url)
         self.assertEqual(response2.status_code, status.HTTP_200_OK)

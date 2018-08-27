@@ -195,6 +195,9 @@ preflight_hs() {
         echo "This directory is used for celery beat scheduler to write celerybeat-schedule file for \
             scheduling purposes." > ${HS_PATH}/celery/readme.txt;
     fi
+    # Generate append-hosts
+    cp -rf ${HS_PATH}/scripts/templates/append-hosts.template ${HS_PATH}/scripts/append-hosts
+    sed -i 's!HS_HOSTSD_DIR!'${HS_HOSTSD_DIR}'!g' ${HS_PATH}/scripts/append-hosts
     # Generate init-hydroshare
     cp -rf ${HS_PATH}/scripts/templates/init-hydroshare.template ${HS_PATH}/init-hydroshare
     sed -i 's!HS_SERVICE_UID!'${HS_SERVICE_UID}'!g' ${HS_PATH}/init-hydroshare
@@ -244,28 +247,28 @@ loaddb_hs() {
     # Ensure all prior connections to the database are removed prior to dropping the database
     docker exec -u postgres -ti postgis psql -c "REVOKE CONNECT ON DATABASE postgres FROM public;"
     docker exec -u postgres -ti postgis psql -c "SELECT pid, pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid();"
-    echo "  - docker exec -u hydro-service hydroshare dropdb -U postgres -h postgis postgres"
-    docker exec -u hydro-service hydroshare dropdb -U postgres -h postgis postgres
-    echo "  - docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION postgis;'"
-    docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION postgis;'
-    echo "  - docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION hstore;'"
-    docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION hstore;'
-    echo "  - docker exec -u hydro-service hydroshare createdb -U postgres -h postgis postgres --encoding UNICODE --template=template1"
-    docker exec -u hydro-service hydroshare createdb -U postgres -h postgis postgres --encoding UNICODE --template=template1
-    echo "  - docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -w -c 'SET client_min_messages TO WARNING;'"
-    docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -w -c 'SET client_min_messages TO WARNING;'
-    echo "  - docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -q -f ${HS_DATABASE}"
-    docker exec -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -q -f ${HS_DATABASE}
+    # Make sure no services are connected to the database so that the database
+    # can be dropped:
+    docker-compose stop hydroshare
+    echo "  - docker run --rm -u hydro-service hydroshare dropdb -U postgres -h postgis postgres"
+    docker-compose run --rm -u hydro-service hydroshare dropdb -U postgres -h postgis postgres
+    echo "  - docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION postgis;'"
+    docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION postgis;'
+    echo "  - docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION hstore;'"
+    docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d template1 -w -c 'CREATE EXTENSION hstore;'
+    echo "  - docker-compose run --rm -u hydro-service hydroshare createdb -U postgres -h postgis postgres --encoding UNICODE --template=template1"
+    docker-compose run --rm -u hydro-service hydroshare createdb -U postgres -h postgis postgres --encoding UNICODE --template=template1
+    echo "  - docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -w -c 'SET client_min_messages TO WARNING;'"
+    docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -w -c 'SET client_min_messages TO WARNING;'
+    echo "  - docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -q -f ${HS_DATABASE}"
+    docker-compose run --rm -u hydro-service hydroshare psql -U postgres -h postgis -d postgres -q -f ${HS_DATABASE}
+    docker-compose up -d
 }
 
 migrate_hs() {
     echo "MIGRATE:"
-    echo "  - docker exec -u hydro-service hydroshare python manage.py migrate sites -v0 --noinput"
-    docker exec -u hydro-service hydroshare python manage.py migrate sites -v0 --noinput
     echo "  - docker exec -u hydro-service hydroshare python manage.py migrate -v0 --fake-initial --noinput"
     docker exec -u hydro-service hydroshare python manage.py migrate -v0 --fake-initial --noinput
-    echo "  - docker exec -u hydro-service hydroshare python manage.py fix_permissions"
-    docker exec -u hydro-service hydroshare python manage.py fix_permissions
 }
 
 manage_py_hs() {
@@ -351,6 +354,11 @@ rebuild_hs() {
     if [ "${USE_NGINX}" = true ]; then
         start_nginx;
     fi
+    # Collect CSS before running compilescss or the included files won't be found:
+    echo "  - docker exec -u hydro-service hydroshare python manage.py collectstatic -v0 --noinput"
+    docker exec -u hydro-service hydroshare python manage.py collectstatic -v0 --noinput
+    echo "  - docker exec -u hydro-service hydroshare python manage.py compilescss"
+    docker exec -u hydro-service hydroshare python manage.py compilescss
     echo "  - docker exec -u hydro-service hydroshare python manage.py collectstatic -v0 --noinput"
     docker exec -u hydro-service hydroshare python manage.py collectstatic -v0 --noinput
     # Ensure any autogenerated robots.txt file is removed so that django-robots can work

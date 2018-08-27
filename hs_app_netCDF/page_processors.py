@@ -100,11 +100,11 @@ def landing_page(request, page):
             if len(form.initial) > 0:
                 form.delete_modal_form = MetaDataElementDeleteForm(
                     content_model.short_id, 'variable', form.initial['id'])
-                form.action = "/hsapi/_internal/%s/variable/%s/update-metadata/" % \
+                form.action = "/hydroshare/hsapi/_internal/%s/variable/%s/update-metadata/" % \
                               (content_model.short_id, form.initial['id'])
                 form.number = form.initial['id']
             else:
-                form.action = "/hsapi/_internal/%s/variable/add-metadata/" % content_model.short_id
+                form.action = "/hydroshare/hsapi/_internal/%s/variable/add-metadata/" % content_model.short_id
 
         # netcdf file update notification in editing mode
         UpdateNetcdfLayout = HTML(content_model.metadata.get_update_netcdf_file_html_form())

@@ -1,0 +1,183 @@
+{% extends "myhpom/with_modal.html" %}
+
+{% block main_content %}
+<div
+    class="modal show pseudo-modal"
+    data-close-href="{% url 'myhpom:dashboard' %}"
+>
+    <div class="modal-dialog pseudo-modal__dialog" role="document">
+        <div class="modal-content pseudo-modal__content">
+            {% if not is_update %}
+            <div class="pb-0 modal-header pseudo-modal__header pseudo-modal__header--centered">
+                <strong class="ml-auto">Thank you for registering.&nbsp;</strong>
+                <div
+                    class="ml-auto oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark"
+                    role="button"
+                    tabindex="0"
+                    data-close-href="{% url 'myhpom:dashboard' %}"
+                ></div>
+            </div>
+            {% endif %}
+
+            <div class="pt-0 pb-0 modal-header pseudo-modal__header--centered modal-header--main pseudo-modal__header">
+                <h1 class="modal-title pseudo-modal__title pseudo-modal__title--centered">
+                    Select your Healthcare Network for {{ state.title }}.
+                </h1>
+            </div>
+
+            <div class="pt-0 modal-body pseudo-modal__body">
+                <div class="row">
+                    <div class="col-12 col--centered">
+                        <small class="mx-1 pseudo-modal__tooltip-text">How do I find my healthcare network?</small>
+                        <small class="mx-1 pseudo-modal__tooltip-text">Why is Medicare / Medicaid not an option?</small>
+                    </div>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="row mt-2">
+                    <div class="col-12">
+                        {% for error in form.non_field_errors %}
+                            <div class="text-danger">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% for row in priority_0_rows %}
+                <div class="row">
+                    {% for health_network in row %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-control custom-radio nobutton-radio">
+                            <input
+                                type="radio"
+                                class="custom-control-input"
+                                id="id_health_network_{{ health_network.id }}"
+                                name="health_network_radio"
+                                value="{{ health_network.id }}"
+                                {% if request.user.userdetails.health_network.id == health_network.id %}checked="checked"{% endif %}
+                            />
+                            <label
+                                class="custom-control-label nobutton-radio__label"
+                                for="id_health_network_{{ health_network.id }}"
+                            >
+                                {{ health_network.name }}
+                            </label>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                <div class="row mt-4">
+                    {% if supported_state %}
+                    <div class="col-md-6 col-lg-8">
+                        <div class="form-group">
+                            <label class="pseudo-modal__label pseudo-modal__label--center-full" for="id_health_network_full">Additional healthcare networks</label>
+                            <select name="health_network" id="id_health_network_full" class="pseudo-modal__input custom-select">
+                                <option value="null" selected="selected"></option>
+                                {% for priority, networks in health_networks.items %}
+                                    <optgroup label="{{PRIORITY.priority}}">
+                                        {% for health_network in networks %}
+                                        <option
+                                            id="id_health_network_{{ health_network.id }}"
+                                            name="health_network_option"
+                                            value="{{ health_network.id }}"
+                                            {% if request.user.userdetails.health_network.id == health_network.id %}selected="selected"{% endif %}
+                                        >{{ health_network.name }}</option>
+                                        {% endfor %}
+                                    </optgroup>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="form-group">
+                            <form id="id_health_network_form" method="post" action="{% if is_update %}{% url 'myhpom:update_network' %}{% else %}{% url 'myhpom:choose_network' %}{% endif %}">
+                                {% csrf_token %}
+                                <!-- store the selected health_network id in the hidden input -->
+                                <input type="hidden" name="health_network" id="id_health_network" />
+                                <label class="pseudo-modal__label pseudo-modal__label--subdued" for="id_custom_provider">{% if supported_state %}<strong>Not listed?</strong> {% endif %}Write network below:</label>
+                                <input class="form-control pseudo-modal__input" type="text" name="custom_provider" id="id_custom_provider" />
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <a id="id_submit_health_network_form" class="btn btn-secondary btn--wide float-right" href="">
+                            Submit
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="modal-footer pseudo-modal__footer">
+                <!-- TODO: add real URL -->
+                {% if is_update %}
+                <a class="pseudo-modal__skip-link small" href="{% url 'myhpom:dashboard' %}">Cancel</a>
+                {% else %}
+                <a class="pseudo-modal__skip-link small" href="/accounts/next-steps">Skip for now</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show"></div>
+{% endblock main_content %}
+
+{% block extra-js %}
+{{ block.super }}
+<script>
+    /*
+        Enforce mutual exclusion of radio button selection and
+        use of the `select` element. When either input changes,
+        if a non-null value is chosen, clear the other's value.
+    */
+    jQuery(function ($) {
+        var $radios = $('input[type="radio"]');
+        var $fullSelect = $('#id_health_network_full');
+        var $customProvider = $('#id_custom_provider');
+        var $submitHealthNetworkFormButton = $('#id_submit_health_network_form');
+        var $healthNetwork = $('#id_health_network');
+
+        $customProvider.focus();
+
+        // startup assignment
+        if ($('input[checked="checked"]').val()) {
+            $healthNetwork.val($('input[checked="checked"]').val());
+        } else if ($fullSelect.val() && $fullSelect.val() != 'null') {
+            $healthNetwork.val($fullSelect.val());
+        }
+
+        // event-based assignment
+        $radios.on('change', function (e) {
+            $healthNetwork.val($(e.target).val());
+            if ($(e.target).prop('checked')) {
+                $fullSelect.val('null');
+                $customProvider.val('');
+            }
+        });
+
+        $fullSelect.on('change', function (e) {
+            $healthNetwork.val($(e.target).val());
+            if ($(e.target).val() !== 'null') {
+                $radios.prop('checked', false);
+                $customProvider.val('');
+            }
+        });
+
+        $customProvider.on('keypress', function (e) {
+            $fullSelect.val('null');
+            $radios.prop('checked', false);
+            $healthNetwork.val('');
+        });
+
+        $submitHealthNetworkFormButton.on('click', function (e) {
+            e.preventDefault();
+            $("#id_health_network_form").submit();
+        });
+    });
+</script>
+{% endblock extra-js %}
