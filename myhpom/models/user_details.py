@@ -78,6 +78,15 @@ class UserDetails(models.Model):
     is_organ_donor = models.BooleanField(
         default=False, help_text="Whether the user is registered as an organ donor."
     )
+    # account verification
+    verification_code = models.CharField(
+        max_length=64,
+        null=True,
+        help_text="The generated code by which the user verifies their account.",
+    )
+    verification_completed = models.DateTimeField(
+        null=True, help_text="When the user's account was verified."
+    )
 
 
 def user_details_pre_save_receiver(sender, instance, **kwargs):
