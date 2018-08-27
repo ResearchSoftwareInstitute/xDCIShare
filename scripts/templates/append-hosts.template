@@ -3,6 +3,13 @@
 # errexit: abort script at first error
 set -e
 
+# Append a list of hosts in HS_HOSTSD_DIR to /etc/hosts.
+#
+# Resources stored in IRODS are associated to the hostname that they are
+# connected to - thus it is important for clients to use a hostname rather than
+# an IP address to connect to IRODS. This script allows configurations to use
+# the setup hostname for this purpose.
+
 HOSTS=/etc/hosts
 HOSTSD=HS_HOSTSD_DIR
 if [ -d "$HOSTSD" ]; then
