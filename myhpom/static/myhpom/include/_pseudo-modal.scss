@@ -35,13 +35,16 @@ html [type="button"].close--link {
     border-bottom: none;
 }
 
-.pseudo-modal__header--centered {
-    justify-content: center;
-}
-
 .pseudo-modal__header:first-child {
     border-top-left-radius: ($container-border-radius - 0.1);
     border-top-right-radius: ($container-border-radius - 0.1);
+}
+
+.pseudo-modal__pre-header,
+.pseudo-modal__header {
+    > *:first-child {
+        flex-grow: 1;
+    }
 }
 
 .pseudo-modal__header {
@@ -76,6 +79,10 @@ html [type="button"].close--link {
 .pseudo-modal__pre-header {
     background-color: transparent !important;
     padding: 1rem;
+    text-align: center;
+}
+
+.pseudo-modal__logo-container {
     text-align: center;
 }
 
