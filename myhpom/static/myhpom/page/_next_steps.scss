@@ -1,6 +1,11 @@
 .modal-header--next-steps {
     text-align: center;
     display: flex;
+    align-items: flex-start;
+}
+
+.pseudo-modal__inner-header {
+    display: flex;
     flex-direction: column;
     align-items: center;
 }

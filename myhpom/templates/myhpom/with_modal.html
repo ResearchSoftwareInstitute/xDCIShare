@@ -1,0 +1,30 @@
+{% extends "myhpom/base.html" %}
+
+{% block extra-js %}
+{{ block.super }}
+<script>
+    /*
+        Because our modals aren't real modals, when they
+        are "closed", they need to take you to some other
+        page. For the expected "click the backdrop to
+        close modal" behavior, we can use a click event
+        on the modal to redirect the user based on a
+        data attribute's value.
+    */
+    jQuery(function ($) {
+        var $pseudoLinks = $('[data-close-href]');
+
+        if ($pseudoLinks.length) {
+            $pseudoLinks.each(function (i, el) {
+                var $el = $(el);
+                var href = $el.data('close-href');
+                $(el).click(function (e) {
+                    if (e.target === el) {
+                        window.location.href = href;
+                    }
+                });
+            });
+        }
+    });
+</script>
+{% endblock %}
