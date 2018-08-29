@@ -8,10 +8,10 @@
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             {% if not is_update %}
-            <div class="pb-0 modal-header pseudo-modal__header pseudo-modal__header--centered">
-                <strong class="ml-auto">Thank you for registering.&nbsp;</strong>
+            <div class="pb-0 modal-header pseudo-modal__header">
+                <strong>Thank you for registering.&nbsp;</strong>
                 <div
-                    class="ml-auto oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark"
+                    class="oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark"
                     role="button"
                     tabindex="0"
                     data-close-href="{% url 'myhpom:dashboard' %}"
