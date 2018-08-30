@@ -96,9 +96,9 @@ class UserDetails(models.Model):
         * set new verification_code
         """
         self.verification_completed = None
-        code_hash = hashlib.new('sha256')  # less secure & shorter with e.g. md5
-        code_hash.update(str(uuid.uuid4()))  # more secure with more random data e.g. timestamp
-        self.verification_code = code_hash.hexdigest()  # currently 64 bytes
+        code_hash = hashlib.new('sha256')  # make less secure & shorter with e.g. md5
+        code_hash.update(str(uuid.uuid4()))  # make more secure with more random data e.g. timestamp
+        self.verification_code = code_hash.hexdigest()  # currently 64 bytes, which is quite long
 
 
 def user_details_pre_save_receiver(sender, instance, **kwargs):

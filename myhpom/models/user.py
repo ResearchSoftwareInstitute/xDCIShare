@@ -18,7 +18,7 @@ def user_pre_save_receiver(sender, instance, **kwargs):
     validators.name_validator(instance.first_name)
     validators.name_validator(instance.last_name)
     validators.email_validator(instance.email)
-    if instance.email != instance.username:
+    if instance.email != instance.username and hasattr(instance, 'userdetails'):
         instance.userdetails.reset_verification()
         instance.userdetails.save()
     instance.username = instance.email
