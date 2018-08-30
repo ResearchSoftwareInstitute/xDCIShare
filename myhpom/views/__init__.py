@@ -42,7 +42,6 @@ def home(request):
 @require_GET
 def faq(request):
     context = {
-        'contact_email': settings.CONTACT_EMAIL,
         'faqs': FAQS,
     }
     return render(request, 'myhpom/faq.html', context)
