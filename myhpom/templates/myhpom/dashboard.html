@@ -21,8 +21,8 @@
         <div class="row">
             <div class="col-12">
                 {% for message in messages %}
-                    <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% endif %}">
-                        {{ message }}
+                    <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}alert-success{% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}alert-info{% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% elif message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}alert-warning{% endif %}">
+                        {{ message|safe }}
                     </div>
                 {% endfor %}
             </div>
