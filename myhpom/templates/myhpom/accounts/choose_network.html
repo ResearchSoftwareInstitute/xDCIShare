@@ -9,7 +9,12 @@
         <div class="modal-content pseudo-modal__content">
             {% if not is_update %}
             <div class="pb-0 modal-header pseudo-modal__header">
-                <strong>Thank you for registering.&nbsp;</strong>
+                <div>
+                    <strong>Thank you for registering.&nbsp;</strong>
+                    {% if not request.user.userdetails.verification_completed %}
+                    Please check your email to verify your account.
+                    {% endif %}
+                </div>
                 <div
                     class="oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark"
                     role="button"

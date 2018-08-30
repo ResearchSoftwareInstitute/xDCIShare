@@ -5,6 +5,7 @@ from django.shortcuts import redirect, render
 
 from myhpom.forms.signup import SignupForm
 from myhpom.models import State, UserDetails
+from myhpom.views.verification import send_account_verification
 
 
 def signup(request):
@@ -31,10 +32,14 @@ def signup(request):
             )
             login(request, user)
 
+            # send account verification email.
+            send_account_verification(request, return_redirect=False)
+
             if user_details.state.healthnetwork_set.exists():
                 return redirect('myhpom:choose_network')
             else:
                 return redirect('myhpom:next_steps')
+
         # else it falls through to re-display the page with errors
     else:
         form = SignupForm()
