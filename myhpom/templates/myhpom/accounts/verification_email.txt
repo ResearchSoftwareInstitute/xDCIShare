@@ -1,0 +1,13 @@
+{% autoescape off %}
+Thank you for using Mind My Health!
+
+To continue using Mind My Health, you’ll need to verify your email address. To verify your address, please click the link below:
+
+{{ protocol }}://{{ domain }}{% url 'myhpom:verify_account' code=code %}
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser
+window instead.
+
+Sincerely,
+Mind My Health Team
+{% endautoescape %}
