@@ -30,6 +30,21 @@ class EditUserForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
 
+    def clean(self):
+        cleaned_data = super(EditUserForm, self).clean()
+        
+        # check to ensure that the email is available
+        if User.objects.filter(email=cleaned_data.get('email')).exclude(id=self.instance.id).exists():
+            self.add_error('email', "Email already in use.")
+
+        if not self.is_valid():
+            self.errors['__all__'] = [
+                'Please make the indicated corrections to edit your profile.'
+            ]
+
+        return cleaned_data
+
+
 
 class EditUserDetailsForm(forms.ModelForm):
     """subform to handle the UserDetails portion."""
