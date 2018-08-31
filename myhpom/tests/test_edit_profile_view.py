@@ -24,7 +24,7 @@ class EditProfileViewTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/profile/edit.html')
@@ -47,7 +47,8 @@ class EditProfileViewTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
+
         # since we test the form elsewhere, we can minimize our valid data test
         valid_post_data = dict(
             state=user.userdetails.state.name,

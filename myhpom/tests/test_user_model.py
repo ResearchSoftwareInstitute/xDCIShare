@@ -17,10 +17,10 @@ class UserModelTestCase(TestCase):
         }
 
     def test_save_user_without_username(self):
-        """saving User without username results in username = email"""
+        """saving User without username results in username not null"""
         user = User(**self.user_data)
         user.save()
-        self.assertEqual(user.email, user.username)
+        self.assertIsNotNone(user.username)
 
     def test_save_invalid_user_fails(self):
         """first_name and last_name are not only required, but they have to be alphanumeric,
