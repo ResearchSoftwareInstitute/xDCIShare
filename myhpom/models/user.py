@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from myhpom import validators
-import base64, hashlib
+import base64
+import hashlib
 
 """
 * Connect a pre_save receiver/hook to the User model, and use this model in all imports
@@ -10,8 +11,9 @@ import base64, hashlib
 
 User.__unicode__ = lambda u: u.email
 
+
 def get_username(email):
-    """unique username as hash of the email. 
+    """unique username as hash of the email.
     Must be <= 30 characters long. 30, Django? Really?
     """
     h = hashlib.new('sha1')  # the longest hash algorithm that base64-encodes at <= 30 characters
