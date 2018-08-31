@@ -19,7 +19,7 @@ class ContactEmailProcessorTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         for example_email in ('foo@example.com', 'bar@example.com', ):
             response = self.client.get(reverse('myhpom:dashboard'))
             self.assertEqual(response.context['contact_email'], settings.CONTACT_EMAIL)

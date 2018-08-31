@@ -19,7 +19,7 @@ class DashboardTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/dashboard.html')
@@ -34,7 +34,7 @@ class DashboardTestCase(TestCase):
         user.save()
         advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
         advancedirective.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/dashboard.html')
@@ -49,7 +49,7 @@ class DashboardTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
 
         user.userdetails.is_organ_donor = False
         user.userdetails.save()
