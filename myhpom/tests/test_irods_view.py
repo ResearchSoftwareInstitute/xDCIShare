@@ -72,7 +72,7 @@ class IrodsDownloadTest(TestCase):
         self.assertEqual(404, response.status_code)
 
         # When the user is logged in, they can retrieve their file:
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         response = self.client.get(self.url)
         self.assertEqual(''.join(response.streaming_content), 'content')
 

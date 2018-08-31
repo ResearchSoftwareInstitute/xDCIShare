@@ -16,7 +16,7 @@ class UploadMixin:
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         return user
 
     def test_not_logged_in(self):

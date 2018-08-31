@@ -24,7 +24,7 @@ class EditProfileViewTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
         response = self.client.get(self.url)
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/profile/edit.html')
@@ -47,22 +47,34 @@ class EditProfileViewTestCase(TestCase):
         user = UserFactory()
         user.set_password('password')
         user.save()
-        self.assertTrue(self.client.login(username=user.username, password='password'))
+        self.assertTrue(self.client.login(username=user.email, password='password'))
+
         # since we test the form elsewhere, we can minimize our valid data test
         valid_post_data = dict(
             state=user.userdetails.state.name,
             **{key: user.__getattribute__(key) for key in ['first_name', 'last_name', 'email']}
         )
+
         # default redirect to dashboard
         response = self.client.post(self.url, data=valid_post_data)
         self.assertRedirects(response, reverse('myhpom:dashboard'), fetch_redirect_response=False)
+
         # invalid POST redisplays page
+        # -- an invalid value added to valid_post_data
         invalid_post_data = [
             dict(birthdate='today', **valid_post_data),  # invalid birthdate
             dict(gender='NOT A GENDER', **valid_post_data),  # invalid gender
         ]
+        # -- existing user email address but otherwise valid
+        existing_user = UserFactory()
+        invalid_post_data.append(
+            dict(first_name=user.first_name, last_name=user.last_name, email=existing_user.email)
+        )
+        # -- valid_post_data without a required key
         for key in valid_post_data:
-            invalid_post_data.append(dict(key='', **{k:v for k,v in deepcopy(valid_post_data).items() if k != key}))
+            invalid_post_data.append(
+                dict(key='', **{k: v for k, v in deepcopy(valid_post_data).items() if k != key})
+            )
         for data in invalid_post_data:
             response = self.client.post(self.url, data=data)
             self.assertEqual(200, response.status_code)
