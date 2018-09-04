@@ -26,6 +26,7 @@ $banner-proportion: 60%;
 
 .myhpom-header__home-logo-caption {
     @include serif;
+    font-size: 1.13rem; // per Shane's nicely specific request!
     font-weight: 400;
     color: $brand-orange;
     align-self: flex-end;
