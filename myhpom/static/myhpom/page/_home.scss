@@ -202,6 +202,12 @@ $banner-proportion: 60%;
 .supported-by-section__title {
     text-align: center;
     color: black;
+    text-transform: uppercase;
+    color: $brand-blue;
+
+    :any-link {
+        @include orange-link;
+    }
 }
 .supported-by-logos {
     padding-left: 0;
