@@ -142,6 +142,8 @@ $banner-proportion: 60%;
     color: white;
     text-transform: uppercase;
     font-size: 150%;
+    line-height: 1.25;
+    margin-bottom: 0.25em;
 }
 .feature__text {
     @include serif;
