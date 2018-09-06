@@ -33,7 +33,7 @@ def signup(request):
             login(request, user)
 
             # send account verification email.
-            send_account_verification(request, return_redirect=False)
+            send_account_verification(request)
 
             if user_details.state.healthnetwork_set.exists():
                 return redirect('myhpom:choose_network')

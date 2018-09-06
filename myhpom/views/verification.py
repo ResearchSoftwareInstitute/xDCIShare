@@ -12,7 +12,7 @@ from myhpom.decorators import require_ajax_login
 
 
 @login_required
-def send_account_verification(request, return_redirect=True):
+def send_account_verification(request):
     """
     * if already verified => returns message: info: verification already completed
     * if unverified => 
@@ -42,8 +42,7 @@ def send_account_verification(request, return_redirect=True):
             )
         userdetails.save()
 
-    if return_redirect:
-        return redirect('myhpom:dashboard')
+    return redirect('myhpom:dashboard')
 
 
 @require_GET
