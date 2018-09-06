@@ -38,3 +38,4 @@ deploy/.vault-key
 deploy/*.retry
 myhpom/static/myhpom/myhpom.css
 hydroshare/public/media
+append-hosts
