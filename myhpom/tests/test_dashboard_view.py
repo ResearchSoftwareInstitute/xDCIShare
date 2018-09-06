@@ -2,7 +2,7 @@ import re
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.timezone import now
-from django.contrib.messages import get_messages
+from django.contrib.messages import get_messages, WARNING
 
 from myhpom.models import AdvanceDirective
 from myhpom.tests.factories import UserFactory
@@ -85,8 +85,8 @@ class DashboardTestCase(TestCase):
         self.assertIsNotNone(user.userdetails.verification_code)
         self.assertIsNone(user.userdetails.verification_completed)
         response = self.client.get(self.url)
-        messages = get_messages(response.wsgi_request)
-        self.assertIn(30, [message.level for message in messages])  # 30 = warning
+        messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == WARNING]
+        self.assertGreater(len(messages), 0)
         matchdata = re.search(
             r'<a.*?class="(advance-directive-widget__button--primary[^"]*)"[^>]*>.*?</a>',
             ''.join(response._container),
@@ -98,8 +98,8 @@ class DashboardTestCase(TestCase):
         user.userdetails.verification_completed = now()  # voila, verified
         user.userdetails.save()
         response = self.client.get(self.url)
-        messages = get_messages(response.wsgi_request)
-        self.assertNotIn(30, [message.level for message in messages])  # 30 = warning
+        messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == WARNING]
+        self.assertEqual(len(messages), 0)
         matchdata = re.search(
             r'<a.*?class="(advance-directive-widget__button--primary[^"]*)"[^>]*>.*?</a>',
             ''.join(response._container),

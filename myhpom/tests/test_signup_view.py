@@ -1,7 +1,7 @@
 from django.contrib import auth
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.contrib.messages import get_messages
+from django.contrib.messages import get_messages, INFO
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
@@ -62,8 +62,8 @@ class SignupTestCase(TestCase):
         self.assertTrue(user.is_authenticated())
 
         # test for the presence of User verification message and model values
-        messages = get_messages(response.wsgi_request)
-        self.assertIn(20, [message.level for message in messages])  # 20 = info level
+        messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == INFO]
+        self.assertGreater(len(messages), 0)
         self.assertIsNotNone(user.userdetails.verification_code)
         self.assertIsNone(user.userdetails.verification_completed)
 
@@ -83,8 +83,8 @@ class SignupTestCase(TestCase):
         self.assertTrue(user.is_authenticated())
 
         # test for the presence of User verification message and model values
-        messages = get_messages(response.wsgi_request)
-        self.assertIn(20, [message.level for message in messages])  # 20 = info level
+        messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == INFO]
+        self.assertGreater(len(messages), 0)
         self.assertIsNotNone(user.userdetails.verification_code)
         self.assertIsNone(user.userdetails.verification_completed)
 
