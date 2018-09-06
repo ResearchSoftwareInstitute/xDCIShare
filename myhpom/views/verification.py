@@ -14,10 +14,10 @@ from myhpom.decorators import require_ajax_login
 @login_required
 def send_account_verification(request, return_redirect=True):
     """
-    * if already verified => returns message: success: verification already completed
+    * if already verified => returns message: info: verification already completed
     * if unverified => 
         * if no verification code: set it and save UserDetails
-        * send the verification email and returns message: success: email sent, please check
+        * send the verification email and returns message: info: email sent, please check
     """
     userdetails = request.user.userdetails
     if userdetails.verification_completed:
