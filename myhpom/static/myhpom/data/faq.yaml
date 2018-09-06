@@ -82,6 +82,18 @@
     name: who_can_sign_up_to_become_an_organ_donor
     answer: "Everyone! An individual of any age is able to join the organ, eye and tissue donor registry. This includes individuals who have been sick, had cancer in the past, or who have HIV or Hepatitis C."
     tooltip: "Everyone! An individual of any age is able to join the organ, eye and tissue donor registry. "
+  - question: Why does Mind My Health only directly serve North Carolina and South Carolina at this time?
+    name: why_only_north_south_carolina
+    answer: Mind My Health is a project of The Carolinas Center for Hospice and End of Life Care (TCC), a nonprofit hospice association with members in North Carolina and South Carolina. TCC developed Mind My Health in partnership with the support of a grant from The Duke Endowment to expand access in the Carolinas to creation and accessible storage of Advance Care Planning Documents.
+    tooltip: Mind My Health is a project of The Carolinas Center for Hospice and End of Life Care (TCC), a nonprofit hospice association with members in North Carolina and South Carolina.
+  - question: How do I find my healthcare network?
+    name: how_do_i_find_my_healthcare_network
+    answer: Many physicians belong to a hospital network, so start by asking your physician if they belong to a network. You can also ask them what network your nearest hospital belongs to.
+    tooltip: Many physicians belong to a hospital network, so start by asking your physician if they belong to a network. You can also ask them what network your nearest hospital belongs to.
+  - question: Why is Medicare not an option? 
+    name: why_is_medicare_not_an_option
+    answer: Medicare does not operate hospitals or doctor’s offices, so it is not a network. Check with your doctor about their health network or ask them what the network for the nearest hospital is.
+    tooltip: Medicare does not operate hospitals or doctor’s offices, so it is not a network. Check with your doctor about their health network or ask them what the network for the nearest hospital is.
 
 - name: understanding
   description: Understanding My Plan
