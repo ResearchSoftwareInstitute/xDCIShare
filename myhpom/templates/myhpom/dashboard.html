@@ -221,16 +221,13 @@ jQuery(function ($) {
     }
 
     function handleAnchorClick() {
-        if ($(this).is('[target="_blank"]') || $(this).data('no-ajax')) {
-            return;
-        }
         handleAjax($.ajax({
             url: this.href
         }));
         return false;
     }
 
-    $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a', handleAnchorClick);
+    $(ADVANCED_DIRECTIVE_WIDGET_ID).on('click', 'a:not([data-no-ajax])', handleAnchorClick);
     $(ADVANCED_DIRECTIVE_WIDGET_ID).submit(handleFormSubmit);
 });
 </script>
