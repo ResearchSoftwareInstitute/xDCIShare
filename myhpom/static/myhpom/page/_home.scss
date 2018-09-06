@@ -28,7 +28,7 @@ $banner-proportion: 60%;
     @include serif;
     font-size: 1.13rem; // per Shane's nicely specific request!
     font-weight: 400;
-    color: $brand-orange-light;
+    color: white;
     align-self: flex-end;
 
     @include media-breakpoint-down(md) {
