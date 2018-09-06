@@ -92,6 +92,7 @@
 .faq-entry__header__button {
   @extend .text-left;
 
+  text-transform: none;
   overflow: hidden;
   padding: 0;
 }
