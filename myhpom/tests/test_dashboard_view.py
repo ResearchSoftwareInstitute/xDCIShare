@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.timezone import now
+from django.contrib.messages import get_messages
 
 from myhpom.models import AdvanceDirective
 from myhpom.tests.factories import UserFactory
@@ -62,3 +63,29 @@ class DashboardTestCase(TestCase):
         response = self.client.get(self.url)
         self.assertIn('I am an organ donor', response.content)
         self.assertNotIn('Learn how you can be a donor.', response.content)
+
+    def test_user_verification(self):
+        """
+        + Unverified user
+            + sees a warning message on the dashboard (alert-warning)
+            + has "Upload your File" button disabled
+        + Verified user
+            + sees no warning message on the dashboard
+            + has "Upload your File" button enabled
+        """
+        user = UserFactory()
+        user.set_password('password')
+        user.save()
+        self.assertTrue(self.client.login(username=user.email, password='password'))
+
+        # unverified user
+        user.userdetails.reset_verification()
+        user.userdetails.save()
+        self.assertIsNotNone(user.userdetails.verification_code)
+        self.assertIsNone(user.userdetails.verification_completed)
+        response = self.client.get(self.url)
+        messages = get_messages(response.wsgi_request)
+        self.assertIn(30, [message[level] for message in messages]) # 30 = warning
+
+        # verified user
+        
