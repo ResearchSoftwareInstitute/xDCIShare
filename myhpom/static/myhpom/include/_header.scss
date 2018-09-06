@@ -172,6 +172,12 @@
     }
 }
 
+.myhpom-header__nav-link--button {
+    @include media-breakpoint-up(lg) {
+        margin-left: ($navbar-padding-x);
+    }
+}
+
 .nav-link--light {
     @extend .nav-link;
     color: rgba(255,255,255,0.5)!important;

@@ -1,7 +1,7 @@
-from django.conf import settings
+from django.conf import settings as django_settings
 
 
-def contact_email(request):
+def settings(request):
     return {
-        'contact_email': settings.CONTACT_EMAIL,
+        'settings': django_settings,
     }

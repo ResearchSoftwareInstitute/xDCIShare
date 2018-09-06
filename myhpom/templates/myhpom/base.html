@@ -29,6 +29,19 @@
         <link href="{% static 'scribbler/css/scribbler.css' %}" rel="stylesheet">
 
         <title>{% block title %}My Health Peace Of Mind{% endblock title %}</title>
+
+        {% if settings.GOOGLE_ANALYTICS_ID %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ settings.GOOGLE_ANALYTICS_ID }}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '{{ settings.GOOGLE_ANALYTICS_ID }}');
+        </script>
+        {% endif %}
+
         {% block extra-head %}{% endblock %}
     </head>
     <body>
