@@ -1,3 +1,4 @@
+import re
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.timezone import now
@@ -85,7 +86,23 @@ class DashboardTestCase(TestCase):
         self.assertIsNone(user.userdetails.verification_completed)
         response = self.client.get(self.url)
         messages = get_messages(response.wsgi_request)
-        self.assertIn(30, [message[level] for message in messages]) # 30 = warning
+        self.assertIn(30, [message.level for message in messages])  # 30 = warning
+        matchdata = re.search(
+            r'<a.*?class="(advance-directive-widget__button--primary[^"]*)"[^>]*>.*?</a>',
+            ''.join(response._container),
+        )
+        self.assertIsNotNone(matchdata)
+        self.assertIn('disabled', matchdata.group(1))  # i.e., in the class attribute
 
         # verified user
-        
+        user.userdetails.verification_completed = now()  # voila, verified
+        user.userdetails.save()
+        response = self.client.get(self.url)
+        messages = get_messages(response.wsgi_request)
+        self.assertNotIn(30, [message.level for message in messages])  # 30 = warning
+        matchdata = re.search(
+            r'<a.*?class="(advance-directive-widget__button--primary[^"]*)"[^>]*>.*?</a>',
+            ''.join(response._container),
+        )
+        self.assertIsNotNone(matchdata)
+        self.assertNotIn('disabled', matchdata.group(1))  # i.e., in the class attribute
