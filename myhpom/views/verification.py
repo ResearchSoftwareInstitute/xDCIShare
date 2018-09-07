@@ -1,21 +1,20 @@
 from smtplib import SMTPException
-from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.sites.models import Site
+from django.core.mail import send_mail
 from django.views.decorators.http import require_GET
-from django.shortcuts import render, redirect
-from django.template.loader import get_template
+from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
-from myhpom.decorators import require_ajax_login
 
 
 @login_required
 def send_account_verification(request):
     """
     * if already verified => returns message: info: verification already completed
-    * if unverified => 
+    * if unverified =>
         * if no verification code: set it and save UserDetails
         * send the verification email and returns message: info: email sent, please check
     """
@@ -26,11 +25,18 @@ def send_account_verification(request):
         userdetails.reset_verification()
         code = userdetails.verification_code
         subject = 'Mind My Health Email Verification'
-        template = get_template('myhpom/accounts/verification_email.txt')
+        site = Site.objects.get_current()
         try:
             send_mail(
                 subject,
-                template.render({'code': code}),
+                render_to_string(
+                    'myhpom/accounts/verification_email.txt',
+                    context={
+                        'code': code,
+                        'domain': site.domain if site else None
+                    },
+                    request=request,
+                ),
                 settings.CONTACT_EMAIL,
                 [request.user.email],
                 fail_silently=False,
@@ -55,7 +61,7 @@ def verify_account(request, code):
             * set verification_completed as now and save UserDetails
             * message: success: email verified
         * if not match:
-            * message: invalid: the verification code is invalid. 
+            * message: invalid: the verification code is invalid.
     """
     userdetails = request.user.userdetails
     if userdetails.verification_completed:
