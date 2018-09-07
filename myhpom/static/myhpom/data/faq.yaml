@@ -94,6 +94,14 @@
     name: why_is_medicare_not_an_option
     answer: Medicare does not operate hospitals or doctor’s offices, so it is not a network. Check with your doctor about their health network or ask them what the network for the nearest hospital is.
     tooltip: Medicare does not operate hospitals or doctor’s offices, so it is not a network. Check with your doctor about their health network or ask them what the network for the nearest hospital is.
+  - question: What is a validation date? 
+    name: what_is_a_validation_date
+    answer: This is the date your advance care document is active legally. It aligns to the final date of a notarization or date identified on the document at the time of signing (whichever represents its legal date).
+    tooltip: This is the date your advance care document is active legally.
+  - question: Why is it important that my advance directive have my name on it? 
+    name: why_is_it_important_that_my_advance_directive_have_my_name_on_it
+    answer: The advance directive is a legal document that guides an individual’s care. We cannot accept a document written for another person. The owner of the Mind My Health account must align to the person whose health decisions are reflected in the document.
+    tooltip: The advance directive is a legal document that guides an individual’s care. We cannot accept a document written for another person.
 
 - name: understanding
   description: Understanding My Plan
