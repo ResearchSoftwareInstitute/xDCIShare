@@ -9,14 +9,14 @@
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             <div class="pb-0 modal-header modal-header--next-steps pseudo-modal__header">
-                <div class="ml-auto pseudo-modal__inner-header">
-                    <h1 class="mx-auto h2 modal-title pseudo-modal__title pseudo-modal__title--centered pseudo-modal__title--light">
+                <div class="pseudo-modal__inner-header">
+                    <h1 class="mx-auto h2 modal-title pseudo-modal__title pseudo-modal__title--light">
                         Welcome to <span class="d-none">Mind My Health</span>
                     </h1>
                     <img class="next-steps__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-beta-color@3x.png' %}" alt="">
                 </div>
                 <div
-                    class="ml-auto oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark pseudo-modal__close-button--absolute"
+                    class="oi oi-x pseudo-modal__close-button pseudo-modal__close-button--dark pseudo-modal__close-button--absolute"
                     role="button"
                     tabindex="0"
                     data-close-href="{% url 'myhpom:dashboard' %}"
@@ -46,7 +46,9 @@
                             </div>
                             <div class="advance-directive-block-footer">
                                 <div class="advance-directive-block-footer__info-link">
-                                    Learn more in our FAQs
+                                    <a class="advance-directive-block__template-link" href="{% url 'myhpom:faq' %}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">
+                                        Learn more in our FAQs
+                                    </a>
                                 </div>
                                 <div class="advance-directive-block-footer__caption">
                                     Link will open in new window
@@ -60,14 +62,16 @@
                                 Are you just starting to plan your advance care?
                             </h4>
                             <div class="next-steps__text">
-                                <a class="advance-directive-block__template-link" href="{{ ad_template.url }}" target="_blank" rel="noopener noreferrer">
+                                <a class="advance-directive-block__template-link" href="{{ ad_template.url }}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">
                                     Download our free template</a>,
                                 document your desired care, and follow the
                                 instructions on your Mind My Health Dashboard.
                             </div>
                             <div class="advance-directive-block-footer">
                                 <div class="advance-directive-block-footer__info-link">
-                                    Learn more in our FAQs
+                                    <a class="advance-directive-block__template-link" href="{% url 'myhpom:faq' %}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">
+                                        Learn more in our FAQs
+                                    </a>
                                 </div>
                                 <div class="advance-directive-block-footer__caption">
                                     Link will open in new window

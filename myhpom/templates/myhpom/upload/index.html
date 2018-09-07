@@ -5,18 +5,17 @@
 <h3 class="h5">
     Requirements for Advance Directive:
 </h3>
-
-{% scribble 'upload-ad-requirements' 'shared' %}
 <p>
-    {% lorem 8 w %}
+    <b>Each state has it's own unique requirements for an advance care plan.</b>
 </p>
 <p>
-    {% lorem 12 w %}
+    These requirements may include the need for 1 or 2 witness signatures and/or a notary.
 </p>
 <p>
-    {% lorem 6 w %}
+    Not sure about what your advance care plan may require, learn more in our
+    <a href="{% url 'myhpom:faq' %}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">Frequently Asked Questions
+    (FAQs)</a>.
 </p>
-{% endscribble %}
 
 <div class="advance-directive-widget__buttons-container vertical-flex">
     <div>
@@ -25,7 +24,7 @@
 
     {% if request.user.userdetails.state.advance_directive_template %}
     <div>
-        <a class="advance-directive-widget__button--secondary" href="{{ request.user.userdetails.state.advance_directive_template.url }}" target="_blank">
+        <a class="advance-directive-widget__button--secondary" href="{{ request.user.userdetails.state.advance_directive_template.url }}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">
             Download a Template
         </a>
     </div>

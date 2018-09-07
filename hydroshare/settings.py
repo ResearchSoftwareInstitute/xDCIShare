@@ -199,6 +199,7 @@ TEMPLATES = [
                 "django.core.context_processors.media",
                 "django.core.context_processors.request",
                 "django.core.context_processors.tz",
+                "myhpom.context_processors.settings",
             ],
         },
     },
@@ -244,6 +245,9 @@ MAX_AD_SIZE = 25 * 1024 * 1024
 
 # Where users are directed to send contacts in MYHPOM:
 CONTACT_EMAIL = 'contact@example.com'
+
+# When provided, a gtags.js block is included on all pages.
+GOOGLE_ANALYTICS_ID = None
 
 ##################
 # LOCAL SETTINGS #
@@ -360,3 +364,5 @@ LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 
 # Custom test runner that excludes apps we don't use
 TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
+
+AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']

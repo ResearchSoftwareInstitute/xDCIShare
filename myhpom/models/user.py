@@ -1,8 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
 from myhpom import validators
+import base64
+import hashlib
 
-"""Connect a pre_save receiver/hook to the User model, and use this model in all imports"""
+"""
+* Connect a pre_save receiver/hook to the User model, and use this model in all imports
+* monkeypatch User.__unicode__ to return the email address
+"""
+
+User.__unicode__ = lambda u: u.email
+
+
+def get_username(email):
+    """unique username as hash of the email.
+    Must be <= 30 characters long. 30, Django? Really?
+    """
+    h = hashlib.new('sha1')  # the longest hash algorithm that base64-encodes at <= 30 characters
+    h.update(email)
+    return base64.urlsafe_b64encode(h.digest())
 
 
 def user_pre_save_receiver(sender, instance, **kwargs):
@@ -11,12 +27,12 @@ def user_pre_save_receiver(sender, instance, **kwargs):
         * first_name
         * last_name
         * email
-    * Set the username to the email
+    * Set the username to (a hash of) the email
     """
     validators.name_validator(instance.first_name)
     validators.name_validator(instance.last_name)
     validators.email_validator(instance.email)
-    instance.username = instance.email
+    instance.username = get_username(instance.email)
 
 
 models.signals.pre_save.connect(user_pre_save_receiver, sender=User)

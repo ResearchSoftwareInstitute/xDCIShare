@@ -21,7 +21,7 @@ class ChooseNetworkTestCase(TestCase):
         self.user = UserFactory()
         self.user.set_password('password')
         self.user.save()
-        self.client.login(username=self.user.username, password='password')
+        self.client.login(username=self.user.email, password='password')
         self.url = reverse('myhpom:choose_network')
         self.user.userdetails.state = models.State.objects.get(name="NC")
         self.user.userdetails.save()

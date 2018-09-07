@@ -80,17 +80,6 @@
     }
 }
 
-.myhpom-header__navbar-toggle--profile {
-    @include media-breakpoint-down(md) {
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 175%;
-        text-align: center;
-    }
-}
-
 .myhpom-header__toggler-icon {
     width: ($navbar-padding-x * 2);
 }
@@ -180,6 +169,12 @@
     &:hover {
         color: white;
         margin-bottom: -2px; // to compensate for added height from border
+    }
+}
+
+.myhpom-header__nav-link--button {
+    @include media-breakpoint-up(lg) {
+        margin-left: ($navbar-padding-x);
     }
 }
 

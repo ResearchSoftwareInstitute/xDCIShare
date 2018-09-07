@@ -13,9 +13,11 @@
     <div class="modal-dialog pseudo-modal__dialog" role="document">
         <div class="modal-content pseudo-modal__content">
             <div class="pseudo-modal__pre-header">
-                <img class="ml-auto pseudo-modal__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-beta-color-rev@3x.png' %}" alt="">
+                <div class="pseudo-modal__logo-container">
+                    <img class="pseudo-modal__logo" src="{% static 'myhpom/img/logo/mmh-logo-hor-beta-color-rev@3x.png' %}" alt="">
+                </div>
                 <div
-                    class="ml-auto oi oi-x pseudo-modal__close-button"
+                    class="oi oi-x pseudo-modal__close-button"
                     role="button"
                     tabindex="0"
                     data-close-href="{% url 'myhpom:home' %}"
@@ -109,7 +111,7 @@
                                         <h6 class="form-group-tos__h6 {% if form.errors.accept_tos %}form-group-tos__h6--invalid{% endif %}">Terms and conditions</h6>
                                         <p class="form-group-tos__text">{% scribble 'signup-tos-short' 'shared' %}{% lorem 32 w %}{% endscribble %}</p>
                                         <p class="mb-2">
-                                            <a class="form-group-tos__link" href="{% url 'myhpom:home' %}">
+                                            <a class="form-group-tos__link" href="{% url 'myhpom:legal' %}" target="_blank" rel="noopener noreferrer">
                                                 Read complete terms and conditions
                                             </a>
                                         </p>

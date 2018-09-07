@@ -26,8 +26,9 @@ $banner-proportion: 60%;
 
 .myhpom-header__home-logo-caption {
     @include serif;
+    font-size: 1.13rem; // per Shane's nicely specific request!
     font-weight: 400;
-    color: $brand-orange;
+    color: white;
     align-self: flex-end;
 
     @include media-breakpoint-down(md) {
@@ -75,6 +76,10 @@ $banner-proportion: 60%;
         line-height: 1.25;
         font-size: 2rem;
     }
+}
+
+.hero-section__title-component {
+    white-space: nowrap;
 }
 
 .hero-section__subtitle {
@@ -142,6 +147,8 @@ $banner-proportion: 60%;
     color: white;
     text-transform: uppercase;
     font-size: 150%;
+    line-height: 1.25;
+    margin-bottom: 0.25em;
 }
 .feature__text {
     @include serif;
@@ -202,6 +209,12 @@ $banner-proportion: 60%;
 .supported-by-section__title {
     text-align: center;
     color: black;
+    text-transform: uppercase;
+    color: $brand-blue;
+
+    :any-link {
+        @include orange-link;
+    }
 }
 .supported-by-logos {
     padding-left: 0;
