@@ -86,23 +86,6 @@ def remove_documents_on_delete(sender, instance, using, **kwargs):
 models.signals.post_delete.connect(remove_documents_on_delete, sender=AdvanceDirective)
 
 
-class DocumentKeyManager(models.Manager):
-    def create(self, *args, **kwargs):
-        """
-        * automatically calculate the key if it doesn't exist
-        * automatically calculate the expiration timestamp
-            (note: not overloading the expires attribute, since it is expects as a timestamp)
-        """
-        if not hasattr(kwargs, 'key'):
-            kwargs['key'] = base64.urlsafe_b64encode(str(uuid.uuid4()))
-            # protect against a (very-remotely-possible) key collision
-            while self.filter(key=kwargs['key']).exists():
-                kwargs['key'] = base64.urlsafe_b64encode(str(uuid.uuid4()))
-        if not hasattr(kwargs, 'expiration'):
-            kwargs['expiration'] = now() + settings.DOCUMENT_URLS_EXPIRE_IN
-        return super(models.Manager, self).create(*args, **kwargs)
-
-
 class DocumentUrl(models.Model):
     """
     An Advance Directive is accessible internally from its instance.document.url, but we don't want
@@ -141,7 +124,6 @@ class DocumentUrl(models.Model):
         verbose_name='IP',
     )
 
-    objects = DocumentKeyManager()
     def __str__(self):
         return self.url
 
@@ -168,3 +150,22 @@ class DocumentUrl(models.Model):
             return True
         else:
             return ip_address in self.ip_range
+
+
+def document_url_before_save(sender, instance, using, **kwargs):
+    """
+    * automatically calculate the key if it doesn't exist
+    * automatically set the expiration timestamp
+        (note: not overloading the expires attribute, since it is expects as a timestamp)
+    """
+    # protect against a (very-remotely-possible) key collision
+    while not instance.key or (
+        not instance.pk and sender.objects.filter(key=instance.key).exists()
+    ):
+        instance.key = base64.urlsafe_b64encode(str(uuid.uuid4()))
+    # only set the expiration automatically on create
+    if not instance.pk and not instance.expiration:
+        instance.expiration = now() + settings.DOCUMENT_URLS_EXPIRE_IN
+
+
+models.signals.pre_save.connect(document_url_before_save, sender=DocumentUrl)
