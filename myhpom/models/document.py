@@ -126,12 +126,15 @@ class DocumentKey(models.Model):
     )
     expiration = models.DateTimeField(
         null=True,  # optional
+        blank=True,
         help_text="The optional timestamp indicating when this DocumentKey expires.",
     )
     ip = models.CharField(
         max_length=64,
         null=True,  # optional
+        blank=True,
         help_text="The optional IP address or range to which this DocumentKey is limited",
+        verbose_name='IP',
     )
 
     objects = DocumentKeyManager()
