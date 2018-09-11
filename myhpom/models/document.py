@@ -103,7 +103,7 @@ class DocumentKey(models.Model):
     """
     An Advance Directive is accessible internally from its instance.document.url, but we don't want
     to expose that to anyone but the owner. For CloudFactory, we will provide URLs that expire
-    and that are non-guessable.
+    and that are non-guessable. The DocumentKey model holds "keys" to documents.
     * foreign key to the AdvanceDirective
     * slug = the non-guessable string that identifies this DocumentKey
     * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URLS_EXPIRE_IN)
@@ -142,7 +142,11 @@ class DocumentKey(models.Model):
         if self.ip is not None:
             return iptools.IpRange(*[ip.strip() for ip in self.ip.split(',')][:2])
 
-    def ip_in_range(self, ip_address):
+    def valid_client_ip(self, ip_address):
+        """The given ip_address is valid if either:
+        * the instance has no ip_range; or
+        * the ip_address is in this instance's ip_range
+        """
         if not self.ip_range:
             return True
         else:
