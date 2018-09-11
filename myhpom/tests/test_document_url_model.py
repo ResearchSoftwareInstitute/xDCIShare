@@ -7,7 +7,7 @@ from django.db import IntegrityError
 from myhpom.tests.factories import UserFactory
 from myhpom.models import DocumentUrl, AdvanceDirective
 
-PDF_FILENAME = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
+
 
 
 class DocumentUrlModelTestCase(TestCase):
@@ -16,8 +16,9 @@ class DocumentUrlModelTestCase(TestCase):
         """create an AdvanceDirective that is available to all tests.
         """
         user = UserFactory()
-        with open(PDF_FILENAME, 'rb') as f:
-            document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), f.read())
+        pdf_filename = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
+        with open(pdf_filename, 'rb') as f:
+            document = SimpleUploadedFile(os.path.basename(pdf_filename), f.read())
         Class.advancedirective = AdvanceDirective(
             user=user, share_with_ehs=False, document=document, valid_date=now()
         )
