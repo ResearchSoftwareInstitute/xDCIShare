@@ -138,7 +138,7 @@ class DocumentUrl(models.Model):
     @property
     def ip_range(self):
         """return an IpRange object representing this instance's ip attribute"""
-        if self.ip is not None:
+        if self.ip:
             return iptools.IpRange(*[ip.strip() for ip in self.ip.split(',')][:2])
 
     def valid_client_ip(self, ip_address):
