@@ -3,6 +3,7 @@ from django.contrib import admin
 from myhpom.models.state import State
 from myhpom.models.state_requirement import StateRequirement
 from myhpom.models.state_requirement_link import StateRequirementLink
+from myhpom.models.document import DocumentUrl
 from scribbler.models import Scribble
 
 
@@ -32,6 +33,13 @@ class ScribbleAdmin(admin.ModelAdmin):
     list_display = ['slug', 'name', 'url']
 
 
+class DocumentUrlAdmin(admin.ModelAdmin):
+    model = DocumentUrl
+    readonly_fields = ['key', 'url']
+    list_display = ['url', 'ip', 'expiration']
+
+
 admin.site.register(State, StateAdmin)
 admin.site.register(StateRequirement, StateRequirementAdmin)
 admin.site.register(Scribble, ScribbleAdmin)
+admin.site.register(DocumentUrl, DocumentUrlAdmin)

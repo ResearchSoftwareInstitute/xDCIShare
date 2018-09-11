@@ -2,6 +2,7 @@ import os, tempfile, base64, uuid, iptools
 
 from .user import User
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils.timezone import now
 from django.core.files.base import ContentFile
@@ -71,6 +72,9 @@ class AdvanceDirective(models.Model):
         image_filenames = gs.render(pdf_filename, res=res, allpages=allpages, **gsargs)
         return image_filenames
 
+    def __str__(self):
+        return self.document.name
+
 
 def remove_documents_on_delete(sender, instance, using, **kwargs):
     if instance.thumbnail:
@@ -138,6 +142,16 @@ class DocumentUrl(models.Model):
     )
 
     objects = DocumentKeyManager()
+    def __str__(self):
+        return self.url
+
+    @property
+    def url(self):
+        return reverse('myhpom:document_url', kwargs={'key': self.key, 'filename': self.filename})
+
+    @property
+    def filename(self):
+        return self.advancedirective.filename
 
     @property
     def ip_range(self):
