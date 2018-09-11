@@ -141,7 +141,7 @@ class DocumentUrl(models.Model):
         if self.ip:
             return iptools.IpRange(*[ip.strip() for ip in self.ip.split(',')][:2])
 
-    def valid_client_ip(self, ip_address):
+    def authorized_client_ip(self, ip_address):
         """The given ip_address is valid if either:
         * the instance has no ip_range; or
         * the ip_address is in this instance's ip_range

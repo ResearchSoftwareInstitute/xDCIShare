@@ -19,7 +19,7 @@ def document_url(request, key, filename):
         not client_ip
         or not doc_url
         or (doc_url.expiration is not None and doc_url.expiration < now())
-        or (doc_url.ip is not None and not doc_url.valid_client_ip(client_ip))
+        or (doc_url.ip is not None and not doc_url.authorized_client_ip(client_ip))
         or not doc_url.advancedirective.document
         or filename != doc_url.advancedirective.filename
     ):
