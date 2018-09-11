@@ -1,7 +1,9 @@
-import os, tempfile
+import os, tempfile, base64, uuid, iptools
 
 from .user import User
 from django.db import models
+from django.conf import settings
+from django.utils.timezone import now
 from django.core.files.base import ContentFile
 from myhpom.validators import validate_date_in_past
 from bgs import GS
@@ -40,9 +42,7 @@ class AdvanceDirective(models.Model):
     def render_thumbnail_data(self, res=PDF_RESOLUTION, **gsargs):
         """return the thumbnail binary file data for the given AdvanceDirective instance"""
         mogrify = {'resize': "%dx>" % THUMBNAIL_WIDTH}
-        filenames = self.render_images(
-            allpages=False, res=res, mogrify=mogrify, **gsargs
-        )
+        filenames = self.render_images(allpages=False, res=res, mogrify=mogrify, **gsargs)
         if len(filenames) > 0:
             with open(filenames[0], 'rb') as f:
                 return f.read()
@@ -80,3 +80,70 @@ def remove_documents_on_delete(sender, instance, using, **kwargs):
 
 
 models.signals.post_delete.connect(remove_documents_on_delete, sender=AdvanceDirective)
+
+
+class DocumentKeyManager(models.Manager):
+    def create(self, *args, **kwargs):
+        """
+        * automatically calculate the key if it doesn't exist
+        * automatically calculate the expiration timestamp
+            (note: not overloading the expires attribute, since it is expects as a timestamp)
+        """
+        if not hasattr(kwargs, 'key'):
+            kwargs['key'] = base64.urlsafe_b64encode(str(uuid.uuid4()))
+            # protect against a (very-remotely-possible) key collision
+            while self.filter(key=kwargs['key']).exists():
+                kwargs['key'] = base64.urlsafe_b64encode(str(uuid.uuid4()))
+        if not hasattr(kwargs, 'expiration'):
+            kwargs['expiration'] = now() + settings.DOCUMENT_URLS_EXPIRE_IN
+        return super(models.Manager, self).create(*args, **kwargs)
+
+
+class DocumentKey(models.Model):
+    """
+    An Advance Directive is accessible internally from its instance.document.url, but we don't want
+    to expose that to anyone but the owner. For CloudFactory, we will provide URLs that expire
+    and that are non-guessable.
+    * foreign key to the AdvanceDirective
+    * slug = the non-guessable string that identifies this DocumentKey
+    * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URLS_EXPIRE_IN)
+    * ip_range = (optional) IP Range to limit IP address to client. Can be:
+        * a single IP address, e.g., "10.16.239.82"
+        * a comma-delimited string with 2 values, e.g., "10.16.239.82, 10.16.239.85"
+        * an IP address with netmask, e.g., "10.16.239.82/24"
+      (uses the iptools.IpRange object)
+    """
+
+    advancedirective = models.ForeignKey(
+        AdvanceDirective,
+        on_delete=models.CASCADE,
+        help_text="The AdvanceDirective to which this URL points.",
+    )
+    key = models.CharField(
+        max_length=48,
+        unique=True,
+        help_text="The non-guessable string that indentifies this DocumentKey.",
+    )
+    expiration = models.DateTimeField(
+        null=True,  # optional
+        help_text="The optional timestamp indicating when this DocumentKey expires.",
+    )
+    ip = models.CharField(
+        max_length=64,
+        null=True,  # optional
+        help_text="The optional IP address or range to which this DocumentKey is limited",
+    )
+
+    objects = DocumentKeyManager()
+
+    @property
+    def ip_range(self):
+        """return an IpRange object representing this instance's ip attribute"""
+        if self.ip is not None:
+            return iptools.IpRange(*[ip.strip() for ip in self.ip.split(',')][:2])
+
+    def ip_in_range(self, ip_address):
+        if not self.ip_range:
+            return True
+        else:
+            return ip_address in self.ip_range
