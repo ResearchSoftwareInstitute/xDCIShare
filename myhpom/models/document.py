@@ -94,7 +94,7 @@ class DocumentUrl(models.Model):
     * advancedirective = foreign key to the AdvanceDirective
     * key = the non-guessable string that identifies this DocumentUrl
     * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URLS_EXPIRE_IN)
-    * ip_range = (optional) IP Range to limit IP address to client. Can be:
+    * ip = (optional) IP / range to limit IP address to client. Can be:
         * a single IP address, e.g., "10.16.239.82"
         * a comma-delimited string with 2 values, e.g., "10.16.239.82, 10.16.239.85"
         * an IP address with netmask, e.g., "10.16.239.82/24"
@@ -154,18 +154,16 @@ class DocumentUrl(models.Model):
 
 def document_url_before_save(sender, instance, using, **kwargs):
     """
-    * automatically calculate the key if it doesn't exist
-    * automatically set the expiration timestamp
+    * automatically calculate the key for new instances
+    * automatically set the expiration timestamp for new instances
         (note: not overloading the expires attribute, since it is expects as a timestamp)
     """
-    # protect against a (very-remotely-possible) key collision
-    while not instance.key or (
-        not instance.pk and sender.objects.filter(key=instance.key).exists()
-    ):
-        instance.key = base64.urlsafe_b64encode(str(uuid.uuid4()))
-    # only set the expiration automatically on create
-    if not instance.pk and not instance.expiration:
-        instance.expiration = now() + settings.DOCUMENT_URLS_EXPIRE_IN
+    if not instance.pk:
+        # protect against a (very-remotely-possible) key collision
+        while not instance.key or sender.objects.filter(key=instance.key).exists():
+            instance.key = base64.urlsafe_b64encode(str(uuid.uuid4()))
+        if not instance.expiration:
+            instance.expiration = now() + settings.DOCUMENT_URLS_EXPIRE_IN
 
 
 models.signals.pre_save.connect(document_url_before_save, sender=DocumentUrl)
