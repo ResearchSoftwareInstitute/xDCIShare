@@ -99,13 +99,13 @@ class DocumentKeyManager(models.Manager):
         return super(models.Manager, self).create(*args, **kwargs)
 
 
-class DocumentKey(models.Model):
+class DocumentUrl(models.Model):
     """
     An Advance Directive is accessible internally from its instance.document.url, but we don't want
     to expose that to anyone but the owner. For CloudFactory, we will provide URLs that expire
-    and that are non-guessable. The DocumentKey model holds "keys" to documents.
-    * foreign key to the AdvanceDirective
-    * slug = the non-guessable string that identifies this DocumentKey
+    and that are non-guessable. The DocumentUrl model holds "keys" to documents.
+    * advancedirective = foreign key to the AdvanceDirective
+    * key = the non-guessable string that identifies this DocumentUrl
     * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URLS_EXPIRE_IN)
     * ip_range = (optional) IP Range to limit IP address to client. Can be:
         * a single IP address, e.g., "10.16.239.82"
@@ -122,18 +122,18 @@ class DocumentKey(models.Model):
     key = models.CharField(
         max_length=48,
         unique=True,
-        help_text="The non-guessable string that indentifies this DocumentKey.",
+        help_text="The non-guessable string that indentifies this DocumentUrl.",
     )
     expiration = models.DateTimeField(
         null=True,  # optional
         blank=True,
-        help_text="The optional timestamp indicating when this DocumentKey expires.",
+        help_text="The optional timestamp indicating when this DocumentUrl expires.",
     )
     ip = models.CharField(
         max_length=64,
         null=True,  # optional
         blank=True,
-        help_text="The optional IP address or range to which this DocumentKey is limited",
+        help_text="The optional IP address or range to which this DocumentUrl is limited",
         verbose_name='IP',
     )
 
