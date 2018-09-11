@@ -20,6 +20,7 @@ from myhpom.views.upload import (upload_current_ad, upload_index, upload_require
     upload_sharing, upload_delete_ad)
 from myhpom.views.signup import signup
 from myhpom.views.profile import (edit_profile, view_profile)
+from myhpom.views.document import document_by_key
 
 FAQS = yaml.load(open(os.path.join(settings.PROJECT_ROOT, '../myhpom/static/myhpom/data/faq.yaml'), 'r'))
 

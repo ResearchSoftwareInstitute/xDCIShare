@@ -25,6 +25,8 @@ urlpatterns = [
         {'is_update': True}, name='update_network'),
 
     url(r'^download/(?P<path>.*)$', myhpom_views.irods_download, name='irods_download'),
+    url(r'^document/(?P<key>[A-Za-z0-9]+)/(?P<filename>[^/]+)/?$', 
+        myhpom_views.document_by_key, name='document_by_key'),
 
     url(r'^states/(?P<state>[a-zA-Z]{2})/template/?$', myhpom_views.state_template, name='state_template'),
 
