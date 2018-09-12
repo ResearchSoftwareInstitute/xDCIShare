@@ -1,4 +1,6 @@
 import re
+from io import StringIO
+from lxml import etree
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.utils.timezone import now
@@ -87,12 +89,15 @@ class DashboardTestCase(TestCase):
         response = self.client.get(self.url)
         messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == WARNING]
         self.assertGreater(len(messages), 0)
-        matchdata = re.search(
-            r'<a.*?class="(advance-directive-widget__button--primary[^"]*)"[^>]*>.*?</a>',
-            ''.join(response._container),
+        html_string = re.sub(
+            r'<\!doctype.*?>', '', u''.join(response._container).strip(), flags=re.I
         )
-        self.assertIsNotNone(matchdata)
-        self.assertIn('disabled', matchdata.group(1))  # i.e., in the class attribute
+        html = etree.parse(StringIO(html_string), etree.HTMLParser())
+        a_classes = html.xpath(
+            '//a[contains(@class, "advance-directive-widget__button--primary")]/@class'
+        )
+        self.assertGreater(len(a_classes), 0)
+        self.assertIn('disabled', a_classes[0])
 
         # verified user
         user.userdetails.verification_completed = now()  # voila, verified
@@ -100,9 +105,12 @@ class DashboardTestCase(TestCase):
         response = self.client.get(self.url)
         messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == WARNING]
         self.assertEqual(len(messages), 0)
-        matchdata = re.search(
-            r'<a.*?class="(advance-directive-widget__button--primary[^"]*)"[^>]*>.*?</a>',
-            ''.join(response._container),
+        html_string = re.sub(
+            r'<\!doctype.*?>', '', u''.join(response._container).strip(), flags=re.I
         )
-        self.assertIsNotNone(matchdata)
-        self.assertNotIn('disabled', matchdata.group(1))  # i.e., in the class attribute
+        html = etree.parse(StringIO(html_string), etree.HTMLParser())
+        a_classes = html.xpath(
+            '//a[contains(@class, "advance-directive-widget__button--primary")]/@class'
+        )
+        self.assertGreater(len(a_classes), 0)
+        self.assertNotIn('disabled', a_classes[0])
