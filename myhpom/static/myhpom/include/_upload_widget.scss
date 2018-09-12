@@ -81,7 +81,8 @@
     @extend .advance-directive-widget__button;
     @extend .btn-secondary;
 
-    &:disabled {
+    &:disabled,
+    &.disabled {
         color: rgba(255, 255, 255, 0.9);
     }
 }
