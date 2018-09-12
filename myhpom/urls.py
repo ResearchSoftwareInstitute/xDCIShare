@@ -23,6 +23,10 @@ urlpatterns = [
         {'is_update': False}, name='choose_network'),
     url(r'^accounts/update-network/?$', myhpom_views.choose_network,
         {'is_update': True}, name='update_network'),
+    url(r'^accounts/send-account-verification/?$', myhpom_views.send_account_verification,
+        name='send_account_verification'),
+    url(r'^accounts/verify/(?P<code>[0-9a-zA-Z]+)/?$', myhpom_views.verify_account,
+        name='verify_account'),
 
     url(r'^download/(?P<path>.*)$', myhpom_views.irods_download, name='irods_download'),
     url(r'^document/(?P<key>[A-Za-z0-9]+)/(?P<filename>[^/]+)/?$', 

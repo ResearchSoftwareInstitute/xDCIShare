@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.db import DataError
+from django.utils import timezone
 from myhpom.tests.factories import UserFactory
 from myhpom import models
 from myhpom.models.user_details import GENDER_CHOICES
@@ -69,3 +70,35 @@ class UserDetailsModelTestCase(TestCase):
         self.userdetails.save()
         self.userdetails.phone = '8' * 33  # too long
         self.assertRaises(DataError, self.userdetails.save)
+
+    def test__reset_verification(self):
+        """* instance.reset_verification() results in:
+            * instance.verification_completed = None
+            * instance.verification_code not None, != previous one, 32 <= len <= 64 
+        """
+        self.assertIsNone(self.userdetails.verification_code)
+        self.userdetails.verification_completed = timezone.now()
+        self.assertIsNotNone(self.userdetails.verification_completed)
+        self.userdetails.reset_verification()
+        self.assertIsNotNone(self.userdetails.verification_code)
+        self.assertIsNone(self.userdetails.verification_completed)
+        self.assertGreaterEqual(len(self.userdetails.verification_code), 32)  # >= len md5 hexdigest
+        self.assertLessEqual(len(self.userdetails.verification_code), 64)  # <= len sha256 hexdigest
+
+    def test__change_user_email(self):
+        """
+        * saving change to user email results in reset to verification state (see UserDetails)
+        """
+        userdetails = self.userdetails
+        user = userdetails.user
+        userdetails.reset_verification()
+        userdetails.verification_completed = timezone.now()
+        userdetails.save()
+        self.assertIsNotNone(userdetails.verification_completed)
+        self.assertIsNotNone(userdetails.verification_code)
+        old_verification_code = userdetails.verification_code
+        user.email = user.email.replace('@', 'zzz@')  # add some characters to the email
+        user.save()
+        self.assertIsNone(userdetails.verification_completed)
+        self.assertIsNotNone(userdetails.verification_code)
+        self.assertNotEqual(userdetails.verification_code, old_verification_code)

@@ -19,7 +19,7 @@
 
 <div class="advance-directive-widget__buttons-container vertical-flex">
     <div>
-        <a class="advance-directive-widget__button--primary" href="{% url "myhpom:upload_requirements" %}">Upload Your File</a>
+        <a class="advance-directive-widget__button--primary{% if not request.user.userdetails.verification_completed %} disabled{% endif %}" href="{% url "myhpom:upload_requirements" %}">Upload Your File</a>
     </div>
 
     {% if request.user.userdetails.state.advance_directive_template %}

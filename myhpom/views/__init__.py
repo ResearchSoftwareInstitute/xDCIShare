@@ -4,6 +4,7 @@ import yaml
 
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.views.decorators.http import require_GET
@@ -19,10 +20,13 @@ from myhpom.views.irods import irods_download
 from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,
     upload_sharing, upload_delete_ad)
 from myhpom.views.signup import signup
-from myhpom.views.profile import (edit_profile, view_profile)
 from myhpom.views.document import document_url
+from myhpom.views.profile import edit_profile, view_profile
+from myhpom.views.verification import send_account_verification, verify_account
 
-FAQS = yaml.load(open(os.path.join(settings.PROJECT_ROOT, '../myhpom/static/myhpom/data/faq.yaml'), 'r'))
+FAQS = yaml.load(
+    open(os.path.join(settings.PROJECT_ROOT, '../myhpom/static/myhpom/data/faq.yaml'), 'r')
+)
 
 
 @require_GET
@@ -69,7 +73,17 @@ def dashboard(request):
         template = 'myhpom/upload/current_ad.html'
         advancedirective = request.user.advancedirective
 
-    return render(request, 'myhpom/dashboard.html', {
-        'widget_template': template,
-        'advancedirective': advancedirective,
-    })
+    # messaging for email verification
+    click_here = (
+        "<a href='%s' class='alert-link'>Click here</a> to send yourself a new verification email."
+        % reverse("myhpom:send_account_verification")
+    )
+    if not request.user.userdetails.verification_completed:
+        message = "You must verify your email address before uploading a document. " + click_here
+        messages.warning(request, message)
+
+    return render(
+        request,
+        'myhpom/dashboard.html',
+        {'widget_template': template, 'advancedirective': advancedirective},
+    )

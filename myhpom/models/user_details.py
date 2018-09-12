@@ -1,5 +1,7 @@
 from django.db import models
 import re
+import hashlib
+import uuid
 from .user import User
 from .state import State
 from .health_network import HealthNetwork
@@ -78,6 +80,25 @@ class UserDetails(models.Model):
     is_organ_donor = models.BooleanField(
         default=False, help_text="Whether the user is registered as an organ donor."
     )
+    # account verification
+    verification_code = models.CharField(
+        max_length=64,
+        null=True,
+        help_text="The generated code by which the user verifies their account.",
+    )
+    verification_completed = models.DateTimeField(
+        null=True, help_text="When the user's account was verified."
+    )
+
+    def reset_verification(self):
+        """Reset the user's verification status:
+        * nullify verification_completed
+        * set new verification_code
+        """
+        self.verification_completed = None
+        code_hash = hashlib.new('sha256')  # make less secure & shorter with e.g. md5
+        code_hash.update(str(uuid.uuid4()))  # make more secure with more random data e.g. timestamp
+        self.verification_code = code_hash.hexdigest()  # currently 64 bytes, which is quite long
 
 
 def user_details_pre_save_receiver(sender, instance, **kwargs):
