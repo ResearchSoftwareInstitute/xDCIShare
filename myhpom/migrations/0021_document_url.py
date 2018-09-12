@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myhpom', '0019_auto_20180817_1117'),
+        ('myhpom', '0020_user_verification'),
     ]
 
     operations = [
