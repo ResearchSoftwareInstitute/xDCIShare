@@ -1,7 +1,7 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
-
+from datetime import timedelta
 from dotenv import load_dotenv
 load_dotenv('.env')
 
@@ -366,3 +366,6 @@ LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
 
 AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
+
+# Amount of time after creation that a Document URL expires, as a datetime.timedelta (easy to use!)
+DOCUMENT_URLS_EXPIRE_IN = timedelta(hours=48)
