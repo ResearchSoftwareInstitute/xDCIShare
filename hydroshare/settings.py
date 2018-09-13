@@ -369,3 +369,11 @@ AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
 
 # Amount of time after creation that a Document URL expires, as a datetime.timedelta (easy to use!)
 DOCUMENT_URLS_EXPIRE_IN = timedelta(hours=48)
+
+# CloudFactory Settings (myhpom CloudFactory integration)
+CLOUDFACTORY = {
+    'PRODUCTION_LINES': {'TEST': 'zUyZv59Mxi'},
+    'API_USERNAME': 'a9a8d5b3289c42c29e5229b31c971f20',
+    'API_PASSWORD': 'c5b2debb303a47428b0beef036a478f4',
+    'API_URL': 'https://%(API_USERNAME)s:%(API_PASSWORD)s@api.cloudfactory.com/v4',
+}
