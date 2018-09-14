@@ -10,7 +10,7 @@ from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryRun
 
 
 @shared_task
-def submit_advancedirective_to_cloudfactory(ad_id, line_id, document_host=None, callback_url=None):
+def cloudfactory_submit_advancedirective(ad_id, line_id, document_host=None, callback_url=None):
     """ 
     * ad_id = the database id for the AdvanceDirective
     * line_id = the id of the CloudFactory production line to submit this request to.
