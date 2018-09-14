@@ -9,19 +9,13 @@ from myhpom.models import DocumentUrl
 
 
 @require_GET
-def document_url(request, key, filename):
+def document_url(request, key):
     """download the document at the given url.
-    * key: the DocumentUrl.key by which to find the document
-    * filename: included in the URL to provide a sensible filename and to verify the URL
+    * key = the DocumentUrl.key by which to find the document
     """
-    # protect on client_ip, doc_url match, expiration, and filename
     # -- the DocumentUrl has to exist and match
     doc_url = DocumentUrl.objects.filter(key=key).first()
-    if (
-        not doc_url
-        or not doc_url.advancedirective.document
-        or filename != doc_url.advancedirective.filename
-    ):
+    if not doc_url or not doc_url.advancedirective.document:
         raise Http404()
 
     # -- the client_ip should exist and be authorized
@@ -34,10 +28,9 @@ def document_url(request, key, filename):
         raise Http404()
 
     # If we've gotten this far, the doc_url is valid, so send the document
-    ad = doc_url.advancedirective
     response = FileResponse(
-        ad.document.file,
-        content_type=(mimetypes.guess_type(ad.filename)[0] or 'application-x/octet-stream'),
+        doc_url.advancedirective.document.file,
+        content_type=(mimetypes.guess_type(doc_url.filename)[0] or 'application-x/octet-stream'),
     )
-    response['Content-Disposition'] = 'inline; filename="{filename}"'.format(filename=ad.filename)
+    response['Content-Disposition'] = 'inline; filename="%s"' % doc_url.filename
     return response

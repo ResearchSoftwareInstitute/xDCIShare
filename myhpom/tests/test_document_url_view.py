@@ -56,20 +56,13 @@ class DocumentUrlViewTestCase(TestCase):
     def test_document_url_404(self):
         """
         * accessing a DocumentUrl with past expiration returns 404
-        * accessing a DocumentUrl with correct key and incorrect filename returns 404
         * accessing a non-existent DocumentURL returns 404
         """
-        # wrong filename
         doc_url = DocumentUrl.objects.create(advancedirective=self.advancedirective)
-        response = self.client.get(
-            reverse('myhpom:document_url', kwargs={'key': doc_url.key, 'filename': 'WRONG.pdf'})
-        )
-        self.assertEqual(404, response.status_code)
-
         # wrong key
         wrong_key = 'W' * len(doc_url.key)  # right length, totally wrong value
         response = self.client.get(
-            reverse('myhpom:document_url', kwargs={'key': wrong_key, 'filename': doc_url.filename})
+            reverse('myhpom:document_url', kwargs={'key': wrong_key})
         )
         self.assertEqual(404, response.status_code)
 

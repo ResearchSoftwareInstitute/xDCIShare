@@ -127,11 +127,12 @@ class DocumentUrl(models.Model):
 
     @property
     def url(self):
-        return reverse('myhpom:document_url', kwargs={'key': self.key, 'filename': self.filename})
+        return reverse('myhpom:document_url', kwargs={'key': self.key})
 
     @property
     def filename(self):
-        return self.advancedirective.filename
+        # no information bleed in the filename, but keep the extension from the AdvanceDirective
+        return self.key + os.path.splitext(self.advancedirective.filename)[-1]
 
     def authorized_client_ip(self, ip_address):
         """The given ip_address is valid if either:
