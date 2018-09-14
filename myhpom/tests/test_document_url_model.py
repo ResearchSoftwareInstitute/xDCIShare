@@ -8,77 +8,66 @@ from myhpom.tests.factories import UserFactory
 from myhpom.models import DocumentUrl, AdvanceDirective
 
 
-
-
 class DocumentUrlModelTestCase(TestCase):
-    @classmethod
-    def setUpClass(Class):
+    def setUp(self):
         """create an AdvanceDirective that is available to all tests.
         """
         user = UserFactory()
         pdf_filename = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
         with open(pdf_filename, 'rb') as f:
             document = SimpleUploadedFile(os.path.basename(pdf_filename), f.read())
-        Class.advancedirective = AdvanceDirective(
+        self.advancedirective = AdvanceDirective.objects.create(
             user=user, share_with_ehs=False, document=document, valid_date=now()
         )
-        Class.advancedirective.save()
-
-    @classmethod
-    def tearDownClass(Class):
-        Class.advancedirective.delete()
 
     def test_document_url_create(self):
         """
         Using the DocumentUrl.objects.create() results in correct default values.
         * new DocumentUrls are created with unique key and default expiration now + 48 hrs
         """
-        ad = self.__class__.advancedirective
+        ad = self.advancedirective
         doc_url = DocumentUrl.objects.create(advancedirective=ad)
         current_timestamp = now()  # created after doc_url.expiration
 
         self.assertIsNotNone(doc_url.key)
-        self.assertIsNone(doc_url.ip)
         self.assertGreater(doc_url.expiration, current_timestamp)
         self.assertLessEqual(
-            doc_url.expiration, current_timestamp + settings.DOCUMENT_URLS_EXPIRE_IN
+            doc_url.expiration, current_timestamp + settings.DOCUMENT_URL_EXPIRES_IN
         )
 
     def test_document_url_save(self):
         """Using DocumentUrl(...).save() results in correct default values.
         * new DocumentUrls are created with unique key and default expiration now + 48 hrs
         """
-        ad = self.__class__.advancedirective
+        ad = self.advancedirective
         doc_url = DocumentUrl(advancedirective=ad)
         doc_url.save()
         current_timestamp = now()  # created after doc_url.expiration
 
         self.assertIsNotNone(doc_url.key)
-        self.assertIsNone(doc_url.ip)
         self.assertGreater(doc_url.expiration, current_timestamp)
         self.assertLessEqual(
-            doc_url.expiration, current_timestamp + settings.DOCUMENT_URLS_EXPIRE_IN
+            doc_url.expiration, current_timestamp + settings.DOCUMENT_URL_EXPIRES_IN
         )
 
     def test_document_url_authorized_client_ip(self):
         """
         * DocumentUrl.authorized_client_ip(ip_address) returns True if
-            ip_address is "in" DocumentUrl.ip_range (per iptools) 
+            ip_address is "in" the allowed ip ranges (in settings)
         """
-        ad = self.__class__.advancedirective
+        ad = self.advancedirective
         doc_url = DocumentUrl(advancedirective=ad)
-        ips = [
-            "93.184.216.34",  # single address
-            "93.184.216.34, 93.184.216.37",  # comma-delimited range
-            "93.184.216.34/24",  # ip with subnet mask
+        authorized_ips = [
+            "127.0.0.1",  # local host
+            "192.168.1.100",  # local subnet
+            "70.62.97.168",  # caktus office
         ]
-        authorized_ip = "93.184.216.34"
-        unauthorized_ip = "93.184.217.34"
+        unauthorized_ips = ["93.184.217.34"]  # somewhere else
 
-        for ip in ips:
-            doc_url.ip = ip
-            self.assertTrue(doc_url.authorized_client_ip(authorized_ip))
-            self.assertFalse(doc_url.authorized_client_ip(unauthorized_ip))
+        for ip in authorized_ips:
+            self.assertTrue(doc_url.authorized_client_ip(ip))
+        for ip in unauthorized_ips:
+            self.assertFalse(doc_url.authorized_client_ip(ip))
 
     def test_document_url_required_and_optional_fields(self):
         """
@@ -87,16 +76,10 @@ class DocumentUrlModelTestCase(TestCase):
         * When a DocumentUrl is changed, the key is unchanged, 
             and expiration is changed only if explicitly.
         """
-        ad = self.__class__.advancedirective
+        ad = self.advancedirective
         doc_url = DocumentUrl.objects.create(advancedirective=ad)
         key = doc_url.key
         expiration = doc_url.expiration
-        # -- ip: nullable
-        doc_url.ip = None
-        doc_url.save()
-        self.assertIsNone(doc_url.ip)
-        self.assertEqual(key, doc_url.key)
-        self.assertEqual(expiration, doc_url.expiration)
         # -- expiration: nullable
         doc_url.expiration = None
         doc_url.save()

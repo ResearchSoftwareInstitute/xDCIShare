@@ -1,4 +1,4 @@
-import os, tempfile, base64, uuid, iptools
+import os, tempfile, base64, uuid
 
 from .user import User
 from django.db import models
@@ -93,12 +93,7 @@ class DocumentUrl(models.Model):
     and that are non-guessable. The DocumentUrl model holds "keys" to documents.
     * advancedirective = foreign key to the AdvanceDirective
     * key = the non-guessable string that identifies this DocumentUrl
-    * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URLS_EXPIRE_IN)
-    * ip = (optional) IP / range to limit IP address to client. Can be:
-        * a single IP address, e.g., "10.16.239.82"
-        * a comma-delimited string with 2 values, e.g., "10.16.239.82, 10.16.239.85"
-        * an IP address with netmask, e.g., "10.16.239.82/24"
-      (uses the iptools.IpRange object)
+    * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URL_EXPIRES_IN)
     """
 
     advancedirective = models.ForeignKey(
@@ -116,13 +111,6 @@ class DocumentUrl(models.Model):
         blank=True,
         help_text="The optional timestamp indicating when this DocumentUrl expires.",
     )
-    ip = models.CharField(
-        max_length=64,
-        null=True,  # optional
-        blank=True,
-        help_text="The optional IP address or range to which this DocumentUrl is limited",
-        verbose_name='IP',
-    )
 
     def __str__(self):
         return self.url
@@ -135,21 +123,18 @@ class DocumentUrl(models.Model):
     def filename(self):
         return self.advancedirective.filename
 
-    @property
-    def ip_range(self):
-        """return an IpRange object representing this instance's ip attribute"""
-        if self.ip:
-            return iptools.IpRange(*[ip.strip() for ip in self.ip.split(',')][:2])
-
     def authorized_client_ip(self, ip_address):
         """The given ip_address is valid if either:
-        * the instance has no ip_range; or
-        * the ip_address is in this instance's ip_range
+        * settings has no ip_ranges; or
+        * the ip_address is in settings ip_ranges
         """
-        if not self.ip_range:
+        if not settings.DOCUMENT_URL_IP_RANGES:
             return True
         else:
-            return ip_address in self.ip_range
+            for ip_range in settings.DOCUMENT_URL_IP_RANGES:
+                if ip_address in ip_range:
+                    return True
+        return False
 
 
 def document_url_before_save(sender, instance, using, **kwargs):
@@ -163,7 +148,7 @@ def document_url_before_save(sender, instance, using, **kwargs):
         while not instance.key or sender.objects.filter(key=instance.key).exists():
             instance.key = base64.urlsafe_b64encode(str(uuid.uuid4()))
         if not instance.expiration:
-            instance.expiration = now() + settings.DOCUMENT_URLS_EXPIRE_IN
+            instance.expiration = now() + settings.DOCUMENT_URL_EXPIRES_IN
 
 
 models.signals.pre_save.connect(document_url_before_save, sender=DocumentUrl)
