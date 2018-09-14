@@ -37,7 +37,7 @@ class CloudFactoryRun(models.Model):
         """create a data to POST the run to CloudFactory"""
         return dict(
             units=[unit.post_data() for unit in self.cloudfactoryunit_set.all()],
-            **{k: self.data()[k] for k in ['line_id', 'callback_url']}
+            **{key: self.data()[key] for key in ['line_id', 'callback_url']}
         )
 
     def data(self):
@@ -46,12 +46,12 @@ class CloudFactoryRun(models.Model):
             units=[unit.data() for unit in self.cloudfactoryunit_set.all()],
             **{
                 key: (
-                    str(val)
+                    str(val)  # datetime.datetime and datetime.date as str
                     if isinstance(val, datetime.datetime) or isinstance(val, datetime.date)
                     else val
                 )
                 for key, val in self.__dict__.items()
-                if key[0] != '_'
+                if key[0] != '_'  # exclude utility vals like _state
             }
         )
 
@@ -74,9 +74,10 @@ class CloudFactoryUnit(models.Model):
         blank=True, null=True, help_text="When unit processing was finished at CloudFactory."
     )
     input = models.TextField(
-        help_text="A json-string containing the input to CloudFactory; use to validate the response."
+        blank=True,
+        help_text="JSON input to CloudFactory; use to validate the response.",
     )
-    output = models.TextField(help_text="A json-string containing the output from CloudFactory")
+    output = models.TextField(blank=True, help_text="JSON output from CloudFactory")
 
     def post_data(self):
         """create data to POST the unit to CloudFactory"""
@@ -98,21 +99,27 @@ class CloudFactoryUnit(models.Model):
 
 
 # The following is an unfortunate hack to overcome the lack of JSONField in Django 1.8:
-# use json to convert the CloudFactoryUnit.input field to/from string for the database/python.
+# convert the CloudFactoryUnit.input and .output fields to/from string for the database/python.
 # -- When we upgrade to Django 1.11 we can instead use django.contrib.postgres.fields.JSONField
 #   (but we'll need to be careful about migrating the database at that point!)
 
 
 def cloudfactory_unit_post_init_post_save(sender, instance, **kwargs):
     """in python the input field is an object, not a string"""
-    if isinstance(instance.input, str) or isinstance(instance.input, unicode):
+    if instance.input and (isinstance(instance.input, str) or isinstance(instance.input, unicode)):
         instance.input = json.loads(instance.input)
+    if instance.output and (
+        isinstance(instance.output, str) or isinstance(instance.output, unicode)
+    ):
+        instance.output = json.loads(instance.output)
 
 
 def cloudfactory_unit_pre_save(sender, instance, **kwargs):
     """in the database the input field is a string (TextField)"""
     if not isinstance(instance.input, str) and not isinstance(instance.input, unicode):
         instance.input = json.dumps(instance.input)
+    if not isinstance(instance.output, str) and not isinstance(instance.output, unicode):
+        instance.output = json.dumps(instance.output)
 
 
 models.signals.post_init.connect(cloudfactory_unit_post_init_post_save, sender=CloudFactoryUnit)
