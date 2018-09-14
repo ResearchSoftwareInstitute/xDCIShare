@@ -4,9 +4,11 @@ from ipware import get_client_ip
 from django.http import Http404, HttpResponse, FileResponse
 from django.utils.timezone import now
 from django.contrib.sites.models import Site
+from django.views.decorators.http import require_GET
 from myhpom.models import DocumentUrl
 
 
+@require_GET
 def document_url(request, key, filename):
     """download the document at the given url.
     * key: the DocumentUrl.key by which to find the document
