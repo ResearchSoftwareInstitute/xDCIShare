@@ -1,10 +1,7 @@
 
+import json
+import datetime
 from django.db import models
-from django.conf import settings
-
-
-def cloudfactory_api_url():
-    return settings.CLOUDFACTORY['API_URL'] % settings.CLOUDFACTORY
 
 
 class CloudFactoryRun(models.Model):
@@ -12,6 +9,12 @@ class CloudFactoryRun(models.Model):
 
     line_id = models.CharField(
         max_length=64, help_text="the id of the production line at CloudFactory."
+    )
+    run_id = models.CharField(
+        max_length=64,
+        blank=True,
+        default=True,
+        help_text="The id of this production run at CloudFactory.",
     )
     callback_url = models.CharField(
         max_length=1024,
@@ -22,12 +25,35 @@ class CloudFactoryRun(models.Model):
     status = models.CharField(
         max_length=32, blank=True, default="", help_text="The status of the run at CloudFactory."
     )
+    message = models.TextField(blank=True, help_text="Any message returned by CloudFactory.")
     created_at = models.DateTimeField(
         blank=True, null=True, help_text="When the run was created at CloudFactory."
     )
     processed_at = models.DateTimeField(
         blank=True, null=True, help_text="When run processing was finished at CloudFactory."
     )
+
+    def post_data(self):
+        """create a data to POST the run to CloudFactory"""
+        return dict(
+            units=[unit.post_data() for unit in self.cloudfactoryunit_set.all()],
+            **{k: self.data()[k] for k in ['line_id', 'callback_url']}
+        )
+
+    def data(self):
+        """working with celery and email requires being able to provide json for the instance"""
+        return dict(
+            units=[unit.data() for unit in self.cloudfactoryunit_set.all()],
+            **{
+                key: (
+                    str(val)
+                    if isinstance(val, datetime.datetime) or isinstance(val, datetime.date)
+                    else val
+                )
+                for key, val in self.__dict__.items()
+                if key[0] != '_'
+            }
+        )
 
 
 class CloudFactoryUnit(models.Model):
@@ -51,3 +77,44 @@ class CloudFactoryUnit(models.Model):
         help_text="A json-string containing the input to CloudFactory; use to validate the response."
     )
     output = models.TextField(help_text="A json-string containing the output from CloudFactory")
+
+    def post_data(self):
+        """create data to POST the unit to CloudFactory"""
+        return self.data()['input']
+
+    def data(self):
+        """working with celery and email requires being able to provide json for the instance"""
+        return dict(
+            **{
+                key: (
+                    str(val)  # datetime.datetime and datetime.date as str
+                    if isinstance(val, datetime.datetime) or isinstance(val, datetime.date)
+                    else val
+                )
+                for key, val in self.__dict__.items()
+                if key[0] != '_'  # exclude utility vals like _state
+            }
+        )
+
+
+# The following is an unfortunate hack to overcome the lack of JSONField in Django 1.8:
+# use json to convert the CloudFactoryUnit.input field to/from string for the database/python.
+# -- When we upgrade to Django 1.11 we can instead use django.contrib.postgres.fields.JSONField
+#   (but we'll need to be careful about migrating the database at that point!)
+
+
+def cloudfactory_unit_post_init_post_save(sender, instance, **kwargs):
+    """in python the input field is an object, not a string"""
+    if isinstance(instance.input, str) or isinstance(instance.input, unicode):
+        instance.input = json.loads(instance.input)
+
+
+def cloudfactory_unit_pre_save(sender, instance, **kwargs):
+    """in the database the input field is a string (TextField)"""
+    if not isinstance(instance.input, str) and not isinstance(instance.input, unicode):
+        instance.input = json.dumps(instance.input)
+
+
+models.signals.post_init.connect(cloudfactory_unit_post_init_post_save, sender=CloudFactoryUnit)
+models.signals.post_save.connect(cloudfactory_unit_post_init_post_save, sender=CloudFactoryUnit)
+models.signals.pre_save.connect(cloudfactory_unit_pre_save, sender=CloudFactoryUnit)
