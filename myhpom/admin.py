@@ -36,7 +36,8 @@ class ScribbleAdmin(admin.ModelAdmin):
 class DocumentUrlAdmin(admin.ModelAdmin):
     model = DocumentUrl
     readonly_fields = ['key', 'url']
-    list_display = ['url', 'ip', 'expiration']
+    list_display = ['url', 'expiration']
+    raw_id_fields = ['advancedirective']
 
 
 admin.site.register(State, StateAdmin)

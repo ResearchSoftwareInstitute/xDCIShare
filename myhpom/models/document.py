@@ -1,4 +1,4 @@
-import os, tempfile, base64, uuid, iptools
+import os, tempfile, base64, uuid
 
 from .user import User
 from django.db import models
@@ -86,6 +86,14 @@ def remove_documents_on_delete(sender, instance, using, **kwargs):
 models.signals.post_delete.connect(remove_documents_on_delete, sender=AdvanceDirective)
 
 
+def document_url_default_expiration():
+    return now() + settings.DOCUMENT_URL_EXPIRES_IN
+
+
+def document_url_create_key():
+    return base64.urlsafe_b64encode(str(uuid.uuid4()))
+
+
 class DocumentUrl(models.Model):
     """
     An Advance Directive is accessible internally from its instance.document.url, but we don't want
@@ -93,12 +101,7 @@ class DocumentUrl(models.Model):
     and that are non-guessable. The DocumentUrl model holds "keys" to documents.
     * advancedirective = foreign key to the AdvanceDirective
     * key = the non-guessable string that identifies this DocumentUrl
-    * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URLS_EXPIRE_IN)
-    * ip = (optional) IP / range to limit IP address to client. Can be:
-        * a single IP address, e.g., "10.16.239.82"
-        * a comma-delimited string with 2 values, e.g., "10.16.239.82, 10.16.239.85"
-        * an IP address with netmask, e.g., "10.16.239.82/24"
-      (uses the iptools.IpRange object)
+    * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URL_EXPIRES_IN)
     """
 
     advancedirective = models.ForeignKey(
@@ -109,19 +112,14 @@ class DocumentUrl(models.Model):
     key = models.CharField(
         max_length=48,
         unique=True,
+        default=document_url_create_key,
         help_text="The non-guessable string that indentifies this DocumentUrl.",
     )
     expiration = models.DateTimeField(
         null=True,  # optional
         blank=True,
+        default=document_url_default_expiration,
         help_text="The optional timestamp indicating when this DocumentUrl expires.",
-    )
-    ip = models.CharField(
-        max_length=64,
-        null=True,  # optional
-        blank=True,
-        help_text="The optional IP address or range to which this DocumentUrl is limited",
-        verbose_name='IP',
     )
 
     def __str__(self):
@@ -129,41 +127,22 @@ class DocumentUrl(models.Model):
 
     @property
     def url(self):
-        return reverse('myhpom:document_url', kwargs={'key': self.key, 'filename': self.filename})
+        return reverse('myhpom:document_url', kwargs={'key': self.key})
 
     @property
     def filename(self):
-        return self.advancedirective.filename
-
-    @property
-    def ip_range(self):
-        """return an IpRange object representing this instance's ip attribute"""
-        if self.ip:
-            return iptools.IpRange(*[ip.strip() for ip in self.ip.split(',')][:2])
+        # no information bleed in the filename, but keep the extension from the AdvanceDirective
+        return self.key + os.path.splitext(self.advancedirective.filename)[-1]
 
     def authorized_client_ip(self, ip_address):
         """The given ip_address is valid if either:
-        * the instance has no ip_range; or
-        * the ip_address is in this instance's ip_range
+        * settings has no ip_ranges; or
+        * the ip_address is in settings ip_ranges
         """
-        if not self.ip_range:
+        if not settings.DOCUMENT_URL_IP_RANGES:
             return True
         else:
-            return ip_address in self.ip_range
-
-
-def document_url_before_save(sender, instance, using, **kwargs):
-    """
-    * automatically calculate the key for new instances
-    * automatically set the expiration timestamp for new instances
-        (note: not overloading the expires attribute, since it is expects as a timestamp)
-    """
-    if not instance.pk:
-        # protect against a (very-remotely-possible) key collision
-        while not instance.key or sender.objects.filter(key=instance.key).exists():
-            instance.key = base64.urlsafe_b64encode(str(uuid.uuid4()))
-        if not instance.expiration:
-            instance.expiration = now() + settings.DOCUMENT_URLS_EXPIRE_IN
-
-
-models.signals.pre_save.connect(document_url_before_save, sender=DocumentUrl)
+            for ip_range in settings.DOCUMENT_URL_IP_RANGES:
+                if ip_address in ip_range:
+                    return True
+        return False

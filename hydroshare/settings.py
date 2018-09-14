@@ -1,8 +1,10 @@
 from __future__ import absolute_import, unicode_literals
 
 import os
+import iptools
 from datetime import timedelta
 from dotenv import load_dotenv
+
 load_dotenv('.env')
 
 local_settings_module = os.environ.get('LOCAL_SETTINGS', 'hydroshare.local_settings')
@@ -249,6 +251,35 @@ CONTACT_EMAIL = 'contact@example.com'
 # When provided, a gtags.js block is included on all pages.
 GOOGLE_ANALYTICS_ID = None
 
+# -- DOCUMENT URL SETTINGS -- 
+
+# Amount of time after creation that a Document URL expires, as a datetime.timedelta (easy to use!)
+DOCUMENT_URL_EXPIRES_IN = timedelta(hours=48)
+
+# IP ranges that can access Document URLs (document and callback)
+# Each string can be a single IP address, a comma-delimited range (two IP addresses), or
+# an IP address with a /mask
+DOCUMENT_URL_IP_RANGES = [
+    iptools.IpRange(iprange)
+    for iprange in [
+        '127.0.0.1/8',  # local
+        '192.168.1.1/24',  # local
+        '70.62.97.168/29',  # caktus office
+    ]
+]
+
+# -- CLOUDFACTORY SETTINGS -- 
+# (myhpom CloudFactory integration)
+
+CLOUDFACTORY_PRODUCTION_LINES = {'TEST': 'zUyZv59Mxi'}
+CLOUDFACTORY_AUTH = {
+    'USERNAME': 'a9a8d5b3289c42c29e5229b31c971f20',
+    'PASSWORD': 'c5b2debb303a47428b0beef036a478f4',
+}
+CLOUDFACTORY_API_URL = (
+    'https://%(USERNAME)s:%(PASSWORD)s@api.cloudfactory.com/v4' % CLOUDFACTORY_AUTH
+)
+
 ##################
 # LOCAL SETTINGS #
 ##################
@@ -367,15 +398,3 @@ TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
 
 AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
 
-# Amount of time after creation that a Document URL expires, as a datetime.timedelta (easy to use!)
-DOCUMENT_URLS_EXPIRE_IN = timedelta(hours=48)
-
-# CloudFactory Settings (myhpom CloudFactory integration)
-CLOUDFACTORY_PRODUCTION_LINES = {'TEST': 'zUyZv59Mxi'}
-CLOUDFACTORY_AUTH = {
-    'USERNAME': 'a9a8d5b3289c42c29e5229b31c971f20',
-    'PASSWORD': 'c5b2debb303a47428b0beef036a478f4',
-}
-CLOUDFACTORY_API_URL = (
-    'https://%(USERNAME)s:%(PASSWORD)s@api.cloudfactory.com/v4' % CLOUDFACTORY_AUTH
-)
