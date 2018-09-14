@@ -1,0 +1,6 @@
+The following error occurred while processing a celery task:
+
+{% for key, section in sections.items %}
+== {{ key.upper }} ==
+{{ section|safe }}
+{% endfor %}
