@@ -1,6 +1,5 @@
 from smtplib import SMTPException
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.core.mail import send_mail
 from django.views.decorators.http import require_GET
 from django.shortcuts import redirect
@@ -25,7 +24,7 @@ def send_account_verification(request):
         userdetails.reset_verification()
         code = userdetails.verification_code
         subject = 'Mind My Health Email Verification'
-        site = Site.objects.get_current()
+        domain = request.get_host()
         try:
             send_mail(
                 subject,
@@ -33,7 +32,7 @@ def send_account_verification(request):
                     'myhpom/accounts/verification_email.txt',
                     context={
                         'code': code,
-                        'domain': site.domain if site else None
+                        'domain': domain
                     },
                     request=request,
                 ),
