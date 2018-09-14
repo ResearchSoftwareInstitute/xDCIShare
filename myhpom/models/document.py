@@ -86,6 +86,14 @@ def remove_documents_on_delete(sender, instance, using, **kwargs):
 models.signals.post_delete.connect(remove_documents_on_delete, sender=AdvanceDirective)
 
 
+def document_url_default_expiration():
+    return now() + settings.DOCUMENT_URL_EXPIRES_IN
+
+
+def document_url_create_key():
+    return base64.urlsafe_b64encode(str(uuid.uuid4()))
+
+
 class DocumentUrl(models.Model):
     """
     An Advance Directive is accessible internally from its instance.document.url, but we don't want
@@ -104,11 +112,13 @@ class DocumentUrl(models.Model):
     key = models.CharField(
         max_length=48,
         unique=True,
+        default=document_url_create_key,
         help_text="The non-guessable string that indentifies this DocumentUrl.",
     )
     expiration = models.DateTimeField(
         null=True,  # optional
         blank=True,
+        default=document_url_default_expiration,
         help_text="The optional timestamp indicating when this DocumentUrl expires.",
     )
 
@@ -135,20 +145,3 @@ class DocumentUrl(models.Model):
                 if ip_address in ip_range:
                     return True
         return False
-
-
-def document_url_before_save(sender, instance, using, **kwargs):
-    """
-    * automatically calculate the key for new instances
-    * automatically set the expiration timestamp for new instances
-        (note: not overloading the expires attribute, since it is expects as a timestamp)
-    """
-    if not instance.pk:
-        # protect against a (very-remotely-possible) key collision
-        while not instance.key or sender.objects.filter(key=instance.key).exists():
-            instance.key = base64.urlsafe_b64encode(str(uuid.uuid4()))
-        if not instance.expiration:
-            instance.expiration = now() + settings.DOCUMENT_URL_EXPIRES_IN
-
-
-models.signals.pre_save.connect(document_url_before_save, sender=DocumentUrl)
