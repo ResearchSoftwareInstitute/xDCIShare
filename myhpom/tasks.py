@@ -14,7 +14,7 @@ def submit_advancedirective_to_cloudfactory(ad_id, line_id, document_host=None, 
     """ 
     * ad_id = the database id for the AdvanceDirective
     * line_id = the id of the CloudFactory production line to submit this request to.
-    * document_host = the host to use for the DocumentURL
+    * document_host = the host (incl. protocol/scheme) to use for the DocumentURL
     * callback_url = the URL to use with the callback request
 
     - create an expiring DocumentUrl for the AdvanceDirective
@@ -24,25 +24,29 @@ def submit_advancedirective_to_cloudfactory(ad_id, line_id, document_host=None, 
         - the AdvanceDirective might no longer exist by the time celery picks it up,
         - or the document it points to might have been removed.
     """
-    # if an error occurs while building the post_data, don't send support email,
-    # but do let celery catch the exception and return it with the task status.
-    ad = AdvanceDirective.objects.get(id=ad_id)
-    document_url = DocumentUrl.objects.create(advancedirective=ad)
-    run = CloudFactoryRun(line_id=line_id, callback_url=callback_url or "")
-    unit = CloudFactoryUnit(
-        run=run, input=cloudfactory_advancedirective_unit_input(document_url, document_host)
-    )
-    post_data = run.post_data()
-
-    # if an error occurs in posting the run to CloudFactory, send support email
+    # if an error occurs, send support email
     try:
+        ad = AdvanceDirective.objects.get(id=ad_id)
+        document_url = DocumentUrl.objects.create(advancedirective=ad)
+        run = CloudFactoryRun(line_id=line_id, callback_url=callback_url or "")
+        unit = CloudFactoryUnit(
+            run=run, input=cloudfactory_advancedirective_unit_input(document_url, document_host)
+        )
+        post_data = run.post_data()
+
         response = requests.post(settings.CLOUDFACTORY_API_URL, json=post_data)
         response_data = response.json()
 
         if response.status_code != 201:
             run.__dict__.update(status=str(response.status_code), message=response_data['message'])
             run.save()
-            raise ValueError(response_data['message'] + '\n' + json.dumps(post_data, indent=2))
+            raise ValueError(
+                response_data['message']
+                + '\n\n== POST DATA ==\n'
+                + json.dumps(post_data, indent=2)
+                + '\n\n== RUN DATA ==\n'
+                + json.dumps(run.data(), indent=2)
+            )
 
         run.__dict__.update(
             run_id=rundata['id'], status=rundata['status'], created_at=rundata['created_at']
@@ -51,9 +55,8 @@ def submit_advancedirective_to_cloudfactory(ad_id, line_id, document_host=None, 
         return run
 
     except exc:
-        tb = traceback.format_tb(exc_info[2])
         message = get_template('myhpom/celery_task_error_email.txt').render(
-            Context({'sections': OrderedDict(traceback=tb, run=json.dumps(run.data(), indent=2))})
+            Context({'traceback': traceback.format_tb(exc_info[2])})
         )
         send_mail(
             'MMH Celery Error', message, settings.DEFAULT_FROM_EMAIL, settings.DEFAULT_SUPPORT_EMAIL
