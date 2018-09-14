@@ -27,9 +27,15 @@ def document_url(request, key):
     if doc_url.expiration and doc_url.expiration < now():
         raise Http404()
 
+    # -- it's also possible that the document file was removed for some reason.
+    try:
+        document_file = doc_url.advancedirective.document.file
+    except:
+        raise Http404()
+
     # If we've gotten this far, the doc_url is valid, so send the document
     response = FileResponse(
-        doc_url.advancedirective.document.file,
+        document_file,
         content_type=(mimetypes.guess_type(doc_url.filename)[0] or 'application-x/octet-stream'),
     )
     response['Content-Disposition'] = 'inline; filename="%s"' % doc_url.filename
