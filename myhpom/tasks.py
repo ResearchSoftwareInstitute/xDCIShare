@@ -55,13 +55,20 @@ def submit_advancedirective_to_cloudfactory(ad_id, line_id, document_host=None, 
         return run
 
     except exc:
-        message = get_template('myhpom/celery_task_error_email.txt').render(
-            Context({'traceback': traceback.format_tb(exc_info[2])})
-        )
-        send_mail(
-            'MMH Celery Error', message, settings.DEFAULT_FROM_EMAIL, settings.DEFAULT_SUPPORT_EMAIL
+        send_celery_error_mail(
+            '[MMH] Error Submitting AdvanceDirective to CloudFactory',
+            traceback.format_tb(exc_info[2]),
         )
         raise exc
+
+
+def send_celery_error_mail(subject, traceback):
+    message = get_template('myhpom/celery_task_error_email.txt').render(
+        Context({'traceback': traceback})
+    )
+    return send_mail(
+        'MMH Celery Error', message, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_SUPPORT_EMAIL]
+    )
 
 
 # The following helper function doesn't really belong in any of the models
