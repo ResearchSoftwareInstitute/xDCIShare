@@ -1,6 +1,5 @@
 {% extends "myhpom/base.html" %}
 {% load sass_tags static %}
-{% load scribbler_tags %}
 
 {% block extra-head %}
 <script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
@@ -115,18 +114,24 @@
             </div>
             <div class="col-md-6 small">
                 <strong class="h6 dashboard-faq__heading">
-                    {% scribble 'dashboard-faq-1-head' %}{% lorem 5 w %}?{% endscribble %}
+                    Do I need an Advance Care Plan?
                 </strong>
-                <p>
-                    {% scribble 'dashboard-faq-1' %}{% lorem 24 w %}{% endscribble %}
+                <p class="mt-2">
+                    Yes! Everyone has the right and responsibility
+                    to own their health care decisions, and an
+                    advance care plan is an important way to
+                    communicate your choices with your family,
+                    caregivers, and medical professionals.
                 </p>
             </div>
             <div class="col-md-6 small">
                 <strong class="h6 dashboard-faq__heading">
-                    {% scribble 'dashboard-faq-2-head' %}{% lorem 5 w %}?{% endscribble %}
+                    Why Does Mind My Health want to know my health network?
                 </strong>
-                <p>
-                    {% scribble 'dashboard-faq-2' %}{% lorem 24 w %}{% endscribble %}
+                <p class="mt-2">
+                    Linking your care plan to a health network ensures that
+                    future enhancements offer you more opportunities to
+                    share your care plan with care providers.
                 </p>
             </div>
         </sidebar>
