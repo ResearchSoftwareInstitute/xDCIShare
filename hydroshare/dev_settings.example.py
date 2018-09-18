@@ -10,3 +10,5 @@ DEBUG = True
 
 NEVERCACHE_KEY='dev_nevercache_key'
 SECRET_KEY='dev_secret_key'
+
+DOCUMENT_URL_IP_RANGES = []
