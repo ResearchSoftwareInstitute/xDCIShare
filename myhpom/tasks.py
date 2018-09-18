@@ -32,9 +32,8 @@ def cloudfactory_submit_advancedirective(ad_id, line_id, document_host=None, cal
         unit = CloudFactoryUnit(
             run=run, input=cloudfactory_advancedirective_unit_input(document_url, document_host)
         )
-        post_data = run.post_data()
 
-        response = requests.post(settings.CLOUDFACTORY_API_URL, json=post_data)
+        response = requests.post(settings.CLOUDFACTORY_API_URL, json=run.post_data)
         response_data = response.json()
 
         if response.status_code != 201:
@@ -43,9 +42,9 @@ def cloudfactory_submit_advancedirective(ad_id, line_id, document_host=None, cal
             raise ValueError(
                 response_data['message']
                 + '\n\n== POST DATA ==\n'
-                + json.dumps(post_data, indent=2)
+                + json.dumps(run.post_data, indent=2)
                 + '\n\n== RUN DATA ==\n'
-                + json.dumps(run.data(), indent=2)
+                + json.dumps(run.data, indent=2)
             )
 
         run.__dict__.update(

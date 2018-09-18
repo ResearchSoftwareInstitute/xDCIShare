@@ -13,7 +13,7 @@ class CloudFactoryRun(models.Model):
     run_id = models.CharField(
         max_length=64,
         blank=True,
-        default=True,
+        default="",
         help_text="The id of this production run at CloudFactory.",
     )
     callback_url = models.CharField(
@@ -33,17 +33,19 @@ class CloudFactoryRun(models.Model):
         blank=True, null=True, help_text="When run processing was finished at CloudFactory."
     )
 
+    @property
     def post_data(self):
         """create a data to POST the run to CloudFactory"""
         return dict(
-            units=[unit.post_data() for unit in self.cloudfactoryunit_set.all()],
-            **{key: self.data()[key] for key in ['line_id', 'callback_url']}
+            units=[unit.post_data for unit in self.cloudfactoryunit_set.all()],
+            **{key: self.data[key] for key in ['line_id', 'callback_url']}
         )
 
+    @property
     def data(self):
         """working with celery and email requires being able to provide json for the instance"""
         return dict(
-            units=[unit.data() for unit in self.cloudfactoryunit_set.all()],
+            units=[unit.data for unit in self.cloudfactoryunit_set.all()],
             **{
                 key: (
                     str(val)  # datetime.datetime and datetime.date as str
@@ -75,14 +77,17 @@ class CloudFactoryUnit(models.Model):
     )
     input = models.TextField(
         blank=True,
+        default="",
         help_text="JSON input to CloudFactory; use to validate the response.",
     )
-    output = models.TextField(blank=True, help_text="JSON output from CloudFactory")
+    output = models.TextField(blank=True, default="", help_text="JSON output from CloudFactory")
 
+    @property
     def post_data(self):
         """create data to POST the unit to CloudFactory"""
-        return self.data()['input']
+        return self.data['input']
 
+    @property
     def data(self):
         """working with celery and email requires being able to provide json for the instance"""
         return dict(
