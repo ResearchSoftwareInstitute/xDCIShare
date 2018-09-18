@@ -7,13 +7,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myhpom', '0018_scribble_data'),
+        ('myhpom', '0015_userdetails_updated'),
     ]
 
     operations = [
-        migrations.AlterField(
+        migrations.AddField(
             model_name='advancedirective',
             name='thumbnail',
-            field=models.FileField(help_text=b"The first-page thumbnail image of the user's Advance Directive.", null=True, upload_to=b'myhpom/advance_directives', blank=True),
+            field=models.FileField(help_text=b"The first-page thumbnail image of the user's Advance Directive.", null=True, upload_to=b'myhpom/advance_directives'),
         ),
     ]
