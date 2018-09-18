@@ -1,10 +1,10 @@
 import os
+import iptools
 from datetime import timedelta
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from myhpom.tests.factories import UserFactory
 from myhpom.models import AdvanceDirective, DocumentUrl
 
@@ -61,9 +61,7 @@ class DocumentUrlViewTestCase(TestCase):
         doc_url = DocumentUrl.objects.create(advancedirective=self.advancedirective)
         # wrong key
         wrong_key = 'W' * len(doc_url.key)  # right length, totally wrong value
-        response = self.client.get(
-            reverse('myhpom:document_url', kwargs={'key': wrong_key})
-        )
+        response = self.client.get(reverse('myhpom:document_url', kwargs={'key': wrong_key}))
         self.assertEqual(404, response.status_code)
 
         # past expiration
@@ -72,20 +70,12 @@ class DocumentUrlViewTestCase(TestCase):
         response = self.client.get(doc_url.url)
         self.assertEqual(404, response.status_code)
 
+    @override_settings(DOCUMENT_URL_IP_RANGES=[iptools.IpRange("255.255.255.255")])  # no one
     def test_document_url_not_authorized_ip(self):
         """
         * accessing a DocumentURL not from authorized_client_ip returns 404
         """
         doc_url = DocumentUrl.objects.create(advancedirective=self.advancedirective)
-        
-        # save the settings before changing them
-        save_settings = settings.DOCUMENT_URL_IP_RANGES
-
-        settings.DOCUMENT_URL_IP_RANGES = ["255.255.255.255"]  # pretty much no one, anywhere
         response = self.client.get(doc_url.url)
         self.assertLess(now(), doc_url.expiration)
         self.assertEqual(404, response.status_code)
-
-        # restore settings
-        settings.DOCUMENT_URL_IP_RANGES = save_settings
-

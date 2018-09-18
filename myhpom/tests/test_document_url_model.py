@@ -1,5 +1,6 @@
 import os
-from django.test import TestCase
+import iptools
+from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.conf import settings
@@ -50,6 +51,11 @@ class DocumentUrlModelTestCase(TestCase):
             doc_url.expiration, current_timestamp + settings.DOCUMENT_URL_EXPIRES_IN
         )
 
+    @override_settings(
+        DOCUMENT_URL_IP_RANGES=[
+            iptools.IpRange(ip) for ip in ['127.0.0.1', '192.168.1.1/24', '70.62.97.168/29']
+        ]
+    )
     def test_document_url_authorized_client_ip(self):
         """
         * DocumentUrl.authorized_client_ip(ip_address) returns True if
@@ -57,6 +63,7 @@ class DocumentUrlModelTestCase(TestCase):
         """
         ad = self.advancedirective
         doc_url = DocumentUrl(advancedirective=ad)
+        doc_url.save()
         authorized_ips = [
             "127.0.0.1",  # local host
             "192.168.1.100",  # local subnet
@@ -73,13 +80,12 @@ class DocumentUrlModelTestCase(TestCase):
         """
         * Nullable attributes: ip, expiration
         * Required attributes: advancedirective, key
-        * When a DocumentUrl is changed, the key is unchanged, 
+        * When a DocumentUrl is changed, the key is unchanged,
             and expiration is changed only if explicitly.
         """
         ad = self.advancedirective
         doc_url = DocumentUrl.objects.create(advancedirective=ad)
         key = doc_url.key
-        expiration = doc_url.expiration
         # -- expiration: nullable
         doc_url.expiration = None
         doc_url.save()

@@ -1,5 +1,4 @@
 {% extends "myhpom/base.html" %}
-{% load scribbler_tags %}
 {% load staticfiles %}
 
 {% block main_container_class %}myhpom-page__container{% endblock main_container_class %}
@@ -10,23 +9,17 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                {% scribble 'overview-title' 'how-it-works' %}
                 <h1 class="content-overview__title">
                     How it works.
                 </h1>
-                {% endscribble %}
 
-                {% scribble 'overview-subtitle' 'how-it-works' %}
                 <h2 class="content-overview__subtitle">
                     Your simple step-by-step guide to empowering
                     your advance care planning with Mind My Health.
                 </h2>
-                {% endscribble %}
 
                 <div class="mt-3 mb-4 content-overview__text">
-                    {% scribble 'overview' 'how-it-works' %}
                     Mind My Health empowers people by encouraging everyong make plans for care in advance. To help you complete your plan and upload it to Mind My Health, we have provided you this useful guide.
-                    {% endscribble %}
                 </div>
 
                 <div class="mt-3 mb-4 content-overview__text">

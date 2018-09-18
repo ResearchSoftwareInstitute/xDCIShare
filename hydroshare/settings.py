@@ -167,7 +167,6 @@ INSTALLED_APPS = (
     "django.contrib.postgres",
     "haystack",
     "sass_processor",
-    "scribbler",
     "myhpom",
     # Load auth app after our app, so that our templates for login/password
     # reset are found first:

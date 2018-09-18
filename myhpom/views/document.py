@@ -1,9 +1,7 @@
 import mimetypes
-import requests
 from ipware import get_client_ip
-from django.http import Http404, HttpResponse, FileResponse
+from django.http import Http404, FileResponse
 from django.utils.timezone import now
-from django.contrib.sites.models import Site
 from django.views.decorators.http import require_GET
 from myhpom.models import DocumentUrl
 
