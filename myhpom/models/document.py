@@ -1,11 +1,13 @@
-import os, tempfile, base64, uuid
+import os
+import tempfile
+import base64
+import uuid
 
 from .user import User
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils.timezone import now
-from django.core.files.base import ContentFile
 from myhpom.validators import validate_date_in_past
 from bgs import GS
 
@@ -49,7 +51,7 @@ class AdvanceDirective(models.Model):
                 return f.read()
 
     def render_images(self, allpages=True, res=PDF_RESOLUTION, **gsargs):
-        """create one or more images of pages of the current document. 
+        """create one or more images of pages of the current document.
         Requires that the AD has a document in storage
         Returns a list of (temporary) filenames (deleted after the AD object goes out of scope).
         * allpages=False: if true, creates all pages. if False, creates only the first page.
@@ -101,7 +103,8 @@ class DocumentUrl(models.Model):
     and that are non-guessable. The DocumentUrl model holds "keys" to documents.
     * advancedirective = foreign key to the AdvanceDirective
     * key = the non-guessable string that identifies this DocumentUrl
-    * expiration = (optional) timestamp, based on a new setting (now + settings.DOCUMENT_URL_EXPIRES_IN)
+    * expiration = (optional) timestamp, based on a new setting
+        (now + settings.DOCUMENT_URL_EXPIRES_IN)
     """
 
     advancedirective = models.ForeignKey(

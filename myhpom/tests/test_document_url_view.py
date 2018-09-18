@@ -1,10 +1,10 @@
 import os
+import iptools
 from datetime import timedelta
 from django.test import TestCase, override_settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.core.urlresolvers import reverse
-from django.conf import settings
 from myhpom.tests.factories import UserFactory
 from myhpom.models import AdvanceDirective, DocumentUrl
 
@@ -61,9 +61,7 @@ class DocumentUrlViewTestCase(TestCase):
         doc_url = DocumentUrl.objects.create(advancedirective=self.advancedirective)
         # wrong key
         wrong_key = 'W' * len(doc_url.key)  # right length, totally wrong value
-        response = self.client.get(
-            reverse('myhpom:document_url', kwargs={'key': wrong_key})
-        )
+        response = self.client.get(reverse('myhpom:document_url', kwargs={'key': wrong_key}))
         self.assertEqual(404, response.status_code)
 
         # past expiration

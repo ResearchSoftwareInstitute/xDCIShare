@@ -63,6 +63,7 @@ class DocumentUrlModelTestCase(TestCase):
         """
         ad = self.advancedirective
         doc_url = DocumentUrl(advancedirective=ad)
+        doc_url.save()
         authorized_ips = [
             "127.0.0.1",  # local host
             "192.168.1.100",  # local subnet
@@ -79,13 +80,12 @@ class DocumentUrlModelTestCase(TestCase):
         """
         * Nullable attributes: ip, expiration
         * Required attributes: advancedirective, key
-        * When a DocumentUrl is changed, the key is unchanged, 
+        * When a DocumentUrl is changed, the key is unchanged,
             and expiration is changed only if explicitly.
         """
         ad = self.advancedirective
         doc_url = DocumentUrl.objects.create(advancedirective=ad)
         key = doc_url.key
-        expiration = doc_url.expiration
         # -- expiration: nullable
         doc_url.expiration = None
         doc_url.save()
