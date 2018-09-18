@@ -94,11 +94,11 @@
 .why-plan-quote__text {
     font-weight: 600;
 
-    > div::before {
+    &::before {
         content: "“";
     }
 
-    > div::after {
+    &::after {
         content: "”";
     }
 }
