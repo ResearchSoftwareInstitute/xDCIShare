@@ -1,5 +1,3 @@
-import re
-from io import StringIO
 from lxml import etree
 from django.core.urlresolvers import reverse
 from django.test import TestCase
@@ -89,10 +87,7 @@ class DashboardTestCase(TestCase):
         response = self.client.get(self.url)
         messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == WARNING]
         self.assertGreater(len(messages), 0)
-        html_string = re.sub(
-            r'<\!doctype.*?>', '', u''.join(response._container).strip(), flags=re.I
-        )
-        html = etree.parse(StringIO(html_string), etree.HTMLParser())
+        html = etree.fromstring(response.content.decode('utf-8'), etree.HTMLParser())
         a_classes = html.xpath(
             '//a[contains(@class, "advance-directive-widget__button--primary")]/@class'
         )
@@ -105,10 +100,7 @@ class DashboardTestCase(TestCase):
         response = self.client.get(self.url)
         messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == WARNING]
         self.assertEqual(len(messages), 0)
-        html_string = re.sub(
-            r'<\!doctype.*?>', '', u''.join(response._container).strip(), flags=re.I
-        )
-        html = etree.parse(StringIO(html_string), etree.HTMLParser())
+        html = etree.fromstring(response.content.decode('utf-8'), etree.HTMLParser())
         a_classes = html.xpath(
             '//a[contains(@class, "advance-directive-widget__button--primary")]/@class'
         )

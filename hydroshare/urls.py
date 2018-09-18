@@ -17,7 +17,6 @@ urlpatterns = [
         auth_views.password_reset_confirm,
         {'set_password_form': SetPasswordForm}, name='password_reset_confirm'),
     url(r'^accounts/', include('django.contrib.auth.urls'), name='login'),
-    url(r'^scribbler/', include('scribbler.urls')),
     url(r'', include('myhpom.urls', namespace='myhpom')),
 ]
 

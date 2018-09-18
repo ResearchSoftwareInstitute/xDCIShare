@@ -27,12 +27,6 @@ ul.errorlist {
     color: black;
 }
 
-.form-group-tos__text {
-    @include serif;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-}
-
 .form-group-tos__link {
     @include orange-link;
     text-transform: uppercase;
