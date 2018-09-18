@@ -362,3 +362,6 @@ CSRF_COOKIE_SECURE = USE_SECURITY
 LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 
 AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
+
+# Custom test runner that excludes apps we don't use
+TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
