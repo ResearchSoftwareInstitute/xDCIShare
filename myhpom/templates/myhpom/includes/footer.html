@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load scribbler_tags %}
 
 <footer>
     <div class="pt-3 footer-headline-enclosure">
@@ -52,10 +51,17 @@
                             <a class="footer-links-list__link--legal" href="{% url 'myhpom:legal' %}">Legal Disclaimers</a>
                         </li>
                     </ul>
-                    {% scribble 'footer-text' 'shared' %}
-                    <strong>&copy; MIND MY HEALTH</strong>
-                    {% lorem 48 w %}
-                    {% endscribble %}
+                    <div>
+                        <strong>© MIND MY HEALTH</strong> • Mind My Health is a nonprofit project
+                        of The Carolinas Center created with support from The Duke Endowment.
+                        <strong>Mind My Health is NOT a licensed healthcare provider, medical
+                        professional, or law firm.</strong> Please read our complete
+                        <a href="https://www.mindmyhealth.org/legal" alt="Read Terms and Conditions">Terms and Conditions</a>
+                        before using Mind My Health. By using Mind My Health and our services,
+                        you agree to be bound by these Terms. The services are not, and should
+                        never be, a substitute for the advice of a licensed healthcare
+                        provider, medical professional, or attorney.
+                    </div>
                 </div>
             </div>
         </div>
