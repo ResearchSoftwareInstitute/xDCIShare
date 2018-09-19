@@ -261,9 +261,23 @@ DOCUMENT_URL_EXPIRES_IN = timedelta(hours=48)
 DOCUMENT_URL_IP_RANGES = [
     iptools.IpRange(iprange)
     for iprange in [
-        '127.0.0.1/8',  # local
-        '192.168.1.1/24',  # local
-        '70.62.97.168/29',  # caktus office
+        # -- local
+        '127.0.0.1/8',
+        '192.168.1.1/24',
+        # -- CaktusGroup office
+        '70.62.97.168/29',
+        # -- CloudFactory production sites
+        '110.34.14.54',
+        '110.34.14.50',
+        '124.41.211.117',
+        '139.5.71.67',
+        '110.44.121.202',
+        '110.44.124.227',
+        # -- CloudFactory engineering
+        '110.44.126.155',
+        '110.44.126.157',
+        '110.44.113.13',
+        '202.166.220.197',
     ]
 ]
 
