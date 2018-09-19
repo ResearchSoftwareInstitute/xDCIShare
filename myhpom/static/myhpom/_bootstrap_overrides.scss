@@ -55,6 +55,10 @@ a:not(.btn):not(.img-link):hover {
     border-bottom-width: 2px;
     border-bottom-style: solid;
     border-bottom-color: inherit;
+
+    .alert.alert-warning > & {
+        border-bottom-color: darken(theme-color-level("warning", $alert-color-level), 10%);
+    }
 }
 
 // Layout

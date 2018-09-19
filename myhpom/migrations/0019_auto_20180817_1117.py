@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myhpom', '0016_ad_thumbnail'),
+        ('myhpom', '0017_ad_thumbnail'),
     ]
 
     operations = [

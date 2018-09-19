@@ -18,7 +18,7 @@
 </dl>
 
 {% if request.user.advancedirective.thumbnail %}
-<a href="{{ request.user.advancedirective.document.url }}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">
+<a class="advance-directive-widget__thumbnail-link" href="{{ request.user.advancedirective.document.url }}" data-no-ajax="true" target="_blank" rel="noopener noreferrer">
     <img class="advance-directive-widget__thumbnail" src="{{ request.user.advancedirective.thumbnail.url }}"/>
 </a>
 {% endif %}
