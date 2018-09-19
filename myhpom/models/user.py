@@ -18,7 +18,7 @@ def get_username(email):
     """
     h = hashlib.new('sha1')  # the longest hash algorithm that base64-encodes at <= 30 characters
     h.update(email)
-    return base64.urlsafe_b64encode(h.digest())
+    return base64.urlsafe_b64encode(h.digest()).strip('=')
 
 
 def user_pre_save_receiver(sender, instance, **kwargs):
