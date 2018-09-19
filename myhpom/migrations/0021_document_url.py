@@ -8,7 +8,7 @@ import myhpom.models.document
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('myhpom', '0018_user_verification'),
+        ('myhpom', '0020_user_verification'),
     ]
 
     operations = [
