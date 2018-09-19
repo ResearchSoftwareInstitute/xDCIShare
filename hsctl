@@ -269,6 +269,10 @@ migrate_hs() {
     echo "MIGRATE:"
     echo "  - docker exec -u hydro-service hydroshare python manage.py migrate -v0 --fake-initial --noinput"
     docker exec -u hydro-service hydroshare python manage.py migrate -v0 --fake-initial --noinput
+    exitcode=$?
+    if [[ $exitcode -ne 0 ]]; then
+        exit $exitcode
+    fi
 }
 
 manage_py_hs() {
