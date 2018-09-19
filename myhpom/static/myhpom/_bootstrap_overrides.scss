@@ -57,7 +57,7 @@ a:not(.btn):not(.img-link):hover {
     border-bottom-color: inherit;
 
     .alert.alert-warning > & {
-        border-bottom-color: $link-hover-color;
+        border-bottom-color: darken(theme-color-level("warning", $alert-color-level), 10%);
     }
 }
 
