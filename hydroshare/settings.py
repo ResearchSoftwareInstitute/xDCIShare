@@ -165,7 +165,6 @@ INSTALLED_APPS = (
     "django.contrib.postgres",
     "haystack",
     "sass_processor",
-    "scribbler",
     "myhpom",
     # Load auth app after our app, so that our templates for login/password
     # reset are found first:
@@ -362,7 +361,7 @@ CSRF_COOKIE_SECURE = USE_SECURITY
 # Where login should go after successful authentication
 LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 
+AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
+
 # Custom test runner that excludes apps we don't use
 TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
-
-AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
