@@ -33,6 +33,13 @@ class CloudFactoryRun(models.Model):
         blank=True, null=True, help_text="When run processing was finished at CloudFactory."
     )
 
+    def __repr__(self):
+        keys = [key for key in ['id', 'line_id'] if key in self.__dict__.keys()]
+        return u"%s(%s)" % (
+            self.__class__.__name__,
+            u", ".join([u"%s=%r" % (key, self.__dict__[key]) for key in keys]),
+        )
+
     @property
     def post_data(self):
         """create a data to POST the run to CloudFactory"""
@@ -81,6 +88,13 @@ class CloudFactoryUnit(models.Model):
         help_text="JSON input to CloudFactory; use to validate the response.",
     )
     output = models.TextField(blank=True, default="", help_text="JSON output from CloudFactory")
+
+    def __repr__(self):
+        keys = [key for key in ['id', 'run_id'] if key in self.__dict__.keys()]
+        return u"%s(%s)" % (
+            self.__class__.__name__,
+            u", ".join([u"%s=%r" % (key, self.__dict__[key]) for key in keys]),
+        )
 
     @property
     def post_data(self):
