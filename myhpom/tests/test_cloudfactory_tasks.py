@@ -13,7 +13,7 @@ from myhpom.tasks import CloudFactorySubmitAdvanceDirectiveTask
 import myhpom
 
 PDF_FILENAME = os.path.join(
-    os.path.dirname(myhpom.__file__), 'tests', 'fixtures', 'NC Advance Directive Form.pdf'
+    os.path.dirname(myhpom.__file__), 'tests', 'fixtures', 'afile.pdf'  # can be anything
 )
 LINE_ID = settings.CLOUDFACTORY_PRODUCTION_LINES['TEST']
 DOCUMENT_HOST = CALLBACK_URL = ""
