@@ -247,6 +247,9 @@ MAX_AD_SIZE = 25 * 1024 * 1024
 # Where users are directed to send contacts in MYHPOM:
 CONTACT_EMAIL = 'contact@example.com'
 
+# The prefix on admin emails
+EMAIL_SUBJECT_PREFIX = '[MMH] '
+
 # When provided, a gtags.js block is included on all pages.
 GOOGLE_ANALYTICS_ID = None
 
