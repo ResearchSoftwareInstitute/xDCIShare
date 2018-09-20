@@ -1,7 +1,7 @@
 import json
 import requests
 import sys
-import traceback
+import traceback as tb
 from collections import OrderedDict
 from django.core.mail import send_mail
 from django.conf import settings
@@ -17,29 +17,43 @@ from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryRun, CloudF
 class CloudFactorySubmitAdvanceDirectiveTask(Task):
     def run(self, ad_id, line_id, document_host, callback_url):
         """ 
+        ## Arguments
         * ad_id = the database id for the AdvanceDirective
         * line_id = the id of the CloudFactory production line to submit this request to.
         * document_host = the host (incl. protocol/scheme) to use for the DocumentURL
         * callback_url = the URL to use with the callback request
-
+        
+        ## Task Process
         - create an expiring DocumentUrl for the AdvanceDirective
         - submit the DocumentUrl to the CloudFactory (test) endpoint
         - store the status of the submitted document
-        - if an error occurs in this process, send support email.
+        - if the AdvanceDirective no longer exists, abort the task without an Exception.
             - the AdvanceDirective might no longer exist by the time celery picks it up,
             - or the document it points to might have been removed.
+        - if an error occurs in this process, send support email.
         """
-        # if an error occurs, send support email
-        ad = AdvanceDirective.objects.get(id=ad_id)
-        document_url = DocumentUrl.objects.create(advancedirective=ad)
         cf_run = CloudFactoryRun.objects.create(line_id=line_id, callback_url=callback_url or "")
+
+        # If the AdvanceDirective has been deleted, abort the task with a message
+        # -- no need to admin support email, this is an expected case.
+        try:
+            ad = AdvanceDirective.objects.get(id=ad_id)
+        except:
+            cf_run.status = 'ABORTED'
+            cf_run.message = 'AdvanceDirective(id=%r) no longer exists.' % ad_id
+            cf_run.save()
+            return cf_run.data
+
+        # Any exception in the rest of the task should result in support email
+        document_url = DocumentUrl.objects.create(advancedirective=ad)
         unit = CloudFactoryUnit.objects.create(
             run=cf_run, input=self.create_unit_input(document_url, document_host)
         )
-
         response = self.post_run(cf_run.post_data)
         response_data = response.json()
 
+        # if the run could not be created (status_code != 201), send support email
+        # -- we need to understand why the the run could not be created at CloudFactory.
         if response.status_code != 201:
             cf_run.__dict__.update(
                 status=str(response.status_code), message=response_data.get['message']
@@ -47,9 +61,9 @@ class CloudFactorySubmitAdvanceDirectiveTask(Task):
             cf_run.save()
             raise ValueError(
                 response_data['message']
-                + '\n\n== POST DATA ==\n'
+                + '\n\n== RUN POST DATA ==\n'
                 + json.dumps(cf_run.post_data, indent=2)
-                + '\n\n== RUN DATA ==\n'
+                + '\n\n== FULL RUN DATA ==\n'
                 + json.dumps(cf_run.data, indent=2)
             )
 
