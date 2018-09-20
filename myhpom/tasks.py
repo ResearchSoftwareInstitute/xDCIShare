@@ -82,7 +82,7 @@ class CloudFactorySubmitAdvanceDirectiveRun(Task):
         see https://docs.google.com/document/d/1VHD3iVq2Ky_SblQScv9O7tlphv9QHllMpGvn-bkWM_8/edit
         """
         ad = document_url.advancedirective
-        unit_input = {
+        data = {
             'full_name': ' '.join(
                 name
                 for name in [ad.user.first_name, ad.user.userdetails.middle_name, ad.user.last_name]
@@ -92,6 +92,8 @@ class CloudFactorySubmitAdvanceDirectiveRun(Task):
             'pdf_url': "%s%s" % (document_host or '', document_url.url),
             'date_signed': str(ad.valid_date),
         }
+        # only non-blank values are submitted, to prevent present but useless values
+        unit_input = {k: v for k, v in data.items() if bool(v) is True}
         return unit_input
 
 
