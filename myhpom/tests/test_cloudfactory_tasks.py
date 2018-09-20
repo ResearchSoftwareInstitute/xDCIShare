@@ -76,7 +76,11 @@ class CloudFactorySubmitAdvanceDirectiveRunTestCase(TestCase):
             self.task.post_run = mock_post_run(request_data['post_data'])
             if request_data['response_data']['status_code'] == 201:
                 result = self.task(*self.task_args)
-                self.assertEqual(result['status'], 'CREATED')
+                response_data = request_data['response_data']['json']
+                # Here we test the mapping of response_data keys to the task result
+                self.assertEqual(result['run_id'], response_data['id'])
+                self.assertEqual(result['status'], response_data['status'])
+                self.assertEqual(result['created_at'], response_data['created_at'])
             else:
                 with self.assertRaises(ValueError):
                     result = self.task(*self.task_args)
