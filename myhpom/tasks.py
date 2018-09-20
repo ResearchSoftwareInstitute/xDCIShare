@@ -82,15 +82,17 @@ class CloudFactorySubmitAdvanceDirectiveTask(Task):
         }
         return unit_input
 
-@task_failure.connect(sender='myhpom.tasks.CloudFactorySubmitAdvanceDirectiveTask')
-def send_celery_error_mail(
-    task_id=None, exception=None, traceback=None, einfo=None, *args, **kwargs
-):
-    subject = '[MMH] Error Submitting AdvanceDirective to CloudFactory'
-    task = 'CloudFactorySubmitAdvanceDirectiveTask'
-    message = get_template('myhpom/celery_task_error_email.txt').render(
-        Context({'traceback': traceback, 'task': task, 'args': args, 'kwargs': kwargs})
+
+@task_failure.connect()
+def send_celery_error_mail(task_id=None, einfo=None, sender=None, *args, **kwargs):
+    task = sender.name
+    subject = '{prefix}[celery] Error: {task} ({task_id})'.format(
+        prefix=settings.EMAIL_SUBJECT_PREFIX, task=task, task_id=task_id
     )
+    context = Context({'traceback': einfo, 'task': task})
+    if args:
+        context['args'] = args
+    if kwargs:
+        context['kwargs'] = kwargs
+    message = get_template('myhpom/celery_task_error_email.txt').render(context)
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_SUPPORT_EMAIL])
-
-

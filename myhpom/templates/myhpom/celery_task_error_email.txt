@@ -2,14 +2,7 @@ The following error occurred while processing a celery task:
 
 task = {{ task }}
 
-{% if args %}-- ARGS -- 
-{% for arg in args %}{{ arg }}
-{{% endfor %}}{% endif %}
-
-{% if kwargs %}-- KWARGS -- 
-{% for key, val in kwargs.items %}{{ key }} = {{ val }}
-{% endfor %}{% endif %}
-
--- TRACEBACK -- 
-{{ traceback|safe }}
-
+{% if traceback %}-- TRACEBACK -- 
+{{ traceback|safe }}{% endif %}
+{% if einfo %}-- EINFO -- 
+{{ einfo|safe }}{% endif %}
