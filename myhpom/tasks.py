@@ -97,6 +97,14 @@ class CloudFactorySubmitAdvanceDirectiveRun(Task):
         return unit_input
 
 
+@shared_task
+def test_error_email(data=None):
+    """the sole purpose of this task is to poke celery into sending an error email."""
+    raise ValueError(
+        "This is a test of the celery error email. data:\n" + json.dumps(data, indent=2)
+    )
+
+
 # == SIGNALS ==
 
 
