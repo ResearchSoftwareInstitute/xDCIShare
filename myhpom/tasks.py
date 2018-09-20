@@ -14,7 +14,7 @@ from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryRun, CloudF
 
 
 @shared_task
-class CloudFactorySubmitAdvanceDirectiveTask(Task):
+class CloudFactorySubmitAdvanceDirectiveRun(Task):
     def run(self, ad_id, line_id, document_host, callback_url):
         """ 
         ## Arguments
@@ -51,12 +51,12 @@ class CloudFactorySubmitAdvanceDirectiveTask(Task):
         )
         response = self.post_run(cf_run.post_data)
         response_data = response.json()
-
+        
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
         if response.status_code != 201:
             cf_run.__dict__.update(
-                status=str(response.status_code), message=response_data.get['message']
+                status=str(response.status_code), message=response_data.get('message')
             )
             cf_run.save()
             raise ValueError(
@@ -90,11 +90,14 @@ class CloudFactorySubmitAdvanceDirectiveTask(Task):
                 for name in [ad.user.first_name, ad.user.userdetails.middle_name, ad.user.last_name]
                 if name != ''  # in the not-uncommon case that one of the names is blank
             ),
-            'state': ad.user.userdetails.state.name,
+            'state': ad.user.userdetails.state.name if ad.user.userdetails.state else None,
             'pdf_url': "%s%s" % (document_host or '', document_url.url),
             'date_signed': str(ad.valid_date),
         }
         return unit_input
+
+
+# == SIGNALS ==
 
 
 @task_failure.connect()
@@ -104,9 +107,5 @@ def send_celery_error_mail(task_id=None, einfo=None, sender=None, *args, **kwarg
         prefix=settings.EMAIL_SUBJECT_PREFIX, task=task, task_id=task_id
     )
     context = Context({'traceback': einfo, 'task': task})
-    if args:
-        context['args'] = args
-    if kwargs:
-        context['kwargs'] = kwargs
     message = get_template('myhpom/celery_task_error_email.txt').render(context)
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [settings.DEFAULT_SUPPORT_EMAIL])

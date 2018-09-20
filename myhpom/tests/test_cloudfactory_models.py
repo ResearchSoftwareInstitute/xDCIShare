@@ -17,7 +17,6 @@ class CloudFactoryRunModelTestCase(TestCase):
         self.assertEqual(run.post_data, {'line_id': line_id, 'callback_url': '', 'units': []})
         self.assertEqual(run.data['units'], [])
         for key in ['run_id', 'callback_url', 'status', 'message']:
-            print key, run.data[key]
             self.assertEqual(run.data[key], '')
         for key in ['created_at', 'processed_at']:
             self.assertIsNone(run.data[key])
