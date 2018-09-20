@@ -1,8 +1,5 @@
 import json
 import requests
-import sys
-import traceback as tb
-from collections import OrderedDict
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template.loader import get_template
@@ -16,13 +13,13 @@ from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryRun, CloudF
 @shared_task
 class CloudFactorySubmitAdvanceDirectiveRun(Task):
     def run(self, ad_id, line_id, document_host, callback_url):
-        """ 
+        """
         ## Arguments
         * ad_id = the database id for the AdvanceDirective
         * line_id = the id of the CloudFactory production line to submit this request to.
         * document_host = the host (incl. protocol/scheme) to use for the DocumentURL
         * callback_url = the URL to use with the callback request
-        
+
         ## Task Process
         - create an expiring DocumentUrl for the AdvanceDirective
         - submit the DocumentUrl to the CloudFactory (test) endpoint
@@ -46,12 +43,12 @@ class CloudFactorySubmitAdvanceDirectiveRun(Task):
 
         # Any exception in the rest of the task should result in support email
         document_url = DocumentUrl.objects.create(advancedirective=ad)
-        unit = CloudFactoryUnit.objects.create(
+        CloudFactoryUnit.objects.create(
             run=cf_run, input=self.create_unit_input(document_url, document_host)
         )
         response = self.post_run(cf_run.post_data)
         response_data = response.json()
-        
+
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
         if response.status_code != 201:
@@ -60,11 +57,12 @@ class CloudFactorySubmitAdvanceDirectiveRun(Task):
             )
             cf_run.save()
             raise ValueError(
-                response_data['message']
-                + '\n\n== RUN POST DATA ==\n'
-                + json.dumps(cf_run.post_data, indent=2)
-                + '\n\n== FULL RUN DATA ==\n'
-                + json.dumps(cf_run.data, indent=2)
+                "%s\n\n== RUN POST DATA ==\n%s\n\n== FULL RUN DATA ==\n%s"
+                % (
+                    response_data['message'],
+                    json.dumps(cf_run.post_data, indent=2),
+                    json.dumps(cf_run.data, indent=2),
+                )
             )
 
         cf_run.__dict__.update(

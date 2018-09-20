@@ -1,7 +1,5 @@
-
 import os
 import json
-import random
 import requests
 import requests_mock
 from glob import glob
@@ -10,7 +8,7 @@ from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from myhpom.tests.factories import UserFactory
-from myhpom.models import CloudFactoryRun, CloudFactoryUnit, AdvanceDirective
+from myhpom.models import AdvanceDirective
 from myhpom.tasks import CloudFactorySubmitAdvanceDirectiveRun
 import myhpom
 
@@ -30,7 +28,7 @@ CALLBACK_URL = ""
 
 def mock_post_run(post_data):
     """This function returns a method that mocks CloudFactorySubmitAdvanceDirectiveRun.post_run().
-    It uses request/response data in fixtures/cloudfactory to represent current expectations. 
+    It uses request/response data in fixtures/cloudfactory to represent current expectations.
     For a given 'post_data' block, it returns the corresponding 'response_data'.
     The 'post_data' must exist in one of the MOCK_REQUEST_DATA blocks.
     The 'response_data' must have the same keys that python-requests expects.
@@ -56,7 +54,7 @@ class CloudFactorySubmitAdvanceDirectiveRunTestCase(TestCase):
     """In the task:
     * submitting a run with valid data to CloudFactory returns 201 and run object with expected vals
     * various situations that raise exceptions in the task:
-        * the AdvanceDirective id that was submitted to celery no longer exists 
+        * the AdvanceDirective id that was submitted to celery no longer exists
             (deleted by user while task in queue).
         * submitting a run with invalid data returns 422 (Unprocessable Entity)
     * raising an exception in a task causes error mail to be created
@@ -84,7 +82,6 @@ class CloudFactorySubmitAdvanceDirectiveRunTestCase(TestCase):
                     result = self.task(*self.task_args)
 
     def test_submit_deleted_ad(self):
-        ad_id = self.ad.id
         self.ad.delete()
         # the post_data is moot - it won't post_run - but we still want to avoid posting to the API
         self.task.post_run = mock_post_run({})

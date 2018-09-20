@@ -71,4 +71,3 @@ class CloudFactoryUnitModelTestCase(TestCase):
         unit = CloudFactoryUnit.objects.get(id=self.unit.id)
         self.assertEqual(unit.input, input)
         self.assertEqual(unit.output, output)
-
