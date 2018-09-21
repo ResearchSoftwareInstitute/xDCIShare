@@ -34,6 +34,12 @@ class CloudFactoryRun(models.Model):
         blank=True, null=True, help_text="When run processing was finished at CloudFactory."
     )
 
+    def __str__(self):
+        return (
+            "%s - %s %s"
+            % (self.run_id, self.status, str(self.processed_at or self.created_at or ''))
+        ).strip()
+
     def __repr__(self):
         keys = [key for key in ['id', 'line_id'] if key in self.__dict__.keys()]
         return u"%s(%s)" % (
@@ -73,7 +79,7 @@ class CloudFactoryRun(models.Model):
             if key in data:
                 self.__dict__[key] = data[key]
 
-        # we're just rewriting the unit_set to match the CloudFactory response. 
+        # we're just rewriting the unit_set to match the CloudFactory response.
         self.cloudfactoryunit_set.all().delete()
         for index, unit_data in enumerate(data['units']):
             cf_unit = CloudFactoryUnit(run=self)
@@ -142,7 +148,6 @@ class CloudFactoryUnit(models.Model):
             if key in unit_data:
                 self.__dict__[key] = unit_data[key]
         self.save()
-
 
 
 # The following is an unfortunate hack to overcome the lack of JSONField in Django 1.8:
