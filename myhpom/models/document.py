@@ -2,6 +2,7 @@ import os
 import tempfile
 import base64
 import uuid
+import importlib
 
 from .user import User
 from django.db import models
@@ -9,6 +10,7 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils.timezone import now
 from myhpom.validators import validate_date_in_past
+from myhpom.models.cloudfactory import CloudFactoryUnit
 from bgs import GS
 
 PDF_RESOLUTION = 150  # this is the resolution at which to render the PDF to images.
@@ -136,6 +138,13 @@ class DocumentUrl(models.Model):
     def filename(self):
         # no information bleed in the filename, but keep the extension from the AdvanceDirective
         return self.key + os.path.splitext(self.advancedirective.filename)[-1]
+
+    @property
+    def cloudfactory_runs(self):
+        # DocumentUrl is stored in the CloudFactoryUnit.input field, which is currently text.
+        return set(
+            cf_unit.run for cf_unit in CloudFactoryUnit.objects.filter(input__contains=self.url)
+        )
 
     def authorized_client_ip(self, ip_address):
         """The given ip_address is valid if either:
