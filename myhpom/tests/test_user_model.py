@@ -21,6 +21,7 @@ class UserModelTestCase(TestCase):
         user = User(**self.user_data)
         user.save()
         self.assertIsNotNone(user.username)
+        self.assertNotIn('=', user.username)    # MH-276 fixed this
 
     def test_save_invalid_user_fails(self):
         """first_name and last_name are not only required, but they have to be alphanumeric,
