@@ -149,3 +149,14 @@ class DocumentUrl(models.Model):
                 if ip_address in ip_range:
                     return True
         return False
+
+
+def abort_cloudfactory_on_document_url_delete(sender, instance, using, **kwargs):
+    """queue a celery task to abort any CloudFactory processing associated with this instance."""
+    # work-around for circular import
+    tasks = importlib.import_module('myhpom.tasks')
+    for cf_run in instance.cloudfactory_runs:
+        tasks.CloudFactoryCancelAdvanceDirectiveRun.delay(cf_run.id)
+
+
+models.signals.post_delete.connect(abort_cloudfactory_on_document_url_delete, sender=DocumentUrl)
