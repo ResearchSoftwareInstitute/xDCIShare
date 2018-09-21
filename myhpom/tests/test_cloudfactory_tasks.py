@@ -90,5 +90,5 @@ class CloudFactorySubmitAdvanceDirectiveRunTestCase(TestCase):
         # the post_data is moot - it won't post_run - but we still want to avoid posting to the API
         self.task.post_run = mock_post_run({})
         result = self.task(*self.task_args)
-        self.assertEqual(result['status'], 'ABORTED')
+        self.assertEqual(result['status'], 'DELETED')
         self.assertIn('no longer exists', result['message'])

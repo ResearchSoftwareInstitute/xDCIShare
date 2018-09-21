@@ -36,7 +36,7 @@ class CloudFactorySubmitAdvanceDirectiveRun(Task):
         try:
             ad = AdvanceDirective.objects.get(id=ad_id)
         except:
-            cf_run.status = 'ABORTED'
+            cf_run.status = 'DELETED'
             cf_run.message = 'AdvanceDirective(id=%r) no longer exists.' % ad_id
             cf_run.save()
             return cf_run.data
