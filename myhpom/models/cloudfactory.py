@@ -2,6 +2,7 @@
 import json
 import datetime
 from django.db import models
+from django.db import transaction
 
 
 class CloudFactoryRun(models.Model):
@@ -64,6 +65,22 @@ class CloudFactoryRun(models.Model):
             }
         )
 
+    @transaction.atomic
+    def save_cloudfactory_response(self, data):
+        """Save the data from a CloudFactory response on the run's url at CloudFactory.
+        """
+        for key in ['status', 'created_at', 'processed_at']:
+            if key in data:
+                self.__dict__[key] = data[key]
+
+        # we're just rewriting the unit_set to match the CloudFactory response. 
+        self.cloudfactoryunit_set.all().delete()
+        for index, unit_data in enumerate(data['units']):
+            cf_unit = CloudFactoryUnit(run=self)
+            cf_unit.save_cloudfactory_response(unit_data)
+
+        self.save()
+
 
 class CloudFactoryUnit(models.Model):
     """Each CloudFactory run contains zero or more units."""
@@ -115,6 +132,17 @@ class CloudFactoryUnit(models.Model):
                 if key[0] != '_'  # exclude utility vals like _state
             }
         )
+
+    def save_cloudfactory_response(self, unit_data):
+        # 'meta' keys are direct fields of the CloudFactoryUnit
+        for key in unit_data['meta']:
+            self.__dict__[key] = unit_data['meta'][key]
+        # rewrite 'input' and 'output' to match unit_data
+        for key in ['input', 'output']:
+            if key in unit_data:
+                self.__dict__[key] = unit_data[key]
+        self.save()
+
 
 
 # The following is an unfortunate hack to overcome the lack of JSONField in Django 1.8:
