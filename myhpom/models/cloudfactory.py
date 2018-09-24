@@ -25,7 +25,7 @@ class CloudFactoryDocumentRun(models.Model):
     document_url = models.ForeignKey(
         DocumentUrl,
         on_delete=models.SET_NULL,
-        null=True,
+        null=True,  # null must be allowed because of the ON DELETE SET NULL.
         help_text="the DocumentUrl object with which this run is associated.",
     )
     document_host = models.CharField(
@@ -101,15 +101,15 @@ class CloudFactoryDocumentRun(models.Model):
         }
         return data
 
-    def save_response(self, response):
+    def save_response_content(self, response_content):
         """update the response_data field and the other fields that are extracted from it.
         """
         # we want to save the response_content to self.response_data no matter what.
-        self.response_content = response.content
+        self.response_content = response_content
         self.save()
 
-        # now we try to unpack the response.content on the assumption that it is json.
-        data = json.loads(response.content)  # throws an error if not json
+        # now we try to unpack the response_content on the assumption that it is json.
+        data = json.loads(response_content)  # throws an error if not json
         CloudFactoryDocumentRun.objects.filter(pk=self.pk).update(
             run_id=data['id'] if 'id' in data else None,
             **{key: data[key] for key in ['status', 'created_at', 'processed_at'] if key in data}

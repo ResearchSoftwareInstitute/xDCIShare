@@ -1,73 +1,76 @@
-
+import os
 from django.test import TestCase
 from django.conf import settings
-from myhpom.models import CloudFactoryRun, CloudFactoryUnit
+from django.core.files.uploadedfile import SimpleUploadedFile
+from django.utils.timezone import now
+from django.utils.dateparse import parse_datetime
+from myhpom.models import CloudFactoryDocumentRun, AdvanceDirective, DocumentUrl
+from myhpom.tests.factories import UserFactory
+from myhpom.models import cloudfactory
+
+PDF_FILENAME = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
 
 
-class CloudFactoryRunModelTestCase(TestCase):
-    """
-    * run created with required data has expected defaults
-    * .post_data contains keys: ['units', 'line_id', 'callback_url']
-    * .data contains all keys defined in the model.
-    """
-
-    def test_create_run(self):
-        line_id = settings.CLOUDFACTORY_LINE_ID
-        run = CloudFactoryRun.objects.create(line_id=line_id)
-        self.assertEqual(run.post_data, {'line_id': line_id, 'callback_url': '', 'units': []})
-        self.assertEqual(run.data['units'], [])
-        for key in ['run_id', 'callback_url', 'status', 'message']:
-            self.assertEqual(run.data[key], '')
-        for key in ['created_at', 'processed_at']:
-            self.assertIsNone(run.data[key])
-
-
-class CloudFactoryUnitModelTestCase(TestCase):
-    """
-    * unit created with required data has expected defaults
-    * .input is a dict, not a string, in all user-facing object states
-    * .output is a dict, not a string, in all user-facing object states
-    * .post_data contains the content of .input
-    * .data contains the all the keys defined in the model (with .input and .output as objects)
-    """
-
+class CloudFactoryDocumentRunModelTestCase(TestCase):
     def setUp(self):
-        line_id = settings.CLOUDFACTORY_LINE_ID
-        self.run = CloudFactoryRun.objects.create(line_id=line_id)
-        self.unit = CloudFactoryUnit.objects.create(run=self.run)
+        self.document_url = DocumentUrl.objects.create(
+            advancedirective=AdvanceDirective.objects.create(
+                user=UserFactory(),
+                share_with_ehs=False,
+                document=SimpleUploadedFile(
+                    os.path.basename(PDF_FILENAME), open(PDF_FILENAME, 'rb').read()
+                ),
+                valid_date=now(),
+            )
+        )
 
-    def test_create_unit(self):
-        self.assertEqual(self.unit.run, self.run)
-        for key in ['status', 'input', 'output']:
-            self.assertEqual(self.unit.data[key], '')
-        for key in ['created_at', 'processed_at']:
-            self.assertIsNone(self.unit.data[key])
-
-    def test_unit_input_output(self):
-        """since Django 1.8 doesn't have a JSONField, we're storing input and output as strings.
-        This test just ensures that they are stored and presented correctly.
+    def test_create_default_run(self):
         """
+        * run can be created with no arguments: 
+            * .run_id is null.
+            * .create_post_data() raises AttributeError because it requires document_url
+        """
+        run = CloudFactoryDocumentRun.objects.create()
+        self.assertIsNone(run.run_id)
+        self.assertIsNone(run.document_url)
+        with self.assertRaises(AttributeError):
+            run.create_post_data()
 
-        input = {
-            'state': 'NC',
-            'full_name': 'Joe Tester',
-            'date_signed': '2018-09-18',
-            'pdf_url': '',
-        }
-        output = {
-            'owner_name_matches': 'true',
-            'witness_signature_1': 'true',
-            'witness_signature_2': 'false',
-            'notarized': 'true',
-            'signed_by_owner': 'not applicable',
-        }
-        self.unit.input = input
-        self.unit.output = output
-        self.unit.save()
+    def test_create_run_with_document_url(self):
+        """
+        * run created with .document_url returns post_data with expected keys
+        """
+        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
+        self.assertEqual(run.document_url.id, self.document_url.id)
+        post_data = run.create_post_data()
+        for key in ['line_id', 'callback_url', 'units']:
+            self.assertIn(key, post_data)
+        for key in ['full_name', 'state', 'pdf_url', 'date_signed']:
+            self.assertIn(key, post_data['units'][0])
 
-        self.assertEqual(self.unit.input, input)
-        self.assertEqual(self.unit.output, output)
+    def test_run_save_response_content_created(self):
+        """
+        * the .save_response_content(content) method:
+            * puts the value of content in the run .response_content attribute, no matter what.
+            * throws a ValueError if the response_content is not json-parsable 
+            * puts any 'status', 'created_at', or 'processed_at' keys into those fields       
+        """
+        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
 
-        unit = CloudFactoryUnit.objects.get(id=self.unit.id)
-        self.assertEqual(unit.input, input)
-        self.assertEqual(unit.output, output)
+        # this represents a typical "201 Created" response
+        response_content = r'{"id":"SOME_RUN_ID","line_id":"SOME_LINE_ID","status":"Processing","created_at":"2018-09-24T22:27:53.000Z"}'
+        run.save_response_content(response_content)
+        self.assertEqual(run.run_id, "SOME_RUN_ID")
+        self.assertEqual(run.status, "Processing")
+        self.assertEqual(run.created_at, parse_datetime("2018-09-24T22:27:53.000Z"))
+
+    def test_run_save_response_content_unprocessable(self):
+        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
+
+        # this represents a "422 Unprocessable Entity" response
+        response_content = r'{"message":"Invalid request. \"state\" is missing in the request."}'
+        run.save_response_content(response_content)
+        self.assertIsNone(run.run_id)
+        self.assertEqual(run.status, cloudfactory.STATUS_NEW)
+        self.assertIsNone(run.created_at)
+        self.assertEqual(run.response_content, response_content)
