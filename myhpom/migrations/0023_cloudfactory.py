@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
+import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
@@ -12,28 +13,18 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='CloudFactoryRun',
+            name='CloudFactoryDocumentRun',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('line_id', models.CharField(help_text=b'the id of the production line at CloudFactory.', max_length=64)),
-                ('run_id', models.CharField(default=b'', help_text=b'The id of this production run at CloudFactory.', max_length=64, blank=True)),
-                ('callback_url', models.CharField(default=b'', help_text=b'The URL to which CloudFactory will submit the results of the production run.', max_length=1024, blank=True)),
-                ('status', models.CharField(default=b'', help_text=b'The status of the run at CloudFactory.', max_length=32, blank=True)),
-                ('message', models.TextField(help_text=b'Any message returned by CloudFactory.', blank=True)),
+                ('document_host', models.CharField(default=b'', help_text=b'The document host to which this run is connected.', max_length=64, blank=True)),
+                ('document_url', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='myhpom.DocumentUrl', help_text=b'the DocumentUrl object with which this run is associated.', null=True)),
+                ('inserted_at', models.DateTimeField(help_text=b'When the run instance was inserted into our system.', auto_now_add=True)),
+                ('run_id', models.CharField(help_text=b'The id of this production run at CloudFactory.', unique=True, max_length=32)),
+                ('status', models.CharField(default=b'NEW', help_text=b'The status of the run.', max_length=16, choices=[(b'NEW', b'NEW'), (b'DELETED', b'DELETED'), (b'Processing', b'Processing'), (b'Processed', b'Processed')])),
                 ('created_at', models.DateTimeField(help_text=b'When the run was created at CloudFactory.', null=True, blank=True)),
                 ('processed_at', models.DateTimeField(help_text=b'When run processing was finished at CloudFactory.', null=True, blank=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='CloudFactoryUnit',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('status', models.CharField(default=b'', help_text=b'The status of the unit at CloudFactory.', max_length=32, blank=True)),
-                ('created_at', models.DateTimeField(help_text=b'When the unit was created at CloudFactory.', null=True, blank=True)),
-                ('processed_at', models.DateTimeField(help_text=b'When unit processing was finished at CloudFactory.', null=True, blank=True)),
-                ('input', models.TextField(default=b'', help_text=b'JSON input to CloudFactory; use to validate the response.', blank=True)),
-                ('output', models.TextField(default=b'', help_text=b'JSON output from CloudFactory', blank=True)),
-                ('run', models.ForeignKey(help_text=b'The CloudFactory production run in which this unit is processed.', to='myhpom.CloudFactoryRun')),
+                ('post_data', models.TextField(default=b'', help_text=b'The raw data that was submitted to CloudFactory when this run was created', blank=True)),
+                ('response_content', models.TextField(default=b'', help_text=b'The raw content of the most recent response from CloudFactory', blank=True)),
             ],
         ),
     ]

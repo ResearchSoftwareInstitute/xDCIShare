@@ -2,30 +2,52 @@
 import json
 import datetime
 from django.db import models
+from django.core.urlresolvers import reverse
+from django.conf import settings
+from myhpom.models import DocumentUrl
+
+# from myhpom.models.user import User
+
+STATUS_NEW = 'NEW'
+STATUS_DELETED = 'DELETED'
+STATUS_PROCESSING = 'Processing'
+STATUS_PROCESSED = 'Processed'
+STATUS_VALUES = [STATUS_NEW, STATUS_DELETED, STATUS_PROCESSING, STATUS_PROCESSED]
+STATUS_MAX_LENGTH = 16
+STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
 
 
-class CloudFactoryRun(models.Model):
-    """Store information about current and past CloudFactory runs."""
+class CloudFactoryDocumentRun(models.Model):
+    """Store information about current and past CloudFactory document runs
+    (processing for AdvanceDirective.DocumentUrl objects).
+    """
 
-    line_id = models.CharField(
-        max_length=64, help_text="the id of the production line at CloudFactory."
+    document_url = models.ForeignKey(
+        DocumentUrl,
+        on_delete=models.SET_NULL,
+        null=True,
+        help_text="the DocumentUrl object with which this run is associated.",
     )
-    run_id = models.CharField(
+    document_host = models.CharField(
         max_length=64,
         blank=True,
         default="",
-        help_text="The id of this production run at CloudFactory.",
+        help_text="The document host to which this run is connected.",
     )
-    callback_url = models.CharField(
-        max_length=1024,
-        blank=True,
-        default="",
-        help_text="The URL to which CloudFactory will submit the results of the production run.",
+    inserted_at = models.DateTimeField(
+        auto_now_add=True, help_text="When the run instance was inserted into our system."
+    )
+
+    # The following four fields are pulled out of the response_data for use in the admin.
+    run_id = models.CharField(
+        max_length=32, unique=True, help_text="The id of this production run at CloudFactory."
     )
     status = models.CharField(
-        max_length=32, blank=True, default="", help_text="The status of the run at CloudFactory."
+        choices=STATUS_CHOICES,
+        max_length=STATUS_MAX_LENGTH,
+        default=STATUS_NEW,
+        help_text="The status of the run.",
     )
-    message = models.TextField(blank=True, help_text="Any message returned by CloudFactory.")
     created_at = models.DateTimeField(
         blank=True, null=True, help_text="When the run was created at CloudFactory."
     )
@@ -33,114 +55,58 @@ class CloudFactoryRun(models.Model):
         blank=True, null=True, help_text="When run processing was finished at CloudFactory."
     )
 
-    def __repr__(self):
-        keys = [key for key in ['id', 'line_id'] if key in self.__dict__.keys()]
-        return u"%s(%s)" % (
-            self.__class__.__name__,
-            u", ".join([u"%s=%r" % (key, self.__dict__[key]) for key in keys]),
-        )
-
-    @property
-    def post_data(self):
-        """create a data to POST the run to CloudFactory"""
-        return dict(
-            units=[unit.post_data for unit in self.cloudfactoryunit_set.all()],
-            **{key: self.data[key] for key in ['line_id', 'callback_url']}
-        )
-
-    @property
-    def data(self):
-        """working with celery and email requires being able to provide json for the instance"""
-        return dict(
-            units=[unit.data for unit in self.cloudfactoryunit_set.all()],
-            **{
-                key: (
-                    str(val)  # datetime.datetime and datetime.date as str
-                    if isinstance(val, datetime.datetime) or isinstance(val, datetime.date)
-                    else val
-                )
-                for key, val in self.__dict__.items()
-                if key[0] != '_'  # exclude utility vals like _state
-            }
-        )
-
-
-class CloudFactoryUnit(models.Model):
-    """Each CloudFactory run contains zero or more units."""
-
-    run = models.ForeignKey(
-        CloudFactoryRun,
-        on_delete=models.CASCADE,
-        help_text="The CloudFactory production run in which this unit is processed.",
-    )
-    status = models.CharField(
-        max_length=32, blank=True, default="", help_text="The status of the unit at CloudFactory."
-    )
-    created_at = models.DateTimeField(
-        blank=True, null=True, help_text="When the unit was created at CloudFactory."
-    )
-    processed_at = models.DateTimeField(
-        blank=True, null=True, help_text="When unit processing was finished at CloudFactory."
-    )
-    input = models.TextField(
+    post_data = models.TextField(
         blank=True,
         default="",
-        help_text="JSON input to CloudFactory; use to validate the response.",
+        help_text="The raw data that was submitted to CloudFactory when this run was created",
     )
-    output = models.TextField(blank=True, default="", help_text="JSON output from CloudFactory")
+    response_content = models.TextField(
+        blank=True,
+        default="",
+        help_text="The raw content of the most recent response from CloudFactory",
+    )
 
-    def __repr__(self):
-        keys = [key for key in ['id', 'run_id'] if key in self.__dict__.keys()]
-        return u"%s(%s)" % (
-            self.__class__.__name__,
-            u", ".join([u"%s=%r" % (key, self.__dict__[key]) for key in keys]),
+    def __unicode__(self):
+        return (
+            "%s (%s %s)"
+            % (self.run_id, self.status, self.processed_at or self.created_at or self.inserted_at)
+        ).strip()
+
+    def create_post_data(self):
+        """Return the post data that CloudFactory expects when creating a run.
+        see https://docs.google.com/document/d/1VHD3iVq2Ky_SblQScv9O7tlphv9QHllMpGvn-bkWM_8/edit
+        """
+        ad = self.document_url.advancedirective
+        unit_data = {
+            'full_name': ad.user.get_full_name(),
+            'state': ad.user.userdetails.state.name if ad.user.userdetails.state else None,
+            'pdf_url': self.document_host + self.document_url.url,
+            'date_signed': str(ad.valid_date),
+        }
+        # Only submit non-blank values, to ensure valid input. (CloudFactory accepts blank values
+        # on POST, even though those values are invalid, but does not accept missing keys.)
+        # (The User's state can be null in our models. Others are ensured by model validations.)
+
+        unit_post_data = {k: v for k, v in unit_data.items() if bool(v) is True}
+
+        data = {
+            "line_id": settings.CLOUDFACTORY_LINE_ID,
+            "callback_url": self.document_host + reverse('myhpom:cloudfactory_response'),
+            "units": [unit_post_data],
+        }
+        return data
+
+    def save_response(self, response):
+        """update the response_data field and the other fields that are extracted from it.
+        """
+        # we want to save the response_content to self.response_data no matter what.
+        self.response_content = response.content
+        self.save()
+
+        # now we try to unpack the response.content on the assumption that it is json.
+        data = json.loads(response.content)  # throws an error if not json
+        CloudFactoryDocumentRun.objects.filter(pk=self.pk).update(
+            run_id=data['id'] if 'id' in data else None,
+            **{key: data[key] for key in ['status', 'created_at', 'processed_at'] if key in data}
         )
-
-    @property
-    def post_data(self):
-        """create data to POST the unit to CloudFactory"""
-        return self.data['input']
-
-    @property
-    def data(self):
-        """working with celery and email requires being able to provide json for the instance"""
-        return dict(
-            **{
-                key: (
-                    str(val)  # datetime.datetime and datetime.date as str
-                    if isinstance(val, datetime.datetime) or isinstance(val, datetime.date)
-                    else val
-                )
-                for key, val in self.__dict__.items()
-                if key[0] != '_'  # exclude utility vals like _state
-            }
-        )
-
-
-# The following is an unfortunate hack to overcome the lack of JSONField in Django 1.8:
-# convert the CloudFactoryUnit.input and .output fields to/from string for the database/python.
-# -- When we upgrade to Django 1.11 we can instead use django.contrib.postgres.fields.JSONField
-#   (but we'll need to be careful about migrating the database at that point!)
-
-
-def cloudfactory_unit_post_init_post_save(sender, instance, **kwargs):
-    """in python the input field is an object, not a string"""
-    if instance.input and (isinstance(instance.input, str) or isinstance(instance.input, unicode)):
-        instance.input = json.loads(instance.input)
-    if instance.output and (
-        isinstance(instance.output, str) or isinstance(instance.output, unicode)
-    ):
-        instance.output = json.loads(instance.output)
-
-
-def cloudfactory_unit_pre_save(sender, instance, **kwargs):
-    """in the database the input field is a string (TextField)"""
-    if not isinstance(instance.input, str) and not isinstance(instance.input, unicode):
-        instance.input = json.dumps(instance.input)
-    if not isinstance(instance.output, str) and not isinstance(instance.output, unicode):
-        instance.output = json.dumps(instance.output)
-
-
-models.signals.post_init.connect(cloudfactory_unit_post_init_post_save, sender=CloudFactoryUnit)
-models.signals.post_save.connect(cloudfactory_unit_post_init_post_save, sender=CloudFactoryUnit)
-models.signals.pre_save.connect(cloudfactory_unit_pre_save, sender=CloudFactoryUnit)
+        self.refresh_from_db()

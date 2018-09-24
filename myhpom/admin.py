@@ -1,10 +1,8 @@
 from django.contrib import admin
-
 from myhpom.models.state import State
 from myhpom.models.state_requirement import StateRequirement
 from myhpom.models.state_requirement_link import StateRequirementLink
 from myhpom.models.document import AdvanceDirective, DocumentUrl
-
 from django.utils.safestring import mark_safe
 
 

@@ -2,7 +2,7 @@ import mimetypes
 from ipware import get_client_ip
 from django.http import Http404, FileResponse
 from django.utils.timezone import now
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_POST
 from myhpom.models import DocumentUrl
 
 
@@ -38,3 +38,8 @@ def document_url(request, key):
     )
     response['Content-Disposition'] = 'inline; filename="%s"' % doc_url.filename
     return response
+
+@require_POST
+def cloudfactory_response(request):
+    """receive the response from CloudFactory with processed document information
+    """

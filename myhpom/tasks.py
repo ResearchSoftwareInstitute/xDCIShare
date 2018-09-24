@@ -7,94 +7,58 @@ from django.template import Context
 from celery import shared_task
 from celery.task import Task
 from celery.signals import task_failure
-from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryRun, CloudFactoryUnit
+from myhpom.models.document import DocumentUrl
+from myhpom.models import cloudfactory
 
 
 @shared_task
-class CloudFactorySubmitAdvanceDirectiveRun(Task):
-    def run(self, ad_id, line_id, document_host, callback_url):
+class CloudFactorySubmitDocumentRun(Task):
+    def run(self, document_url_id, document_host=None):
         """
         ## Arguments
-        * ad_id = the database id for the AdvanceDirective
-        * line_id = the id of the CloudFactory production line to submit this request to.
-        * document_host = the host (incl. protocol/scheme) to use for the DocumentURL
-        * callback_url = the URL to use with the callback request
+        * document_url_id = the database id for the DocumentUrl that is being submitted
+        * document_host = the host (incl. protocol/scheme) to use for the DocumentURL & callback
+            -- configurable so that we can tell CloudFactory which server to interact with
+            (the document_host and the callback_host are assumed the same)
 
         ## Task Process
-        - create an expiring DocumentUrl for the AdvanceDirective
         - submit the DocumentUrl to the CloudFactory (test) endpoint
         - store the status of the submitted document
-        - if the AdvanceDirective no longer exists, abort the task without an Exception.
-            - the AdvanceDirective might no longer exist by the time celery picks it up,
+        - if the DocumentUrl no longer exists, abort the task without an Exception.
+            - the DocumentUrl might no longer exist by the time celery picks it up,
             - or the document it points to might have been removed.
         - if an error occurs in this process, send support email.
         """
-        cf_run = CloudFactoryRun.objects.create(line_id=line_id, callback_url=callback_url or "")
+        cf_run = cloudfactory.CloudFactoryDocumentRun(document_host=document_host or '')
 
-        # If the AdvanceDirective has been deleted, abort the task with a message
+        # If the DocumentUrl has been deleted, abort the task with a message
         # -- no need to admin support email, this is an expected case.
         try:
-            ad = AdvanceDirective.objects.get(id=ad_id)
+            cf_run.document_url = DocumentUrl.objects.get(id=document_url_id)
         except:
-            cf_run.status = 'ABORTED'
-            cf_run.message = 'AdvanceDirective(id=%r) no longer exists.' % ad_id
+            cf_run.status = cloudfactory.STATUS_DELETED
             cf_run.save()
-            return cf_run.data
+            return cf_run.id
 
         # Any exception in the rest of the task should result in support email
-        document_url = DocumentUrl.objects.create(advancedirective=ad)
-        CloudFactoryUnit.objects.create(
-            run=cf_run, input=self.create_unit_input(document_url, document_host)
-        )
+        cf_run.post_data = cf_run.create_post_data()
+        cf_run.save()
         response = self.post_run(cf_run.post_data)
-        response_data = response.json()
+        cf_run.save_response(response)  # throws an error if response.content is not json
 
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
         if response.status_code != 201:
-            cf_run.__dict__.update(
-                status=str(response.status_code), message=response_data.get('message')
-            )
-            cf_run.save()
             raise ValueError(
-                "%s\n\n== RUN POST DATA ==\n%s\n\n== FULL RUN DATA ==\n%s"
-                % (
-                    response_data['message'],
-                    json.dumps(cf_run.post_data, indent=2),
-                    json.dumps(cf_run.data, indent=2),
-                )
+                "%s\n\n== POST DATA ==\n%s\n\n== RESPONSE CONTENT ==\n%s"
+                % (json.dumps(cf_run.post_data, indent=2), cf_run.response_content)
             )
 
-        cf_run.__dict__.update(
-            run_id=response_data['id'],
-            status=response_data['status'],
-            created_at=response_data['created_at'],
-        )
-        cf_run.save()
-        return cf_run.data  # json-serializable by design
+        return cf_run.pk
 
     # separating this so it can be mocked during tests, and not actually hit CloudFactory then.
     def post_run(self, post_data):
         return requests.post(settings.CLOUDFACTORY_API_URL + '/runs', json=post_data)
-
-    def create_unit_input(self, document_url, document_host):
-        """For a given DocumentUrl object, return the unit input that CloudFactory expects.
-        see https://docs.google.com/document/d/1VHD3iVq2Ky_SblQScv9O7tlphv9QHllMpGvn-bkWM_8/edit
-        """
-        ad = document_url.advancedirective
-        data = {
-            'full_name': ' '.join(
-                name
-                for name in [ad.user.first_name, ad.user.userdetails.middle_name, ad.user.last_name]
-                if name != ''  # in the not-uncommon case that one of the names is blank
-            ),
-            'state': ad.user.userdetails.state.name if ad.user.userdetails.state else None,
-            'pdf_url': "%s%s" % (document_host or '', document_url.url),
-            'date_signed': str(ad.valid_date),
-        }
-        # only non-blank values are submitted, to prevent present but useless values
-        unit_input = {k: v for k, v in data.items() if bool(v) is True}
-        return unit_input
 
 
 @shared_task
