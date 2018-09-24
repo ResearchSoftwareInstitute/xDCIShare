@@ -21,6 +21,14 @@ def get_username(email):
     return base64.urlsafe_b64encode(h.digest()).strip('=')
 
 
+# replace the built-in get_full_name() with one that includes the middle_name, if any.
+User.get_full_name = lambda self: ' '.join(
+    name
+    for name in [self.first_name, self.userdetails.middle_name, self.last_name]
+    if name != ''  # in the not-uncommon case that one of the names is blank
+)
+
+
 def user_pre_save_receiver(sender, instance, **kwargs):
     """
     * Ensure that the User fields are valid before saving:
