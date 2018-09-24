@@ -40,7 +40,12 @@ class CloudFactoryDocumentRun(models.Model):
 
     # The following four fields are pulled out of the response_data for use in the admin.
     run_id = models.CharField(
-        max_length=32, unique=True, help_text="The id of this production run at CloudFactory."
+        max_length=32,
+        unique=True,
+        null=True,
+        blank=True,
+        default=None,  # force null if blank
+        help_text="The id of this production run at CloudFactory.",
     )
     status = models.CharField(
         choices=STATUS_CHOICES,
