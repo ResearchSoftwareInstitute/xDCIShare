@@ -43,22 +43,18 @@ class CloudFactorySubmitDocumentRun(Task):
         # Any exception in the rest of the task should result in support email
         cf_run.post_data = cf_run.create_post_data()
         cf_run.save()
-        response = self.post_run(cf_run.post_data)
+
+        response = requests.post(settings.CLOUDFACTORY_API_URL + '/runs', json=cf_run.post_data)
         cf_run.save_response(response)  # throws an error if response.content is not json
 
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
         if response.status_code != 201:
             raise ValueError(
-                "%s\n\n== POST DATA ==\n%s\n\n== RESPONSE CONTENT ==\n%s"
+                "== POST DATA ==\n%s\n\n== RESPONSE CONTENT ==\n%s"
                 % (json.dumps(cf_run.post_data, indent=2), cf_run.response_content)
             )
-
         return cf_run.pk
-
-    # separating this so it can be mocked during tests, and not actually hit CloudFactory then.
-    def post_run(self, post_data):
-        return requests.post(settings.CLOUDFACTORY_API_URL + '/runs', json=post_data)
 
 
 @shared_task
