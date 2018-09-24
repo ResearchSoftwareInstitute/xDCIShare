@@ -79,7 +79,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 0
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # The numeric mode to set newly-uploaded files to. The value should be
@@ -203,7 +203,7 @@ TEMPLATES = [
                 "myhpom.context_processors.settings",
             ],
         },
-    },
+        },
 ]
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -253,7 +253,7 @@ EMAIL_SUBJECT_PREFIX = '[MMH] '
 # When provided, a gtags.js block is included on all pages.
 GOOGLE_ANALYTICS_ID = None
 
-# -- DOCUMENT URL SETTINGS -- 
+# -- DOCUMENT URL SETTINGS --
 
 # Amount of time after creation that a Document URL expires, as a datetime.timedelta (easy to use!)
 DOCUMENT_URL_EXPIRES_IN = timedelta(hours=48)
@@ -284,16 +284,16 @@ DOCUMENT_URL_IP_RANGES = [
     ]
 ]
 
-# -- CLOUDFACTORY SETTINGS -- 
+# -- CLOUDFACTORY SETTINGS --
 # (myhpom CloudFactory integration)
+# -- Real values for these settings are stored in the local environment.
 
-CLOUDFACTORY_PRODUCTION_LINES = {'TEST': 'zUyZv59Mxi'}
-CLOUDFACTORY_AUTH = {
-    'USERNAME': 'a9a8d5b3289c42c29e5229b31c971f20',
-    'PASSWORD': 'c5b2debb303a47428b0beef036a478f4',
-}
-CLOUDFACTORY_API_URL = (
-    'https://%(USERNAME)s:%(PASSWORD)s@api.cloudfactory.com/v4' % CLOUDFACTORY_AUTH
+CLOUDFACTORY_LINE_ID = 'NOTAREALPRODUCTIONLINE'
+CLOUDFACTORY_AUTH_USERNAME = 'NOTAREALUSERNAME'
+CLOUDFACTORY_AUTH_PASSWORD = 'NOTAREALPASSWORD'
+CLOUDFACTORY_API_URL = 'https://%s:%s@api.cloudfactory.com/v4' % (
+    CLOUDFACTORY_AUTH_USERNAME,
+    CLOUDFACTORY_AUTH_PASSWORD,
 )
 
 ##################
@@ -337,7 +337,7 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
             'datefmt' : "%d/%b/%Y %H:%M:%S"
         },
         'simple': {
@@ -351,7 +351,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/hydroshare/log/system.log',
             'formatter': 'simple',
-            'maxBytes': 1024*1024*15, # 15MB
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
         'djangolog': {
@@ -359,7 +359,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/hydroshare/log/django.log',
             'formatter': 'verbose',
-            'maxBytes': 1024*1024*15, # 15MB
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
         'hydrosharelog': {
@@ -367,7 +367,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/hydroshare/log/hydroshare.log',
             'formatter': 'verbose',
-            'maxBytes': 1024*1024*15, # 15MB
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
         'mail_admins': {
@@ -393,8 +393,8 @@ LOGGING = {
             'handlers': ['hydrosharelog', 'mail_admins'],
             'propagate': False,
             'level': 'DEBUG'
-        },
-    }
+    },
+}
 }
 
 X_FRAME_OPTIONS = "deny"
