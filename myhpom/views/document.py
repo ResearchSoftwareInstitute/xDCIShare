@@ -43,3 +43,4 @@ def document_url(request, key):
 def cloudfactory_response(request):
     """receive the response from CloudFactory with processed document information
     """
+    raise Http404()
