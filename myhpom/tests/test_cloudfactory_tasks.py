@@ -14,7 +14,7 @@ import myhpom
 
 FIXTURE_PATH = os.path.join(os.path.dirname(myhpom.__file__), 'tests', 'fixtures')
 PDF_FILENAME = os.path.join(FIXTURE_PATH, 'afile.pdf')  # can be anything
-LINE_ID = settings.CLOUDFACTORY_PRODUCTION_LINES['TEST']
+LINE_ID = settings.CLOUDFACTORY_LINE_ID
 MOCK_REQUEST_DATA = [
     json.load(f)
     for f in [

@@ -12,7 +12,7 @@ class CloudFactoryRunModelTestCase(TestCase):
     """
 
     def test_create_run(self):
-        line_id = settings.CLOUDFACTORY_PRODUCTION_LINES['TEST']
+        line_id = settings.CLOUDFACTORY_LINE_ID
         run = CloudFactoryRun.objects.create(line_id=line_id)
         self.assertEqual(run.post_data, {'line_id': line_id, 'callback_url': '', 'units': []})
         self.assertEqual(run.data['units'], [])
@@ -32,7 +32,7 @@ class CloudFactoryUnitModelTestCase(TestCase):
     """
 
     def setUp(self):
-        line_id = settings.CLOUDFACTORY_PRODUCTION_LINES['TEST']
+        line_id = settings.CLOUDFACTORY_LINE_ID
         self.run = CloudFactoryRun.objects.create(line_id=line_id)
         self.unit = CloudFactoryUnit.objects.create(run=self.run)
 
