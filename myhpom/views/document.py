@@ -46,21 +46,26 @@ def cloudfactory_response(request):
     """
     Receive the response from CloudFactory with processed document information.
     """
-    if 'id' not in request.POST:
-        return HttpResponseBadRequest()
-
     try:
-        run = CloudFactoryDocumentRun.objects.get(run_id=request.POST['id'])
+        body = request.body
+        json_body = json.loads(body)
+
+        if 'id' not in json_body:
+            return HttpResponseBadRequest()
+
+        run = CloudFactoryDocumentRun.objects.get(run_id=json_body['id'])
+    except ValueError:
+        return HttpResponseBadRequest()
     except CloudFactoryDocumentRun.DoesNotExist:
         raise Http404()
     else:
         # A run in a non-final state shouldn't be changed/updated again. Log an
         # error.
-        if run.is_status_final():
+        if run.status in CloudFactoryDocumentRun.STATUS_FINAL_VALUES:
             return HttpResponseBadRequest()
 
-        CloudFactoryDocumentRun.objects \
-            .filter(run_id=request.POST['id']) \
-            .update(status=CloudFactoryDocumentRun.STATUS_PROCESSED)
+        # We already know that the body is parseable JSON so there is no need to
+        # try/catch here:
+        run.save_response_content(body)
 
         return HttpResponse()

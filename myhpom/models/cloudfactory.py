@@ -92,10 +92,10 @@ class CloudFactoryDocumentRun(models.Model):
     )
 
     def __unicode__(self):
-        return (
+        return unicode(
             "%s (%s %s)"
             % (self.run_id, self.status, self.processed_at or self.created_at or self.inserted_at)
-        ).strip()
+        )
 
     def create_post_data(self):
         """Return the post data that CloudFactory expects when creating a run.
@@ -122,7 +122,10 @@ class CloudFactoryDocumentRun(models.Model):
         return data
 
     def save_response_content(self, response_content):
-        """update the response_data field and the other fields that are extracted from it.
+        """
+        Update the response_data field and the other fields that are extracted from it.
+
+        Raises ValueError when content is not parseable JSON.
         """
         # we want to save the response_content to self.response_data no matter what.
         self.response_content = response_content
@@ -131,17 +134,41 @@ class CloudFactoryDocumentRun(models.Model):
         # now we try to unpack the response_content on the assumption that it is json.
         data = json.loads(response_content)  # throws an error if not json
 
-        if 'id' in data:
+        # The first time we get data from CF we store the pertinent information
+        # which shouldn't change again.
+        if not self.created_at and 'created_at' in data.keys():
+            self.created_at = parse_datetime(data['created_at'])
+        if not self.run_id and 'id' in data.keys():
             self.run_id = data['id']
+
         if 'status' in data:
             self.status = data['status']
-        if 'created_at' in data:
-            self.created_at = parse_datetime(data['created_at'])
         if 'processed_at' in data:
             self.processed_at = parse_datetime(data['processed_at'])
         self.save()
 
-    def is_status_final(self):
-        """ Returns True when this object's status is in a final state (no more
-        transitions expected or possible) """
-        return self.status in self.STATUS_FINAL_VALUES
+    @property
+    def is_successful_run(self):
+        """
+        Returns True when this run finished successfully, and all the outputs
+        checked by the run are true (or not applicable)
+        """
+        if self.status != self.STATUS_PROCESSED:
+            return False
+        try:
+            data = json.loads(self.response_content)
+            if 'units' not in data.keys():
+                return False
+            units = data['units']
+            if len(units) == 0 or 'output' not in units[0].keys():
+                return False
+
+            # If all the values are either true or not applicable then this
+            # would be considered a successful run:
+            #
+            # Note that we consider only the first unit of work - which at the
+            # moment is all we create.
+            output = units[0]['output']
+            return set(output.values()) < set(['true', 'not applicable'])
+        except ValueError:
+            return False

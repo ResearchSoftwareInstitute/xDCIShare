@@ -74,8 +74,8 @@ class AdvanceDirective(models.Model):
         image_filenames = gs.render(pdf_filename, res=res, allpages=allpages, **gsargs)
         return image_filenames
 
-    def __str__(self):
-        return self.document.name
+    def __unicode__(self):
+        return unicode(self.document.name)
 
 
 def remove_documents_on_delete(sender, instance, using, **kwargs):

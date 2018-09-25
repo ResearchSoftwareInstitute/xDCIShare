@@ -1,13 +1,12 @@
-import copy
-import os
 import json
+import os
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
 from myhpom.models import CloudFactoryDocumentRun
 
 CF_PATH = os.path.join(os.path.dirname(__file__), 'fixtures', 'cloudfactory')
-SUCCESS_DATA = json.load(open(os.path.join(CF_PATH, 'callback_success.json'), 'rb'))
+SUCCESS_DATA = open(os.path.join(CF_PATH, 'callback_success.json')).read()
 
 
 class CloudfactoryResponseTest(TestCase):
@@ -27,7 +26,7 @@ class CloudfactoryResponseTest(TestCase):
 
     def test_no_id(self):
         # Record doesn't exist on our end - we want a log of this.
-        response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA)
+        response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')
         self.assertEqual(404, response.status_code)
 
     def test_already_finished(self):
@@ -37,7 +36,7 @@ class CloudfactoryResponseTest(TestCase):
         for status in CloudFactoryDocumentRun.STATUS_FINAL_VALUES:
             run.status = status
             run.save()
-            response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA)
+            response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')
             self.assertEqual(400, response.status_code, '%s should fail' % status)
 
     def test_failed_review(self):
@@ -46,28 +45,28 @@ class CloudfactoryResponseTest(TestCase):
 
         # Try all the possible keys that could fail - they should all cause the
         # run to transition to finished.
-        failed_data = copy.deepcopy(SUCCESS_DATA)
+        failed_data = json.loads(SUCCESS_DATA)
         for output in failed_data['units'][0]['output'].keys():
             failed_data['units'][0]['output'][output] = False
             run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
             run.save()
-            response = self.client.post(reverse('myhpom:cloudfactory_response'), data=failed_data)
+            response = self.client.post(reverse('myhpom:cloudfactory_response'), data=json.dumps(failed_data), content_type='application/json')
             self.assertEqual(200, response.status_code, '%s=False should return 200' % output)
             run.refresh_from_db()
+            # The status and the response should be saved:
             self.assertEqual(
                 CloudFactoryDocumentRun.STATUS_PROCESSED, run.status,
                 '%s=False should transition to processed' % output)
-            # TODO is there another status that should be set here that the
-            # human readable side would see?
+            self.assertEqual(json.dumps(failed_data), run.response_content)
 
     def test_successful_review(self):
         # We get back a response that says any of the output criteria failed
         run = CloudFactoryDocumentRun.objects.create(
             run_id='E7gVrtVQJx', status=CloudFactoryDocumentRun.STATUS_PROCESSING)
 
-        response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA)
+        response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')
         self.assertEqual(200, response.status_code)
         run.refresh_from_db()
+        # The status and the response should be saved:
         self.assertEqual(CloudFactoryDocumentRun.STATUS_PROCESSED, run.status)
-        # TODO is there another status that should be set here that the
-        # human readable side would see?
+        self.assertEqual(SUCCESS_DATA, run.response_content)
