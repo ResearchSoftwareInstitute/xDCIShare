@@ -1,9 +1,10 @@
+import json
 import mimetypes
 from ipware import get_client_ip
-from django.http import Http404, FileResponse
+from django.http import HttpResponseBadRequest, Http404, FileResponse, HttpResponse
 from django.utils.timezone import now
 from django.views.decorators.http import require_GET, require_POST
-from myhpom.models import DocumentUrl
+from myhpom.models import DocumentUrl, CloudFactoryDocumentRun
 
 
 @require_GET
@@ -42,6 +43,24 @@ def document_url(request, key):
 
 @require_POST
 def cloudfactory_response(request):
-    """receive the response from CloudFactory with processed document information
     """
-    raise Http404()
+    Receive the response from CloudFactory with processed document information.
+    """
+    if 'id' not in request.POST:
+        return HttpResponseBadRequest()
+
+    try:
+        run = CloudFactoryDocumentRun.objects.get(run_id=request.POST['id'])
+    except CloudFactoryDocumentRun.DoesNotExist:
+        raise Http404()
+    else:
+        # A run in a non-final state shouldn't be changed/updated again. Log an
+        # error.
+        if run.is_status_final():
+            return HttpResponseBadRequest()
+
+        CloudFactoryDocumentRun.objects \
+            .filter(run_id=request.POST['id']) \
+            .update(status=CloudFactoryDocumentRun.STATUS_PROCESSED)
+
+        return HttpResponse()

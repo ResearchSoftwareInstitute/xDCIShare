@@ -22,7 +22,7 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_PROCESSING = 'Processing'
     STATUS_PROCESSED = 'Processed'
     STATUS_ABORTED = 'Aborted'
-    STATUS_VALUES = [
+    STATUS_VALUES = (
         STATUS_NEW,
         STATUS_DELETED,
         STATUS_TIMEOUT,
@@ -31,7 +31,14 @@ class CloudFactoryDocumentRun(models.Model):
         STATUS_PROCESSING,
         STATUS_PROCESSED,
         STATUS_ABORTED,
-    ]
+    )
+    STATUS_FINAL_VALUES = (
+        STATUS_DELETED,
+        STATUS_NOTFOUND,
+        STATUS_UNPROCESSABLE,
+        STATUS_PROCESSED,
+        STATUS_ABORTED,
+    )
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
 
@@ -133,3 +140,8 @@ class CloudFactoryDocumentRun(models.Model):
         if 'processed_at' in data:
             self.processed_at = parse_datetime(data['processed_at'])
         self.save()
+
+    def is_status_final(self):
+        """ Returns True when this object's status is in a final state (no more
+        transitions expected or possible) """
+        return self.status in self.STATUS_FINAL_VALUES
