@@ -16,20 +16,9 @@ class CloudFactoryDocumentRun(models.Model):
 
     STATUS_NEW = 'NEW'
     STATUS_DELETED = 'DELETED'
-    STATUS_TIMEOUT = 'TIMEOUT'
-    STATUS_NOTFOUND = 'NOTFOUND'
-    STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
     STATUS_PROCESSING = 'Processing'
     STATUS_PROCESSED = 'Processed'
-    STATUS_VALUES = [
-        STATUS_NEW,
-        STATUS_DELETED,
-        STATUS_TIMEOUT,
-        STATUS_NOTFOUND,
-        STATUS_UNPROCESSABLE,
-        STATUS_PROCESSING,
-        STATUS_PROCESSED,
-    ]
+    STATUS_VALUES = [STATUS_NEW, STATUS_DELETED, STATUS_PROCESSING, STATUS_PROCESSED]
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
 
@@ -121,7 +110,6 @@ class CloudFactoryDocumentRun(models.Model):
 
         # now we try to unpack the response_content on the assumption that it is json.
         data = json.loads(response_content)  # throws an error if not json
-
         if 'id' in data:
             self.run_id = data['id']
         if 'status' in data:

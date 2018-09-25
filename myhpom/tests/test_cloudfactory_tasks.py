@@ -63,8 +63,7 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
             self.assertRaises(ValueError, self.task, self.document_url.id)
             cf_run = self.document_url.cloudfactorydocumentrun_set.last()
             self.assertIsNotNone(cf_run)
-            self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_NEW)
-            self.assertIn("Invalid request.", cf_run.response_content)
+            self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_UNPROCESSABLE)
             self.assertIsNone(cf_run.run_id)
             self.assertIsNone(cf_run.created_at)
 
@@ -76,7 +75,7 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
         self.assertRaises(ValueError, self.task, self.document_url.id)
         cf_run = self.document_url.cloudfactorydocumentrun_set.last()
         self.assertIsNotNone(cf_run)
-        self.assertEqual(cf_run.response_content, response_data['text'])
+        self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_NOTFOUND)
 
     def test_non_json_response(self, reqmock):
         response_data = json.load(
@@ -84,12 +83,16 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
         )
         reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
         self.assertRaises(ValueError, self.task, self.document_url.id)
+        cf_run = self.document_url.cloudfactorydocumentrun_set.last()
+        self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_UNPROCESSABLE)
 
     def test_connection_timeout(self, reqmock):
         reqmock.post(
             settings.CLOUDFACTORY_API_URL + '/runs', exc=requests.exceptions.ConnectTimeout
         )
         self.assertRaises(requests.exceptions.ConnectTimeout, self.task, self.document_url.id)
+        cf_run = self.document_url.cloudfactorydocumentrun_set.last()
+        self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_TIMEOUT)
 
     def test_deleted_document_url(self, reqmock):
         du_id = self.document_url.id

@@ -44,19 +44,10 @@ class CloudFactorySubmitDocumentRun(Task):
         cf_run.post_data = cf_run.create_post_data()
         cf_run.save()
 
-        try:
-            response = requests.post(settings.CLOUDFACTORY_API_URL + '/runs', json=cf_run.post_data)
-        except requests.exceptions.ConnectTimeout:
-            cf_run.status = CloudFactoryDocumentRun.STATUS_TIMEOUT
-            cf_run.save()
-            raise
+        response = requests.post(settings.CLOUDFACTORY_API_URL + '/runs', json=cf_run.post_data)
 
-        if response.status_code == 422:
-            cf_run.status = CloudFactoryDocumentRun.STATUS_UNPROCESSABLE
-            cf_run.save()
-        elif response.status_code == 404:
-            cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
-            cf_run.save()
+        # following throws an error (as it should) if response.content is not json-parsable
+        cf_run.save_response_content(response.content)
 
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
@@ -65,15 +56,6 @@ class CloudFactorySubmitDocumentRun(Task):
                 "== POST DATA ==\n%s\n\n== RESPONSE CONTENT ==\n%s"
                 % (json.dumps(cf_run.post_data, indent=2), cf_run.response_content)
             )
-
-        # following throws an error (as it should) if response.content is not json-parsable
-        try:
-            cf_run.save_response_content(response.content)
-        except ValueError:
-            cf_run.status = CloudFactoryDocumentRun.STATUS_UNPROCESSABLE
-            cf_run.save()
-            raise
-
         return cf_run.pk
 
 
