@@ -78,6 +78,13 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
         self.assertIsNotNone(cf_run)
         self.assertEqual(cf_run.response_content, response_data['text'])
 
+    def test_non_json_response(self, reqmock):
+        response_data = json.load(
+            open(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_invalid_response_201.json'), 'rb')
+        )
+        reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
+        self.assertRaises(ValueError, self.task, self.document_url.id)
+
     def test_connection_timeout(self, reqmock):
         reqmock.post(
             settings.CLOUDFACTORY_API_URL + '/runs', exc=requests.exceptions.ConnectTimeout
