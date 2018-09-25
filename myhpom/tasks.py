@@ -35,7 +35,7 @@ class CloudFactorySubmitDocumentRun(Task):
         # -- no need to admin support email, this is an expected case.
         try:
             cf_run.document_url = DocumentUrl.objects.get(id=document_url_id)
-        except:
+        except DocumentUrl.DoesNotExist:
             cf_run.status = CloudFactoryDocumentRun.STATUS_DELETED
             cf_run.save()
             return cf_run.id
