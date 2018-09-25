@@ -11,7 +11,7 @@ from myhpom.models import cloudfactory
 PDF_FILENAME = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
 
 
-class CloudFactoryDocumentRunModelTestCase(TestCase):
+class DocumentRunModelTestCase(TestCase):
     def setUp(self):
         self.document_url = DocumentUrl.objects.create(
             advancedirective=AdvanceDirective.objects.create(

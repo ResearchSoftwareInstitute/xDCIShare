@@ -3,54 +3,23 @@ import json
 import requests
 import requests_mock
 from glob import glob
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
+from django.utils.dateparse import parse_datetime
 from myhpom.tests.factories import UserFactory
-from myhpom.models import AdvanceDirective
-from myhpom.tasks import CloudFactorySubmitAdvanceDirectiveRun
+from myhpom.models import AdvanceDirective, DocumentUrl, cloudfactory
+from myhpom.tasks import CloudFactorySubmitDocumentRun
 import myhpom
 
-FIXTURE_PATH = os.path.join(os.path.dirname(myhpom.__file__), 'tests', 'fixtures')
-PDF_FILENAME = os.path.join(FIXTURE_PATH, 'afile.pdf')  # can be anything
-LINE_ID = settings.CLOUDFACTORY_LINE_ID
-MOCK_REQUEST_DATA = [
-    json.load(f)
-    for f in [
-        open(fn) for fn in glob(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_run__*.json'))
-    ]
-]
-REQUEST_URL = settings.CLOUDFACTORY_API_URL + '/runs'
-DOCUMENT_HOST = ""
-CALLBACK_URL = ""
+FIXTURE_PATH = os.path.join(os.path.dirname(__file__), 'fixtures')
+PDF_FILENAME = os.path.join(FIXTURE_PATH, 'afile.pdf')
 
 
-def mock_post_run(post_data):
-    """This function returns a method that mocks CloudFactorySubmitAdvanceDirectiveRun.post_run().
-    It uses request/response data in fixtures/cloudfactory to represent current expectations.
-    For a given 'post_data' block, it returns the corresponding 'response_data'.
-    The 'post_data' must exist in one of the MOCK_REQUEST_DATA blocks.
-    The 'response_data' must have the same keys that python-requests expects.
-    """
-    url = REQUEST_URL
-    for data in MOCK_REQUEST_DATA:
-        if data['post_data'] == post_data:
-            with requests_mock.Mocker() as requestmocker:
-                requestmocker.get(url, **data['response_data'])
-                response = requests.get(url)
-                return lambda x: response
-
-    # if the post_data isn't in data, then return a 404 response.
-    with requests_mock.Mocker() as requestmocker:
-        requestmocker.get(
-            url, status_code=404, json={'message': 'post_data not in MOCK_REQUEST_DATA'}
-        )
-        response = requests.get(url)
-        return lambda x: response
-
-
-class CloudFactorySubmitAdvanceDirectiveRunTestCase(TestCase):
+@requests_mock.Mocker()
+@override_settings(CLOUDFACTORY_API_URL='https://TEST.NIL')
+class CloudFactorySubmitDocumentRunTestCase(TestCase):
     """In the task:
     * submitting a run with valid data to CloudFactory returns 201 and run object with expected vals
     * various situations that raise exceptions in the task:
@@ -61,34 +30,60 @@ class CloudFactorySubmitAdvanceDirectiveRunTestCase(TestCase):
     """
 
     def setUp(self):
-        user = UserFactory()
-        document = SimpleUploadedFile(
-            os.path.basename(PDF_FILENAME), open(PDF_FILENAME, 'rb').read()
+        self.document_url = DocumentUrl.objects.create(
+            advancedirective=AdvanceDirective.objects.create(
+                user=UserFactory(),
+                share_with_ehs=False,
+                document=SimpleUploadedFile(
+                    os.path.basename(PDF_FILENAME), open(PDF_FILENAME, 'rb').read()
+                ),
+                valid_date=now(),
+            )
         )
-        self.ad = AdvanceDirective.objects.create(
-            user=user, share_with_ehs=False, document=document, valid_date=now()
+        self.task = CloudFactorySubmitDocumentRun
+
+    def test_201_created(self, reqmock):
+        response_data = json.load(
+            open(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_response_201.json'), 'rb')
         )
-        self.task = CloudFactorySubmitAdvanceDirectiveRun
-        self.task_args = [self.ad.id, LINE_ID, DOCUMENT_HOST, CALLBACK_URL]
+        reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
+        run_id = self.task(self.document_url.id)
+        self.assertTrue(reqmock.called)
+        self.assertEqual(type(run_id), int)  # self.task() returns the id of the run object
+        cf_run = self.document_url.cloudfactorydocumentrun_set.last()
+        self.assertIsNotNone(cf_run)
+        self.assertEqual(cf_run.status, response_data['json']['status'])
+        self.assertEqual(cf_run.run_id, response_data['json']['id'])
+        self.assertEqual(cf_run.created_at, parse_datetime(response_data['json']['created_at']))
 
-    def test_submit_cloudfactory_run(self):
-        for request_data in MOCK_REQUEST_DATA:
-            self.task.post_run = mock_post_run(request_data['post_data'])
-            if request_data['response_data']['status_code'] == 201:
-                result = self.task(*self.task_args)
-                response_data = request_data['response_data']['json']
-                # Here we test the mapping of response_data keys to the task result
-                self.assertEqual(result['run_id'], response_data['id'])
-                self.assertEqual(result['status'], response_data['status'])
-                self.assertEqual(result['created_at'], response_data['created_at'])
-            else:
-                with self.assertRaises(ValueError):
-                    result = self.task(*self.task_args)
+    def test_422_unprocessable(self, reqmock):
+        response_data_set = json.load(
+            open(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_responses_422.json'), 'rb')
+        )
+        for response_data in response_data_set.values():
+            reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
+            self.assertRaises(ValueError, self.task, self.document_url.id)
+            cf_run = self.document_url.cloudfactorydocumentrun_set.last()
+            self.assertIsNotNone(cf_run)
+            self.assertEqual(cf_run.status, cloudfactory.STATUS_NEW)
+            self.assertIn("Invalid request.", cf_run.response_content)
+            self.assertIsNone(cf_run.run_id)
+            self.assertIsNone(cf_run.created_at)
 
-    def test_submit_deleted_ad(self):
-        self.ad.delete()
-        # the post_data is moot - it won't post_run - but we still want to avoid posting to the API
-        self.task.post_run = mock_post_run({})
-        result = self.task(*self.task_args)
-        self.assertEqual(result['status'], 'ABORTED')
-        self.assertIn('no longer exists', result['message'])
+    def test_404_notfound(self, reqmock):
+        response_data = json.load(
+            open(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_response_404.json'), 'rb')
+        )
+        reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
+        self.assertRaises(ValueError, self.task, self.document_url.id)
+        cf_run = self.document_url.cloudfactorydocumentrun_set.last()
+        self.assertIsNotNone(cf_run)
+        self.assertEqual(cf_run.response_content, response_data['text'])
+
+    def test_deleted_document_url(self, reqmock):
+        du_id = self.document_url.id
+        self.document_url.delete()
+        run_id = CloudFactorySubmitDocumentRun(du_id)
+        cf_run = cloudfactory.CloudFactoryDocumentRun.objects.get(id=run_id)
+        self.assertEqual(cf_run.status, cloudfactory.STATUS_DELETED)
+        self.assertFalse(reqmock.called)
