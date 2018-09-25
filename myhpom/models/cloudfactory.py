@@ -12,6 +12,16 @@ from myhpom.models import DocumentUrl
 class CloudFactoryDocumentRun(models.Model):
     """Store information about current and past CloudFactory document runs
     (processing for AdvanceDirective.DocumentUrl objects).
+
+    ## STATUS_VALUES:
+    * 'NEW'         = the run is new and hasn't been submitted to CF
+    * 'DELETED'     = the corresponding document has been deleted
+    * 'TIMEOUT'     = the last request to CF timed out
+    * 'NOTFOUND'    = the run could not be found at CF
+    * 'UNPROCESSABLE' = CF found the post_data unprocessable (422)
+    * 'Processing'  = CF is currently processing the document
+    * 'Aborted'     = We have aborted the run, CF is still listed as 'Processing'
+    * 'Processed'   = CF has completed processing, details in the response_content
     """
 
     STATUS_NEW = 'NEW'
@@ -20,9 +30,9 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_NOTFOUND = 'NOTFOUND'
     STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
     STATUS_PROCESSING = 'Processing'
-    STATUS_PROCESSED = 'Processed'
     STATUS_ABORTED = 'Aborted'
-    STATUS_VALUES = [
+    STATUS_PROCESSED = 'Processed'
+    STATUS_VALUES = [  # if you re-order these, like I tried to do, you'll prompt a migration.
         STATUS_NEW,
         STATUS_DELETED,
         STATUS_TIMEOUT,
