@@ -6,6 +6,10 @@ from myhpom.models.state_requirement import StateRequirement
 from myhpom.models.state_requirement_link import StateRequirementLink
 from myhpom.models.document import AdvanceDirective, DocumentUrl
 from myhpom.models.cloudfactory import CloudFactoryDocumentRun
+from myhpom.tasks import (
+    CloudFactoryAbortDocumentRun,
+    CloudFactoryUpdateDocumentRun,
+)
 
 from django.utils.safestring import mark_safe
 
@@ -87,6 +91,23 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'created_at',
         'processed_at',
     ]
+    actions = ['abort_runs', 'update_runs']
+
+    def delete_selected(self, request, queryset):
+        self.abort_runs(request, queryset)
+        super(CloudFactoryDocumentRunAdmin, self).delete_selected(request, queryset)
+
+    def abort_runs(self, request, queryset):
+        for cf_run in queryset:
+            CloudFactoryAbortDocumentRun(cf_run.id)
+
+    abort_runs.short_description = "Abort the selected document runs at CloudFactory."
+
+    def update_runs(self, request, queryset):
+        for cf_run in queryset:
+            CloudFactoryUpdateDocumentRun(cf_run.id)
+
+    update_runs.short_description = "Update the selected document runs by querying CloudFactory."
 
 
 admin.site.register(State, StateAdmin)

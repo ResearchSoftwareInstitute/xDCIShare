@@ -77,6 +77,92 @@ class CloudFactorySubmitDocumentRun(Task):
         return cf_run.pk
 
 
+@shared_task
+class CloudFactoryAbortDocumentRun(Task):
+    def run(self, cf_run_id):
+        """Abort the given CloudFactoryDocumentRun.
+        
+        ## Use Cases:
+        * when the user deletes their DocumentUrl, this task is triggered automatically
+            (through the deletion of the DocumentUrl).
+        * can be called from the admin
+        
+        ## Parameters:
+        * cf_run_id = the id (not the run_id) of a CloudFactoryDocumentRun object
+        
+        ## Process:
+        * If it is in progress (status='Processing'), cancel it at CloudFactory.
+            * 202 = CloudFactory accepted the request
+            * 405 = already processed / aborted at CloudFactory
+        * Get the run info from CloudFactory and update our models.
+            * 200 = Ok
+        * Any response status apart from those given should raise an exception / send error email,
+            because it means we have a bug / false assumption somewhere in our system.
+        """
+        cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
+        if cf_run.status in [
+            CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going
+            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time
+            CloudFactoryDocumentRun.STATUS_UNPROCESSABLE,  # maybe we fixed things on our side
+        ]:
+            # abort the run
+            abort_url = "%s/runs/%s/abort" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
+            response = requests.post(abort_url)  # yes, CF wants a POST without a body for this.
+
+            if response.status_code == 404:
+                cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
+                cf_run.save()
+            elif response.status_code in [202, 405]:
+                # 202 = they accepted the response, so we can consider it done. 
+                # 405 = CF uses it to mean "already done, folks"
+                cf_run.status = CloudFactoryDocumentRun.STATUS_ABORTED
+                cf_run.save()
+            else:
+                # don't change the run status here -- we haven't learned anything about it,
+                # and maybe there's a response status that we don't know about.
+                raise ValueError(
+                    """URL: %s\nResponse status: %d\nResponse Content:\n%s"""
+                    % (response.url, response.status_code, response.content)
+                )
+            # update the CloudFactoryDocumentRun object, needs another API call.
+            CloudFactoryUpdateDocumentRun(cf_run.id)  # no delay here!
+
+
+@shared_task
+class CloudFactoryUpdateDocumentRun(Task):
+    def run(self, cf_run_id):
+        """Update the CloudFactoryDocumentRun object from the CF API.
+
+        ## Use Cases
+        * The admin user can update the status of all or selected runs from CloudFactory.
+
+        ## Parameters
+        * cf_run_id = the id (not the run_id) of the CloudFactoryDocumentRun object.
+        """
+        cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
+
+        if cf_run.status in [
+            CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going
+            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time
+            CloudFactoryDocumentRun.STATUS_UNPROCESSABLE,  # maybe we fixed things on our side
+        ]:
+            run_url = "%s/runs/%s" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
+            response = requests.get(run_url)
+
+            if response.status_code == 404:
+                cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
+                cf_run.save()
+            elif response.status_code != 200:
+                # don't change the run status here -- we haven't learned anything about it,
+                # and maybe there's a response status that we don't know about
+                raise ValueError(
+                    """URL: %s\nResponse status: %d\nResponse Data: %s"""
+                    % (response.url, response.status_code, response.content)
+                )
+
+            cf_run.save_response_content(response.content)
+
+
 # == SIGNALS ==
 
 
