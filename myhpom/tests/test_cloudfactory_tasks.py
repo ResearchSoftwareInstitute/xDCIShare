@@ -80,6 +80,12 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
         self.assertIsNotNone(cf_run)
         self.assertEqual(cf_run.response_content, response_data['text'])
 
+    def test_connection_timeout(self, reqmock):
+        reqmock.post(
+            settings.CLOUDFACTORY_API_URL + '/runs', exc=requests.exceptions.ConnectTimeout
+        )
+        self.assertRaises(requests.exceptions.ConnectTimeout, self.task, self.document_url.id)
+
     def test_deleted_document_url(self, reqmock):
         du_id = self.document_url.id
         self.document_url.delete()
