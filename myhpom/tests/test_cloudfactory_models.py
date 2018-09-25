@@ -86,25 +86,25 @@ class DocumentRunModelTestCase(TestCase):
             os.path.dirname(__file__), 'fixtures/cloudfactory/callback_success.json')).read()
 
         # If the status is equal to a successful run, and all the outputs are
-        # successful, then is_successful_run() will return True
+        # successful, then is_successful_run will return True
         run = CloudFactoryDocumentRun.objects.create(
             document_url=self.document_url)
         run.save_response_content(SUCCESS_DATA)
-        self.assertTrue(run.is_successful_run())
+        self.assertTrue(run.is_successful_run)
 
         # Even if the successful run is true, if the status is failed, so is
         # this the run:
         run.status = CloudFactoryDocumentRun.STATUS_ABORTED
         run.save()
-        self.assertFalse(run.is_successful_run())
+        self.assertFalse(run.is_successful_run)
 
         # If a one of the outputs are false, then the run is not successful.
         failed_run = json.loads(SUCCESS_DATA)
         failed_run['units'][0]['output']['owner_name_matches'] = False
         run.save_response_content(json.dumps(failed_run))
-        self.assertFalse(run.is_successful_run())
+        self.assertFalse(run.is_successful_run)
 
         # Especially if the status is aborted
         failed_run['status'] = CloudFactoryDocumentRun.STATUS_ABORTED
         run.save_response_content(json.dumps(failed_run))
-        self.assertFalse(run.is_successful_run())
+        self.assertFalse(run.is_successful_run)
