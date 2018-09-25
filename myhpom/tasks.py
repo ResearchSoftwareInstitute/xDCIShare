@@ -79,6 +79,45 @@ class CloudFactorySubmitDocumentRun(Task):
 
 
 @shared_task
+class CloudFactoryUpdateDocumentRun(Task):
+    def run(self, cf_run_id):
+        """Update the CloudFactoryDocumentRun object from the CF API.
+
+        ## Use Cases
+        * The admin user can update the status of all or selected runs from CloudFactory.
+
+        ## Parameters
+        * cf_run_id = the id (not the run_id) of the CloudFactoryDocumentRun object.
+        """
+        cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
+
+        if cf_run.status in [
+            CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going last we checked
+            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time; was it created?
+            CloudFactoryDocumentRun.STATUS_ABORTED,  # we previously aborted; did it take?
+        ]:
+            try:
+                run_url = "%s/runs/%s" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
+                response = requests.get(run_url)
+            except requests.exceptions.ConnectTimeout:
+                cf_run.status = CloudFactoryDocumentRun.STATUS_TIMEOUT
+
+            if response.status_code == 404:
+                cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
+                cf_run.response_content = response.content  # not json, shouldn't raise Exception.
+                cf_run.save()
+            elif response.status_code == 200:
+                cf_run.save_response_content(response.content)
+            else:
+                # don't change the run status here -- we haven't learned anything about it,
+                # and maybe there's a response status that we don't know about
+                raise ValueError(
+                    """URL: %s\nResponse status: %d\nResponse Data: %s"""
+                    % (response.url, response.status_code, response.content)
+                )
+
+
+@shared_task
 class CloudFactoryAbortDocumentRun(Task):
     def run(self, cf_run_id):
         """Abort the given CloudFactoryDocumentRun.
@@ -100,9 +139,12 @@ class CloudFactoryAbortDocumentRun(Task):
         * Any response status apart from those given should raise an exception / send error email,
             because it means we have a bug / false assumption somewhere in our system.
         """
+        # update the CloudFactoryDocumentRun object first
+        CloudFactoryUpdateDocumentRun(cf_run_id)
+
         cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
         if cf_run.status in [
-            CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going
+            CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going last we checked
             CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time; was it created?
         ]:
             # abort the run
@@ -128,44 +170,6 @@ class CloudFactoryAbortDocumentRun(Task):
                     """URL: %s\nResponse status: %d\nResponse Content:\n%s"""
                     % (response.url, response.status_code, response.content)
                 )
-
-            # update the CloudFactoryDocumentRun object, needs another API call.
-            CloudFactoryUpdateDocumentRun(cf_run.id)  # no delay here!
-
-
-@shared_task
-class CloudFactoryUpdateDocumentRun(Task):
-    def run(self, cf_run_id):
-        """Update the CloudFactoryDocumentRun object from the CF API.
-
-        ## Use Cases
-        * The admin user can update the status of all or selected runs from CloudFactory.
-
-        ## Parameters
-        * cf_run_id = the id (not the run_id) of the CloudFactoryDocumentRun object.
-        """
-        cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
-
-        if cf_run.status in [
-            CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going
-            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time; was it created?
-            CloudFactoryDocumentRun.STATUS_ABORTED,  # we aborted; did it take?
-        ]:
-            run_url = "%s/runs/%s" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
-            response = requests.get(run_url)
-
-            if response.status_code == 404:
-                cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
-                cf_run.save()
-            elif response.status_code != 200:
-                # don't change the run status here -- we haven't learned anything about it,
-                # and maybe there's a response status that we don't know about
-                raise ValueError(
-                    """URL: %s\nResponse status: %d\nResponse Data: %s"""
-                    % (response.url, response.status_code, response.content)
-                )
-
-            cf_run.save_response_content(response.content)
 
 
 # == SIGNALS ==
