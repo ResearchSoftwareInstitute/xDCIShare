@@ -9,7 +9,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
 from myhpom.tests.factories import UserFactory
-from myhpom.models import AdvanceDirective, DocumentUrl, cloudfactory
+from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryDocumentRun
 from myhpom.tasks import CloudFactorySubmitDocumentRun
 import myhpom
 
@@ -65,7 +65,7 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
             self.assertRaises(ValueError, self.task, self.document_url.id)
             cf_run = self.document_url.cloudfactorydocumentrun_set.last()
             self.assertIsNotNone(cf_run)
-            self.assertEqual(cf_run.status, cloudfactory.STATUS_NEW)
+            self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_NEW)
             self.assertIn("Invalid request.", cf_run.response_content)
             self.assertIsNone(cf_run.run_id)
             self.assertIsNone(cf_run.created_at)
@@ -84,6 +84,6 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
         du_id = self.document_url.id
         self.document_url.delete()
         run_id = CloudFactorySubmitDocumentRun(du_id)
-        cf_run = cloudfactory.CloudFactoryDocumentRun.objects.get(id=run_id)
-        self.assertEqual(cf_run.status, cloudfactory.STATUS_DELETED)
+        cf_run = CloudFactoryDocumentRun.objects.get(id=run_id)
+        self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_DELETED)
         self.assertFalse(reqmock.called)

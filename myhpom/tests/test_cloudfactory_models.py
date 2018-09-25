@@ -6,7 +6,6 @@ from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
 from myhpom.models import CloudFactoryDocumentRun, AdvanceDirective, DocumentUrl
 from myhpom.tests.factories import UserFactory
-from myhpom.models import cloudfactory
 
 PDF_FILENAME = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
 
@@ -71,6 +70,6 @@ class DocumentRunModelTestCase(TestCase):
         response_content = r'{"message":"Invalid request. \"state\" is missing in the request."}'
         run.save_response_content(response_content)
         self.assertIsNone(run.run_id)
-        self.assertEqual(run.status, cloudfactory.STATUS_NEW)
+        self.assertEqual(run.status, CloudFactoryDocumentRun.STATUS_NEW)
         self.assertIsNone(run.created_at)
         self.assertEqual(run.response_content, response_content)

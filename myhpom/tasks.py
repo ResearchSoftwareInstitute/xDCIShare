@@ -8,7 +8,7 @@ from celery import shared_task
 from celery.task import Task
 from celery.signals import task_failure
 from myhpom.models.document import DocumentUrl
-from myhpom.models import cloudfactory
+from myhpom.models import CloudFactoryDocumentRun
 
 
 @shared_task
@@ -29,14 +29,14 @@ class CloudFactorySubmitDocumentRun(Task):
             - or the document it points to might have been removed.
         - if an error occurs in this process, send support email.
         """
-        cf_run = cloudfactory.CloudFactoryDocumentRun(document_host=document_host or '')
+        cf_run = CloudFactoryDocumentRun(document_host=document_host or '')
 
         # If the DocumentUrl has been deleted, abort the task with a message
         # -- no need to admin support email, this is an expected case.
         try:
             cf_run.document_url = DocumentUrl.objects.get(id=document_url_id)
         except:
-            cf_run.status = cloudfactory.STATUS_DELETED
+            cf_run.status = CloudFactoryDocumentRun.STATUS_DELETED
             cf_run.save()
             return cf_run.id
 

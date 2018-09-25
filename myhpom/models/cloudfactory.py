@@ -8,19 +8,19 @@ from myhpom.models import DocumentUrl
 
 # from myhpom.models.user import User
 
-STATUS_NEW = 'NEW'
-STATUS_DELETED = 'DELETED'
-STATUS_PROCESSING = 'Processing'
-STATUS_PROCESSED = 'Processed'
-STATUS_VALUES = [STATUS_NEW, STATUS_DELETED, STATUS_PROCESSING, STATUS_PROCESSED]
-STATUS_MAX_LENGTH = 16
-STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
-
 
 class CloudFactoryDocumentRun(models.Model):
     """Store information about current and past CloudFactory document runs
     (processing for AdvanceDirective.DocumentUrl objects).
     """
+
+    STATUS_NEW = 'NEW'
+    STATUS_DELETED = 'DELETED'
+    STATUS_PROCESSING = 'Processing'
+    STATUS_PROCESSED = 'Processed'
+    STATUS_VALUES = [STATUS_NEW, STATUS_DELETED, STATUS_PROCESSING, STATUS_PROCESSED]
+    STATUS_MAX_LENGTH = 16
+    STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
 
     document_url = models.ForeignKey(
         DocumentUrl,
