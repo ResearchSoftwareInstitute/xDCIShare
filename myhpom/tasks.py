@@ -45,9 +45,9 @@ class CloudFactorySubmitDocumentRun(Task):
         cf_run.save()
 
         response = requests.post(settings.CLOUDFACTORY_API_URL + '/runs', json=cf_run.post_data)
-        
+
         # following throws an error (as it should) if response.content is not json-parsable
-        cf_run.save_response_content(response.content)  
+        cf_run.save_response_content(response.content)
 
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.

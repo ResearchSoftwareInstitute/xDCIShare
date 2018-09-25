@@ -39,6 +39,7 @@ def document_url(request, key):
     response['Content-Disposition'] = 'inline; filename="%s"' % doc_url.filename
     return response
 
+
 @require_POST
 def cloudfactory_response(request):
     """receive the response from CloudFactory with processed document information

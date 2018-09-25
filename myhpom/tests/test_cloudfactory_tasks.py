@@ -2,7 +2,6 @@ import os
 import json
 import requests
 import requests_mock
-from glob import glob
 from django.test import TestCase, override_settings
 from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -11,7 +10,6 @@ from django.utils.dateparse import parse_datetime
 from myhpom.tests.factories import UserFactory
 from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryDocumentRun
 from myhpom.tasks import CloudFactorySubmitDocumentRun
-import myhpom
 
 FIXTURE_PATH = os.path.join(os.path.dirname(__file__), 'fixtures')
 PDF_FILENAME = os.path.join(FIXTURE_PATH, 'afile.pdf')

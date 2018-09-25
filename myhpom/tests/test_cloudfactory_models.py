@@ -1,6 +1,5 @@
 import os
 from django.test import TestCase
-from django.conf import settings
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
@@ -25,7 +24,7 @@ class DocumentRunModelTestCase(TestCase):
 
     def test_create_default_run(self):
         """
-        * run can be created with no arguments: 
+        * run can be created with no arguments:
             * .run_id is null.
             * .create_post_data() raises AttributeError because it requires document_url
         """
@@ -51,22 +50,23 @@ class DocumentRunModelTestCase(TestCase):
         """
         * the .save_response_content(content) method:
             * puts the value of content in the run .response_content attribute, no matter what.
-            * throws a ValueError if the response_content is not json-parsable 
-            * puts any 'status', 'created_at', or 'processed_at' keys into those fields       
+            * throws a ValueError if the response_content is not json-parsable
+            * puts any 'status', 'created_at', or 'processed_at' keys into those fields
         """
-        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
-
         # this represents a typical "201 Created" response
-        response_content = r'{"id":"SOME_RUN_ID","line_id":"SOME_LINE_ID","status":"Processing","created_at":"2018-09-24T22:27:53.000Z"}'
+        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
+        response_content = (
+            r'{"id":"SOME_RUN_ID","line_id":"SOME_LINE_ID","status":"Processing",'
+            + r'"created_at":"2018-09-24T22:27:53.000Z"}'
+        )
         run.save_response_content(response_content)
         self.assertEqual(run.run_id, "SOME_RUN_ID")
         self.assertEqual(run.status, "Processing")
         self.assertEqual(run.created_at, parse_datetime("2018-09-24T22:27:53.000Z"))
 
     def test_run_save_response_content_unprocessable(self):
-        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
-
         # this represents a "422 Unprocessable Entity" response
+        run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
         response_content = r'{"message":"Invalid request. \"state\" is missing in the request."}'
         run.save_response_content(response_content)
         self.assertIsNone(run.run_id)

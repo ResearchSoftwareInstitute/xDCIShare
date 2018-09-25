@@ -35,7 +35,7 @@ def user_pre_save_receiver(sender, instance, **kwargs):
         * first_name
         * last_name
         * email
-            * if the email has changed (!= username), reset user verification_code 
+            * if the email has changed (!= username), reset user verification_code
                 (this is also true if the user is a new user)
     * Set the username to the email
     """
