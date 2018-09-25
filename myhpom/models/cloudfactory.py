@@ -21,6 +21,7 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
     STATUS_PROCESSING = 'Processing'
     STATUS_PROCESSED = 'Processed'
+    STATUS_ABORTED = 'Aborted'
     STATUS_VALUES = [
         STATUS_NEW,
         STATUS_DELETED,
@@ -29,6 +30,7 @@ class CloudFactoryDocumentRun(models.Model):
         STATUS_UNPROCESSABLE,
         STATUS_PROCESSING,
         STATUS_PROCESSED,
+        STATUS_ABORTED,
     ]
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
