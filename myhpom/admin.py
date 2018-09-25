@@ -66,8 +66,9 @@ class AdvanceDirectiveAdmin(admin.ModelAdmin):
 class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
     model = CloudFactoryDocumentRun
     fields = (
-        ('document_url', 'inserted_at', 'document_host'),
         ('status', 'run_id'),
+        ('document_url', 'document_host'),
+        ('inserted_at', 'updated_at'), 
         ('created_at', 'processed_at'),
         'post_data',
         'response_content',
@@ -75,6 +76,7 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
     readonly_fields = [
         'document_url',
         'inserted_at',
+        'updated_at',
         'document_host',
         'status',
         'run_id',

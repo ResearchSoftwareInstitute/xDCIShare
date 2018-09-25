@@ -59,6 +59,9 @@ class CloudFactoryDocumentRun(models.Model):
     inserted_at = models.DateTimeField(
         auto_now_add=True, help_text="When the run instance was inserted into our system."
     )
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text="When the run instance was last updated in our system."
+    )
 
     # The following four fields are pulled out of the response_data for use in the admin.
     run_id = models.CharField(
