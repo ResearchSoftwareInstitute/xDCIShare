@@ -57,6 +57,9 @@ class CloudFactorySubmitDocumentRun(Task):
         elif response.status_code == 404:
             cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
             cf_run.save()
+        elif response.status_code == 201:
+            cf_run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
+            cf_run.save()
 
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
@@ -66,13 +69,11 @@ class CloudFactorySubmitDocumentRun(Task):
                 % (json.dumps(cf_run.post_data, indent=2), cf_run.response_content)
             )
 
-        # following throws an error (as it should) if response.content is not json-parsable
-        try:
-            cf_run.save_response_content(response.content)
-        except ValueError:
-            cf_run.status = CloudFactoryDocumentRun.STATUS_UNPROCESSABLE
-            cf_run.save()
-            raise
+        # following throws an error (as it should) if response.content is not json-parsable.
+        # don't change the run status here -- we haven't learned anything about it,
+        # and maybe there's a response status that we don't know about.
+
+        cf_run.save_response_content(response.content)
 
         return cf_run.pk
 
@@ -102,8 +103,7 @@ class CloudFactoryAbortDocumentRun(Task):
         cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
         if cf_run.status in [
             CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going
-            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time
-            CloudFactoryDocumentRun.STATUS_UNPROCESSABLE,  # maybe we fixed things on our side
+            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time; was it created?
         ]:
             # abort the run
             abort_url = "%s/runs/%s/abort" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
@@ -112,10 +112,14 @@ class CloudFactoryAbortDocumentRun(Task):
             if response.status_code == 404:
                 cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
                 cf_run.save()
-            elif response.status_code in [202, 405]:
-                # 202 = they accepted the response, so we can consider it done. 
-                # 405 = CF uses it to mean "already done, folks"
+            elif response.status_code == 202:
+                # 202 = they accepted the response, so we can consider it done.
                 cf_run.status = CloudFactoryDocumentRun.STATUS_ABORTED
+                cf_run.save()
+            elif response.status_code == 405:
+                # 405 = CF uses it to mean "already done, folks" -- whether aborted or processed
+                # (the details of what was done are in the .response_content)
+                cf_run.status = CloudFactoryDocumentRun.STATUS_PROCESSED
                 cf_run.save()
             else:
                 # don't change the run status here -- we haven't learned anything about it,
@@ -124,6 +128,7 @@ class CloudFactoryAbortDocumentRun(Task):
                     """URL: %s\nResponse status: %d\nResponse Content:\n%s"""
                     % (response.url, response.status_code, response.content)
                 )
+
             # update the CloudFactoryDocumentRun object, needs another API call.
             CloudFactoryUpdateDocumentRun(cf_run.id)  # no delay here!
 
@@ -143,8 +148,8 @@ class CloudFactoryUpdateDocumentRun(Task):
 
         if cf_run.status in [
             CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going
-            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time
-            CloudFactoryDocumentRun.STATUS_UNPROCESSABLE,  # maybe we fixed things on our side
+            CloudFactoryDocumentRun.STATUS_TIMEOUT,  # didn't work last time; was it created?
+            CloudFactoryDocumentRun.STATUS_ABORTED,  # we aborted; did it take?
         ]:
             run_url = "%s/runs/%s" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
             response = requests.get(run_url)
