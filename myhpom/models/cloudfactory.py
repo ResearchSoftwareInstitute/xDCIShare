@@ -3,7 +3,6 @@ import json
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.utils.dateparse import parse_datetime
 from myhpom.models import DocumentUrl
 
 # from myhpom.models.user import User
@@ -139,7 +138,7 @@ class CloudFactoryDocumentRun(models.Model):
         if 'status' in data:
             self.status = data['status']
         if 'created_at' in data:
-            self.created_at = parse_datetime(data['created_at'])
+            self.created_at = data['created_at']
         if 'processed_at' in data:
-            self.processed_at = parse_datetime(data['processed_at'])
+            self.processed_at = data['processed_at']
         self.save()

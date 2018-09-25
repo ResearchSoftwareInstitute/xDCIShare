@@ -2,7 +2,6 @@ import os
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
-from django.utils.dateparse import parse_datetime
 from myhpom.models import CloudFactoryDocumentRun, AdvanceDirective, DocumentUrl
 from myhpom.tests.factories import UserFactory
 
@@ -62,7 +61,7 @@ class DocumentRunModelTestCase(TestCase):
         run.save_response_content(response_content)
         self.assertEqual(run.run_id, "SOME_RUN_ID")
         self.assertEqual(run.status, "Processing")
-        self.assertEqual(run.created_at, parse_datetime("2018-09-24T22:27:53.000Z"))
+        self.assertEqual(run.created_at, "2018-09-24T22:27:53.000Z")
 
     def test_run_save_response_content_unprocessable(self):
         # this represents a "422 Unprocessable Entity" response
