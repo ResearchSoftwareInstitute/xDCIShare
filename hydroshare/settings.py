@@ -79,7 +79,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 0
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # The numeric mode to set newly-uploaded files to. The value should be
@@ -203,7 +203,7 @@ TEMPLATES = [
                 "myhpom.context_processors.settings",
             ],
         },
-    },
+        },
 ]
 
 # List of middleware classes to use. Order is important; in the request phase,
@@ -247,10 +247,13 @@ MAX_AD_SIZE = 25 * 1024 * 1024
 # Where users are directed to send contacts in MYHPOM:
 CONTACT_EMAIL = 'contact@example.com'
 
+# The prefix on admin emails
+EMAIL_SUBJECT_PREFIX = '[MMH] '
+
 # When provided, a gtags.js block is included on all pages.
 GOOGLE_ANALYTICS_ID = None
 
-# -- DOCUMENT URL SETTINGS -- 
+# -- DOCUMENT URL SETTINGS --
 
 # Amount of time after creation that a Document URL expires, as a datetime.timedelta (easy to use!)
 DOCUMENT_URL_EXPIRES_IN = timedelta(hours=48)
@@ -261,11 +264,37 @@ DOCUMENT_URL_EXPIRES_IN = timedelta(hours=48)
 DOCUMENT_URL_IP_RANGES = [
     iptools.IpRange(iprange)
     for iprange in [
-        '127.0.0.1/8',  # local
-        '192.168.1.1/24',  # local
-        '70.62.97.168/29',  # caktus office
+        # -- local
+        '127.0.0.1/8',
+        '192.168.1.1/24',
+        # -- CaktusGroup office
+        '70.62.97.168/29',
+        # -- CloudFactory production sites
+        '110.34.14.54',
+        '110.34.14.50',
+        '124.41.211.117',
+        '139.5.71.67',
+        '110.44.121.202',
+        '110.44.124.227',
+        # -- CloudFactory engineering
+        '110.44.126.155',
+        '110.44.126.157',
+        '110.44.113.13',
+        '202.166.220.197',
     ]
 ]
+
+# -- CLOUDFACTORY SETTINGS --
+# (myhpom CloudFactory integration)
+# -- Real values for these settings are stored in the local environment.
+
+CLOUDFACTORY_LINE_ID = 'NOTAREALPRODUCTIONLINE'
+CLOUDFACTORY_AUTH_USERNAME = 'NOTAREALUSERNAME'
+CLOUDFACTORY_AUTH_PASSWORD = 'NOTAREALPASSWORD'
+CLOUDFACTORY_API_URL = 'https://%s:%s@api.cloudfactory.com/v4' % (
+    CLOUDFACTORY_AUTH_USERNAME,
+    CLOUDFACTORY_AUTH_PASSWORD,
+)
 
 ##################
 # LOCAL SETTINGS #
@@ -308,7 +337,7 @@ LOGGING = {
     },
     'formatters': {
         'verbose': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
             'datefmt' : "%d/%b/%Y %H:%M:%S"
         },
         'simple': {
@@ -322,7 +351,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/hydroshare/log/system.log',
             'formatter': 'simple',
-            'maxBytes': 1024*1024*15, # 15MB
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
         'djangolog': {
@@ -330,7 +359,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/hydroshare/log/django.log',
             'formatter': 'verbose',
-            'maxBytes': 1024*1024*15, # 15MB
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
         'hydrosharelog': {
@@ -338,7 +367,7 @@ LOGGING = {
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/hydroshare/log/hydroshare.log',
             'formatter': 'verbose',
-            'maxBytes': 1024*1024*15, # 15MB
+            'maxBytes': 1024 * 1024 * 15,  # 15MB
             'backupCount': 10,
         },
         'mail_admins': {
@@ -364,8 +393,8 @@ LOGGING = {
             'handlers': ['hydrosharelog', 'mail_admins'],
             'propagate': False,
             'level': 'DEBUG'
-        },
-    }
+    },
+}
 }
 
 X_FRAME_OPTIONS = "deny"
@@ -380,7 +409,8 @@ CSRF_COOKIE_SECURE = USE_SECURITY
 # Where login should go after successful authentication
 LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 
-AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
-
 # Custom test runner that excludes apps we don't use
 TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
+
+AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
+

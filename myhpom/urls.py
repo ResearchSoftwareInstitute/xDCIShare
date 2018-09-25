@@ -29,10 +29,14 @@ urlpatterns = [
         name='verify_account'),
 
     url(r'^download/(?P<path>.*)$', myhpom_views.irods_download, name='irods_download'),
-    url(r'^document/(?P<key>[A-Za-z0-9]+)/?$', 
+
+    url(r'^document/cloudfactory_response/?$',
+        myhpom_views.cloudfactory_response, name='cloudfactory_response'),
+    url(r'^document/(?P<key>[A-Za-z0-9]+)/?$',
         myhpom_views.document_url, name='document_url'),
 
-    url(r'^states/(?P<state>[a-zA-Z]{2})/template/?$', myhpom_views.state_template, name='state_template'),
+    url(r'^states/(?P<state>[a-zA-Z]{2})/template/?$', myhpom_views.state_template,
+        name='state_template'),
 
     url(r'^faq/?$', myhpom_views.faq, name='faq'),
 

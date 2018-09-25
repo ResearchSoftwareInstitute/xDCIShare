@@ -1,0 +1,8 @@
+The following error occurred while processing a celery task:
+
+task = {{ task }}
+
+{% if traceback %}-- TRACEBACK -- 
+{{ traceback|safe }}{% endif %}
+{% if einfo %}-- EINFO -- 
+{{ einfo|safe }}{% endif %}
