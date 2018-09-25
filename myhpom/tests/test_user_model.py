@@ -42,8 +42,21 @@ class UserModelTestCase(TestCase):
 
     def test_get_full_name(self):
         """User.get_full_name() includes first, middle, last name"""
-        user = UserFactory()  # first_name, userdetails.middle_name, last_name all here & normalized
-        self.assertEqual(
-            user.get_full_name(),
-            ' '.join([user.first_name, user.userdetails.middle_name, user.last_name]),
-        )
+        user = UserFactory(first_name='first', last_name='last')
+        user.userdetails.middle_name = ''
+        self.assertEqual(user.get_full_name(), 'first last')
+
+        user.userdetails.middle_name = 'middle'
+        self.assertEqual(user.get_full_name(), 'first middle last')
+
+        user.last_name = ''
+        self.assertEqual(user.get_full_name(), 'first middle')
+        
+        user.first_name = ''
+        self.assertEqual(user.get_full_name(), 'middle')
+
+        user.userdetails.middle_name = ''
+        self.assertEqual(user.get_full_name(), '')
+
+        user.last_name = 'last'
+        self.assertEqual(user.get_full_name(), 'last')
