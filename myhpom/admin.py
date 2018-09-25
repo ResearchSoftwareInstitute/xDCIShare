@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from django.contrib import admin
-
+from django.core.urlresolvers import reverse
 from myhpom.models.state import State
 from myhpom.models.state_requirement import StateRequirement
 from myhpom.models.state_requirement_link import StateRequirementLink
@@ -46,8 +46,8 @@ class DocumentUrlInlineAdmin(admin.StackedInline):
             '<ul>'
             + ''.join(
                 # Is there a better way to get a URL in the mmh-admin? I don't find a resolver.
-                '<li><a href="/mmh-admin/myhpom/cloudfactorydocumentrun/%d">%s</a></li>'
-                % (cf_run.id, cf_run)
+                '<li><a href="%s">%s</a></li>'
+                % (reverse("admin:myhpom_cloudfactorydocumentrun_change", args=[cf_run.id]), cf_run)
                 for cf_run in obj.cloudfactorydocumentrun_set.all()
             )
             + '</ul>'
