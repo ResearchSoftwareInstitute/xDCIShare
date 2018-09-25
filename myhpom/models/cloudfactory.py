@@ -4,6 +4,7 @@ import datetime
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.utils.dateparse import parse_datetime
 from myhpom.models import DocumentUrl
 
 # from myhpom.models.user import User
@@ -110,8 +111,12 @@ class CloudFactoryDocumentRun(models.Model):
 
         # now we try to unpack the response_content on the assumption that it is json.
         data = json.loads(response_content)  # throws an error if not json
-        CloudFactoryDocumentRun.objects.filter(pk=self.pk).update(
-            run_id=data['id'] if 'id' in data else None,
-            **{key: data[key] for key in ['status', 'created_at', 'processed_at'] if key in data}
-        )
-        self.refresh_from_db()
+        if 'id' in data:
+            self.run_id = data['id']
+        if 'status' in data:
+            self.status = data['status']
+        if 'created_at' in data:
+            self.created_at = parse_datetime(data['created_at'])
+        if 'processed_at' in data:
+            self.processed_at = parse_datetime(data['processed_at'])
+        self.save()
