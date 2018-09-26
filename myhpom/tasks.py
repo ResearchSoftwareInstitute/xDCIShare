@@ -147,16 +147,16 @@ class CloudFactoryAbortDocumentRun(Task):
 
             if response.status_code == 404:
                 cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
-                cf_run.save()
+                cf_run.save()  # don't save the response.content, it's probably not json
             elif response.status_code == 202:
                 # 202 = they accepted the response, so we can consider it done.
                 cf_run.status = CloudFactoryDocumentRun.STATUS_ABORTED
-                cf_run.save()
+                cf_run.save_response_content(response.content)
             elif response.status_code == 405:
                 # 405 = CF uses it to mean "already done, folks" -- whether aborted or processed
                 # (the details of what was done are in the .response_content)
                 cf_run.status = CloudFactoryDocumentRun.STATUS_PROCESSED
-                cf_run.save()
+                cf_run.save_response_content(response.content)
             else:
                 # don't change the run status here -- we haven't learned anything about it,
                 # and maybe there's a response status that we don't know about.
