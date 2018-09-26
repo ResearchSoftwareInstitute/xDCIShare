@@ -49,10 +49,9 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
             open(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_response_201.json'), 'rb')
         )
         reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
-        run_id = self.task(self.document_url.id)
+        id = self.task(self.document_url.id)
+        cf_run = CloudFactoryDocumentRun.objects.get(id=id)
         self.assertTrue(reqmock.called)
-        self.assertEqual(type(run_id), int)  # self.task() returns the id of the run object
-        cf_run = self.document_url.cloudfactorydocumentrun_set.last()
         self.assertIsNotNone(cf_run)
         self.assertEqual(cf_run.status, response_data['json']['status'])
         self.assertEqual(cf_run.run_id, response_data['json']['id'])
@@ -98,13 +97,33 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
         cf_run = self.document_url.cloudfactorydocumentrun_set.last()
         self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_TIMEOUT)
 
-    def test_deleted_document_url(self, reqmock):
+    def test_deleted_document_url_before_run_created(self, reqmock):
         du_id = self.document_url.id
         self.document_url.delete()
         run_id = CloudFactorySubmitDocumentRun(du_id)
         cf_run = CloudFactoryDocumentRun.objects.get(id=run_id)
         self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_DELETED)
         self.assertFalse(reqmock.called)
+
+    def test_deleted_document_url_after_run_created(self, reqmock):
+        """
+        * A run associated with a DocumentUrl is auto-aborted after the DocumentURL is deleted.
+        """
+        response_data = json.load(
+            open(os.path.join(FIXTURE_PATH, 'cloudfactory', 'post_response_201.json'), 'rb')
+        )
+        reqmock.post(settings.CLOUDFACTORY_API_URL + '/runs', **response_data)
+        id = self.task(self.document_url.id)
+        cf_run = CloudFactoryDocumentRun.objects.get(id=id)
+        reqmock.post(
+            settings.CLOUDFACTORY_API_URL + '/runs/' + cf_run.run_id + '/abort',
+            status_code=202,
+            json={},
+        )
+        du_id = self.document_url.id
+        self.document_url.delete()
+        for cf_run in self.document_url.cloudfactorydocumentrun_set.all():
+            self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_ABORTED)
 
 
 @requests_mock.Mocker()
