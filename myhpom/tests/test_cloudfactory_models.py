@@ -78,3 +78,5 @@ class DocumentRunModelTestCase(TestCase):
         run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
         response_content = 'This content is not json, so not parsable'
         self.assertRaises(ValueError, run.save_response_content, response_content)
+        self.assertEqual(run.status, CloudFactoryDocumentRun.STATUS_ERROR)
+        self.assertEqual(run.response_content, response_content)

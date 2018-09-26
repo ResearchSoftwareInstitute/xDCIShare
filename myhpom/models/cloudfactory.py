@@ -18,6 +18,7 @@ class CloudFactoryDocumentRun(models.Model):
     * 'TIMEOUT'     = the last request to CF timed out
     * 'NOTFOUND'    = the run could not be found at CF
     * 'UNPROCESSABLE' = CF found the post_data unprocessable (422)
+    * 'ERROR'       = an error occurred, such as a non-json response that we couldn't interpret
     * 'Processing'  = CF is currently processing the document
     * 'Aborted'     = We have aborted the run, CF is still listed as 'Processing'
     * 'Processed'   = CF has completed processing, details in the response_content
@@ -28,6 +29,7 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_TIMEOUT = 'TIMEOUT'
     STATUS_NOTFOUND = 'NOTFOUND'
     STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
+    STATUS_ERROR = 'ERROR'
     STATUS_PROCESSING = 'Processing'
     STATUS_ABORTED = 'Aborted'
     STATUS_PROCESSED = 'Processed'
@@ -37,9 +39,10 @@ class CloudFactoryDocumentRun(models.Model):
         STATUS_TIMEOUT,
         STATUS_NOTFOUND,
         STATUS_UNPROCESSABLE,
+        STATUS_ERROR,
         STATUS_PROCESSING,
-        STATUS_PROCESSED,
         STATUS_ABORTED,
+        STATUS_PROCESSED,
     ]
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
@@ -134,14 +137,20 @@ class CloudFactoryDocumentRun(models.Model):
         self.save()
 
         # now we try to unpack the response_content on the assumption that it is json.
-        data = json.loads(response_content)  # throws an error if not json
+        try:
+            data = json.loads(response_content)  # throws an error if not json
 
-        if 'id' in data:
-            self.run_id = data['id']
-        if 'status' in data:
-            self.status = data['status']
-        if 'created_at' in data:
-            self.created_at = data['created_at']
-        if 'processed_at' in data:
-            self.processed_at = data['processed_at']
+            if 'id' in data:
+                self.run_id = data['id']
+            if 'status' in data:
+                self.status = data['status']
+            if 'created_at' in data:
+                self.created_at = data['created_at']
+            if 'processed_at' in data:
+                self.processed_at = data['processed_at']
+        except ValueError:
+            self.status = self.STATUS_ERROR
+            self.save()
+            raise
+
         self.save()

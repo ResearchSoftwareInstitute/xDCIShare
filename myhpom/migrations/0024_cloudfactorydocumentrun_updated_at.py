@@ -2,8 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import migrations, models
-import datetime
-from django.utils.timezone import utc
+from django.utils.timezone import now
 
 
 class Migration(migrations.Migration):
@@ -16,7 +15,12 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='cloudfactorydocumentrun',
             name='updated_at',
-            field=models.DateTimeField(default=datetime.datetime(2018, 9, 25, 20, 4, 2, 726135, tzinfo=utc), help_text=b'When the run instance was last updated in our system.', auto_now=True),
+            field=models.DateTimeField(default=now(), help_text=b'When the run instance was last updated in our system.', auto_now=True),
             preserve_default=False,
+        ),
+        migrations.AlterField(
+            model_name='cloudfactorydocumentrun',
+            name='status',
+            field=models.CharField(default=b'NEW', help_text=b'The status of the run.', max_length=16, choices=[(b'NEW', b'NEW'), (b'DELETED', b'DELETED'), (b'TIMEOUT', b'TIMEOUT'), (b'NOTFOUND', b'NOTFOUND'), (b'UNPROCESSABLE', b'UNPROCESSABLE'), (b'ERROR', b'ERROR'), (b'Processing', b'Processing'), (b'Aborted', b'Aborted'), (b'Processed', b'Processed')]),
         ),
     ]
