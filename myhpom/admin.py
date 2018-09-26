@@ -6,10 +6,7 @@ from myhpom.models.state_requirement import StateRequirement
 from myhpom.models.state_requirement_link import StateRequirementLink
 from myhpom.models.document import AdvanceDirective, DocumentUrl
 from myhpom.models.cloudfactory import CloudFactoryDocumentRun
-from myhpom.tasks import (
-    CloudFactoryAbortDocumentRun,
-    CloudFactoryUpdateDocumentRun,
-)
+from myhpom.tasks import CloudFactoryAbortDocumentRun, CloudFactoryUpdateDocumentRun
 
 from django.utils.safestring import mark_safe
 
@@ -67,8 +64,8 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
     model = CloudFactoryDocumentRun
     fields = (
         ('status', 'run_id'),
-        ('document_url', 'document_host'),
-        ('inserted_at', 'updated_at'), 
+        ('document_url', 'document_host', 'advance_directive'),
+        ('inserted_at', 'updated_at'),
         ('created_at', 'processed_at'),
         'post_data',
         'response_content',
@@ -78,6 +75,7 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'inserted_at',
         'updated_at',
         'document_host',
+        'advance_directive',
         'status',
         'run_id',
         'created_at',
@@ -90,10 +88,26 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'document_host',
         'run_id',
         'status',
-        'created_at',
-        'processed_at',
+        'latest_timestamp',
+        'advance_directive',
     ]
     actions = ['abort_runs', 'update_runs']
+
+    def latest_timestamp(self, obj):
+        return obj.processed_at or obj.created_at or obj.updated_at
+
+    def advance_directive(self, obj):
+        if obj.document_url and obj.document_url.advancedirective:
+            return mark_safe(
+                '<a href="%s">%s</a>'
+                % (
+                    reverse(
+                        "admin:myhpom_advancedirective_change",
+                        args=[obj.document_url.advancedirective.id],
+                    ),
+                    obj.document_url.advancedirective,
+                )
+            )
 
     def delete_selected(self, request, queryset):
         self.abort_runs(request, queryset)
