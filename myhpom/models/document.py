@@ -154,7 +154,7 @@ class DocumentUrl(models.Model):
 
 def abort_document_runs_on_delete(sender, instance, using, **kwargs):
     """Any document runs associated with a DocumentUrl should be aborted at CF on delete."""
-    if instance.cloudfactorydocumentrun_set.exists:
+    if instance.cloudfactorydocumentrun_set.exists():
         tasks = importlib.import_module('myhpom.tasks')
         for run in instance.cloudfactorydocumentrun_set.all():
             tasks.CloudFactoryAbortDocumentRun.delay(run.id)
