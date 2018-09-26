@@ -70,9 +70,6 @@ class CloudFactorySubmitDocumentRun(Task):
             )
 
         # following throws an error (as it should) if response.content is not json-parsable.
-        # don't change the run status here -- we haven't learned anything about it,
-        # and maybe there's a response status that we don't know about.
-
         cf_run.save_response_content(response.content)
 
         return cf_run.pk
@@ -139,9 +136,6 @@ class CloudFactoryAbortDocumentRun(Task):
         * Any response status apart from those given should raise an exception / send error email,
             because it means we have a bug / false assumption somewhere in our system.
         """
-        # update the CloudFactoryDocumentRun object first
-        CloudFactoryUpdateDocumentRun(cf_run_id)
-
         cf_run = CloudFactoryDocumentRun.objects.get(id=cf_run_id)
         if cf_run.status in [
             CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going last we checked
