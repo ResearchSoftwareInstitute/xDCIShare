@@ -21,6 +21,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cloudfactorydocumentrun',
             name='status',
-            field=models.CharField(default=b'NEW', help_text=b'The status of the run.', max_length=16, choices=[(b'NEW', b'NEW'), (b'DELETED', b'DELETED'), (b'TIMEOUT', b'TIMEOUT'), (b'NOTFOUND', b'NOTFOUND'), (b'UNPROCESSABLE', b'UNPROCESSABLE'), (b'ERROR', b'ERROR'), (b'Processing', b'Processing'), (b'Aborted', b'Aborted'), (b'Processed', b'Processed')]),
+            field=models.CharField(default=b'NEW', help_text=b'The status of the run.', max_length=16, choices=[(b'NEW', b'NEW'), (b'DELETED', b'DELETED'), (b'REQ_ERROR', b'REQ_ERROR'), (b'NOTFOUND', b'NOTFOUND'), (b'UNPROCESSABLE', b'UNPROCESSABLE'), (b'ERROR', b'ERROR'), (b'Processing', b'Processing'), (b'Aborted', b'Aborted'), (b'Processed', b'Processed')]),
         ),
     ]

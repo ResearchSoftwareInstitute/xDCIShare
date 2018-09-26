@@ -15,7 +15,7 @@ class CloudFactoryDocumentRun(models.Model):
     ## STATUS_VALUES:
     * 'NEW'         = the run is new and hasn't been submitted to CF
     * 'DELETED'     = the corresponding document has been deleted
-    * 'TIMEOUT'     = the last request to CF timed out
+    * 'REQ_ERROR'     = the last request to CF timed out
     * 'NOTFOUND'    = the run could not be found at CF
     * 'UNPROCESSABLE' = CF found the post_data unprocessable (422)
     * 'ERROR'       = an error occurred, such as a non-json response that we couldn't interpret
@@ -26,7 +26,7 @@ class CloudFactoryDocumentRun(models.Model):
 
     STATUS_NEW = 'NEW'
     STATUS_DELETED = 'DELETED'
-    STATUS_TIMEOUT = 'TIMEOUT'
+    STATUS_REQ_ERROR = 'REQ_ERROR'
     STATUS_NOTFOUND = 'NOTFOUND'
     STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
     STATUS_ERROR = 'ERROR'
@@ -36,7 +36,7 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_VALUES = [  # if you re-order these, like I tried to do, you'll prompt a migration.
         STATUS_NEW,
         STATUS_DELETED,
-        STATUS_TIMEOUT,
+        STATUS_REQ_ERROR,
         STATUS_NOTFOUND,
         STATUS_UNPROCESSABLE,
         STATUS_ERROR,
@@ -139,7 +139,6 @@ class CloudFactoryDocumentRun(models.Model):
         # now we try to unpack the response_content on the assumption that it is json.
         try:
             data = json.loads(response_content)  # throws an error if not json
-
             if 'id' in data:
                 self.run_id = data['id']
             if 'status' in data:
