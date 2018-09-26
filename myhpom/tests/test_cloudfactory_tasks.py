@@ -120,9 +120,9 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
             status_code=202,
             json={},
         )
-        du_id = self.document_url.id
+        cf_runs = self.document_url.cloudfactorydocumentrun_set.all()
         self.document_url.delete()
-        for cf_run in self.document_url.cloudfactorydocumentrun_set.all():
+        for cf_run in cf_runs:
             self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_ABORTED)
 
 

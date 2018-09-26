@@ -118,15 +118,15 @@ class CloudFactoryUpdateDocumentRun(Task):
 class CloudFactoryAbortDocumentRun(Task):
     def run(self, cf_run_id):
         """Abort the given CloudFactoryDocumentRun.
-        
+
         ## Use Cases:
         * when the user deletes their DocumentUrl, this task is triggered automatically
             (through the deletion of the DocumentUrl).
         * can be called from the admin
-        
+
         ## Parameters:
         * cf_run_id = the id (not the run_id) of a CloudFactoryDocumentRun object
-        
+
         ## Process:
         * If it is in progress (status='Processing'), cancel it at CloudFactory.
             * 202 = CloudFactory accepted the request
