@@ -2,6 +2,7 @@ import os
 import tempfile
 import base64
 import uuid
+import importlib
 
 from .user import User
 from django.db import models
@@ -149,3 +150,14 @@ class DocumentUrl(models.Model):
                 if ip_address in ip_range:
                     return True
         return False
+
+
+def abort_document_runs_on_delete(sender, instance, using, **kwargs):
+    """Any document runs associated with a DocumentUrl should be aborted at CF on delete."""
+    if instance.cloudfactorydocumentrun_set.exists:
+        tasks = importlib.import_module('myhpom.tasks')
+        for run in instance.cloudfactorydocumentrun_set.all():
+            tasks.CloudFactoryAbortDocumentRun.delay(run.id)
+
+
+models.signals.post_delete.connect(abort_document_runs_on_delete, sender=DocumentUrl)
