@@ -129,7 +129,7 @@ class CloudFactoryDocumentRun(models.Model):
         }
         return data
 
-    def save_response_content(self, response_content):
+    def save_response_data(self, response_content):
         """update the response_data field and the other fields that are extracted from it.
         """
         # we want to save the response_content to self.response_data no matter what.

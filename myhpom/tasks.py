@@ -53,16 +53,15 @@ class CloudFactorySubmitDocumentRun(Task):
 
         if response.status_code == 422:
             cf_run.status = CloudFactoryDocumentRun.STATUS_UNPROCESSABLE
-            cf_run.save()
         elif response.status_code == 404:
             cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
-            cf_run.save()
         elif response.status_code == 201:
             cf_run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
-            cf_run.save()
         else:
             cf_run.status = CloudFactoryDocumentRun.STATUS_ERROR
-            cf_run.save()
+
+        cf_run.response_content = response.content
+        cf_run.save()
 
         # if the run could not be created (status_code != 201), send support email
         # -- we need to understand why the the run could not be created at CloudFactory.
@@ -73,7 +72,7 @@ class CloudFactorySubmitDocumentRun(Task):
             )
 
         # following throws an error (as it should) if response.content is not json-parsable.
-        cf_run.save_response_content(response.content)
+        cf_run.save_response_data(response.content)
 
         return cf_run.pk
 
@@ -109,7 +108,7 @@ class CloudFactoryUpdateDocumentRun(Task):
                 cf_run.response_content = response.content  # not json, shouldn't raise Exception.
                 cf_run.save()
             elif response.status_code == 200:
-                cf_run.save_response_content(response.content)
+                cf_run.save_response_data(response.content)
             else:
                 cf_run.status = CloudFactoryDocumentRun.STATUS_ERROR
                 cf_run.save()
