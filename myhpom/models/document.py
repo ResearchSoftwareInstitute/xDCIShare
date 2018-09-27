@@ -374,6 +374,11 @@ class CloudFactoryDocumentRun(models.Model):
         Returns True when this run processed successfully, and all the
         outputs are either true or na.
         """
+        REQUIRED_OUTPUT_KEYS = set([
+            'owner_name_matches', 'witness_signature_1', 'witness_signature_2',
+            'notarized', 'signed_by_owner'])
+        YES_OR_NA = set(['true', 'not applicable'])
+
         if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
             return False
 
@@ -390,8 +395,13 @@ class CloudFactoryDocumentRun(models.Model):
             #
             # Note that we consider only the first unit of work - which at the
             # moment is all we create.
+            #
+            # The output must also have at least the required keys mentioned in
+            # our integration doc.
             output = units[0]['output']
-            return set(output.values()) < set(['true', 'not applicable'])
+            all_true_or_na = set(output.values()) <= YES_OR_NA
+            has_required_keys = REQUIRED_OUTPUT_KEYS <= set(output.keys())
+            return all_true_or_na and has_required_keys
         except ValueError:
             return False
 

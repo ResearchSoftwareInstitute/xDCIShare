@@ -54,8 +54,15 @@ class AdvanceDirectiveTest(TestCase):
         run.save_response_data(json.dumps(failed_run))
         self.assertFalse(ad.verification_succeeded)
 
-        # Especially if the status is aborted
+        # Especially if the status is aborted, it is not a success
         failed_run['status'] = CloudFactoryDocumentRun.STATUS_ABORTED
+        run.save_response_data(json.dumps(failed_run))
+        self.assertFalse(ad.verification_succeeded)
+
+        # We expect a certain set of keys in the output - if they are missing,
+        # that is also not a success:
+        failed_run['status'] = CloudFactoryDocumentRun.STATUS_PROCESSED
+        failed_run['units'][0]['output'] = {}
         run.save_response_data(json.dumps(failed_run))
         self.assertFalse(ad.verification_succeeded)
 
