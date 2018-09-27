@@ -25,6 +25,7 @@ def upload_current_ad(request):
 
     return render(request, 'myhpom/upload/current_ad.html', {
         'advancedirective': request.user.advancedirective,
+        'yes_or_na': CloudFactorySubmitDocumentRun.YES_OR_NA,
     })
 
 

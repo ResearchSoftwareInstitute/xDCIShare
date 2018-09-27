@@ -263,6 +263,11 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
 
+    REQUIRED_OUTPUT_KEYS = set([
+        'owner_name_matches', 'witness_signature_1', 'witness_signature_2',
+        'notarized', 'signed_by_owner'])
+    YES_OR_NA = set(['true', 'not applicable'])
+
     document_url = models.ForeignKey(
         DocumentUrl,
         on_delete=models.SET_NULL,
@@ -393,11 +398,6 @@ class CloudFactoryDocumentRun(models.Model):
         Returns True when this run processed successfully, and all the
         outputs are either true or na.
         """
-        REQUIRED_OUTPUT_KEYS = set([
-            'owner_name_matches', 'witness_signature_1', 'witness_signature_2',
-            'notarized', 'signed_by_owner'])
-        YES_OR_NA = set(['true', 'not applicable'])
-
         if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
             return False
 

@@ -4,22 +4,46 @@
 <li class="advance-directive-widget__breadcrumb-status">
     current status:
 </li>
-<li class="advance-directive-widget__breadcrumb-status-value">
-    {% with ad=request.user.advancedirective %}
-        {% if ad.verification_passed %}
-        Verified
-        {% elif ad.verification_in_progress %}
-        Verifying
-        {% elif ad.verification_result %}
-        Failed
-        {% elif ad.verification_failed %}
-        FAILED
-        {% else %}
-        Saved
-        {% endif %}
-    {% endwith %}
-</li>
+{% with ad=request.user.advancedirective %}
+{% if ad.verification_passed %}
+<li class="advance-directive-widget__breadcrumb-status-value--success">Verified</li>
+{% elif ad.verification_in_progress %}
+<li class="advance-directive-widget__breadcrumb-status-value--inprogress">Verifying</li>
+{% elif ad.verification_result %}
+<li class="advance-directive-widget__breadcrumb-status-value--error">Failed</li>
+{% elif ad.verification_failed %}
+<li class="advance-directive-widget__breadcrumb-status-value--error">Failed</li>
+{% else %}
+<li class="advance-directive-widget__breadcrumb-status-value">Saved</li>
+{% endif %}
+{% endwith %}
 {% endblock widget_breadcrumb_items %}
+
+{% block widget_breadcrumb_detail %}
+{% with ad=request.user.advancedirective %}
+{% if ad.verification_result %}
+    {% if ad.verification_result.owner_name_matches not in yes_or_na %}
+        Name on document doesn't match yours.
+    {% elif not ad.verification_result.witness_signature_1 not in yes_or_na %}
+        Missing first witness signature.
+    {% elif not ad.verification_result.witness_signature_2 not in yes_or_na %}
+        Missing second witness signature.
+    {% elif not ad.verification_result.notarized not in yes_or_na %}
+        Not notarized.
+    {% elif not ad.verification_result.signed_by_owner not in yes_or_na %}
+        Not signed.
+    {% else %}
+        Could not be verified. Please re-scan and upload.
+    {% endif %}
+{% elif ad.verification_failed %}
+    Please re-scan and upload.
+    {% comment %}
+    Some unrecoverable problem happened during verification - probably not due
+    to the user's AD.
+    {% endcomment %}
+{% endif %}
+{% endwith %}
+{% endblock widget_breadcrumb_detail %}
 
 {% block widget_body %}
 <dl class="advance-directive-widget__definition">

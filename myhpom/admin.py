@@ -80,7 +80,6 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'created_at',
         'processed_at',
         'post_data',
-        'response_content',
     ]
     list_display = [
         'document_url',
