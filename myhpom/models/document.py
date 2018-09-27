@@ -418,8 +418,8 @@ class CloudFactoryDocumentRun(models.Model):
             # The output must also have at least the required keys mentioned in
             # our integration doc.
             output = units[0]['output']
-            all_true_or_na = set(output.values()) <= YES_OR_NA
-            has_required_keys = REQUIRED_OUTPUT_KEYS <= set(output.keys())
+            all_true_or_na = set(output.values()) <= self.YES_OR_NA
+            has_required_keys = self.REQUIRED_OUTPUT_KEYS <= set(output.keys())
             return all_true_or_na and has_required_keys
         except ValueError:
             return False
