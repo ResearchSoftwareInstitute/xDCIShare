@@ -2,7 +2,6 @@ import os
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
-from django.utils.dateparse import parse_datetime
 from myhpom.models import CloudFactoryDocumentRun, AdvanceDirective, DocumentUrl
 from myhpom.tests.factories import UserFactory
 
@@ -46,9 +45,9 @@ class DocumentRunModelTestCase(TestCase):
         for key in ['full_name', 'state', 'pdf_url', 'date_signed']:
             self.assertIn(key, post_data['units'][0])
 
-    def test_run_save_response_content_created(self):
+    def test_run_save_response_data_created(self):
         """
-        * the .save_response_content(content) method:
+        * the .save_response_data(content) method:
             * puts the value of content in the run .response_content attribute, no matter what.
             * throws a ValueError if the response_content is not json-parsable
             * puts any 'status', 'created_at', or 'processed_at' keys into those fields
@@ -59,23 +58,25 @@ class DocumentRunModelTestCase(TestCase):
             r'{"id":"SOME_RUN_ID","line_id":"SOME_LINE_ID","status":"Processing",'
             + r'"created_at":"2018-09-24T22:27:53.000Z"}'
         )
-        run.save_response_content(response_content)
+        run.save_response_data(response_content)
         self.assertEqual(run.run_id, "SOME_RUN_ID")
         self.assertEqual(run.status, "Processing")
-        self.assertEqual(run.created_at, parse_datetime("2018-09-24T22:27:53.000Z"))
+        self.assertEqual(run.created_at, "2018-09-24T22:27:53.000Z")
 
-    def test_run_save_response_content_unprocessable(self):
+    def test_run_save_response_data_unprocessable(self):
         # this represents a "422 Unprocessable Entity" response
         run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
         response_content = r'{"message":"Invalid request. \"state\" is missing in the request."}'
-        run.save_response_content(response_content)
+        run.save_response_data(response_content)
         self.assertIsNone(run.run_id)
         self.assertEqual(run.status, CloudFactoryDocumentRun.STATUS_NEW)
         self.assertIsNone(run.created_at)
         self.assertEqual(run.response_content, response_content)
 
-    def test_run_save_response_content_not_json(self):
+    def test_run_save_response_data_not_json(self):
         # this represents a response in which the content is not json-parsable
         run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
         response_content = 'This content is not json, so not parsable'
-        self.assertRaises(ValueError, run.save_response_content, response_content)
+        self.assertRaises(ValueError, run.save_response_data, response_content)
+        self.assertEqual(run.status, CloudFactoryDocumentRun.STATUS_ERROR)
+        self.assertEqual(run.response_content, response_content)

@@ -66,6 +66,6 @@ def cloudfactory_response(request):
 
         # We already know that the body is parseable JSON so there is no need to
         # try/catch here:
-        run.save_response_content(body)
+        run.save_response_data(body)
 
         return HttpResponse()

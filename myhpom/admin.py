@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.contrib import admin
 from django.core.urlresolvers import reverse
+from myhpom.tasks import CloudFactoryAbortDocumentRun, CloudFactoryUpdateDocumentRun
 from django.utils.safestring import mark_safe
 
 from myhpom.models import (
@@ -61,8 +62,9 @@ class AdvanceDirectiveAdmin(admin.ModelAdmin):
 class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
     model = CloudFactoryDocumentRun
     fields = (
-        ('document_url', 'inserted_at', 'document_host'),
         ('status', 'run_id'),
+        ('document_url', 'document_host', 'advance_directive'),
+        ('inserted_at', 'updated_at'),
         ('created_at', 'processed_at'),
         'post_data',
         'response_content',
@@ -70,7 +72,9 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
     readonly_fields = [
         'document_url',
         'inserted_at',
+        'updated_at',
         'document_host',
+        'advance_directive',
         'status',
         'run_id',
         'created_at',
@@ -83,9 +87,42 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'document_host',
         'run_id',
         'status',
-        'created_at',
-        'processed_at',
+        'latest_timestamp',
+        'advance_directive',
     ]
+    actions = ['abort_runs', 'update_runs']
+
+    def latest_timestamp(self, obj):
+        return obj.processed_at or obj.created_at or obj.updated_at
+
+    def advance_directive(self, obj):
+        if obj.document_url and obj.document_url.advancedirective:
+            return mark_safe(
+                '<a href="%s">%s</a>'
+                % (
+                    reverse(
+                        "admin:myhpom_advancedirective_change",
+                        args=[obj.document_url.advancedirective.id],
+                    ),
+                    obj.document_url.advancedirective,
+                )
+            )
+
+    def delete_selected(self, request, queryset):
+        self.abort_runs(request, queryset)
+        super(CloudFactoryDocumentRunAdmin, self).delete_selected(request, queryset)
+
+    def abort_runs(self, request, queryset):
+        for cf_run in queryset:
+            CloudFactoryAbortDocumentRun(cf_run.id)
+
+    abort_runs.short_description = "Abort the selected document runs at CloudFactory."
+
+    def update_runs(self, request, queryset):
+        for cf_run in queryset:
+            CloudFactoryUpdateDocumentRun(cf_run.id)
+
+    update_runs.short_description = "Update the selected document runs by querying CloudFactory."
 
 
 admin.site.register(State, StateAdmin)

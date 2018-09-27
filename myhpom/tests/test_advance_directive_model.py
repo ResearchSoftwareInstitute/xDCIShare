@@ -39,7 +39,7 @@ class AdvanceDirectiveTest(TestCase):
         run = CloudFactoryDocumentRunFactory()
         ad = run.document_url.advancedirective
 
-        run.save_response_content(SUCCESS_DATA)
+        run.save_response_data(SUCCESS_DATA)
         self.assertTrue(ad.verification_succeeded)
 
         # Even if the successful run is true, if the status is failed, so is
@@ -51,12 +51,12 @@ class AdvanceDirectiveTest(TestCase):
         # If a one of the outputs are false, then the run is not successful.
         failed_run = json.loads(SUCCESS_DATA)
         failed_run['units'][0]['output']['owner_name_matches'] = False
-        run.save_response_content(json.dumps(failed_run))
+        run.save_response_data(json.dumps(failed_run))
         self.assertFalse(ad.verification_succeeded)
 
         # Especially if the status is aborted
         failed_run['status'] = CloudFactoryDocumentRun.STATUS_ABORTED
-        run.save_response_content(json.dumps(failed_run))
+        run.save_response_data(json.dumps(failed_run))
         self.assertFalse(ad.verification_succeeded)
 
     def test_verification_in_progress(self):
@@ -96,5 +96,5 @@ class AdvanceDirectiveTest(TestCase):
         self.assertIsNone(ad.verification_result)
 
         # When there is a run, and its results are parsable, return a dictionary of results
-        run.save_response_content(SUCCESS_DATA)
+        run.save_response_data(SUCCESS_DATA)
         self.assertIsNotNone(ad.verification_result)
