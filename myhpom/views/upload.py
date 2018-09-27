@@ -7,7 +7,7 @@ from django.utils.timezone import now
 
 from myhpom.decorators import require_ajax_login
 from myhpom.forms.upload_requirements import SharingForm, UploadRequirementsForm
-from myhpom.models import AdvanceDirective, StateRequirement, DocumentUrl
+from myhpom.models import AdvanceDirective, StateRequirement, DocumentUrl, CloudFactoryDocumentRun
 from myhpom.tasks import CloudFactorySubmitDocumentRun
 
 
@@ -25,7 +25,7 @@ def upload_current_ad(request):
 
     return render(request, 'myhpom/upload/current_ad.html', {
         'advancedirective': request.user.advancedirective,
-        'yes_or_na': CloudFactorySubmitDocumentRun.YES_OR_NA,
+        'yes_or_na': CloudFactoryDocumentRun.YES_OR_NA,
     })
 
 

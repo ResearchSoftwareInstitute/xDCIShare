@@ -75,7 +75,6 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'updated_at',
         'document_host',
         'advance_directive',
-        'status',
         'run_id',
         'created_at',
         'processed_at',
