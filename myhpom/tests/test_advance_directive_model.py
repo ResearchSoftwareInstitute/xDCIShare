@@ -1,30 +1,19 @@
+import json
 import os
-from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
-from django.utils.timezone import now
 from mock import MagicMock
 
-from myhpom.models import AdvanceDirective
+from myhpom.tests.factories import AdvanceDirectiveFactory, CloudFactoryDocumentRunFactory
+from myhpom.models import CloudFactoryDocumentRun
 from myhpom.models.document import remove_documents_on_delete
-from myhpom.tests.factories import UserFactory
-
-PDF_FILENAME = os.path.join(os.path.dirname(__file__), 'fixtures', 'afile.pdf')
 
 
-class RemoveDocumentsOnDeleteTest(TestCase):
-    def test_a_file(self):
+class AdvanceDirectiveTest(TestCase):
+
+    def test_remove_a_file(self):
         # When an AD is deleted its corresponding file and thumbnail should be deleted from
         # the system. (this test requires an actual PDF)
-        user = UserFactory()
-        with open(PDF_FILENAME, 'rb') as f:
-            document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), f.read())
-        directive = AdvanceDirective(
-            user=user, share_with_ehs=False, document=document, valid_date=now())
-        directive.thumbnail = SimpleUploadedFile(
-            os.path.splitext(os.path.basename(PDF_FILENAME))[0] + '.jpg',
-            directive.render_thumbnail_data(),
-        )
-        directive.save()
+        directive = AdvanceDirectiveFactory()
         self.assertTrue(directive.document.storage.exists(directive.document.name))
         self.assertTrue(directive.thumbnail.storage.exists(directive.thumbnail.name))
 
@@ -36,11 +25,36 @@ class RemoveDocumentsOnDeleteTest(TestCase):
         directive.delete()
 
         # When there is no document associated with the AD, nothing happens:
-        directive = AdvanceDirective(
-            user=user, share_with_ehs=False, valid_date=now())
-        directive.save()
-
+        directive = AdvanceDirectiveFactory(document=None)
         directive.document.storage = MagicMock()
         remove_documents_on_delete(None, directive, 'default')
         self.assertFalse(directive.document.storage.delete.called)
 
+    def test_verification_succeeded(self):
+        SUCCESS_DATA = open(os.path.join(
+            os.path.dirname(__file__), 'fixtures/cloudfactory/callback_success.json')).read()
+
+        # If the status is equal to a successful run, and all the outputs are
+        # successful, then verification_succeeded will return True
+        run = CloudFactoryDocumentRunFactory()
+        ad = run.document_url.advancedirective
+
+        run.save_response_content(SUCCESS_DATA)
+        self.assertTrue(ad.verification_succeeded)
+
+        # Even if the successful run is true, if the status is failed, so is
+        # this the run:
+        run.status = CloudFactoryDocumentRun.STATUS_ABORTED
+        run.save()
+        self.assertFalse(ad.verification_succeeded)
+
+        # If a one of the outputs are false, then the run is not successful.
+        failed_run = json.loads(SUCCESS_DATA)
+        failed_run['units'][0]['output']['owner_name_matches'] = False
+        run.save_response_content(json.dumps(failed_run))
+        self.assertFalse(ad.verification_succeeded)
+
+        # Especially if the status is aborted
+        failed_run['status'] = CloudFactoryDocumentRun.STATUS_ABORTED
+        run.save_response_content(json.dumps(failed_run))
+        self.assertFalse(ad.verification_succeeded)
