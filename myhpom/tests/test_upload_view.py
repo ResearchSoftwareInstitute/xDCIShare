@@ -1,3 +1,4 @@
+from mock import patch
 import os
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -109,7 +110,8 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         with open(PDF_FILENAME, 'rb') as f:
             self.pdfdata = f.read()
 
-    def test_POST_valid_date_for_unsupported_state(self):
+    @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')
+    def test_POST_valid_date_for_unsupported_state(self, task_patch):
         user = self._setup_user_and_login()
         document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
         post_data = {'valid_date': '2018-01-01', 'document': document}
@@ -122,10 +124,16 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertEqual(
             post_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
         )
+        # On success the document, thumbnail & documenturl are created and CF
+        # task are queued.
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)
+        self.assertEqual(1, user.advancedirective.documenturl_set.count())
+        task_patch.delay.assert_called_with(
+            user.advancedirective.documenturl_set.first().pk, 'testserver')
 
-    def test_POST_valid_date_for_supported_state(self):
+    @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')
+    def test_POST_valid_date_for_supported_state(self, task_patch):
         user = self._setup_user_and_login()
         user.userdetails.state.advance_directive_template = SimpleUploadedFile('ad.pdf', '')
         user.userdetails.state.save()
@@ -140,10 +148,16 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertEqual(
             post_data['valid_date'], user.advancedirective.valid_date.strftime('%Y-%m-%d')
         )
+        # On success the document, thumbnail & documenturl are created and CF
+        # task are queued.
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)
+        self.assertEqual(1, user.advancedirective.documenturl_set.count())
+        task_patch.delay.assert_called_with(
+            user.advancedirective.documenturl_set.first().pk, 'testserver')
 
-    def test_POST_invalid_date(self):
+    @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')
+    def test_POST_invalid_date(self, task_patch):
         user = self._setup_user_and_login()
         document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
         post_data = {'valid_date': '', 'document': document}
@@ -153,8 +167,10 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
         self.assertFalse(hasattr(user, 'advancedirective'))
+        self.assertFalse(task_patch.delay.called)
 
-    def test__POST_invalid_filename(self):
+    @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')
+    def test__POST_invalid_filename(self, task_patch):
         user = self._setup_user_and_login()
         post_data = {
             'valid_date': '2018-01-01',
@@ -166,9 +182,11 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
         self.assertFalse(hasattr(user, 'advancedirective'))
+        self.assertFalse(task_patch.delay.called)
 
+    @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')
     @override_settings(MAX_AD_SIZE=10)
-    def test_POST_invalid_filesize(self):
+    def test_POST_invalid_filesize(self, task_patch):
         user = self._setup_user_and_login()
         document = SimpleUploadedFile(os.path.basename(PDF_FILENAME), self.pdfdata)
         post_data = {'valid_date': '2018-01-01', 'document': document}
@@ -178,8 +196,10 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertEqual(200, response.status_code)
         self.assertTemplateUsed('myhpom/upload/requirements.html')
         self.assertFalse(hasattr(user, 'advancedirective'))
+        self.assertFalse(task_patch.delay.called)
 
-    def test_POST_duplicate_filenames(self):
+    @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')
+    def test_POST_duplicate_filenames(self, task_patch):
         """
         Confirm that files are (as expected, not necessarily as desired)
         renamed to avoid name collisions on the filesystem but are available by
@@ -208,6 +228,9 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertIsNotNone(user.advancedirective.thumbnail)
         self.assertNotEqual(old_name, user.advancedirective.document.name)
         self.assertEqual(og_name, user.advancedirective.filename)
+        self.assertEqual(1, user.advancedirective.documenturl_set.count())
+        task_patch.delay.assert_called_with(
+            user.advancedirective.documenturl_set.first().pk, 'testserver')
 
 
 class UploadDeleteTestCase(UploadMixin, TestCase):

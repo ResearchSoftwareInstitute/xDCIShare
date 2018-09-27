@@ -94,14 +94,13 @@ class AdvanceDirective(models.Model):
 
         If the CF verification is not finished or failed, returns None.
         """
-        # Select all finished runs - for the first one that succeeded (there
+        # Select all finished runs - for the first one that processed (there
         # should be only one), return its output
-        processed_runs = CloudFactoryDocumentRun.objects.filter(
+        processed_run = CloudFactoryDocumentRun.objects.filter(
             status=CloudFactoryDocumentRun.STATUS_PROCESSED,
-            document_url__advancedirective=self)
-        for run in processed_runs:
-            if run.succeeded():
-                return run.output()
+            document_url__advancedirective=self).first()
+        if processed_run:
+            return processed_run.output()
 
         return None
 
@@ -113,7 +112,11 @@ class AdvanceDirective(models.Model):
         Notes: if the CF-run finished successfully, and all the outputs checked
         by the run are true (or not applicable).
         """
-        return self.verification_result is not None
+        processed_run = CloudFactoryDocumentRun.objects.filter(
+            status=CloudFactoryDocumentRun.STATUS_PROCESSED,
+            document_url__advancedirective=self).first()
+
+        return processed_run and processed_run.succeeded()
 
     def __unicode__(self):
         return unicode(self.document.name)
@@ -350,17 +353,21 @@ class CloudFactoryDocumentRun(models.Model):
 
     def output(self):
         """
-        Returns dictionary of 'output' from run if it succeeded.
+        Returns dictionary of 'output' from run if is processed.
 
-        If the run isn't finished or didn't succeed returns None.
+        Otherwise if the run failed to process returns None or return non-JSON
+        return None.
         """
-        if not self.succeeded():
+        if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
             return None
 
-        # no need to try/catch since we know it succeeded
-        data = json.loads(self.response_content)
-        units = data['units']
-        return units[0]['output']
+        try:
+            # no need to try/catch since we know it succeeded
+            data = json.loads(self.response_content)
+            units = data['units']
+            return units[0]['output']
+        except ValueError:
+            return None
 
     def succeeded(self):
         """

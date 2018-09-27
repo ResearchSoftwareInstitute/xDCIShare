@@ -87,7 +87,7 @@ class AdvanceDirectiveTest(TestCase):
         ad = run.document_url.advancedirective
         self.assertIsNone(ad.verification_result)
 
-        # when there is no output, but the results are parseable, return None
+        # When there is no output, but the results are parseable, return None
         run = CloudFactoryDocumentRunFactory()
         ad = run.document_url.advancedirective
         run.response_content = 'not-json'
@@ -97,4 +97,11 @@ class AdvanceDirectiveTest(TestCase):
 
         # When there is a run, and its results are parsable, return a dictionary of results
         run.save_response_data(SUCCESS_DATA)
+        self.assertIsNotNone(ad.verification_result)
+
+        # When the run finished, a dictionary is still returned, even if some
+        # outputs failed to pass
+        failed_run = json.loads(SUCCESS_DATA)
+        failed_run['units'][0]['output']['owner_name_matches'] = False
+        run.save_response_data(json.dumps(failed_run))
         self.assertIsNotNone(ad.verification_result)

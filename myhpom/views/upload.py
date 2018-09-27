@@ -7,7 +7,8 @@ from django.utils.timezone import now
 
 from myhpom.decorators import require_ajax_login
 from myhpom.forms.upload_requirements import SharingForm, UploadRequirementsForm
-from myhpom.models import AdvanceDirective, StateRequirement
+from myhpom.models import AdvanceDirective, StateRequirement, DocumentUrl
+from myhpom.tasks import CloudFactorySubmitDocumentRun
 
 
 @require_GET
@@ -44,6 +45,11 @@ def upload_requirements(request):
         form = UploadRequirementsForm(request.POST, request.FILES, instance=directive)
         if form.is_valid():
             form.save()
+
+            # start the verification process for the AD:
+            document_url = DocumentUrl.objects.create(advancedirective=form.instance)
+            CloudFactorySubmitDocumentRun.delay(document_url.pk, request.get_host())
+
             if request.user.userdetails.state.advance_directive_template:
                 return redirect(reverse("myhpom:upload_sharing"))
             return redirect(reverse("myhpom:upload_current_ad"))

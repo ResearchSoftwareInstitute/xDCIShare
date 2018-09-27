@@ -5,15 +5,17 @@
     current status:
 </li>
 <li class="advance-directive-widget__breadcrumb-status-value">
-    {% if request.user.advancedirective.documenturl.cloudfactorydocumentrun %}
-        {% if request.user.advancedirective.documenturl.cloudfactorydocumentrun.is_successful_run  %}
+    {% with ad=request.user.advancedirective %}
+        {% if ad.verification_succeeded %}
         Verified
+        {% elif ad.verification_in_progress %}
+        Verifying
+        {% elif ad.verification_result %}
+        Failed
         {% else %}
-        TODO in progress or failed, please resend
+        Saved -- TODO this doesn't include 'failed' runs - which should say something
         {% endif %}
-    {% else %}
-    Saved
-    {% endif %}
+    {% endwith %}
 </li>
 {% endblock widget_breadcrumb_items %}
 
