@@ -107,7 +107,7 @@ class DocumentUrlModelTestCase(TestCase):
         make sure that the CloudFactoryAbortDocumentRun task has been called.
         """
 
-        @after_task_publish.connect()
+        @after_task_publish.connect(sender='myhpom.tasks.CloudFactoryAbortDocumentRun')
         def task_sent_handler(sender=None, headers=None, body=None, **kwargs):
             task_sent_handler.called = True
 
