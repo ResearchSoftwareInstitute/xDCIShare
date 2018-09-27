@@ -51,7 +51,7 @@ class UserModelTestCase(TestCase):
 
         user.last_name = ''
         self.assertEqual(user.get_full_name(), 'first middle')
-        
+
         user.first_name = ''
         self.assertEqual(user.get_full_name(), 'middle')
 

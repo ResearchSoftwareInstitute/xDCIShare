@@ -3,7 +3,6 @@ import json
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.utils.dateparse import parse_datetime
 from myhpom.models import DocumentUrl
 
 # from myhpom.models.user import User
@@ -12,25 +11,38 @@ from myhpom.models import DocumentUrl
 class CloudFactoryDocumentRun(models.Model):
     """Store information about current and past CloudFactory document runs
     (processing for AdvanceDirective.DocumentUrl objects).
+
+    ## STATUS_VALUES:
+    * 'NEW'         = the run is new and hasn't been submitted to CF
+    * 'DELETED'     = the corresponding document has been deleted
+    * 'REQ_ERROR'     = the last request to CF timed out
+    * 'NOTFOUND'    = the run could not be found at CF
+    * 'UNPROCESSABLE' = CF found the post_data unprocessable (422)
+    * 'ERROR'       = an error occurred, such as a non-json response that we couldn't interpret
+    * 'Processing'  = CF is currently processing the document
+    * 'Aborted'     = We have aborted the run, CF is still listed as 'Processing'
+    * 'Processed'   = CF has completed processing, details in the response_content
     """
 
     STATUS_NEW = 'NEW'
     STATUS_DELETED = 'DELETED'
-    STATUS_TIMEOUT = 'TIMEOUT'
+    STATUS_REQ_ERROR = 'REQ_ERROR'
     STATUS_NOTFOUND = 'NOTFOUND'
     STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
+    STATUS_ERROR = 'ERROR'
     STATUS_PROCESSING = 'Processing'
-    STATUS_PROCESSED = 'Processed'
     STATUS_ABORTED = 'Aborted'
-    STATUS_VALUES = [
+    STATUS_PROCESSED = 'Processed'
+    STATUS_VALUES = [  # if you re-order these, like I tried to do, you'll prompt a migration.
         STATUS_NEW,
         STATUS_DELETED,
-        STATUS_TIMEOUT,
+        STATUS_REQ_ERROR,
         STATUS_NOTFOUND,
         STATUS_UNPROCESSABLE,
+        STATUS_ERROR,
         STATUS_PROCESSING,
-        STATUS_PROCESSED,
         STATUS_ABORTED,
+        STATUS_PROCESSED,
     ]
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
@@ -49,6 +61,9 @@ class CloudFactoryDocumentRun(models.Model):
     )
     inserted_at = models.DateTimeField(
         auto_now_add=True, help_text="When the run instance was inserted into our system."
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True, help_text="When the run instance was last updated in our system."
     )
 
     # The following four fields are pulled out of the response_data for use in the admin.
@@ -114,7 +129,7 @@ class CloudFactoryDocumentRun(models.Model):
         }
         return data
 
-    def save_response_content(self, response_content):
+    def save_response_data(self, response_content):
         """update the response_data field and the other fields that are extracted from it.
         """
         # we want to save the response_content to self.response_data no matter what.
@@ -122,14 +137,19 @@ class CloudFactoryDocumentRun(models.Model):
         self.save()
 
         # now we try to unpack the response_content on the assumption that it is json.
-        data = json.loads(response_content)  # throws an error if not json
+        try:
+            data = json.loads(response_content)  # throws an error if not json
+            if 'id' in data:
+                self.run_id = data['id']
+            if 'status' in data:
+                self.status = data['status']
+            if 'created_at' in data:
+                self.created_at = data['created_at']
+            if 'processed_at' in data:
+                self.processed_at = data['processed_at']
+        except ValueError:
+            self.status = self.STATUS_ERROR
+            self.save()
+            raise
 
-        if 'id' in data:
-            self.run_id = data['id']
-        if 'status' in data:
-            self.status = data['status']
-        if 'created_at' in data:
-            self.created_at = parse_datetime(data['created_at'])
-        if 'processed_at' in data:
-            self.processed_at = parse_datetime(data['processed_at'])
         self.save()
