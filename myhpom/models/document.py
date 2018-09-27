@@ -160,4 +160,4 @@ def abort_document_runs_on_delete(sender, instance, using, **kwargs):
             tasks.CloudFactoryAbortDocumentRun.delay(run.id)
 
 
-models.signals.post_delete.connect(abort_document_runs_on_delete, sender=DocumentUrl)
+models.signals.pre_delete.connect(abort_document_runs_on_delete, sender=DocumentUrl)

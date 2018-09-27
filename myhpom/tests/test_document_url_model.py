@@ -5,8 +5,11 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.conf import settings
 from django.db import IntegrityError
+from mock import Mock
+from celery.signals import after_task_publish
 from myhpom.tests.factories import UserFactory
-from myhpom.models import DocumentUrl, AdvanceDirective
+from myhpom.models import DocumentUrl, AdvanceDirective, CloudFactoryDocumentRun
+from myhpom.tasks import CloudFactoryAbortDocumentRun
 
 
 class DocumentUrlModelTestCase(TestCase):
@@ -97,3 +100,23 @@ class DocumentUrlModelTestCase(TestCase):
         # -- key: required
         doc_url.key = None
         self.assertRaises(IntegrityError, doc_url.save)
+
+    def test_deleted_with_cf_runs(self):
+        """
+        When a DocumentUrl is deleted that has associated CloudFactoryDocumentRuns, 
+        make sure that the CloudFactoryAbortDocumentRun task has been called.
+        """
+
+        @after_task_publish.connect()
+        def task_sent_handler(sender=None, headers=None, body=None, **kwargs):
+            task_sent_handler.called = True
+
+        task_sent_handler.called = False
+
+        ad = self.advancedirective
+        doc_url = DocumentUrl.objects.create(advancedirective=ad)
+        cf_run = CloudFactoryDocumentRun.objects.create(
+            document_url=doc_url, status=CloudFactoryDocumentRun.STATUS_PROCESSING, run_id='A_RUN'
+        )
+        doc_url.delete()
+        self.assertTrue(task_sent_handler.called)
