@@ -87,6 +87,22 @@ class AdvanceDirective(models.Model):
             document_url__advancedirective=self).exists()
 
     @property
+    def verification_failed(self):
+        """ Returns True when the CF task has failed.
+
+        A failure of the task (aborted, network problems, bad data at the
+        protocol level, etc) -- the verification process did not happen at this
+        stage (it failed before it could)
+        """
+        # Search for any run that is in progress
+        return CloudFactoryDocumentRun.objects \
+            .filter(
+                status__in=CloudFactoryDocumentRun.STATUS_FINAL_STATES,
+                document_url__advancedirective=self) \
+            .exclude(status=CloudFactoryDocumentRun.STATUS_PROCESSED) \
+            .exists()
+
+    @property
     def verification_result(self):
         """
         Returns a dictionary of keys corresponding to the output of the
@@ -105,7 +121,7 @@ class AdvanceDirective(models.Model):
         return None
 
     @property
-    def verification_succeeded(self):
+    def verification_passed(self):
         """
         Returns True when this AD has been verified with CloudFactory.
 
@@ -116,7 +132,7 @@ class AdvanceDirective(models.Model):
             status=CloudFactoryDocumentRun.STATUS_PROCESSED,
             document_url__advancedirective=self).first()
 
-        return processed_run and processed_run.succeeded()
+        return processed_run and processed_run.passed()
 
     def __unicode__(self):
         return unicode(self.document.name)
@@ -220,7 +236,7 @@ class CloudFactoryDocumentRun(models.Model):
     STATUS_PROCESSING = 'Processing'
     STATUS_ABORTED = 'Aborted'
     STATUS_PROCESSED = 'Processed'
-    STATUS_VALUES = [  # if you re-order these, like I tried to do, you'll prompt a migration.
+    STATUS_VALUES = (  # if you re-order these, like I tried to do, you'll prompt a migration.
         STATUS_NEW,
         STATUS_DELETED,
         STATUS_REQ_ERROR,
@@ -230,16 +246,19 @@ class CloudFactoryDocumentRun(models.Model):
         STATUS_PROCESSING,
         STATUS_ABORTED,
         STATUS_PROCESSED,
-    ]
+    )
 
     # Once a run is in the following states, it will not transition to a new
     # state.
-    STATUS_FINAL_VALUES = (
+    STATUS_FINAL_STATES = (
+        STATUS_NEW,
         STATUS_DELETED,
+        STATUS_REQ_ERROR,
         STATUS_NOTFOUND,
         STATUS_UNPROCESSABLE,
-        STATUS_PROCESSED,
+        STATUS_ERROR,
         STATUS_ABORTED,
+        STATUS_PROCESSED,
     )
     STATUS_MAX_LENGTH = 16
     STATUS_CHOICES = [(i, i) for i in STATUS_VALUES]
@@ -369,7 +388,7 @@ class CloudFactoryDocumentRun(models.Model):
         except ValueError:
             return None
 
-    def succeeded(self):
+    def passed(self):
         """
         Returns True when this run processed successfully, and all the
         outputs are either true or na.

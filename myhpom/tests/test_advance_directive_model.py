@@ -33,38 +33,38 @@ class AdvanceDirectiveTest(TestCase):
         remove_documents_on_delete(None, directive, 'default')
         self.assertFalse(directive.document.storage.delete.called)
 
-    def test_verification_succeeded(self):
+    def test_verification_passed(self):
         # If the status is equal to a successful run, and all the outputs are
-        # successful, then verification_succeeded will return True
+        # successful, then verification_passed will return True
         run = CloudFactoryDocumentRunFactory()
         ad = run.document_url.advancedirective
 
         run.save_response_data(SUCCESS_DATA)
-        self.assertTrue(ad.verification_succeeded)
+        self.assertTrue(ad.verification_passed)
 
         # Even if the successful run is true, if the status is failed, so is
         # this the run:
         run.status = CloudFactoryDocumentRun.STATUS_ABORTED
         run.save()
-        self.assertFalse(ad.verification_succeeded)
+        self.assertFalse(ad.verification_passed)
 
         # If a one of the outputs are false, then the run is not successful.
         failed_run = json.loads(SUCCESS_DATA)
         failed_run['units'][0]['output']['owner_name_matches'] = False
         run.save_response_data(json.dumps(failed_run))
-        self.assertFalse(ad.verification_succeeded)
+        self.assertFalse(ad.verification_passed)
 
         # Especially if the status is aborted, it is not a success
         failed_run['status'] = CloudFactoryDocumentRun.STATUS_ABORTED
         run.save_response_data(json.dumps(failed_run))
-        self.assertFalse(ad.verification_succeeded)
+        self.assertFalse(ad.verification_passed)
 
         # We expect a certain set of keys in the output - if they are missing,
         # that is also not a success:
         failed_run['status'] = CloudFactoryDocumentRun.STATUS_PROCESSED
         failed_run['units'][0]['output'] = {}
         run.save_response_data(json.dumps(failed_run))
-        self.assertFalse(ad.verification_succeeded)
+        self.assertFalse(ad.verification_passed)
 
     def test_verification_in_progress(self):
         # When there are no runs associated with an AD, then it isn't in
@@ -83,6 +83,29 @@ class AdvanceDirectiveTest(TestCase):
         run.status = CloudFactoryDocumentRun.STATUS_ABORTED
         run.save()
         self.assertFalse(ad.verification_in_progress)
+
+    def test_verification_failed(self):
+        # When there are no runs associated with an AD, then it hasn't failed
+        # yet
+        ad_wo_run = AdvanceDirectiveFactory()
+        self.assertFalse(ad_wo_run.verification_failed)
+
+        # Any final state that isn't 'processed' is failed:
+        run = CloudFactoryDocumentRunFactory()
+        ad = run.document_url.advancedirective
+        for status in set(CloudFactoryDocumentRun.STATUS_FINAL_STATES) - \
+                set((CloudFactoryDocumentRun.STATUS_PROCESSED,)):
+            run.status = status
+            run.save()
+            self.assertTrue(ad.verification_failed, '"%s" should fail' % status)
+
+        # When in process or processed, it hasn't failed
+        run.status = CloudFactoryDocumentRun.STATUS_PROCESSED
+        run.save()
+        self.assertFalse(ad.verification_failed)
+        run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
+        run.save()
+        self.assertFalse(ad.verification_failed)
 
     def test_verification_result(self):
         # When there is no run, there are no results

@@ -61,7 +61,7 @@ def cloudfactory_response(request):
     else:
         # A run in a non-final state shouldn't be changed/updated again. Log an
         # error.
-        if run.status in CloudFactoryDocumentRun.STATUS_FINAL_VALUES:
+        if run.status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
             return HttpResponseBadRequest()
 
         # We already know that the body is parseable JSON so there is no need to

@@ -33,7 +33,7 @@ class CloudfactoryResponseTest(TestCase):
         # When CloudFactoryDocumentRun exists, but it is already 'finished' - we
         # don't expect to receive any updates
         run = CloudFactoryDocumentRun.objects.create(run_id='E7gVrtVQJx')
-        for status in CloudFactoryDocumentRun.STATUS_FINAL_VALUES:
+        for status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
             run.status = status
             run.save()
             response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')

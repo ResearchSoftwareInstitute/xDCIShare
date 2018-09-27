@@ -6,14 +6,16 @@
 </li>
 <li class="advance-directive-widget__breadcrumb-status-value">
     {% with ad=request.user.advancedirective %}
-        {% if ad.verification_succeeded %}
+        {% if ad.verification_passed %}
         Verified
         {% elif ad.verification_in_progress %}
         Verifying
         {% elif ad.verification_result %}
         Failed
+        {% elif ad.verification_failed %}
+        FAILED
         {% else %}
-        Saved -- TODO this doesn't include 'failed' runs - which should say something
+        Saved
         {% endif %}
     {% endwith %}
 </li>
