@@ -81,7 +81,10 @@ class AdvanceDirective(models.Model):
     @property
     def verification_in_progress(self):
         """ Returns True when the CF for this AD is still in progress. """
-        return False
+        # Search for any run that is in progress
+        return CloudFactoryDocumentRun.objects.filter(
+            status=CloudFactoryDocumentRun.STATUS_PROCESSING,
+            document_url__advancedirective=self).exists()
 
     @property
     def verification_result(self):
@@ -91,41 +94,26 @@ class AdvanceDirective(models.Model):
 
         If the CF verification is not finished or failed, returns None.
         """
+        # Select all finished runs - for the first one that succeeded (there
+        # should be only one), return its output
+        processed_runs = CloudFactoryDocumentRun.objects.filter(
+            status=CloudFactoryDocumentRun.STATUS_PROCESSED,
+            document_url__advancedirective=self)
+        for run in processed_runs:
+            if run.succeeded():
+                return run.output()
 
-        return {}
+        return None
 
     @property
     def verification_succeeded(self):
         """
         Returns True when this AD has been verified with CloudFactory.
 
-        In detail: if the CF-run finished successfully, and all the outputs checked
+        Notes: if the CF-run finished successfully, and all the outputs checked
         by the run are true (or not applicable).
         """
-        # TODO search for any run that is processed
-        processed_run = CloudFactoryDocumentRun.objects.filter(
-            status=CloudFactoryDocumentRun.STATUS_PROCESSED,
-            document_url__advancedirective=self).first()
-
-        if not processed_run:
-            return False
-        try:
-            data = json.loads(processed_run.response_content)
-            if 'units' not in data.keys():
-                return False
-            units = data['units']
-            if len(units) == 0 or 'output' not in units[0].keys():
-                return False
-
-            # If all the values are either true or not applicable then this
-            # would be considered a successful run:
-            #
-            # Note that we consider only the first unit of work - which at the
-            # moment is all we create.
-            output = units[0]['output']
-            return set(output.values()) < set(['true', 'not applicable'])
-        except ValueError:
-            return False
+        return self.verification_result is not None
 
     def __unicode__(self):
         return unicode(self.document.name)
@@ -209,8 +197,12 @@ class CloudFactoryDocumentRun(models.Model):
     (processing for AdvanceDirective.DocumentUrl objects).
     """
 
+    # The run has been created, but not sent to CF (not expected to ever happen)
     STATUS_NEW = 'NEW'
+    # The run is deleted when its corresponding AD was deleted before the run
+    # could happen.
     STATUS_DELETED = 'DELETED'
+    # The run failed on request to CF
     STATUS_TIMEOUT = 'TIMEOUT'
     STATUS_NOTFOUND = 'NOTFOUND'
     STATUS_UNPROCESSABLE = 'UNPROCESSABLE'
@@ -227,6 +219,9 @@ class CloudFactoryDocumentRun(models.Model):
         STATUS_PROCESSED,
         STATUS_ABORTED,
     )
+
+    # Once a run is in the following states, it will not transition to a new
+    # state.
     STATUS_FINAL_VALUES = (
         STATUS_DELETED,
         STATUS_NOTFOUND,
@@ -341,3 +336,43 @@ class CloudFactoryDocumentRun(models.Model):
         if 'processed_at' in data:
             self.processed_at = parse_datetime(data['processed_at'])
         self.save()
+
+    def output(self):
+        """
+        Returns dictionary of 'output' from run if it succeeded.
+
+        If the run isn't finished or didn't succeed returns None.
+        """
+        if not self.succeeded():
+            return None
+
+        # no need to try/catch since we know it succeeded
+        data = json.loads(self.response_content)
+        units = data['units']
+        return units[0]['output']
+
+    def succeeded(self):
+        """
+        Returns True when this run processed successfully, and all the
+        outputs are either true or na.
+        """
+        if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
+            return False
+
+        try:
+            data = json.loads(self.response_content)
+            if 'units' not in data.keys():
+                return False
+            units = data['units']
+            if len(units) == 0 or 'output' not in units[0].keys():
+                return False
+
+            # If all the values are either true or not applicable then this
+            # would be considered a successful run:
+            #
+            # Note that we consider only the first unit of work - which at the
+            # moment is all we create.
+            output = units[0]['output']
+            return set(output.values()) < set(['true', 'not applicable'])
+        except ValueError:
+            return False

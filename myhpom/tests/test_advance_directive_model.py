@@ -7,6 +7,9 @@ from myhpom.tests.factories import AdvanceDirectiveFactory, CloudFactoryDocument
 from myhpom.models import CloudFactoryDocumentRun
 from myhpom.models.document import remove_documents_on_delete
 
+SUCCESS_DATA = open(os.path.join(
+    os.path.dirname(__file__), 'fixtures/cloudfactory/callback_success.json')).read()
+
 
 class AdvanceDirectiveTest(TestCase):
 
@@ -31,9 +34,6 @@ class AdvanceDirectiveTest(TestCase):
         self.assertFalse(directive.document.storage.delete.called)
 
     def test_verification_succeeded(self):
-        SUCCESS_DATA = open(os.path.join(
-            os.path.dirname(__file__), 'fixtures/cloudfactory/callback_success.json')).read()
-
         # If the status is equal to a successful run, and all the outputs are
         # successful, then verification_succeeded will return True
         run = CloudFactoryDocumentRunFactory()
@@ -58,3 +58,43 @@ class AdvanceDirectiveTest(TestCase):
         failed_run['status'] = CloudFactoryDocumentRun.STATUS_ABORTED
         run.save_response_content(json.dumps(failed_run))
         self.assertFalse(ad.verification_succeeded)
+
+    def test_verification_in_progress(self):
+        # When there are no runs associated with an AD, then it isn't in
+        # progress
+        ad_wo_run = AdvanceDirectiveFactory()
+        self.assertFalse(ad_wo_run.verification_in_progress)
+
+        # When there is an AD, but it isn't finished, then it is in progress
+        run = CloudFactoryDocumentRunFactory()
+        ad = run.document_url.advancedirective
+        run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
+        run.save()
+        self.assertTrue(ad.verification_in_progress)
+
+        # When the run failed for some reason, it is no longer in progress
+        run.status = CloudFactoryDocumentRun.STATUS_ABORTED
+        run.save()
+        self.assertFalse(ad.verification_in_progress)
+
+    def test_verification_result(self):
+        # When there is no run, there are no results
+        ad_wo_run = AdvanceDirectiveFactory()
+        self.assertIsNone(ad_wo_run.verification_result)
+
+        # When there is a run, but there are no parseable results, returns None
+        run = CloudFactoryDocumentRunFactory()
+        ad = run.document_url.advancedirective
+        self.assertIsNone(ad.verification_result)
+
+        # when there is no output, but the results are parseable, return None
+        run = CloudFactoryDocumentRunFactory()
+        ad = run.document_url.advancedirective
+        run.response_content = 'not-json'
+        run.status = CloudFactoryDocumentRun.STATUS_PROCESSED
+        run.save()
+        self.assertIsNone(ad.verification_result)
+
+        # When there is a run, and its results are parsable, return a dictionary of results
+        run.save_response_content(SUCCESS_DATA)
+        self.assertIsNotNone(ad.verification_result)
