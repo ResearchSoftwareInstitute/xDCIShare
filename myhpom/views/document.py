@@ -71,7 +71,7 @@ def cloudfactory_response(request):
         # try/catch here:
         run.save_response_data(body)
 
-        # If the status is STATUS_PROCESSED, this means that the review is 
+        # If the status is now STATUS_PROCESSED, this means that the review is
         # completed and the user should be notified to come view their document.
         # -- In a task so that the CF callback can finish w/o reference to the user notification.
         if run.status == CloudFactoryDocumentRun.STATUS_PROCESSED:
