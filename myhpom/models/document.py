@@ -386,12 +386,16 @@ class CloudFactoryDocumentRun(models.Model):
             return None
 
         try:
-            # no need to try/catch since we know it succeeded
             data = json.loads(self.response_content)
-            units = data['units']
-            return units[0]['output']
+            if 'units' in data:
+                units = data['units']
+                if len(units) > 0 and 'output' in units[0]:
+                    return units[0]['output']
         except ValueError:
-            return None
+            # fall thru to failure
+            pass
+
+        return None
 
     def passed(self):
         """

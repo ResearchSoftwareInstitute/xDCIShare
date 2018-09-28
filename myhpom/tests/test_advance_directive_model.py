@@ -66,6 +66,14 @@ class AdvanceDirectiveTest(TestCase):
         run.save_response_data(json.dumps(failed_run))
         self.assertFalse(ad.verification_passed)
 
+        del failed_run['units'][0]['output']
+        run.save_response_data(json.dumps(failed_run))
+        self.assertFalse(ad.verification_passed)
+
+        del failed_run['units']
+        run.save_response_data(json.dumps(failed_run))
+        self.assertFalse(ad.verification_passed)
+
     def test_verification_in_progress(self):
         # When there are no runs associated with an AD, then it isn't in
         # progress
@@ -135,3 +143,13 @@ class AdvanceDirectiveTest(TestCase):
         failed_run['units'][0]['output']['owner_name_matches'] = False
         run.save_response_data(json.dumps(failed_run))
         self.assertIsNotNone(ad.verification_result)
+
+        # We expect a certain set of keys in the output - if they are missing,
+        # that is also not a success:
+        del failed_run['units'][0]['output']
+        run.save_response_data(json.dumps(failed_run))
+        self.assertIsNone(ad.verification_result)
+
+        del failed_run['units']
+        run.save_response_data(json.dumps(failed_run))
+        self.assertIsNone(ad.verification_result)
