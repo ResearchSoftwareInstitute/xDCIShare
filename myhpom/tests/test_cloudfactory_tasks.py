@@ -139,12 +139,12 @@ class CloudFactoryUpdateDocumentRunTestCase(TestCase):
                 reqmock.get(
                     settings.CLOUDFACTORY_API_URL + '/runs/' + cf_run.run_id,
                     status_code=200,
-                    text='{"status": "Processed"}',
+                    text='{"status": "Processing"}',
                 )
                 self.task(cf_run.id)
                 self.assertTrue(reqmock.called)
             cf_run.refresh_from_db()
-            self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_PROCESSED)
+            self.assertEqual(cf_run.status, CloudFactoryDocumentRun.STATUS_PROCESSING)
             cf_run.delete()
 
     def test_200_invalid(self):

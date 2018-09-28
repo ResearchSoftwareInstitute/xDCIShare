@@ -33,7 +33,7 @@ class CloudfactoryResponseTest(TestCase):
     def test_already_finished(self):
         # When CloudFactoryDocumentRun exists, but it is already 'finished' - we
         # don't expect to receive any updates
-        run = CloudFactoryDocumentRun.objects.create(run_id='E7gVrtVQJx')
+        run = CloudFactoryDocumentRun.objects.create(run_id='SUCCESS_ID')
         for status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
             run.status = status
             run.save()
@@ -42,7 +42,7 @@ class CloudfactoryResponseTest(TestCase):
 
     def test_failed_review(self):
         # We get back a response that says any of the output criteria failed
-        run = CloudFactoryDocumentRun.objects.create(run_id='E7gVrtVQJx')
+        run = CloudFactoryDocumentRun.objects.create(run_id='SUCCESS_ID')
 
         # Try all the possible keys that could fail - they should all cause the
         # run to transition to finished.
@@ -67,8 +67,7 @@ class CloudfactoryResponseTest(TestCase):
     def test_successful_review(self):
         # We get back a response that says any of the output criteria failed
         run = CloudFactoryDocumentRun.objects.create(
-            run_id='E7gVrtVQJx', status=CloudFactoryDocumentRun.STATUS_PROCESSING
-        )
+            run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSING)
 
         response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
         self.assertEqual(200, response.status_code)

@@ -8,6 +8,7 @@ import importlib
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.utils.dateparse import parse_datetime
 from django.utils.timezone import now
 
 from bgs import GS
@@ -114,7 +115,7 @@ class AdvanceDirective(models.Model):
         # should be only one), return its output
         processed_run = CloudFactoryDocumentRun.objects.filter(
             status=CloudFactoryDocumentRun.STATUS_PROCESSED,
-            document_url__advancedirective=self).first()
+            document_url__advancedirective=self).last()
         if processed_run:
             return processed_run.output()
 
@@ -130,7 +131,7 @@ class AdvanceDirective(models.Model):
         """
         processed_run = CloudFactoryDocumentRun.objects.filter(
             status=CloudFactoryDocumentRun.STATUS_PROCESSED,
-            document_url__advancedirective=self).first()
+            document_url__advancedirective=self).last()
 
         return processed_run and processed_run.passed()
 
@@ -224,7 +225,8 @@ class CloudFactoryDocumentRun(models.Model):
     * 'ERROR'       = an error occurred, such as a non-json response that we couldn't interpret
     * 'Processing'  = CF is currently processing the document
     * 'Aborted'     = We have aborted the run, CF is still listed as 'Processing'
-    * 'Processed'   = CF has completed processing, details in the response_content
+    * 'Processed'   = CF has completed processing, details in the
+                      response_content (and the content is properly formatted)
     """
 
     STATUS_NEW = 'NEW'
@@ -351,11 +353,11 @@ class CloudFactoryDocumentRun(models.Model):
         return data
 
     def save_response_data(self, response_content):
-        """update the response_data field and the other fields that are extracted from it.
+        """
+        Update response_content and other fields extracted from the CF response.
         """
         # we want to save the response_content to self.response_data no matter what.
         self.response_content = response_content
-        self.save()
 
         # now we try to unpack the response_content on the assumption that it is json.
         try:
@@ -365,9 +367,33 @@ class CloudFactoryDocumentRun(models.Model):
             if 'status' in data:
                 self.status = data['status']
             if 'created_at' in data:
-                self.created_at = data['created_at']
+                self.created_at = parse_datetime(data['created_at'])
+                if self.created_at is None:
+                    raise ValueError('Unable to parse created_at')
             if 'processed_at' in data:
-                self.processed_at = data['processed_at']
+                self.processed_at = parse_datetime(data['processed_at'])
+                if self.processed_at is None:
+                    raise ValueError('Unable to parse processed_at')
+
+            if self.status == self.STATUS_PROCESSED:
+                if 'units' not in data:
+                    raise ValueError('No units found in result')
+                units = data['units']
+                if len(units) == 0 or 'output' not in units[0]:
+                    raise ValueError('No output found in first unit')
+
+                # If all the values are either true or not applicable then this
+                # would be considered a successful run:
+                #
+                # Note that we consider only the first unit of work - which at the
+                # moment is all we create.
+                #
+                # The output must also have at least the required keys mentioned in
+                # our integration doc.
+                output = units[0]['output']
+                has_required_keys = self.REQUIRED_OUTPUT_KEYS <= set(output.keys())
+                if not has_required_keys:
+                    raise ValueError('Missing keys in output')
         except ValueError:
             self.status = self.STATUS_ERROR
             self.save()
@@ -381,52 +407,33 @@ class CloudFactoryDocumentRun(models.Model):
 
         Otherwise if the run failed to process returns None or return non-JSON
         return None.
+
+        Note that this method assumes that save_response_data() has been called
         """
         if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
             return None
 
-        try:
-            data = json.loads(self.response_content)
-            if 'units' in data:
-                units = data['units']
-                if len(units) > 0 and 'output' in units[0]:
-                    return units[0]['output']
-        except ValueError:
-            # fall thru to failure
-            pass
-
-        return None
+        data = json.loads(self.response_content)
+        units = data['units']
+        return units[0]['output']
 
     def passed(self):
         """
         Returns True when this run processed successfully, and all the
         outputs are either true or na.
+
+        Note that this method assumes that save_response_data() has been called
+        (which ensures the content is JSON and that the required keys are
+        present)
         """
         if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
             return False
 
-        try:
-            data = json.loads(self.response_content)
-            if 'units' not in data.keys():
-                return False
-            units = data['units']
-            if len(units) == 0 or 'output' not in units[0].keys():
-                return False
-
-            # If all the values are either true or not applicable then this
-            # would be considered a successful run:
-            #
-            # Note that we consider only the first unit of work - which at the
-            # moment is all we create.
-            #
-            # The output must also have at least the required keys mentioned in
-            # our integration doc.
-            output = units[0]['output']
-            all_true_or_na = set(output.values()) <= self.YES_OR_NA
-            has_required_keys = self.REQUIRED_OUTPUT_KEYS <= set(output.keys())
-            return all_true_or_na and has_required_keys
-        except ValueError:
-            return False
+        data = json.loads(self.response_content)
+        units = data['units']
+        output = units[0]['output']
+        all_true_or_na = set(output.values()) <= self.YES_OR_NA
+        return all_true_or_na
 
 
 def abort_document_runs_on_delete(sender, instance, using, **kwargs):
