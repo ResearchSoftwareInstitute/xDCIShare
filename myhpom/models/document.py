@@ -387,10 +387,14 @@ class CloudFactoryDocumentRun(models.Model):
 
         try:
             data = json.loads(self.response_content)
-            if 'units' in data:
-                units = data['units']
-                if len(units) > 0 and 'output' in units[0]:
-                    return units[0]['output']
+            if 'units' not in data:
+                return None
+            units = data['units']
+
+            if len(units) < 1 or 'output' not in units[0]:
+                return None
+
+            return units[0]['output']
         except ValueError:
             # fall thru to failure
             pass
@@ -407,10 +411,10 @@ class CloudFactoryDocumentRun(models.Model):
 
         try:
             data = json.loads(self.response_content)
-            if 'units' not in data.keys():
+            if 'units' not in data:
                 return False
             units = data['units']
-            if len(units) == 0 or 'output' not in units[0].keys():
+            if len(units) == 0 or 'output' not in units[0]:
                 return False
 
             # If all the values are either true or not applicable then this
