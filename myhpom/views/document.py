@@ -61,7 +61,7 @@ def cloudfactory_response(request):
     except CloudFactoryDocumentRun.DoesNotExist:
         raise Http404()
     else:
-        # A run in a non-final state shouldn't be changed/updated again. Log an
+        # A run in a final state shouldn't be changed/updated again. Log an
         # error.
         if run.status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
             return HttpResponseBadRequest()
