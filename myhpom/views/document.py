@@ -53,11 +53,11 @@ def cloudfactory_response(request):
         json_body = json.loads(body)
 
         if 'id' not in json_body:
-            return HttpResponseBadRequest()
+            return HttpResponseBadRequest('No id found in json body')
 
         run = CloudFactoryDocumentRun.objects.get(run_id=json_body['id'])
     except ValueError:
-        return HttpResponseBadRequest()
+        return HttpResponseBadRequest('Unable to parse json body')
     except CloudFactoryDocumentRun.DoesNotExist:
         raise Http404()
     else:
