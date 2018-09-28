@@ -3,6 +3,7 @@ import mimetypes
 from ipware import get_client_ip
 from django.http import HttpResponseBadRequest, Http404, FileResponse, HttpResponse
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from myhpom.models import DocumentUrl, CloudFactoryDocumentRun
 
@@ -42,6 +43,7 @@ def document_url(request, key):
 
 
 @require_POST
+@csrf_exempt
 def cloudfactory_response(request):
     """
     Receive the response from CloudFactory with processed document information.
