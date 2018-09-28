@@ -6,6 +6,7 @@ from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
 from myhpom.models import DocumentUrl, CloudFactoryDocumentRun
+from myhpom.tasks import EmailUserDocumentReviewCompleted
 
 
 @require_GET
@@ -69,5 +70,11 @@ def cloudfactory_response(request):
         # We already know that the body is parseable JSON so there is no need to
         # try/catch here:
         run.save_response_data(body)
+
+        # If the status is STATUS_PROCESSED, this means that the review is 
+        # completed and the user should be notified to come view their document.
+        # -- In a task so that the CF callback can finish w/o reference to the user notification.
+        if run.status == CloudFactoryDocumentRun.STATUS_PROCESSED:
+            EmailUserDocumentReviewCompleted.delay(run.id, request.scheme, request.get_host())
 
         return HttpResponse()
