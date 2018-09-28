@@ -5,11 +5,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.timezone import now
 from django.conf import settings
 from django.db import IntegrityError
-from mock import Mock
 from celery.signals import after_task_publish
 from myhpom.tests.factories import UserFactory
 from myhpom.models import DocumentUrl, AdvanceDirective, CloudFactoryDocumentRun
-from myhpom.tasks import CloudFactoryAbortDocumentRun
 
 
 class DocumentUrlModelTestCase(TestCase):
@@ -115,7 +113,7 @@ class DocumentUrlModelTestCase(TestCase):
 
         ad = self.advancedirective
         doc_url = DocumentUrl.objects.create(advancedirective=ad)
-        cf_run = CloudFactoryDocumentRun.objects.create(
+        CloudFactoryDocumentRun.objects.create(
             document_url=doc_url, status=CloudFactoryDocumentRun.STATUS_PROCESSING, run_id='A_RUN'
         )
         doc_url.delete()
