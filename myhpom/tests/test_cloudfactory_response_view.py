@@ -11,6 +11,9 @@ SUCCESS_DATA = open(os.path.join(CF_PATH, 'callback_success.json')).read()
 
 class CloudfactoryResponseTest(TestCase):
 
+    def post_json(self, url, data):
+        return self.client.post(url, data=data, content_type='text/example')
+
     def test_no_data(self):
         # When no data is posted to the viewpoint, a 4xx code is returned,
         # alerting the requestor that the problem is theirs
@@ -20,13 +23,12 @@ class CloudfactoryResponseTest(TestCase):
     def test_badly_formed_data(self):
         # When non-json data is sent, we return a 400 to alert the user to the
         # bad formatting.
-        response = self.client.post(
-            reverse('myhpom:cloudfactory_response'), data='blah', content_type='text/example')
+        response = self.post_json(reverse('myhpom:cloudfactory_response'), 'blah')
         self.assertEqual(400, response.status_code)
 
     def test_no_id(self):
         # Record doesn't exist on our end - we want a log of this.
-        response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')
+        response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
         self.assertEqual(404, response.status_code)
 
     def test_already_finished(self):
@@ -36,7 +38,7 @@ class CloudfactoryResponseTest(TestCase):
         for status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
             run.status = status
             run.save()
-            response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')
+            response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
             self.assertEqual(400, response.status_code, '%s should fail' % status)
 
     def test_failed_review(self):
@@ -50,7 +52,8 @@ class CloudfactoryResponseTest(TestCase):
             failed_data['units'][0]['output'][output] = False
             run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
             run.save()
-            response = self.client.post(reverse('myhpom:cloudfactory_response'), data=json.dumps(failed_data), content_type='application/json')
+            response = self.post_json(
+                reverse('myhpom:cloudfactory_response'), json.dumps(failed_data))
             self.assertEqual(200, response.status_code, '%s=False should return 200' % output)
             run.refresh_from_db()
             # The status and the response should be saved:
@@ -64,7 +67,7 @@ class CloudfactoryResponseTest(TestCase):
         run = CloudFactoryDocumentRun.objects.create(
             run_id='E7gVrtVQJx', status=CloudFactoryDocumentRun.STATUS_PROCESSING)
 
-        response = self.client.post(reverse('myhpom:cloudfactory_response'), data=SUCCESS_DATA, content_type='application/json')
+        response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
         self.assertEqual(200, response.status_code)
         run.refresh_from_db()
         # The status and the response should be saved:
