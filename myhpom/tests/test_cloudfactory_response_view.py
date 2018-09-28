@@ -88,7 +88,7 @@ class CloudfactoryResponseTest(TestCase):
         task_sent_handler.called = False
 
         CloudFactoryDocumentRun.objects.create(
-            run_id='E7gVrtVQJx', status=CloudFactoryDocumentRun.STATUS_PROCESSING
+            run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSING
         )
         response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
         self.assertEqual(200, response.status_code)  # indicates successful review completion
@@ -99,7 +99,7 @@ class CloudfactoryResponseTest(TestCase):
         If the status is not STATUS_PROCESSING, the view should not trigger the email task.
         """
         CloudFactoryDocumentRun.objects.create(
-            run_id='E7gVrtVQJx', status=CloudFactoryDocumentRun.STATUS_PROCESSED
+            run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSED
         )
 
         @after_task_publish.connect(sender='myhpom.tasks.EmailUserDocumentReviewCompleted')
