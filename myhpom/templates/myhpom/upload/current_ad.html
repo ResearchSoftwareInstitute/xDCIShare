@@ -39,6 +39,7 @@ resubmitting the AD for verification.
     {% elif ad.verification_result.signed_by_owner not in yes_or_na %}
         Not signed.
     {% else %}
+    {{yes_or_na}}
         Could not be verified. Please re-scan and upload.
     {% endif %}
 {% elif ad.verification_failed %}
@@ -53,10 +54,10 @@ resubmitting the AD for verification.
 
 {% block widget_body %}
 <dl class="advance-directive-widget__definition">
-    <di>
+    <div>
         <dt class="advance-directive-widget__definition__key">active date:</dt>
         <dd class="advance-directive-widget__definition__value">{{ request.user.advancedirective.valid_date|date:"SHORT_DATE_FORMAT" }}</dd>
-    </di>
+    </div>
 </dl>
 
 {% if request.user.advancedirective.thumbnail %}
