@@ -28,20 +28,26 @@ resubmitting the AD for verification.
 {% with ad=request.user.advancedirective %}
 {% if ad.verification_passed %}
 {% elif ad.verification_result %}
-    {% if ad.verification_result.owner_name_matches not in yes_or_na %}
-        Name on document doesn't match yours.
-    {% elif ad.verification_result.witness_signature_1 not in yes_or_na %}
-        Missing first witness signature.
-    {% elif ad.verification_result.witness_signature_2 not in yes_or_na %}
-        Missing second witness signature.
-    {% elif ad.verification_result.notarized not in yes_or_na %}
-        Not notarized.
-    {% elif ad.verification_result.signed_by_owner not in yes_or_na %}
-        Not signed.
-    {% else %}
-    {{yes_or_na}}
-        Could not be verified. Please re-scan and upload.
-    {% endif %}
+    <div class="advance-directive-widget__verification-results">
+        <p class="advance-directive-widget__verification-results__title">Document is not valid:</p>
+        <ul class="advance-directive-widget__verification-results__list">
+        {% if ad.verification_result.owner_name_matches not in yes_or_na %}
+            <li>Name on document doesn't match yours.</li>
+        {% endif %}
+        {% if ad.verification_result.witness_signature_1 not in yes_or_na %}
+            <li>Missing first witness signature.</li>
+        {% endif %}
+        {% if ad.verification_result.witness_signature_2 not in yes_or_na %}
+            <li>Missing second witness signature.</li>
+        {% endif %}
+        {% if ad.verification_result.notarized not in yes_or_na %}
+            <li>Not notarized.</li>
+        {% endif %}
+        {% if ad.verification_result.signed_by_owner not in yes_or_na %}
+            <li>Not signed.</li>
+        {% endif %}
+        </ul>
+    </div>
 {% elif ad.verification_failed %}
     {% comment %}
     Some unrecoverable problem happened during verification - probably not due
