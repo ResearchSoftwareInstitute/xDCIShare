@@ -1,14 +1,13 @@
 from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.core.urlresolvers import reverse
-from myhpom.models.state import State
-from myhpom.models.state_requirement import StateRequirement
-from myhpom.models.state_requirement_link import StateRequirementLink
-from myhpom.models.document import AdvanceDirective, DocumentUrl
-from myhpom.models.cloudfactory import CloudFactoryDocumentRun
 from myhpom.tasks import CloudFactoryAbortDocumentRun, CloudFactoryUpdateDocumentRun
-
 from django.utils.safestring import mark_safe
+
+from myhpom.models import (
+    AdvanceDirective, CloudFactoryDocumentRun, DocumentUrl, State, StateRequirement,
+    StateRequirementLink)
 
 
 class StateRequirementLinkAdmin(admin.TabularInline):
@@ -76,12 +75,10 @@ class CloudFactoryDocumentRunAdmin(admin.ModelAdmin):
         'updated_at',
         'document_host',
         'advance_directive',
-        'status',
         'run_id',
         'created_at',
         'processed_at',
         'post_data',
-        'response_content',
     ]
     list_display = [
         'document_url',

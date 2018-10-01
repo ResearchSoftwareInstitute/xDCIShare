@@ -1,9 +1,11 @@
+import json
 import mimetypes
 from ipware import get_client_ip
-from django.http import Http404, FileResponse
+from django.http import HttpResponseBadRequest, Http404, FileResponse, HttpResponse
 from django.utils.timezone import now
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-from myhpom.models import DocumentUrl
+from myhpom.models import DocumentUrl, CloudFactoryDocumentRun
 
 
 @require_GET
@@ -41,7 +43,31 @@ def document_url(request, key):
 
 
 @require_POST
+@csrf_exempt
 def cloudfactory_response(request):
-    """receive the response from CloudFactory with processed document information
     """
-    raise Http404()
+    Receive the response from CloudFactory with processed document information.
+    """
+    try:
+        body = request.body
+        json_body = json.loads(body)
+
+        if 'id' not in json_body:
+            return HttpResponseBadRequest('No id found in json body')
+
+        run = CloudFactoryDocumentRun.objects.get(run_id=json_body['id'])
+    except ValueError:
+        return HttpResponseBadRequest('Unable to parse json body')
+    except CloudFactoryDocumentRun.DoesNotExist:
+        raise Http404()
+    else:
+        # A run in a final state shouldn't be changed/updated again. Log an
+        # error.
+        if run.status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
+            return HttpResponseBadRequest()
+
+        # We already know that the body is parseable JSON so there is no need to
+        # try/catch here:
+        run.save_response_data(body)
+
+        return HttpResponse()

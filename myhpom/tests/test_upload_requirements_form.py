@@ -50,7 +50,6 @@ class UploadRequirementsFormTestCase(TestCase):
             form = UploadRequirementsForm(data=valid_data, files=invalid_files)
             self.assertFalse(form.is_valid())
 
-
     @override_settings(MAX_AD_SIZE=10)
     def test_document_too_big(self):
         # we can test the MAX_AD_SIZE setting by overriding it with a very small value

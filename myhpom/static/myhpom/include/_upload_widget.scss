@@ -50,8 +50,38 @@
     font-weight: bold;
 }
 
+.advance-directive-widget__breadcrumb-status-value--success {
+    @extend .advance-directive-widget__breadcrumb-status-value;
+
+    color: $brand-green;
+}
+
+.advance-directive-widget__breadcrumb-status-value--inprogress {
+    @extend .advance-directive-widget__breadcrumb-status-value;
+
+    color: $brand-orange;
+}
+
+.advance-directive-widget__breadcrumb-status-value--error {
+    @extend .advance-directive-widget__breadcrumb-status-value;
+
+    color: $brand-orange-dark;
+}
+
+.advance-directive-widget__breadcrumb-detail {
+}
+
+.advance-directive-widget__verification-results {
+    font-size: small;
+    padding-top: 0.2rem;
+}
+
+.advance-directive-widget__verification-results__list {
+    margin-bottom: 0.2rem;
+}
+
 .advance-directive-widget__divider {
-  width: 100%;
+    width: 100%;
 }
 
 .advance-directive-widget__body {

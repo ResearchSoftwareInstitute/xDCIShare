@@ -84,6 +84,9 @@ def dashboard(request):
 
     return render(
         request,
-        'myhpom/dashboard.html',
-        {'widget_template': template, 'advancedirective': advancedirective},
+        'myhpom/dashboard.html', {
+            'widget_template': template,
+            'advancedirective': advancedirective,
+            'yes_or_na': models.CloudFactoryDocumentRun.YES_OR_NA,
+        },
     )

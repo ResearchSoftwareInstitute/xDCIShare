@@ -1,0 +1,27 @@
+{
+   "id": "SUCCESS_ID",
+   "line_id": "zUyZv59Mxi",
+   "created_at": "2015-09-03T09:18:38Z",
+   "processed_at": "2015-09-03T09:39:21Z",
+   "status": "Processed",
+   "units": [{
+      "input": {
+         "state": "state name",
+         "full_name" : "Text full name",
+         "date_signed" : "2017-03-25",
+         "pdf_url" : "http://xyz"
+      },
+      "output": {
+         "owner_name_matches" : "true",
+         "witness_signature_1" : "true",
+         "witness_signature_2" : "true",
+         "notarized" : "true",
+         "signed_by_owner" : "true"
+      },
+      "meta":{
+         "status": "Completed",
+         "created_at": "2015-09-03T09:18:38Z",
+         "processed_at": "2015-09-03T09:25:28Z"
+      }
+   }]
+}

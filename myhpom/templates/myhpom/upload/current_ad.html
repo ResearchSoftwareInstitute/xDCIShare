@@ -4,17 +4,64 @@
 <li class="advance-directive-widget__breadcrumb-status">
     current status:
 </li>
-<li class="advance-directive-widget__breadcrumb-status-value">
-    Saved
-</li>
+{% with ad=request.user.advancedirective %}
+{% if ad.verification_passed %}
+<li class="advance-directive-widget__breadcrumb-status-value--success">Verified</li>
+{% elif ad.verification_in_progress %}
+<li class="advance-directive-widget__breadcrumb-status-value--inprogress">In Review</li>
+{% elif ad.verification_result %}
+<li class="advance-directive-widget__breadcrumb-status-value--error">Invalid</li>
+{% elif ad.verification_failed %}
+{% comment %}
+a slight variation on language so that support people can differentiate between
+the status of this failure -- which in all likelyhood will require a developer
+resubmitting the AD for verification.
+{% endcomment %}
+<li class="advance-directive-widget__breadcrumb-status-value--error">In verification</li>
+{% else %}
+<li class="advance-directive-widget__breadcrumb-status-value">Saved</li>
+{% endif %}
+{% endwith %}
 {% endblock widget_breadcrumb_items %}
+
+{% block widget_breadcrumb_detail %}
+{% with ad=request.user.advancedirective %}
+{% if ad.verification_passed %}
+{% elif ad.verification_result %}
+    <div class="advance-directive-widget__verification-results">
+        <ul class="advance-directive-widget__verification-results__list">
+        {% if ad.verification_result.owner_name_matches not in yes_or_na %}
+            <li>Name on document doesn't match yours.</li>
+        {% endif %}
+        {% if ad.verification_result.witness_signature_1 not in yes_or_na %}
+            <li>Missing first witness signature.</li>
+        {% endif %}
+        {% if ad.verification_result.witness_signature_2 not in yes_or_na %}
+            <li>Missing second witness signature.</li>
+        {% endif %}
+        {% if ad.verification_result.notarized not in yes_or_na %}
+            <li>Not notarized.</li>
+        {% endif %}
+        {% if ad.verification_result.signed_by_owner not in yes_or_na %}
+            <li>Not signed.</li>
+        {% endif %}
+        </ul>
+    </div>
+{% elif ad.verification_failed %}
+    {% comment %}
+    Some unrecoverable problem happened during verification - probably not due
+    to the user's AD.
+    {% endcomment %}
+{% endif %}
+{% endwith %}
+{% endblock widget_breadcrumb_detail %}
 
 {% block widget_body %}
 <dl class="advance-directive-widget__definition">
-    <di>
+    <div>
         <dt class="advance-directive-widget__definition__key">active date:</dt>
         <dd class="advance-directive-widget__definition__value">{{ request.user.advancedirective.valid_date|date:"SHORT_DATE_FORMAT" }}</dd>
-    </di>
+    </div>
 </dl>
 
 {% if request.user.advancedirective.thumbnail %}
