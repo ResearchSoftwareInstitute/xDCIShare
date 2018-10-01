@@ -3,6 +3,7 @@ import os
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
+from django.test import override_settings
 from django.utils.dateparse import parse_datetime
 from django.utils.timezone import now
 
@@ -42,6 +43,10 @@ class DocumentRunModelTestCase(TestCase):
         self.assertIsNone(self.run.document_url)
         with self.assertRaises(AttributeError):
             self.run.create_post_data()
+
+    @override_settings(CLOUDFACTORY_CALLBACK_AUTH='user:pass@')
+    def test_callback_basic_auth(self):
+        self.assertTrue('https://user:pass@' in self.run.create_post_data()['callback_url'])
 
     def test_create_run_with_document_url(self):
         """
