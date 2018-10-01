@@ -29,7 +29,6 @@ resubmitting the AD for verification.
 {% if ad.verification_passed %}
 {% elif ad.verification_result %}
     <div class="advance-directive-widget__verification-results">
-        <p class="advance-directive-widget__verification-results__title">Document is not valid:</p>
         <ul class="advance-directive-widget__verification-results__list">
         {% if ad.verification_result.owner_name_matches not in yes_or_na %}
             <li>Name on document doesn't match yours.</li>
