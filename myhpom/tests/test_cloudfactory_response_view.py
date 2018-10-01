@@ -1,5 +1,6 @@
 import json
 import os
+from mock import patch
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from celery.signals import after_task_publish
@@ -76,37 +77,14 @@ class CloudfactoryResponseTest(TestCase):
         self.assertEqual(CloudFactoryDocumentRun.STATUS_PROCESSED, run.status)
         self.assertEqual(SUCCESS_DATA, run.response_content)
 
-    def test_user_email_task_on_completed_review(self):
+    @patch('myhpom.views.document.EmailUserDocumentReviewCompleted')
+    def test_user_email_task_on_completed_review(self, task_mock):
         """
         When a review has been completed, the view should trigger the email task.
         """
-        # this seems to be the way to test whether a task has been called...
-        @after_task_publish.connect(sender='myhpom.tasks.EmailUserDocumentReviewCompleted')
-        def task_sent_handler(sender=None, headers=None, body=None, **kwargs):
-            task_sent_handler.called = True
-
-        task_sent_handler.called = False
-
-        CloudFactoryDocumentRun.objects.create(
+        run = CloudFactoryDocumentRun.objects.create(
             run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSING
         )
         response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
         self.assertEqual(200, response.status_code)  # indicates successful review completion
-        self.assertTrue(task_sent_handler.called)
-
-    def test_user_email_task_on_non_completed_review(self):
-        """
-        If the status is not STATUS_PROCESSING, the view should not trigger the email task.
-        """
-        CloudFactoryDocumentRun.objects.create(
-            run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSED
-        )
-
-        @after_task_publish.connect(sender='myhpom.tasks.EmailUserDocumentReviewCompleted')
-        def task_sent_handler(sender=None, headers=None, body=None, **kwargs):
-            task_sent_handler.called = True
-
-        task_sent_handler.called = False
-        response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
-        self.assertEqual(400, response.status_code)  # indicates review non-completion
-        self.assertFalse(task_sent_handler.called)
+        task_mock.delay.assert_called_once_with(run.pk, 'http', 'testserver')
