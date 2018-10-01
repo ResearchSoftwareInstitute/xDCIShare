@@ -129,7 +129,20 @@ class DirectiveUploadRequirementsTestCase(GETMixin, TestCase):
         self.assertIsNotNone(user.advancedirective.document)
         self.assertIsNotNone(user.advancedirective.thumbnail)
         self.assertEqual(1, user.advancedirective.documenturl_set.count())
-        task_patch.delay.assert_called_with(
+        task_patch.delay.assert_called_once_with(
+            user.advancedirective.documenturl_set.first().pk, 'testserver')
+
+        # Subsequent posts do not cause more tasks/documents to be created
+        response = self.client.post(
+            self.url, data=post_data, HTTP_X_REQUESTED_WITH='XMLHttpRequest'
+        )
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False
+        )
+        self.assertIsNotNone(user.advancedirective.document)
+        self.assertIsNotNone(user.advancedirective.thumbnail)
+        self.assertEqual(1, user.advancedirective.documenturl_set.count())
+        task_patch.delay.assert_called_once_with(
             user.advancedirective.documenturl_set.first().pk, 'testserver')
 
     @patch('myhpom.views.upload.CloudFactorySubmitDocumentRun')

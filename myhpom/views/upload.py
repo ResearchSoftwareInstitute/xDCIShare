@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponseBadRequest
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
@@ -37,11 +37,9 @@ def upload_requirements(request):
     POST: store the advance directive date, redirect to the upload/submit view.
     """
     if hasattr(request.user, 'advancedirective'):
-        directive = request.user.advancedirective
-    else:
-        directive = AdvanceDirective(user=request.user, share_with_ehs=False)
-    MIN_YEAR = 1950
+        return redirect(reverse("myhpom:upload_current_ad"))
 
+    directive = AdvanceDirective(user=request.user, share_with_ehs=False)
     if request.method == "POST":
         form = UploadRequirementsForm(request.POST, request.FILES, instance=directive)
         if form.is_valid():
@@ -57,6 +55,7 @@ def upload_requirements(request):
     else:
         form = UploadRequirementsForm(instance=directive)
 
+    MIN_YEAR = 1950
     context = {
         'user': request.user,
         'form': form,
