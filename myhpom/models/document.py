@@ -347,7 +347,10 @@ class CloudFactoryDocumentRun(models.Model):
 
         data = {
             "line_id": settings.CLOUDFACTORY_LINE_ID,
-            "callback_url": self.document_host + reverse('myhpom:cloudfactory_response'),
+            "callback_url":
+                'https://%s%s%s' % (
+                    settings.CLOUDFACTORY_CALLBACK_AUTH, self.document_host,
+                    reverse('myhpom:cloudfactory_response')),
             "units": [unit_post_data],
         }
         return data

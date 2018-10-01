@@ -295,6 +295,7 @@ CLOUDFACTORY_API_URL = 'https://%s:%s@api.cloudfactory.com/v4' % (
     CLOUDFACTORY_AUTH_USERNAME,
     CLOUDFACTORY_AUTH_PASSWORD,
 )
+CLOUDFACTORY_CALLBACK_AUTH = ''
 
 ##################
 # LOCAL SETTINGS #
