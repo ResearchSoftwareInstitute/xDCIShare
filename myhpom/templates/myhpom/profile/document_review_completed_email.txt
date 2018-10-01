@@ -1,0 +1,12 @@
+{% autoescape off %}
+At Mind My Health we have completed our review of your document! You can view the results on your account dashboard here:
+
+{{ dashboard_url }}
+
+If clicking the link above doesn't work, please copy and paste the URL in a new browser
+window instead.
+
+Sincerely,
+Mind My Health Team
+{% endautoescape %}
+

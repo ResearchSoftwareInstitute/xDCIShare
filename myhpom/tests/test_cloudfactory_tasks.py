@@ -4,11 +4,9 @@ import requests
 import requests_mock
 from django.test import TestCase, override_settings
 from django.conf import settings
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.utils.timezone import now
 from django.utils.dateparse import parse_datetime
-from myhpom.tests.factories import UserFactory
-from myhpom.models import AdvanceDirective, DocumentUrl, CloudFactoryDocumentRun
+from myhpom.tests.factories import AdvanceDirectiveFactory
+from myhpom.models import DocumentUrl, CloudFactoryDocumentRun
 from myhpom.tasks import (
     CloudFactorySubmitDocumentRun,
     CloudFactoryAbortDocumentRun,
@@ -32,16 +30,7 @@ class CloudFactorySubmitDocumentRunTestCase(TestCase):
     """
 
     def setUp(self):
-        self.document_url = DocumentUrl.objects.create(
-            advancedirective=AdvanceDirective.objects.create(
-                user=UserFactory(),
-                share_with_ehs=False,
-                document=SimpleUploadedFile(
-                    os.path.basename(PDF_FILENAME), open(PDF_FILENAME, 'rb').read()
-                ),
-                valid_date=now(),
-            )
-        )
+        self.document_url = DocumentUrl.objects.create(advancedirective=AdvanceDirectiveFactory())
         self.task = CloudFactorySubmitDocumentRun
 
     def test_201_created(self, reqmock):

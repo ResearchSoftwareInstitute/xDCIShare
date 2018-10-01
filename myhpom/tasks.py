@@ -2,6 +2,7 @@ import json
 import requests
 from django.core.mail import send_mail
 from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.template.loader import get_template
 from django.template import Context
 from celery import shared_task
@@ -168,6 +169,25 @@ class CloudFactoryAbortDocumentRun(Task):
                     """URL: %s\nResponse status: %d\nResponse Content:\n%s"""
                     % (response.url, response.status_code, response.content)
                 )
+
+
+@shared_task
+class EmailUserDocumentReviewCompleted(Task):
+    def run(self, cfrun_id, scheme, host):
+        """Send the user an email indicating that the review has been completed.
+        """
+        # if the document has been deleted, don't send a notification.
+        # (e.g., The user might have deleted the document while the run was at CF.)
+        cfrun = CloudFactoryDocumentRun.objects.get(id=cfrun_id)
+        if cfrun.document_url:
+            email = cfrun.document_url.advancedirective.user.email
+            subject = "Mind My Health: Document Review Completed"
+            context = Context(
+                {'dashboard_url': "%s://%s%s" % (scheme, host, reverse('myhpom:dashboard'))}
+            )
+            template = get_template('myhpom/profile/document_review_completed_email.txt')
+            message = template.render(context)
+            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
 
 
 # == SIGNALS ==
