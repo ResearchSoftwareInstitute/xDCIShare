@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
 from django.shortcuts import render, redirect
-from django.http import HttpResponseForbidden, HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.utils.timezone import now
 
