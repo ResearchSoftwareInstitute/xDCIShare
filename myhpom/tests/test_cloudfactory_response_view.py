@@ -3,8 +3,8 @@ import os
 from mock import patch
 from django.core.urlresolvers import reverse
 from django.test import TestCase
-from celery.signals import after_task_publish
 from myhpom.models import CloudFactoryDocumentRun
+from myhpom.tests.factories import CloudFactoryDocumentRunFactory
 
 CF_PATH = os.path.join(os.path.dirname(__file__), 'fixtures', 'cloudfactory')
 SUCCESS_DATA = open(os.path.join(CF_PATH, 'callback_success.json')).read()
@@ -30,6 +30,18 @@ class CloudfactoryResponseTest(TestCase):
         # Record doesn't exist on our end - we want a log of this.
         response = self.post_json(reverse('myhpom:cloudfactory_response'), SUCCESS_DATA)
         self.assertEqual(404, response.status_code)
+
+    def test_no_output(self):
+        # When no output is in the json, a 4xx code is returned,
+        # alerting the requestor that the problem is theirs
+        run = CloudFactoryDocumentRunFactory(
+            run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSING)
+        no_output = json.loads(SUCCESS_DATA)
+        del no_output['units'][0]['output']
+        response = self.post_json(reverse('myhpom:cloudfactory_response'), json.dumps(no_output))
+        self.assertEqual(400, response.status_code)
+        run.refresh_from_db()
+        self.assertEqual(CloudFactoryDocumentRun.STATUS_ERROR, run.status)
 
     def test_already_finished(self):
         # When CloudFactoryDocumentRun exists, but it is already 'finished' - we
