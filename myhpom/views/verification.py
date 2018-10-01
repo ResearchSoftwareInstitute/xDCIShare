@@ -36,7 +36,7 @@ def send_account_verification(request):
                     },
                     request=request,
                 ),
-                settings.CONTACT_EMAIL,
+                settings.DEFAULT_FROM_EMAIL,
                 [request.user.email],
                 fail_silently=False,
             )

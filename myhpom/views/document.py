@@ -56,25 +56,34 @@ def cloudfactory_response(request):
         if 'id' not in json_body:
             return HttpResponseBadRequest('No id found in json body')
 
+        # An aborted run should be ignored.
+        if 'units' in json_body and len(json_body['units']) > 0:
+            unit = json_body['units'][0]
+            if 'meta' in unit and unit['meta']['status'] == CloudFactoryDocumentRun.STATUS_ABORTED:
+                return HttpResponse()
+
         run = CloudFactoryDocumentRun.objects.get(run_id=json_body['id'])
     except ValueError:
         return HttpResponseBadRequest('Unable to parse json body')
     except CloudFactoryDocumentRun.DoesNotExist:
         raise Http404()
     else:
-        # A run in a final state shouldn't be changed/updated again. Log an
-        # error.
-        if run.status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
-            return HttpResponseBadRequest()
+        try:
+            # A run in a final state shouldn't be changed/updated again. Log an
+            # error.
+            if run.status in CloudFactoryDocumentRun.STATUS_FINAL_STATES:
+                return HttpResponseBadRequest('Unexpected callback')
 
-        # We already know that the body is parseable JSON so there is no need to
-        # try/catch here:
-        run.save_response_data(body)
+            # We already know that the body is parseable JSON so there is no need to
+            # try/catch here:
+            run.save_response_data(body)
+        except ValueError as e:
+            return HttpResponseBadRequest(e.message)
+        else:
+            # If the status is now STATUS_PROCESSED, this means that the review is
+            # completed and the user should be notified to come view their document.
+            # -- In a task so that the CF callback can finish w/o reference to the user notification.
+            if run.status == CloudFactoryDocumentRun.STATUS_PROCESSED:
+                EmailUserDocumentReviewCompleted.delay(run.id, request.scheme, request.get_host())
 
-        # If the status is now STATUS_PROCESSED, this means that the review is
-        # completed and the user should be notified to come view their document.
-        # -- In a task so that the CF callback can finish w/o reference to the user notification.
-        if run.status == CloudFactoryDocumentRun.STATUS_PROCESSED:
-            EmailUserDocumentReviewCompleted.delay(run.id, request.scheme, request.get_host())
-
-        return HttpResponse()
+            return HttpResponse()

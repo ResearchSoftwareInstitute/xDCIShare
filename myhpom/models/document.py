@@ -336,7 +336,7 @@ class CloudFactoryDocumentRun(models.Model):
         unit_data = {
             'full_name': ad.user.get_full_name(),
             'state': ad.user.userdetails.state.name if ad.user.userdetails.state else None,
-            'pdf_url': self.document_host + self.document_url.url,
+            'pdf_url': 'https://%s%s' % (self.document_host, self.document_url.url),
             'date_signed': str(ad.valid_date),
         }
         # Only submit non-blank values, to ensure valid input. (CloudFactory accepts blank values

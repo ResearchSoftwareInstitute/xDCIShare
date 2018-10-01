@@ -1,0 +1,20 @@
+{
+   "id":"ABORT_ID",
+   "line_id":"LINE_ID",
+   "created_at":"2018-10-01T18:26:34.000Z",
+   "processed_at":"2018-10-01T18:39:05.000Z",
+   "status":"Processed",
+   "units":[
+      {"input":{
+         "date_signed":"2014-02-03",
+         "state":"NC",
+         "pdf_url":"some URL",
+         "full_name":"Some Name"}
+      ,"output":{}
+      ,"meta":{
+         "status":"Aborted",
+         "created_at":"2018-10-01T18:26:34.000Z",
+         "processed_at":"2018-10-01T18:39:05Z"}
+      }
+   ]
+}
