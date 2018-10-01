@@ -8,6 +8,7 @@ from myhpom.tests.factories import CloudFactoryDocumentRunFactory
 
 CF_PATH = os.path.join(os.path.dirname(__file__), 'fixtures', 'cloudfactory')
 SUCCESS_DATA = open(os.path.join(CF_PATH, 'callback_success.json')).read()
+ABORT_DATA = open(os.path.join(CF_PATH, 'callback_abort.json')).read()
 
 
 class CloudfactoryResponseTest(TestCase):
@@ -42,6 +43,17 @@ class CloudfactoryResponseTest(TestCase):
         self.assertEqual(400, response.status_code)
         run.refresh_from_db()
         self.assertEqual(CloudFactoryDocumentRun.STATUS_ERROR, run.status)
+
+    def test_abort(self):
+        # When an abort happens, we should handle it gracefully.
+        run = CloudFactoryDocumentRunFactory(
+            run_id='ABORT_ID', status=CloudFactoryDocumentRun.STATUS_ABORTED)
+        no_output = json.loads(ABORT_DATA)
+        response = self.post_json(reverse('myhpom:cloudfactory_response'), json.dumps(no_output))
+        print("response = {0}".format(response))
+        self.assertEqual(200, response.status_code)
+        run.refresh_from_db()
+        self.assertEqual(CloudFactoryDocumentRun.STATUS_ABORTED, run.status)
 
     def test_already_finished(self):
         # When CloudFactoryDocumentRun exists, but it is already 'finished' - we

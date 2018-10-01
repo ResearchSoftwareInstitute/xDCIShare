@@ -56,6 +56,12 @@ def cloudfactory_response(request):
         if 'id' not in json_body:
             return HttpResponseBadRequest('No id found in json body')
 
+        # An aborted run should be ignored.
+        if 'units' in json_body and len(json_body['units']) > 0:
+            unit = json_body['units'][0]
+            if 'meta' in unit and unit['meta']['status'] == CloudFactoryDocumentRun.STATUS_ABORTED:
+                return HttpResponse()
+
         run = CloudFactoryDocumentRun.objects.get(run_id=json_body['id'])
     except ValueError:
         return HttpResponseBadRequest('Unable to parse json body')
