@@ -48,9 +48,8 @@ class CloudfactoryResponseTest(TestCase):
         # When an abort happens, we should handle it gracefully.
         run = CloudFactoryDocumentRunFactory(
             run_id='ABORT_ID', status=CloudFactoryDocumentRun.STATUS_ABORTED)
-        no_output = json.loads(ABORT_DATA)
-        response = self.post_json(reverse('myhpom:cloudfactory_response'), json.dumps(no_output))
-        print("response = {0}".format(response))
+        abort_data = json.loads(ABORT_DATA)
+        response = self.post_json(reverse('myhpom:cloudfactory_response'), json.dumps(abort_data))
         self.assertEqual(200, response.status_code)
         run.refresh_from_db()
         self.assertEqual(CloudFactoryDocumentRun.STATUS_ABORTED, run.status)
