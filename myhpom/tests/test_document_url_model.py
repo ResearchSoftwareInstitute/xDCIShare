@@ -103,7 +103,7 @@ class DocumentUrlModelTestCase(TestCase):
 
     def test_deleted_with_cf_runs(self):
         """
-        When a DocumentUrl is deleted that has associated CloudFactoryDocumentRuns, 
+        When a DocumentUrl is deleted that has associated CloudFactoryDocumentRuns,
         make sure that the CloudFactoryAbortDocumentRun task has been called.
         """
 
@@ -115,7 +115,7 @@ class DocumentUrlModelTestCase(TestCase):
 
         ad = self.advancedirective
         doc_url = DocumentUrl.objects.create(advancedirective=ad)
-        cf_run = CloudFactoryDocumentRun.objects.create(
+        CloudFactoryDocumentRun.objects.create(
             document_url=doc_url, status=CloudFactoryDocumentRun.STATUS_PROCESSING, run_id='A_RUN'
         )
         doc_url.delete()

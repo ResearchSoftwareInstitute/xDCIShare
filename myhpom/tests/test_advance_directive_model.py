@@ -114,6 +114,10 @@ class AdvanceDirectiveTest(TestCase):
         self.assertRaises(ValueError, run.save_response_data, 'not-json')
         self.assertIsNone(ad.verification_result)
 
+        # Even unsaved content would not cause problems:
+        run.response_content = 'not-json'
+        self.assertIsNone(ad.verification_result)
+
         # When there is a run, and its results are parsable, return a dictionary of results
         run.save_response_data(SUCCESS_DATA)
         self.assertIsNotNone(ad.verification_result)
@@ -124,3 +128,15 @@ class AdvanceDirectiveTest(TestCase):
         failed_run['units'][0]['output']['owner_name_matches'] = False
         run.save_response_data(json.dumps(failed_run))
         self.assertIsNotNone(ad.verification_result)
+
+        # Even badly formed JSON saved in the admin doesn't cause errors:
+        del failed_run['units'][0]['output']
+        run.status = CloudFactoryDocumentRun.STATUS_PROCESSED
+        run.response_content = json.dumps(failed_run)
+        run.save()
+        self.assertIsNone(ad.verification_result)
+
+        del failed_run['units']
+        run.response_content = json.dumps(failed_run)
+        run.save()
+        self.assertIsNone(ad.verification_result)

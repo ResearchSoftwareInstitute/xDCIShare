@@ -352,7 +352,7 @@ class CloudFactoryDocumentRun(models.Model):
         }
         return data
 
-    def save_response_data(self, response_content):
+    def save_response_data(self, response_content, save=True):
         """
         Update response_content and other fields extracted from the CF response.
         """
@@ -396,10 +396,12 @@ class CloudFactoryDocumentRun(models.Model):
                     raise ValueError('Missing keys in output')
         except ValueError:
             self.status = self.STATUS_ERROR
-            self.save()
+            if save:
+                self.save()
             raise
 
-        self.save()
+        if save:
+            self.save()
 
     def output(self):
         """
@@ -410,12 +412,17 @@ class CloudFactoryDocumentRun(models.Model):
 
         Note that this method assumes that save_response_data() has been called
         """
-        if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
+        try:
+            self.save_response_data(self.response_content, False)
+        except ValueError:
             return None
+        else:
+            if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
+                return None
 
-        data = json.loads(self.response_content)
-        units = data['units']
-        return units[0]['output']
+            data = json.loads(self.response_content)
+            units = data['units']
+            return units[0]['output']
 
     def passed(self):
         """
@@ -426,14 +433,19 @@ class CloudFactoryDocumentRun(models.Model):
         (which ensures the content is JSON and that the required keys are
         present)
         """
-        if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
+        try:
+            self.save_response_data(self.response_content, False)
+        except ValueError:
             return False
+        else:
+            if self.status != CloudFactoryDocumentRun.STATUS_PROCESSED:
+                return False
 
-        data = json.loads(self.response_content)
-        units = data['units']
-        output = units[0]['output']
-        all_true_or_na = set(output.values()) <= self.YES_OR_NA
-        return all_true_or_na
+            data = json.loads(self.response_content)
+            units = data['units']
+            output = units[0]['output']
+            all_true_or_na = set(output.values()) <= self.YES_OR_NA
+            return all_true_or_na
 
 
 def abort_document_runs_on_delete(sender, instance, using, **kwargs):
