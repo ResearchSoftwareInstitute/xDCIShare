@@ -47,8 +47,8 @@ class CloudfactoryResponseTest(TestCase):
 
         # Try all the possible keys that could fail - they should all cause the
         # run to transition to finished.
-        failed_data = json.loads(SUCCESS_DATA)
-        for output in failed_data['units'][0]['output'].keys():
+        for output in json.loads(SUCCESS_DATA)['units'][0]['output'].keys():
+            failed_data = json.loads(SUCCESS_DATA)
             failed_data['units'][0]['output'][output] = False
             run.status = CloudFactoryDocumentRun.STATUS_PROCESSING
             run.save()
