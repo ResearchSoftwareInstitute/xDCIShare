@@ -146,25 +146,19 @@ class CloudFactoryAbortDocumentRun(Task):
             CloudFactoryDocumentRun.STATUS_PROCESSING,  # still going last we checked
             CloudFactoryDocumentRun.STATUS_REQ_ERROR,  # didn't work last time; was it created?
         ]:
-            # abort the run
             abort_url = "%s/runs/%s/abort" % (settings.CLOUDFACTORY_API_URL, cf_run.run_id)
             response = requests.post(abort_url)  # yes, CF wants a POST without a body for this.
 
             if response.status_code == 404:
-                cf_run.status = CloudFactoryDocumentRun.STATUS_NOTFOUND
-                cf_run.save()  # don't save the response.content, it's probably not json
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_NOTFOUND)
             elif response.status_code == 202:
                 # 202 = they accepted the response, so we can consider it done.
-                cf_run.status = CloudFactoryDocumentRun.STATUS_ABORTED
-                cf_run.save()
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_ABORTED)
             elif response.status_code == 405:
                 # 405 = CF uses it to mean "already done, folks" -- whether aborted or processed
-                # (the details of what was done are in the .response_content)
-                cf_run.status = CloudFactoryDocumentRun.STATUS_PROCESSED
-                cf_run.save()
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_PROCESSED)
             else:
-                cf_run.status = CloudFactoryDocumentRun.STATUS_ERROR
-                cf_run.save()
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_ERROR)
                 raise ValueError(
                     """URL: %s\nResponse status: %d\nResponse Content:\n%s"""
                     % (response.url, response.status_code, response.content)
