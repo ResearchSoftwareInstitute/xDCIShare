@@ -1,5 +1,5 @@
 {% extends "myhpom/profile/view.html" %}
-{% load sass_tags static %}
+{% load sass_tags static mmh_tags %}
 
 {% block extra-head %}
 <script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
@@ -154,7 +154,7 @@
                     <br/>
                 </p>
                 <div class="profile__info-box__link">
-                    <a href="http://donatelifenc.org/Register" alt="Donate Life" target="_blank" rel="noopener noreferrer">
+                    <a href="{% organ_donor_info_url request.user.userdetails.state %}" alt="Donate Life" target="_blank" rel="noopener noreferrer">
                         Learn how you can be a donor.
                     </a>
                 </div>

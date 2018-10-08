@@ -1,5 +1,5 @@
 {% extends "myhpom/base.html" %}
-{% load sass_tags static %}
+{% load sass_tags static mmh_tags %}
 
 {% block extra-head %}
 <script type="text/javascript" src="{% static "myhpom/moment/min/moment.min.js" %}"></script>
@@ -67,7 +67,7 @@
                             <span class="h5 dashboard-profile-information__status">I am not an organ donor.</span>
                         </div>
                         <div>
-                            <a href="http://donatelifenc.org/Register" alt="Donate Life" class="dashboard-profile-information__organ-donor-link" target="_blank" rel="noopener noreferrer">
+                            <a href="{% organ_donor_info_url request.user.userdetails.state %}" alt="Donate Life" class="dashboard-profile-information__organ-donor-link" target="_blank" rel="noopener noreferrer">
                                 Learn how you can be a donor.
                             </a>
                         </div>
