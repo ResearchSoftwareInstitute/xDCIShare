@@ -1,11 +1,16 @@
+import base64
 import json
 import mimetypes
-from ipware import get_client_ip
-from django.http import HttpResponseBadRequest, Http404, FileResponse, HttpResponse
+
+from django.conf import settings
+from django.http import (
+    FileResponse, Http404, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden)
 from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_GET, require_POST
-from myhpom.models import DocumentUrl, CloudFactoryDocumentRun
+
+from ipware import get_client_ip
+from myhpom.models import CloudFactoryDocumentRun, DocumentUrl
 from myhpom.tasks import EmailUserDocumentReviewCompleted
 
 
@@ -43,12 +48,45 @@ def document_url(request, key):
     return response
 
 
+def check_basic_auth(request, expected_auth_string):
+    """
+    Returns True if request has Basic Authorization header matching
+    expected_auth_string.
+
+    Given a request and an expected auth string (user:pass) in an HTTP
+    Authorization header.
+    """
+    if 'HTTP_AUTHORIZATION' not in request.META:
+        return False
+
+    parts = request.META['HTTP_AUTHORIZATION'].split(' ')
+    if len(parts) != 2:
+        return False
+
+    (auth_type, auth_string) = parts
+
+    if auth_type.lower() != 'basic':
+        return False
+
+    try:
+        return base64.b64decode(auth_string) == expected_auth_string
+    except TypeError:
+        return False
+
+
 @require_POST
 @csrf_exempt
 def cloudfactory_response(request):
     """
     Receive the response from CloudFactory with processed document information.
     """
+    # If enabled, require basic authentication in front of this (staging has
+    # basic auth, none additional needed - production won't, and something would
+    # be needed).
+    if settings.CLOUDFACTORY_CALLBACK_ENFORCE_AUTH:
+        if not check_basic_auth(request, settings.CLOUDFACTORY_CALLBACK_AUTH):
+            return HttpResponseForbidden()
+
     try:
         body = request.body
         json_body = json.loads(body)

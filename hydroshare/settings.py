@@ -295,7 +295,12 @@ CLOUDFACTORY_API_URL = 'https://%s:%s@api.cloudfactory.com/v4' % (
     CLOUDFACTORY_AUTH_USERNAME,
     CLOUDFACTORY_AUTH_PASSWORD,
 )
+# Http Basic auth required to access the callback URL ('cloudfactory_response')
 CLOUDFACTORY_CALLBACK_AUTH = ''
+# When True, the 'cloudfactory_response' will check for an Authentication header
+# (if False and CLOUDFACTORY_CALLBACK_AUTH is set, it won't be checked -
+# probably because nginx is enforcing the value.)
+CLOUDFACTORY_CALLBACK_ENFORCE_AUTH = False
 
 ##################
 # LOCAL SETTINGS #
@@ -414,4 +419,3 @@ LOGIN_REDIRECT_URL = 'myhpom:dashboard'
 TEST_RUNNER = 'myhpom.tests.runner.LimitedTestSuiteRunner'
 
 AUTHENTICATION_BACKENDS = ['myhpom.auth.EmailAuthBackend']
-
