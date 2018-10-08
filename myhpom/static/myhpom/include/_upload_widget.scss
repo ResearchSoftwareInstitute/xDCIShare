@@ -154,6 +154,10 @@
     align-items: flex-start;
 }
 
+.advance-directive-widget__change-file-form {
+    flex-shrink: 0;
+}
+
 .advance-directive-widget__change-file {
     flex-shrink: 0;
     margin-left: 1rem;

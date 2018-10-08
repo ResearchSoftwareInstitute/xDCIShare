@@ -274,12 +274,26 @@ class UploadDeleteTestCase(UploadMixin, TestCase):
         self.assertEqual(advancedirective, user.advancedirective)
 
         response = self.client.post(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_index'), fetch_redirect_response=False)
         user = User.objects.get(id=user.id)
-        self.assertEqual(302, response.status_code)
         self.assertFalse(hasattr(user, 'advancedirective'))
 
         # doing this twice should be fine
         response = self.client.post(self.url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
         user = User.objects.get(id=user.id)
-        self.assertEqual(302, response.status_code)
         self.assertFalse(hasattr(user, 'advancedirective'))
+
+    def test_deletes_ad_with_redirect(self):
+        user = self._setup_user_and_login()
+
+        # the redirect parameter doesn't get used if there is no AD
+        response = self.client.post(self.url + '?redirect=/someotherurl', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
+
+        advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
+        advancedirective.save()
+        response = self.client.post(self.url + '?redirect=/someotherurl', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(response, '/someotherurl', fetch_redirect_response=False)

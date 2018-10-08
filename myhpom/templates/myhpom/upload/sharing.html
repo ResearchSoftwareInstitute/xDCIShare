@@ -18,7 +18,15 @@
         <span class="h6">You have selected:</span>
         <span class="advance-directive-widget__filename">{{ request.user.advancedirective.filename }}</span>
     </div>
-    <a class="advance-directive-widget__change-file" href="{% url "myhpom:upload_requirements" %}">change file</a>
+    <form
+        id="delete_and_redirect_to_requiremennts"
+        class="advance-directive-widget__change-file-form"
+        action="{% url "myhpom:upload_delete_ad" %}?redirect={% url "myhpom:upload_requirements" %}"
+        method="POST"
+    >
+        {% csrf_token %}
+        <a class="advance-directive-widget__change-file" data-no-ajax="true" data-post="" href="#">change file</a>
+    </form>
 </div>
 
 <hr/>
@@ -35,3 +43,19 @@
     <button class="advance-directive-widget__button--primary" type="submit">Submit</button>
 </form>
 {% endblock widget_body %}
+
+{% block widget-js %}
+<script>
+jQuery(function ($) {
+    /*
+        Unfortunately, when grabbed via AJAX, the modal trigger
+        will not be initialized automatically. We can pretend
+        this is taking place by assigning a click handler.
+    */
+    $('[data-post]').on('click', function (e) {
+        e.preventDefault();
+        $(this).parent('form').submit();
+    });
+});
+</script>
+{% endblock %}
