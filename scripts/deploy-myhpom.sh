@@ -42,9 +42,9 @@ while true; do
     -e|--environment)
       ENV="$2"
       shift 2
-      if [[ ! "${ENV}" =~ ^(staging|production|mmhstaging|mmhproduction)$ ]]
+      if [[ ! "${ENV}" =~ ^(mmhstaging|mmhproduction)$ ]]
       then
-	echo "--environment must be [mmh]staging or [mmh]production"
+	echo "--environment must be mmhstaging or mmhproduction"
 	exit 2
       fi
       ;;
