@@ -29,6 +29,10 @@ footer a:hover {
     padding-left: 0;
 }
 
+.footer-links-list__button {
+    @extend .myhpom-header__nav-link--button;
+}
+
 .footer-links-list__link {
     @extend .myhpom-header__nav-link;
 }
