@@ -20,6 +20,11 @@
                     </ul>
 
                     <ul class="footer-links-list footer-links-list--account-links">
+                        {% if user.is_authenticated %}
+                        <li class="footer-links-list__item">
+                            <a class="footer-links-list__link" href="{% url 'myhpom:dashboard' %}">My Profile</a>
+                        </li>
+                        {% endif %}
                         <li class="footer-links-list__item">
                             {% if user.is_authenticated %}
                             <a class="footer-links-list__link" href="{% url 'myhpom:logout' %}">Logout</a>
@@ -27,13 +32,11 @@
                             <a class="footer-links-list__link" href="{% url 'login' %}">Login</a>
                             {% endif %}
                         </li>
+                        {% if not user.is_authenticated %}
                         <li class="footer-links-list__item">
-                            {% if user.is_authenticated %}
-                            <a class="footer-links-list__link" href="{% url 'myhpom:dashboard' %}">My Profile</a>
-                            {% else %}
                             <a class="btn btn-secondary footer-links-list__button" href="{% url 'myhpom:signup' %}">Start Now</a>
-                            {% endif %}
                         </li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>
