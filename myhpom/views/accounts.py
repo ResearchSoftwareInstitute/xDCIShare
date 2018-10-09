@@ -1,6 +1,4 @@
 from django.shortcuts import render, redirect
-from django.core.urlresolvers import reverse
-from django.views.decorators.http import require_GET
 from django.contrib.auth.decorators import login_required
 
 from myhpom.forms.choose_network import ChooseNetworkForm

@@ -10,13 +10,6 @@ More information can be found in the [MyHPOM Wiki](https://github.com/SoftwareRe
 Development
 ===========
 
-There are very good instructions on the [hydroshare
-wiki](https://github.com/hydroshare/hydroshare/wiki/getting_started) to set up a
-local dev environment that matches production.
-
-Docker Development
-==================
-
 If you have [docker installed](https://www.docker.com/community-edition#/download) locally, you can use `hsctl` commands to setup a
 local development environment without VirtualBox.
 
@@ -74,6 +67,16 @@ following commands:
  * `brew install gnu-sed --with-default-names`.
  * `brew install gnu-getopt ; brew link --force gnu-getopt`.
  * `brew install gettext ; brew link --force gettext`.
+
+
+Testing
+-------
+
+To run tests in the same manner that CI will, run the following command:
+
+```
+docker-compose run --rm hydroshare fab test
+```
 
 Environments
 ------------

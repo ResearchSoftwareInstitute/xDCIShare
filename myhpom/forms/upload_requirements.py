@@ -39,9 +39,9 @@ class UploadRequirementsForm(forms.ModelForm):
             data['document'].name = "%s-%s%s" % (name, str(uuid.uuid4())[:6], extension)
 
             # (try to) generate a thumbnail of the document
-            # NOTE: We do this here at present because we don't want to keep the PDF 
-            # if the thumbnail can't be created (= corrupt PDF = invalid form). This 
-            # assumes that processing is done in-request. In future, we will want to 
+            # NOTE: We do this here at present because we don't want to keep the PDF
+            # if the thumbnail can't be created (= corrupt PDF = invalid form). This
+            # assumes that processing is done in-request. In future, we will want to
             # move the thumbnail processing into an asynchronous queue, which means
             # that this simple validation setup will need to be refactored into
             # storing the document followed by tracking its state through processing.

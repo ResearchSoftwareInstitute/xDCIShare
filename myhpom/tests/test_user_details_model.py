@@ -74,7 +74,7 @@ class UserDetailsModelTestCase(TestCase):
     def test__reset_verification(self):
         """* instance.reset_verification() results in:
             * instance.verification_completed = None
-            * instance.verification_code not None, != previous one, 32 <= len <= 64 
+            * instance.verification_code not None, != previous one, 32 <= len <= 64
         """
         self.assertIsNone(self.userdetails.verification_code)
         self.userdetails.verification_completed = timezone.now()

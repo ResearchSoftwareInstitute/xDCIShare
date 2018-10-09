@@ -8,12 +8,12 @@ class StateQuerySet(models.QuerySet):
         """ Order so that states with advance_directive_template values are
         before those without. """
         return (self
-            .annotate(ad_length=Length('advance_directive_template'))
-            .annotate(has_ad=Case(
-                When(ad_length__gt=0, then=Value(1)),
-                default=Value(0),
-                output_field=IntegerField()))
-            .order_by('-has_ad', 'is_territory', 'name'))
+                .annotate(ad_length=Length('advance_directive_template'))
+                .annotate(has_ad=Case(
+                    When(ad_length__gt=0, then=Value(1)),
+                    default=Value(0),
+                    output_field=IntegerField()))
+                .order_by('-has_ad', 'is_territory', 'name'))
 
 
 class State(models.Model):

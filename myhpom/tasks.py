@@ -150,15 +150,19 @@ class CloudFactoryAbortDocumentRun(Task):
             response = requests.post(abort_url)  # yes, CF wants a POST without a body for this.
 
             if response.status_code == 404:
-                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_NOTFOUND)
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id) \
+                    .update(status=CloudFactoryDocumentRun.STATUS_NOTFOUND)
             elif response.status_code == 202:
                 # 202 = they accepted the response, so we can consider it done.
-                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_ABORTED)
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id) \
+                    .update(status=CloudFactoryDocumentRun.STATUS_ABORTED)
             elif response.status_code == 405:
                 # 405 = CF uses it to mean "already done, folks" -- whether aborted or processed
-                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_PROCESSED)
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id) \
+                    .update(status=CloudFactoryDocumentRun.STATUS_PROCESSED)
             else:
-                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id).update(status=CloudFactoryDocumentRun.STATUS_ERROR)
+                CloudFactoryDocumentRun.objects.filter(pk=cf_run_id) \
+                    .update(status=CloudFactoryDocumentRun.STATUS_ERROR)
                 raise ValueError(
                     """URL: %s\nResponse status: %d\nResponse Content:\n%s"""
                     % (response.url, response.status_code, response.content)

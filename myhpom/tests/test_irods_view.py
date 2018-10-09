@@ -12,7 +12,9 @@ def run_side_effect(*args, **kwargs):
     """ side_effect for run() with example output for irods commands. """
     # Session.run() returns (stdout, stderr)
     if args[0] == 'ils':
-        return ('wwwHydroProx      0 hydroshareReplResc            7 2018-08-06.18:05 & tmpBktX04', '')
+        return (
+            'wwwHydroProx      0 hydroshareReplResc            7 2018-08-06.18:05 & tmpBktX04',
+            '')
 
 
 def run_safe_side_effect(*args, **kwargs):
@@ -66,7 +68,8 @@ class IrodsDownloadTest(TestCase):
         user.save()
 
         # If the user is not logged in, then return an error
-        advancedirective = AdvanceDirective(user=user, valid_date=now(), document='a_path', share_with_ehs=False)
+        advancedirective = AdvanceDirective(
+            user=user, valid_date=now(), document='a_path', share_with_ehs=False)
         advancedirective.save()
         response = self.client.get(self.url)
         self.assertEqual(404, response.status_code)

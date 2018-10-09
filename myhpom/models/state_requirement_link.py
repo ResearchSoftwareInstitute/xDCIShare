@@ -1,6 +1,4 @@
-import sys
 from django.db import models
-from django.core.exceptions import ValidationError
 from .state_requirement import StateRequirement
 from myhpom.validators import validate_not_blank
 
@@ -25,6 +23,7 @@ def state_requirement_link_pre_save_receiver(sender, instance, **kwargs):
     """
     for key in ['href', 'text']:
         validate_not_blank(instance.__dict__.get(key))
+
 
 models.signals.pre_save.connect(
     state_requirement_link_pre_save_receiver, sender=StateRequirementLink

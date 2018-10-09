@@ -9,10 +9,10 @@ from myhpom.tests.factories import UserFactory
 
 class SendVerificationViewTestCase(TestCase):
     """
-    + Verified user: 
+    + Verified user:
         + message.info = "Your email address is already verified."
         + returns redirect to myhpom:dashboard
-    + Unverified user: 
+    + Unverified user:
         + message.info = "Please check your email to verify your address."
         + user's verification code has changed because UserDetails.reset_verification() is done.
         + returns redirect to myhpom:dashboard
@@ -51,7 +51,7 @@ class VerifyAccountViewTestCase(TestCase):
     + Already verified user: message.info = "Your email address is already verified."
     + Unverified user, correct code (matches UserDetails.verification_code):
         + message.success = "Your email address is now verified."
-        + UserDetails.verification_completed is not None 
+        + UserDetails.verification_completed is not None
     + Unverified user, incorrect code (does not match UserDetails.verification_code):
         + message.error = "The verification code is invalid."
     """
@@ -79,6 +79,7 @@ class VerifyAccountViewTestCase(TestCase):
         self.assertIn(self.user.userdetails.verification_code, self.url)
         response = self.client.get(self.url)
         messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == SUCCESS]
+        self.assertEqual(1, len(messages))
         self.assertRedirects(response, reverse('myhpom:dashboard'))
 
     def test_unverified_user_incorrect_code(self):
@@ -87,4 +88,5 @@ class VerifyAccountViewTestCase(TestCase):
         self.assertNotIn(self.user.userdetails.verification_code, self.url)
         response = self.client.get(self.url)
         messages = [msg for msg in get_messages(response.wsgi_request) if msg.level == ERROR]
+        self.assertEqual(1, len(messages))
         self.assertRedirects(response, reverse('myhpom:dashboard'))

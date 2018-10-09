@@ -80,9 +80,10 @@ def cloudfactory_response(request):
         except ValueError as e:
             return HttpResponseBadRequest(e.message)
         else:
-            # If the status is now STATUS_PROCESSED, this means that the review is
-            # completed and the user should be notified to come view their document.
-            # -- In a task so that the CF callback can finish w/o reference to the user notification.
+            # If the status is now STATUS_PROCESSED, this means that the review
+            # is completed and the user should be notified to come view their
+            # document.  -- In a task so that the CF callback can finish w/o
+            # reference to the user notification.
             if run.status == CloudFactoryDocumentRun.STATUS_PROCESSED:
                 EmailUserDocumentReviewCompleted.delay(run.id, request.scheme, request.get_host())
 

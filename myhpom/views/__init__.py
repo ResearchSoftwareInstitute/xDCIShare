@@ -12,17 +12,17 @@ from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.core.urlresolvers import reverse
 
 from myhpom import models
-from myhpom.views.accounts import next_steps
-from myhpom.views.auth import logout
-from myhpom.views.choose_network import choose_network
-from myhpom.views.content import content_page
-from myhpom.views.irods import irods_download
-from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,
-    upload_sharing, upload_delete_ad)
-from myhpom.views.signup import signup
-from myhpom.views.document import document_url, cloudfactory_response
-from myhpom.views.profile import edit_profile, view_profile
-from myhpom.views.verification import send_account_verification, verify_account
+from myhpom.views.accounts import next_steps  # noqa
+from myhpom.views.auth import logout  # noqa
+from myhpom.views.choose_network import choose_network  # noqa
+from myhpom.views.content import content_page  # noqa
+from myhpom.views.irods import irods_download  # noqa
+from myhpom.views.upload import (upload_current_ad, upload_index, upload_requirements,  # noqa
+    upload_sharing, upload_delete_ad)  # noqa
+from myhpom.views.signup import signup  # noqa
+from myhpom.views.document import document_url, cloudfactory_response  # noqa
+from myhpom.views.profile import edit_profile, view_profile  # noqa
+from myhpom.views.verification import send_account_verification, verify_account  # noqa
 
 FAQS = yaml.load(
     open(os.path.join(settings.PROJECT_ROOT, '../myhpom/static/myhpom/data/faq.yaml'), 'r')

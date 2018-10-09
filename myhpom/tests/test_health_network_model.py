@@ -26,12 +26,12 @@ class HealthNetworkModelTestCase(TestCase):
         )
         self.assertEqual(
             hns_p[1],
-            hns[len(hns_p[0]) : len(hns_p[0]) + len(hns_p[1])],
+            hns[len(hns_p[0]): len(hns_p[0]) + len(hns_p[1])],
             msg="priority 1 health networks should be second",
         )
         self.assertEqual(
             hns_p[2],
-            hns[len(hns_p[0]) + len(hns_p[1]) : len(hns_p[0]) + len(hns_p[1]) + len(hns_p[2])],
+            hns[len(hns_p[0]) + len(hns_p[1]): len(hns_p[0]) + len(hns_p[1]) + len(hns_p[2])],
             msg="priority 2 health networks should be third",
         )
 
@@ -42,8 +42,8 @@ class HealthNetworkModelTestCase(TestCase):
         state1 = State.objects.get(name="NC")
         state2 = State.objects.get(name="SC")
         kwargs = dict(priority=0, name="My Non-existent Health Network")
-        hn1 = HealthNetwork.objects.create(state=state1, **kwargs)
-        hn2 = HealthNetwork.objects.create(state=state2, **kwargs)
+        HealthNetwork.objects.create(state=state1, **kwargs)
+        HealthNetwork.objects.create(state=state2, **kwargs)
         self.assertRaises(IntegrityError, HealthNetwork.objects.create, state=state2, **kwargs)
 
     def test_add_wrong_priority(self):

@@ -1,7 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from myhpom import models
-from myhpom.models.user import User
 from myhpom.tests.factories import UserFactory
 
 

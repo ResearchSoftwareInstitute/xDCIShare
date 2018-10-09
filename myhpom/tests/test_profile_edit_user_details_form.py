@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.core.exceptions import ValidationError
 from myhpom.tests.factories import UserFactory
 from myhpom.forms.profile import EditUserDetailsForm
 from myhpom.models import State
@@ -12,7 +11,7 @@ class EditProfileUserDetailsFormTestCase(TestCase):
     * nothing is required except state
     * form.is_valid()==False when values are not valid for model (e.g., gender not in choices)
     * when a State object is given to data, the cleaned_data has State.name
-    * on save, cleaned_data.state must match an existing State object else ValueError    
+    * on save, cleaned_data.state must match an existing State object else ValueError
     """
 
     def setUp(self):
@@ -52,7 +51,7 @@ class EditProfileUserDetailsFormTestCase(TestCase):
         for data in self.valid_data:
             form = EditUserDetailsForm(data=data, instance=userdetails)
             self.assertTrue(form.is_valid())
-            form.save() # ok
+            form.save()  # ok
         for data in self.invalid_data:
             form = EditUserDetailsForm(data=data, instance=userdetails)
             self.assertFalse(form.is_valid())

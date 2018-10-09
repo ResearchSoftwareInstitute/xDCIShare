@@ -26,7 +26,7 @@ class SignupFormTestCase(TestCase):
 
     def test_passwords_dont_match(self):
         data = self.form_data
-        data['password_confirm'] += '1' # still valid on its own, but doesn't match
+        data['password_confirm'] += '1'  # still valid on its own, but doesn't match
         form = SignupForm(data)
         self.assertFalse(form.is_valid())
         self.assertGreaterEqual(len(form.errors['password_confirm']), 1)

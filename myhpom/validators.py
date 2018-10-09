@@ -11,6 +11,7 @@ name_validator = RegexValidator(regex=r'\w', flags=re.U, message='Please enter y
 # Email: valid email address
 email_validator = EmailValidator()
 
+
 # Email is not already taken
 def email_not_taken_validator(email):
     if User.objects.filter(email=email).exists():
