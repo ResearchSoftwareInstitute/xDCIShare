@@ -48,14 +48,14 @@ class StateRequirementModelTestCase(TestCase):
         requirements = list(StateRequirement.for_state(self.state))
         # global requirements should come first, followed by state-specific requirements
         self.assertEqual(self.global_reqs, requirements[: len(self.global_reqs)])
-        self.assertEqual(self.state_reqs, requirements[len(self.global_reqs) :])
+        self.assertEqual(self.state_reqs, requirements[len(self.global_reqs):])
         # each set of requirements should be in id order
         prev_id = -1
         for req in requirements[: len(self.global_reqs)]:  # global ordering
             self.assertGreater(req.id, prev_id)
             prev_id = req.id
         prev_id = -1
-        for req in requirements[len(self.global_reqs) :]:  # state-specific ordering
+        for req in requirements[len(self.global_reqs):]:  # state-specific ordering
             self.assertGreater(req.id, prev_id)
             prev_id = req.id
 

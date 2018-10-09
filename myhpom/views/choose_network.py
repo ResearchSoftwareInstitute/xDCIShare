@@ -38,7 +38,7 @@ def choose_network(request, is_update=False):
     }
     # priority=0: 3 entries per row
     priority_0_rows = [
-        health_networks[0][(row) * 3 : ((row) * 3) + 3]
+        health_networks[0][(row) * 3: ((row) * 3) + 3]
         for row in range(int(math.ceil(len(health_networks[0]) / 3.)))
     ]
     health_networks.pop(0)  # we're going to iterate only the groups with priority 1..N

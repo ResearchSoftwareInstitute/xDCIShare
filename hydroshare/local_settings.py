@@ -6,7 +6,6 @@
 import redis
 import os
 from kombu import Queue, Exchange
-from kombu.common import Broadcast
 
 DEBUG = os.environ.get('DEBUG') == 'true'
 

@@ -5,7 +5,7 @@ from django.contrib.messages import get_messages, INFO
 from django.test import TestCase
 from django.core.files.uploadedfile import SimpleUploadedFile
 
-from myhpom.models import State, UserDetails
+from myhpom.models import State
 
 
 class SignupTestCase(TestCase):
@@ -47,7 +47,7 @@ class SignupTestCase(TestCase):
         self.assertFalse(auth.get_user(self.client).is_authenticated())
 
     def test_post_signup_valid_supported(self):
-        """valid signup with a supported state should: 
+        """valid signup with a supported state should:
         + redirect to choose_network
         + set message.info (don't test for the value of the message, which might change)
         + save userdetails.verification_code != None and .verification_completed = None
@@ -88,19 +88,21 @@ class SignupTestCase(TestCase):
         self.assertIsNotNone(user.userdetails.verification_code)
         self.assertIsNone(user.userdetails.verification_completed)
 
-
     def test_post_signup_all_user_data(self):
         """valid signup should result in all user data being saved. (bug MH-100)"""
         data = self.form_data
         response = self.client.post(self.url, data=data)
         user = User.objects.get(email=data['email'])
         state = State.objects.get(name=data['state'])
-        
+        self.assertRedirects(
+            response, reverse('myhpom:choose_network'), fetch_redirect_response=False
+        )
+
         # User
         for key in ['first_name', 'last_name', 'email']:
             self.assertEqual(user.__getattribute__(key), data[key])
         self.assertTrue(user.check_password(data['password']))
-        
+
         # UserDetails
         for key in ['middle_name', 'accept_tos']:
             self.assertEqual(user.userdetails.__getattribute__(key), data[key])

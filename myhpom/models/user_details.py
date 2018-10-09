@@ -1,5 +1,4 @@
 from django.db import models
-import re
 import hashlib
 import uuid
 from .user import User

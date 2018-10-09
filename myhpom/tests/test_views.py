@@ -22,4 +22,5 @@ class StateTemplateTest(TestCase):
         state.update(advance_directive_template=SimpleUploadedFile('afile.txt', ''))
         state = state.first()
         result = self.client.get(url)
-        self.assertRedirects(result, state.advance_directive_template.url, fetch_redirect_response=False)
+        self.assertRedirects(
+            result, state.advance_directive_template.url, fetch_redirect_response=False)

@@ -290,10 +290,13 @@ class UploadDeleteTestCase(UploadMixin, TestCase):
         user = self._setup_user_and_login()
 
         # the redirect parameter doesn't get used if there is no AD
-        response = self.client.post(self.url + '?redirect=/someotherurl', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertRedirects(response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
+        response = self.client.post(
+            self.url + '?redirect=/someotherurl', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self.assertRedirects(
+            response, reverse('myhpom:upload_current_ad'), fetch_redirect_response=False)
 
         advancedirective = AdvanceDirective(user=user, valid_date=now(), share_with_ehs=False)
         advancedirective.save()
-        response = self.client.post(self.url + '?redirect=/someotherurl', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        response = self.client.post(
+            self.url + '?redirect=/someotherurl', HTTP_X_REQUESTED_WITH='XMLHttpRequest')
         self.assertRedirects(response, '/someotherurl', fetch_redirect_response=False)

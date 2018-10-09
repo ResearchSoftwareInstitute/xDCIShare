@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import sys
 from django.db import models, IntegrityError
-from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from .state import State
 from myhpom.validators import validate_not_blank
