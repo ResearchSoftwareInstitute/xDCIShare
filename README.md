@@ -75,7 +75,7 @@ Testing
 To run tests in the same manner that CI will, run the following command:
 
 ```
-docker-compose run --rm fab test
+docker-compose run --rm hydroshare fab test
 ```
 
 Environments
