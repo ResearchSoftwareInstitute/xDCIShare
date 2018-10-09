@@ -345,11 +345,16 @@ class CloudFactoryDocumentRun(models.Model):
 
         unit_post_data = {k: v for k, v in unit_data.items() if bool(v) is True}
 
+        # When the auth callback is provided, create a callback URL with Basic
+        # auth credentials:
+        auth = ''
+        if settings.CLOUDFACTORY_CALLBACK_AUTH:
+            auth = '%s@' % settings.CLOUDFACTORY_CALLBACK_AUTH
         data = {
             "line_id": settings.CLOUDFACTORY_LINE_ID,
             "callback_url":
                 'https://%s%s%s' % (
-                    settings.CLOUDFACTORY_CALLBACK_AUTH, self.document_host,
+                    auth, self.document_host,
                     reverse('myhpom:cloudfactory_response')),
             "units": [unit_post_data],
         }

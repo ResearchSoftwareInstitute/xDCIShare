@@ -28,7 +28,9 @@ class DocumentRunModelTestCase(TestCase):
                 valid_date=now(),
             )
         )
-        self.run = CloudFactoryDocumentRun.objects.create(document_url=self.document_url)
+        self.run = CloudFactoryDocumentRun.objects.create(
+            document_host='testserver',
+            document_url=self.document_url)
 
     def test_create_default_run(self):
         """
@@ -44,9 +46,9 @@ class DocumentRunModelTestCase(TestCase):
         with self.assertRaises(AttributeError):
             self.run.create_post_data()
 
-    @override_settings(CLOUDFACTORY_CALLBACK_AUTH='user:pass@')
+    @override_settings(CLOUDFACTORY_CALLBACK_AUTH='user:pass')
     def test_callback_basic_auth(self):
-        self.assertTrue('https://user:pass@' in self.run.create_post_data()['callback_url'])
+        self.assertTrue('user:pass@testserver' in self.run.create_post_data()['callback_url'])
 
     def test_create_run_with_document_url(self):
         """
@@ -68,8 +70,8 @@ class DocumentRunModelTestCase(TestCase):
         """
         # this represents a typical "201 Created" response
         response_content = (
-            r'{"id":"SOME_RUN_ID","line_id":"SOME_LINE_ID","status":"Processing",'
-            + r'"created_at":"2018-09-24T22:27:53.000Z"}'
+            r'{"id":"SOME_RUN_ID","line_id":"SOME_LINE_ID","status":"Processing",' +
+            r'"created_at":"2018-09-24T22:27:53.000Z"}'
         )
         self.run.save_response_data(response_content)
         self.assertEqual(self.run.run_id, "SOME_RUN_ID")

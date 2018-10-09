@@ -1,8 +1,9 @@
+import base64
 import json
 import os
 from mock import patch
 from django.core.urlresolvers import reverse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from myhpom.models import CloudFactoryDocumentRun
 from myhpom.tests.factories import CloudFactoryDocumentRunFactory
 
@@ -13,13 +14,42 @@ ABORT_DATA = open(os.path.join(CF_PATH, 'callback_abort.json')).read()
 
 class CloudfactoryResponseTest(TestCase):
     def post_json(self, url, data):
-        return self.client.post(url, data=data, content_type='text/example')
+        return self.client.post(url, data=data, content_type='application/json')
 
     def test_no_data(self):
         # When no data is posted to the viewpoint, a 4xx code is returned,
         # alerting the requestor that the problem is theirs
         response = self.client.post(reverse('myhpom:cloudfactory_response'))
         self.assertEqual(400, response.status_code)
+
+    @override_settings(
+        CLOUDFACTORY_CALLBACK_ENFORCE_AUTH=True,
+        CLOUDFACTORY_CALLBACK_AUTH='user:pass'
+    )
+    def test_enforce_authentication_setting(self):
+        # When CLOUDFACTORY_CALLBACK_ENFORCE_AUTH is set, the value of the
+        # CLOUDFACTORY_CALLBACK_AUTH is checked.
+        CloudFactoryDocumentRun.objects.create(
+            run_id='SUCCESS_ID', status=CloudFactoryDocumentRun.STATUS_PROCESSING)
+
+        # When the password is wrong, the requestor will see an authentication
+        # failed response code.
+        response = self.client.post(
+            reverse('myhpom:cloudfactory_response'),
+            data=SUCCESS_DATA,
+            content_type='application/json',
+            secure=False,
+            HTTP_AUTHORIZATION='blah')
+        self.assertEqual(403, response.status_code)
+
+        # When the user/pass are correct, the requestor will see a 200
+        response = self.client.post(
+            reverse('myhpom:cloudfactory_response'),
+            data=SUCCESS_DATA,
+            content_type='application/json',
+            secure=False,
+            HTTP_AUTHORIZATION='basic ' + base64.b64encode('user:pass'))
+        self.assertEqual(200, response.status_code)
 
     def test_badly_formed_data(self):
         # When non-json data is sent, we return a 400 to alert the user to the
